@@ -1,0 +1,22 @@
+{
+  "name": "@digitally-imported/dto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf lib/ && tsc --build tsconfig.json"
+  },
+  "keywords": [],
+  "author": "Raphael Pigulla <pigulla@four66.com>",
+  "license": "MIT",
+  "dependencies": {
+    "class-transformer": "^0.2.3",
+    "dayjs": "^1.8.16"
+  },
+  "devDependencies": {
+    "ts-node": "^8.4.1",
+    "tslib": "^1.10.0",
+    "typescript": "^3.6.3"
+  }
+}

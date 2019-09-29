@@ -1,3 +1,5 @@
+import {ChannelFilterDTO} from '@digitally-imported/dto';
+
 export interface RawChannelFilter {
     channels: number[];
     display: boolean;
@@ -20,6 +22,16 @@ export class ChannelFilter {
         public readonly name: string,
         public readonly position: number
     ) {}
+
+    public to_dto (): ChannelFilterDTO {
+        return new ChannelFilterDTO({
+            channels: Array.from(this.channels),
+            id: this.id,
+            key: this.key,
+            name: this.name,
+            meta: this.meta,
+        });
+    }
 
     public static from_raw (data: RawChannelFilter): ChannelFilter {
         return new ChannelFilter(

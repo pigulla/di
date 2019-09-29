@@ -1,3 +1,4 @@
+import {UserDTO} from '@digitally-imported/dto';
 import dayjs, {Dayjs} from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
@@ -98,6 +99,8 @@ export abstract class User {
         this.has_password = data.has_password;
     }
 
+    abstract to_dto (): UserDTO;
+
     public static from_raw (type: UserType, data: RawUserData): User {
         // The type could be deduced from the properties, but DI provides the type explicitly, so why not use that.
 
@@ -173,7 +176,7 @@ export abstract class AuthenticatedUser extends User {
     public readonly created_at: Dayjs;
     public readonly has_password: boolean;
     public readonly api_key: string;
-    public readonly favorites: number[];
+    public readonly favorites: Set<number>;
 
     protected constructor (data: AuthenticatedUserData, type: UserType) {
         super(data, type);
@@ -182,11 +185,7 @@ export abstract class AuthenticatedUser extends User {
         this.has_password = data.has_password;
         this.api_key = data.api_key;
         this.created_at = data.created_at;
-        this.favorites = data.favorites;
-    }
-
-    public is_favorite (channel: Channel): boolean {
-        return this.favorites.includes(channel.id);
+        this.favorites = new Set(data.favorites);
     }
 }
 
@@ -202,6 +201,18 @@ export class GuestUser extends User {
         this.has_premium = false;
         this.has_password = null;
     }
+
+    public to_dto (): UserDTO {
+        return new UserDTO({
+            type: this.type,
+            authenticated: this.authenticated,
+            id: null,
+            has_premium: this.has_premium,
+            has_password: this.has_password,
+            favorites: null,
+            created_at: null,
+        });
+    }
 }
 
 export class PublicUser extends AuthenticatedUser {
@@ -212,6 +223,18 @@ export class PublicUser extends AuthenticatedUser {
 
         this.has_premium = null;
     }
+
+    public to_dto (): UserDTO {
+        return new UserDTO({
+            type: this.type,
+            authenticated: this.authenticated,
+            id: this.id,
+            has_premium: this.has_premium,
+            has_password: this.has_password,
+            favorites: Array.from(this.favorites),
+            created_at: this.created_at.toISOString(),
+        });
+    }
 }
 
 export class PremiumUser extends AuthenticatedUser {
@@ -221,5 +244,17 @@ export class PremiumUser extends AuthenticatedUser {
         super(data, UserType.PREMIUM);
 
         this.listen_key = data.listen_key;
+    }
+
+    public to_dto (): UserDTO {
+        return new UserDTO({
+            type: this.type,
+            authenticated: this.authenticated,
+            id: this.id,
+            has_premium: this.has_premium,
+            has_password: this.has_password,
+            favorites: Array.from(this.favorites),
+            created_at: this.created_at.toISOString(),
+        });
     }
 }

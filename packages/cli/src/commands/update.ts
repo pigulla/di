@@ -8,8 +8,11 @@ export default class Update extends BaseCommand {
     static flags = {...BaseCommand.flags}
 
     async run (): Promise<void> {
-        cli.action.start('Updating')
-        await this._axios.put('/server/update')
+        cli.action.start('Updating');
+        await this.axios({
+            method: 'PUT',
+            url: '/server/update',
+        });
         cli.action.stop();
     }
 }

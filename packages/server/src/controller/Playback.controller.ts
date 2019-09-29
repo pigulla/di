@@ -1,4 +1,4 @@
-import {ChannelDTO, StateDTO} from '@digitally-imported/dto';
+import {ChannelDTO, PlaybackStateDTO} from '@digitally-imported/dto';
 import {
     Body,
     ClassSerializerInterceptor,
@@ -17,7 +17,6 @@ import {
 import {IsString} from 'class-validator';
 
 import {IChannelProvider, IListenkeyProvider, IVlcControl} from '../service';
-import {channel_to_dto} from './dto/Channel.dto';
 
 export class PlayDTO {
     @IsString()
@@ -52,8 +51,8 @@ export class PlaybackController {
 
     @Get()
     @UseInterceptors(ClassSerializerInterceptor)
-    public async current (): Promise<StateDTO> {
-        const state: StateDTO = {
+    public async current (): Promise<PlaybackStateDTO> {
+        const state: PlaybackStateDTO = {
             now_playing: false,
             channel: null,
             volume: await this.vlc_control.get_volume(),
@@ -96,6 +95,6 @@ export class PlaybackController {
 
         await this.vlc_control.add(url);
 
-        return channel_to_dto(channel);
+        return channel.to_dto();
     }
 }

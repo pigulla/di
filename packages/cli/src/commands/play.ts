@@ -22,7 +22,7 @@ export default class Play extends BaseCommand {
             {
                 method: 'PUT',
                 url: '/playback',
-                data: {channel: args.channel}
+                data: {channel: args.channel},
             },
             {
                 [OK]: true,

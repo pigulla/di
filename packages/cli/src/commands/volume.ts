@@ -60,7 +60,7 @@ export default class Volume extends BaseCommand {
         const {args} = this.parse(Volume);
 
         if (args.value) {
-            const cmd = this.parse_input(args.value)
+            const cmd = this.parse_input(args.value);
             await this.handle_set(cmd);
         } else {
             const volume = await this.get_volume();

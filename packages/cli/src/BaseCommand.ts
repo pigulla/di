@@ -33,7 +33,7 @@ export abstract class BaseCommand extends Command {
         }),
     }
 
-    protected async axios(
+    protected async axios (
         config: AxiosRequestConfig,
         responseCodeMap: ResponseCodeMap = {200: true, 204: true},
     ): Promise<AxiosResponse> {
@@ -42,7 +42,7 @@ export abstract class BaseCommand extends Command {
             baseURL: this.base_url,
             validateStatus (status: number): boolean {
                 return Object.keys(responseCodeMap).map(key => parseInt(key, 10)).includes(status);
-            }
+            },
         };
 
         const response = await Axios.request(options);

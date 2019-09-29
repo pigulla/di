@@ -32,7 +32,11 @@ export default class Select extends BaseCommand {
     }
 
     private async get_channels (favorites_only: boolean): Promise<ChannelDTO[]> {
-        const response = await this._axios.get(favorites_only ? '/channels/favorites' : '/channels');
+        const response = await this.axios({
+            method: 'GET',
+            url: favorites_only ? '/channels/favorites' : '/channels',
+        });
+
         return response.data;
     }
 
@@ -44,18 +48,14 @@ export default class Select extends BaseCommand {
         const max_name_length = channels.reduce((len, {name}) => Math.max(name.length, len), 0);
 
         function format_name (channel: ChannelDTO): string {
-            const prefix = favorites_only
-                ? ''
-                : (channel.is_favorite ? chalk.red('* ') : '  ');
-
-            return prefix + channel.name.padEnd(max_name_length) + chalk.dim(channel.description);
+            return channel.name.padEnd(max_name_length) + chalk.dim(channel.description);
         }
 
         const choices = channels
             .map(channel => ({
                 name: format_name(channel),
                 value: channel.key,
-                channel_name: channel.name.toLowerCase()
+                channel_name: channel.name.toLowerCase(),
             }))
             .sort((a, b) => a.name.localeCompare(b.name));
         const answers: Answers = await inquirer.prompt<Answers>({
@@ -70,6 +70,10 @@ export default class Select extends BaseCommand {
             },
         } as AutocompleteQuestion<Answers> as any as QuestionCollection<Answers>);
 
-        await this._axios.put('/playback', {channel: answers.channel})
+        await this.axios({
+            method: 'PUT',
+            url: '/playback',
+            data: {channel: answers.channel},
+        });
     }
 }

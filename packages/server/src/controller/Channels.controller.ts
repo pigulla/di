@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 
 import {IChannelProvider} from '../service';
-import {channel_to_dto} from './dto/';
 
 @Controller()
 export class ChannelsController {
@@ -25,7 +24,7 @@ export class ChannelsController {
     @Get('/channels')
     @UseInterceptors(ClassSerializerInterceptor)
     list_channels (): ChannelDTO[] {
-        return this.channel_provider.get_channels().map(channel_to_dto);
+        return this.channel_provider.get_channels().map(channel => channel.to_dto());
     }
 
     @Get('/channel/:key')
@@ -35,6 +34,6 @@ export class ChannelsController {
             throw new NotFoundException();
         }
 
-        return channel_to_dto(this.channel_provider.get_channel_by_key(key));
+        return this.channel_provider.get_channel_by_key(key).to_dto();
     }
 }

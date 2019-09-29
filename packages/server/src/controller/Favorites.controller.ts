@@ -7,7 +7,6 @@ import {
     ClassSerializerInterceptor, ForbiddenException,
 } from '@nestjs/common';
 
-import {channel_to_dto} from './dto/';
 import {IChannelProvider, IUserProvider} from '../service';
 import {AuthenticatedUser} from '../service/di';
 
@@ -33,8 +32,8 @@ export class FavoritesController {
             throw new ForbiddenException();
         }
 
-        return (user as AuthenticatedUser).favorites
+        return Array.from((user as AuthenticatedUser).favorites)
             .map(id => this.channel_provider.get_channel_by_id(id))
-            .map(channel => channel_to_dto(channel));
+            .map(channel => channel.to_dto());
     }
 }

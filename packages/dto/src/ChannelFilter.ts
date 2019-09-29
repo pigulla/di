@@ -1,19 +1,11 @@
-import {Transform, Exclude} from 'class-transformer';
-
 export class ChannelFilterDTO {
-    @Transform((channels: Set<number>) => Array.from(channels.values()))
-    channels!: Set<number>;
-
-    display!: boolean;
+    channels!: number[];
     id!: number;
     key!: string;
     meta!: boolean;
     name!: string;
 
-    @Exclude()
-    position!: number;
-
-    constructor (partial: ChannelFilterDTO) {
-        Object.assign(this, partial);
+    constructor (channel_filter: ChannelFilterDTO) {
+        Object.assign(this, channel_filter);
     }
 }

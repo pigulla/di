@@ -7,14 +7,15 @@ export default class Status extends BaseCommand {
 
     async run (): Promise<void> {
         try {
-            const response = await this._axios.head('/server');
+            const response = await this.axios({method: 'HEAD', url: '/server'});
             this.log(`Server is alive (${response.headers['x-app-version']})`);
         } catch (error) {
-            if (!error.isAxiosError) {
-                throw error;
+            if (error.isAxiosError && error.code === 'ECONNREFUSED') {
+                this.log('Server is not running');
+                return this.exit(2);
             }
 
-            this.error('Server is dead', {exit: 2});
+            throw error;
         }
     }
 }

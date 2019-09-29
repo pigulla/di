@@ -1,5 +1,6 @@
 import dayjs, {Dayjs} from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import {ChannelDTO} from '@digitally-imported/dto';
 
 dayjs.extend(utc);
 
@@ -67,6 +68,23 @@ export class Channel {
         const matches = /^(\/\/.+?)\{\?[a-z,]*\}$/.exec(value);
 
         return matches ? `https:${matches[1]}` : value;
+    }
+
+    public to_dto (): ChannelDTO {
+        return new ChannelDTO({
+            director: this.director,
+            description: this.description,
+            id: this.id,
+            key: this.key,
+            name: this.name,
+            updated_at: this.updated_at ? this.updated_at.toISOString() : null,
+            created_at: this.created_at.toISOString(),
+            images: {
+                default: this.images.default,
+                compact: this.images.compact,
+                banner: this.images.banner,
+            },
+        });
     }
 
     public static from_raw (data: RawChannel): Channel {

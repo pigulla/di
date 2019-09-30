@@ -1,3 +1,3 @@
-export * from './HttpClientError';
+export * from './ClientError';
 export * from './PremiumAccountRequiredError';
-export * from './UnexpectedResponseError';
+export * from './ServerNotRunningError';

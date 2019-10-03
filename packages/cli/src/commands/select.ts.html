@@ -31,20 +31,11 @@ export default class Select extends BaseCommand {
         }),
     }
 
-    private async get_channels (favorites_only: boolean): Promise<ChannelDTO[]> {
-        const response = await this.axios({
-            method: 'GET',
-            url: favorites_only ? '/channels/favorites' : '/channels',
-        });
-
-        return response.data;
-    }
-
     public async run (): Promise<void> {
         const {flags} = this.parse(Select);
         const favorites_only = flags['favorites-only'];
 
-        const channels = await this.get_channels(favorites_only);
+        const channels = await (favorites_only ? this.client.get_favorites() : this.client.get_channels());
         const max_name_length = channels.reduce((len, {name}) => Math.max(name.length, len), 0);
 
         function format_name (channel: ChannelDTO): string {
@@ -70,10 +61,6 @@ export default class Select extends BaseCommand {
             },
         } as AutocompleteQuestion<Answers> as any as QuestionCollection<Answers>);
 
-        await this.axios({
-            method: 'PUT',
-            url: '/playback',
-            data: {channel: answers.channel},
-        });
+        await this.client.start_playback(answers.channel);
     }
 }

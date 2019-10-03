@@ -1,22 +1,23 @@
+import {NormalizedPackageJson} from 'read-pkg';
 import {ServerStatusDTO} from '@digitally-imported/dto';
 import {Controller, Delete, HttpStatus, Res, Inject, Get, Put, HttpCode} from '@nestjs/common';
 import {Response} from 'express';
 
-import {IAppDataProvider, IVlcControl, IPackageInfo} from '../service';
+import {IAppDataProvider, IVlcControl} from '../service';
 
 @Controller('/server')
 export class ServerController {
     private readonly app_data_provider: IAppDataProvider;
-    private readonly package_info: IPackageInfo;
+    private readonly package_json: NormalizedPackageJson;
     private readonly vlc_control: IVlcControl;
 
     public constructor (
         @Inject('IVlcControl') vlc_control: IVlcControl,
-        @Inject('IPackageInfo') package_info: IPackageInfo,
+        @Inject('NormalizedPackageJson') package_json: NormalizedPackageJson,
         @Inject('IAppDataProvider') app_data_provider: IAppDataProvider,
     ) {
         this.app_data_provider = app_data_provider;
-        this.package_info = package_info;
+        this.package_json = package_json;
         this.vlc_control = vlc_control;
     }
 
@@ -27,7 +28,7 @@ export class ServerController {
         return {
             server: {
                 last_updated: this.app_data_provider.last_updated_at().toISOString(),
-                version: this.package_info.package_json.version,
+                version: this.package_json.package_json.version,
             },
             vlc: {
                 version: this.vlc_control.get_vlc_version(),

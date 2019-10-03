@@ -1,5 +1,3 @@
-import {OK, NOT_FOUND} from 'http-status-codes';
-
 import {BaseCommand} from '../BaseCommand';
 
 export default class Play extends BaseCommand {
@@ -18,19 +16,6 @@ export default class Play extends BaseCommand {
     async run (): Promise<void> {
         const {args} = this.parse(Play);
 
-        await this.axios(
-            {
-                method: 'PUT',
-                url: '/playback',
-                data: {channel: args.channel},
-            },
-            {
-                [OK]: true,
-                [NOT_FOUND]: {
-                    message: 'Channel not found',
-                    exitCode: 2,
-                },
-            }
-        );
+        await this.client.start_playback(args.channel);
     }
 }

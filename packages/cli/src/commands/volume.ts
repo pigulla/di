@@ -3,7 +3,7 @@ import {CLIError} from '@oclif/errors';
 import {BaseCommand} from '../BaseCommand';
 
 interface ParsedInput {
-    mode: 'absolute'|'relative';
+    relative: boolean;
     value: number;
 }
 
@@ -28,32 +28,17 @@ export default class Volume extends BaseCommand {
         }
 
         return {
-            mode: matches[1] ? 'relative' : 'absolute',
+            relative: !!matches[1],
             value: parseInt(input, 10) / 100,
         };
     }
 
-    private async get_volume (): Promise<number> {
-        const response = await this.axios(
-            {
-                method: 'GET',
-                url: '/volume',
-            }
-        );
-
-        return response.data.volume;
-    }
-
     private async handle_set (command: ParsedInput): Promise<void> {
-        const volume = command.mode === 'relative'
-            ? (await this.get_volume() + command.value)
+        const volume = command.relative
+            ? (await this.client.get_volume() + command.value)
             : command.value;
 
-        await this.axios({
-            method: 'PUT',
-            url: '/volume',
-            data: {volume},
-        });
+        await this.client.set_volume(volume);
     }
 
     public async run (): Promise<void> {
@@ -63,7 +48,7 @@ export default class Volume extends BaseCommand {
             const cmd = this.parse_input(args.value);
             await this.handle_set(cmd);
         } else {
-            const volume = await this.get_volume();
+            const volume = await this.client.get_volume();
             this.log(Math.round(volume * 100).toString());
         }
     }

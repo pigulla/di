@@ -73,7 +73,8 @@ export class Client {
                 method: 'GET',
                 url: '/volume',
             })
-            .get('data');
+            .get('data')
+            .get('volume');
     }
 
     public async is_playing (): Promise<boolean> {

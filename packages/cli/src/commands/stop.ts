@@ -6,9 +6,6 @@ export default class Stop extends BaseCommand {
     static flags = {...BaseCommand.flags}
 
     async run (): Promise<void> {
-        await this.axios({
-            method: 'DELETE',
-            url: '/playback',
-        });
+        await this.client.stop_playback();
     }
 }

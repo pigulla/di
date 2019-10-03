@@ -1,3 +1,4 @@
+import read_pkg, {NormalizedPackageJson} from 'read-pkg';
 import {Module, NestModule, MiddlewareConsumer} from '@nestjs/common';
 
 import {
@@ -11,7 +12,6 @@ import {
     IVlcControl,
     ListenkeyProvider,
     UserProvider,
-    PackageInfo,
     VlcControl,
     Logger,
     ILogger,
@@ -48,8 +48,10 @@ import {AppVersionHeader, VlcInstanceMonitor} from './middleware';
             },
         },
         {
-            provide: 'IPackageInfo',
-            useClass: PackageInfo,
+            provide: 'NormalizedPackageJson',
+            async useFactory (): Promise<NormalizedPackageJson> {
+                return read_pkg();
+            },
         },
         {
             provide: 'ILogger',

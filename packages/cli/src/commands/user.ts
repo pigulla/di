@@ -1,4 +1,3 @@
-import {UserDTO} from '@digitally-imported/dto/lib';
 import JSONs from 'json-strictify';
 
 import {BaseCommand} from '../BaseCommand';
@@ -9,11 +8,7 @@ export default class User extends BaseCommand {
     static flags = {...BaseCommand.flags}
 
     async run (): Promise<void> {
-        const response = await this.axios({
-            method: 'GET',
-            url: '/user',
-        });
-        const user: UserDTO = response.data;
+        const user = await this.client.get_user();
 
         this.log(JSONs.stringify(user));
     }

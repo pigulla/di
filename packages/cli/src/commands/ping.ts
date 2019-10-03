@@ -1,4 +1,5 @@
 import {BaseCommand} from '../BaseCommand';
+import {ServerNotRunningError} from '@digitally-imported/client/lib/error';
 
 export default class Status extends BaseCommand {
     static description = 'Test if the server is alive.';
@@ -7,10 +8,10 @@ export default class Status extends BaseCommand {
 
     async run (): Promise<void> {
         try {
-            const response = await this.axios({method: 'HEAD', url: '/server'});
-            this.log(`Server is alive (${response.headers['x-app-version']})`);
+            const status = await this.client.get_server_status();
+            this.log(`Server running (${status.server.version})`);
         } catch (error) {
-            if (error.isAxiosError && error.code === 'ECONNREFUSED') {
+            if (error instanceof ServerNotRunningError) {
                 this.log('Server is not running');
                 return this.exit(2);
             }

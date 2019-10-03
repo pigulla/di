@@ -1,4 +1,6 @@
 import {AddressInfo, Server} from 'net';
+
+import {NormalizedPackageJson} from 'read-pkg';
 import {NestFactory} from '@nestjs/core';
 import {ValidationPipe} from '@nestjs/common';
 
@@ -19,8 +21,9 @@ async function bootstrap (): Promise<void> {
 
     const server = app.getHttpServer() as Server;
     server.once('listening', function () {
+        const {name, version} = app.get<NormalizedPackageJson>('NormalizedPackageJson');
         const address = server.address() as AddressInfo;
-        logger.log(`Application listening on ${address.address}:${address.port}`);
+        logger.log(`Application ${name} v${version} listening on ${address.address}:${address.port}`);
     });
 
     await app.listen(port, host);

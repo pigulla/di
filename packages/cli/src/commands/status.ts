@@ -1,4 +1,3 @@
-import {PlaybackStateDTO} from '@digitally-imported/dto';
 import JSONs from 'json-strictify';
 
 import {BaseCommand} from '../BaseCommand';
@@ -9,13 +8,7 @@ export default class Status extends BaseCommand {
     static flags = {...BaseCommand.flags}
 
     async run (): Promise<void> {
-        const response = await this.axios(
-            {
-                method: 'GET',
-                url: '/server',
-            }
-        );
-        const state: PlaybackStateDTO = response.data;
+        const state = await this.client.get_playback_state();
 
         this.log(JSONs.stringify(state));
     }

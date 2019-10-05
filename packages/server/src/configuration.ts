@@ -12,6 +12,7 @@ export type Config = O.Readonly<{
     vlc: {
         path: string;
         timeout: number;
+        initial_volume: number|null;
     };
     digitally_imported: {
         url: string;
@@ -33,6 +34,7 @@ export const config_schema = joi.object().keys({
     vlc: joi.object().keys({
         path: joi.string().min(1).allow(null).optional().default(null),
         timeout: joi.number().integer().positive().optional().default(1000).unit('milliseconds'),
+        initial_volume: joi.number().min(0).max(1.25).allow(null).optional().default(0.5),
     }).options({presence: 'required'}),
     digitally_imported: joi.object().keys({
         url: joi.string().uri({scheme: 'https'}),

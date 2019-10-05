@@ -1,8 +1,12 @@
 {
   "name": "@digitally-imported/meta",
+  "version": "0.0.1",
   "private": true,
+  "author": "Raphael Pigulla <pigulla@four66.com>",
+  "license": "MIT",
   "scripts": {
     "lint": "eslint --ext=.ts 'packages/**/*.ts'",
+    "outdated": "lerna exec --no-bail 'npm outdated'",
     "build": "lerna exec 'rm -rf lib' && lerna run build",
     "setup": "lerna exec 'rm -rf node_modules' && lerna bootstrap"
   },

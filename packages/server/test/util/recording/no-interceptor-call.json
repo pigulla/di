@@ -1,0 +1,21 @@
+[
+    {
+        "scope": "https://www.di.fm",
+        "method": "GET",
+        "path": "/",
+        "body": "",
+        "status": 200,
+        "response": "<!DOCTYPE html>\n    <html lang=\"en\">\n    <head>\n        <meta charset=\"UTF-8\">\n        <title>DI.fm without interceptor call</title>\n        <script>\n            di.app.start = 42;\n        </script>\n    </head>\n    <body>\n    </body>\n</html>\n",
+        "rawHeaders": [
+            "Content-Type",
+            "text/html",
+            "Date",
+            "Wed, 06 Nov 2019 21:24:44 GMT",
+            "Connection",
+            "close",
+            "Transfer-Encoding",
+            "chunked"
+        ],
+        "responseIsBinary": false
+    }
+]

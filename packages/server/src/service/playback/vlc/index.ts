@@ -1,0 +1,7 @@
+export * from './ChildProcessFacade'
+export * from './ChildProcessFacade.interface'
+export * from './Command'
+export * from './Connector'
+export * from './Connector.interface'
+export * from './ControlError'
+export * from './VlcControl.service'

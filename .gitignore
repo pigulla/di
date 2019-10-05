@@ -1,5 +1,8 @@
+npm-debug.log
+yarn.lock
+*-debug.log
+*-error.log
 .idea/
 node_modules/
 packages/*/lib
-packages/*/npm-debug.log
 

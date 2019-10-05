@@ -9,6 +9,7 @@ import {VlcCommand, VlcControlError} from './vlc/';
 import {StatusData} from './vlc/commands/Status';
 import {TrackInfo} from './vlc/commands/Info';
 import {ILogger} from './Logger.service';
+import {Config} from '../configuration';
 
 export class UnknownCommandError extends Error {
     public constructor (command: string) {
@@ -16,20 +17,14 @@ export class UnknownCommandError extends Error {
     }
 }
 
-interface Options {
-    // The path to the VLC binary.
-    path: string;
-
-    // Timeout after this many milliseconds if the connection can not be established or verified.
-    timeout: number;
-}
+type Options = Config['vlc'];
 
 export interface IVlcControl {
     get_vlc_version (): string;
     get_vlc_pid (): number;
     is_running (): boolean;
 
-    start_instance (): Promise<string>;
+    start_instance (): Promise<void>;
     stop_instance (): Promise<void>;
     get_time (): Promise<number>;
     get_title (): Promise<string>;
@@ -144,7 +139,7 @@ export class VlcControl implements IVlcControl, OnApplicationShutdown {
         return this.vlc_process.pid;
     }
 
-    public start_instance (): Promise<string> {
+    public async start_instance (): Promise<void> {
         if (this.vlc_process) {
             throw new VlcControlError('Instance already running');
         }
@@ -167,7 +162,7 @@ export class VlcControl implements IVlcControl, OnApplicationShutdown {
         vlc.stdout.on('error', on_error);
         vlc.stdout.on('data', on_data);
 
-        return promise
+        await promise
             .tap(version => this.vlc_version = version) // eslint-disable-line no-return-assign
             .tap(() => this.vlc_process = vlc) // eslint-disable-line no-return-assign
             .tapCatch(_error => vlc.kill())
@@ -177,6 +172,10 @@ export class VlcControl implements IVlcControl, OnApplicationShutdown {
                     .off('error', on_error)
                     .off('data', on_data);
             });
+
+        if (this.options.initial_volume !== null) {
+            await this.set_volume(this.options.initial_volume);
+        }
     }
 
     public stop_instance (): Promise<void> {

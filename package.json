@@ -2,24 +2,24 @@
   "name": "@digitally-imported/meta",
   "version": "0.0.1",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "license": "MIT",
   "scripts": {
-    "build": "lerna run build",
-    "setup": "rm -rf node_modules && yarn workspaces run clean && yarn",
-    "compile": "yarn run compile:dto && yarn run compile:client && yarn run compile:cli && yarn run compile:server && yarn run compile:server",
-    "compile:cli": "yarn workspace @digitally-imported/cli run build",
-    "compile:client": "yarn workspace @digitally-imported/client run build",
-    "compile:dto": "yarn workspace @digitally-imported/dto run build",
-    "compile:integration-test": "yarn workspace @digitally-imported/integration-test run build",
-    "compile:server": "yarn workspace @digitally-imported/server run build",
-    "test": "yarn run compile && lerna run test && yarn audit",
-    "codecov": "lerna run codecov"
+    "lint": "eslint --ext=.ts 'packages/**/*.ts'",
+    "outdated": "lerna exec --no-bail 'npm outdated'",
+    "build": "lerna exec 'rm -rf lib' && lerna run build",
+    "setup": "lerna exec 'rm -rf node_modules' && lerna bootstrap"
   },
   "devDependencies": {
-    "lerna": "^3.19.0"
+    "@typescript-eslint/eslint-plugin": "^2.3.2",
+    "@typescript-eslint/parser": "^2.3.2",
+    "eslint": "^6.5.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "lerna": "^3.16.4",
+    "typescript": "^3.6.3"
   }
 }

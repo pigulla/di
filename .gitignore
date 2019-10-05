@@ -1,8 +1,8 @@
 npm-debug.log
+yarn.lock
 *-debug.log
 *-error.log
 .idea/
 node_modules/
-packages/*/.nyc_output
 packages/*/lib
-packages/*/coverage
+

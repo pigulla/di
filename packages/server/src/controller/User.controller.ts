@@ -1,23 +1,23 @@
-import {UserDTO} from '@digitally-imported/dto';
-import {Controller, Get, Inject, UseInterceptors, ClassSerializerInterceptor} from '@nestjs/common';
+import {UserDTO} from '@digitally-imported/dto'
+import {Controller, Get, Inject, UseInterceptors, ClassSerializerInterceptor} from '@nestjs/common'
 
-import {IUserProvider} from '../service';
+import {IUserProvider} from '../service'
 
 @Controller('/user')
 export class UserController {
     private readonly user_provider: IUserProvider;
 
-    constructor (
+    public constructor (
         @Inject('IUserProvider') user_provider: IUserProvider,
     ) {
-        this.user_provider = user_provider;
+        this.user_provider = user_provider
     }
 
     @Get()
     @UseInterceptors(ClassSerializerInterceptor)
-    get_user (): Partial<UserDTO> {
-        const user = this.user_provider.get_user();
+    public get_user (): Partial<UserDTO> {
+        const user = this.user_provider.get_user()
 
-        return user.to_dto();
+        return user.to_dto()
     }
 }

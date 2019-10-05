@@ -1,10 +1,10 @@
-import {UserDTO} from '@digitally-imported/dto';
-import dayjs, {Dayjs} from 'dayjs';
-import utc from 'dayjs/plugin/utc';
+import {UserDTO} from '@digitally-imported/dto'
+import dayjs, {Dayjs} from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 
-import {Channel} from './Channel';
+import {Channel} from './Channel'
 
-dayjs.extend(utc);
+dayjs.extend(utc)
 
 export enum UserType {
     GUEST= 'guest',
@@ -13,73 +13,73 @@ export enum UserType {
 }
 
 export interface RawUserData {
-    authenticated: boolean;
-    hasPremium: boolean|null;
-    audio_token: string;
-    session_key: string;
-    hasPassword: boolean|null;
+    authenticated: boolean
+    hasPremium: boolean|null
+    audio_token: string
+    session_key: string
+    hasPassword: boolean|null
 }
 
 export interface UserData {
-    authenticated: boolean;
-    has_premium: boolean|null;
-    audio_token: string;
-    session_key: string;
-    has_password: boolean|null;
+    authenticated: boolean
+    has_premium: boolean|null
+    audio_token: string
+    session_key: string
+    has_password: boolean|null
 }
 
 interface RawGuestUserData extends RawUserData {
-    authenticated: false;
-    hasPremium: false;
-    hasPassword: null;
+    authenticated: false
+    hasPremium: false
+    hasPassword: null
 }
 
 export interface GuestUserData extends UserData {
-    authenticated: false;
-    has_premium: false;
-    has_password: null;
+    authenticated: false
+    has_premium: false
+    has_password: null
 }
 
 interface RawAuthenticatedUserData extends RawUserData {
-    id: number;
-    authenticated: true;
-    created_at: string;
-    hasPassword: boolean; // False if signed on via Google or Facebook
-    api_key: string;
+    id: number
+    authenticated: true
+    created_at: string
+    hasPassword: boolean // False if signed on via Google or Facebook
+    api_key: string
     favorites: Array<{
-        channel_id: number;
-        position: number;
-    }>;
+        channel_id: number
+        position: number
+    }>
 }
 
 interface AuthenticatedUserData extends UserData {
-    id: number;
-    authenticated: true;
-    created_at: Dayjs;
-    has_password: boolean;
-    api_key: string;
-    favorites: number[];
+    id: number
+    authenticated: true
+    created_at: Dayjs
+    has_password: boolean
+    api_key: string
+    favorites: number[]
 }
 
 interface RawPublicUserData extends RawAuthenticatedUserData {
-    hasPremium: null; // Not sure why this isn't simply false? Maybe false is for users whose subscription has expired?
+    hasPremium: null // Not sure why this isn't simply false? Maybe false is for users whose subscription has expired?
 
     // Technically, non-premium users also have a listen_key, but it can't be used to listen to streams so we pretend
     // it's not even there. Not sure what that is about.
 }
 
 export interface PublicUserData extends AuthenticatedUserData {
-    has_premium: null;
+    has_premium: null
 }
 
 interface RawPremiumUserData extends RawAuthenticatedUserData {
-    hasPremium: true;
-    listen_key: string;
+    hasPremium: true
+    listen_key: string
 }
 
 export interface PremiumUserData extends AuthenticatedUserData {
-    has_premium: true;
-    listen_key: string;
+    has_premium: true
+    listen_key: string
 }
 
 export abstract class User {
@@ -91,12 +91,12 @@ export abstract class User {
     public readonly has_password: boolean|null;
 
     protected constructor (data: UserData, type: UserType) {
-        this.type = type;
-        this.authenticated = data.authenticated;
-        this.has_premium = data.has_premium;
-        this.audio_token = data.audio_token;
-        this.session_key = data.session_key;
-        this.has_password = data.has_password;
+        this.type = type
+        this.authenticated = data.authenticated
+        this.has_premium = data.has_premium
+        this.audio_token = data.audio_token
+        this.session_key = data.session_key
+        this.has_password = data.has_password
     }
 
     abstract to_dto (): UserDTO;
@@ -106,17 +106,17 @@ export abstract class User {
 
         /* eslint-disable @typescript-eslint/no-use-before-define */
         if (type === UserType.GUEST) {
-            const raw = data as RawGuestUserData;
+            const raw = data as RawGuestUserData
             const guest_data: GuestUserData = {
                 authenticated: raw.authenticated,
                 has_premium: raw.hasPremium,
                 audio_token: raw.audio_token,
                 session_key: raw.session_key,
                 has_password: raw.hasPassword,
-            };
-            return new GuestUser(guest_data);
+            }
+            return new GuestUser(guest_data)
         } else if (type === UserType.PUBLIC) {
-            const raw = data as RawPublicUserData;
+            const raw = data as RawPublicUserData
             const public_data: PublicUserData = {
                 id: raw.id,
                 created_at: dayjs(raw.created_at),
@@ -129,10 +129,10 @@ export abstract class User {
                 audio_token: raw.audio_token,
                 session_key: raw.session_key,
                 has_password: raw.hasPassword,
-            };
-            return new PublicUser(public_data);
+            }
+            return new PublicUser(public_data)
         } else if (type === UserType.PREMIUM) {
-            const raw = data as RawPremiumUserData;
+            const raw = data as RawPremiumUserData
             const premium_data: PremiumUserData = {
                 id: raw.id,
                 created_at: dayjs(raw.created_at),
@@ -146,28 +146,28 @@ export abstract class User {
                 audio_token: raw.audio_token,
                 session_key: raw.session_key,
                 has_password: raw.hasPassword,
-            };
-            return new PremiumUser(premium_data);
+            }
+            return new PremiumUser(premium_data)
         }
         /* eslint-enable @typescript-eslint/no-use-before-define */
 
-        throw new Error('Unexpected user type');
+        throw new Error('Unexpected user type')
     }
 
     public is_guest (): boolean {
-        return this.type === UserType.GUEST;
+        return this.type === UserType.GUEST
     }
 
     public is_public (): boolean {
-        return this.type === UserType.PUBLIC;
+        return this.type === UserType.PUBLIC
     }
 
     public is_premium (): boolean {
-        return this.type === UserType.PREMIUM;
+        return this.type === UserType.PREMIUM
     }
 
     public is_favorite (_channel: Channel): boolean {
-        return false;
+        return false
     }
 }
 
@@ -179,13 +179,13 @@ export abstract class AuthenticatedUser extends User {
     public readonly favorites: Set<number>;
 
     protected constructor (data: AuthenticatedUserData, type: UserType) {
-        super(data, type);
+        super(data, type)
 
-        this.id = data.id;
-        this.has_password = data.has_password;
-        this.api_key = data.api_key;
-        this.created_at = data.created_at;
-        this.favorites = new Set(data.favorites);
+        this.id = data.id
+        this.has_password = data.has_password
+        this.api_key = data.api_key
+        this.created_at = data.created_at
+        this.favorites = new Set(data.favorites)
     }
 }
 
@@ -195,11 +195,11 @@ export class GuestUser extends User {
     public readonly has_password: null;
 
     public constructor (data: GuestUserData) {
-        super(data, UserType.GUEST);
+        super(data, UserType.GUEST)
 
-        this.authenticated = false;
-        this.has_premium = false;
-        this.has_password = null;
+        this.authenticated = false
+        this.has_premium = false
+        this.has_password = null
     }
 
     public to_dto (): UserDTO {
@@ -211,7 +211,7 @@ export class GuestUser extends User {
             has_password: this.has_password,
             favorites: null,
             created_at: null,
-        });
+        })
     }
 }
 
@@ -219,9 +219,9 @@ export class PublicUser extends AuthenticatedUser {
     public readonly has_premium: null;
 
     public constructor (data: PublicUserData) {
-        super(data, UserType.PUBLIC);
+        super(data, UserType.PUBLIC)
 
-        this.has_premium = null;
+        this.has_premium = null
     }
 
     public to_dto (): UserDTO {
@@ -233,7 +233,7 @@ export class PublicUser extends AuthenticatedUser {
             has_password: this.has_password,
             favorites: Array.from(this.favorites),
             created_at: this.created_at.toISOString(),
-        });
+        })
     }
 }
 
@@ -241,9 +241,9 @@ export class PremiumUser extends AuthenticatedUser {
     public readonly listen_key: string;
 
     public constructor (data: PremiumUserData) {
-        super(data, UserType.PREMIUM);
+        super(data, UserType.PREMIUM)
 
-        this.listen_key = data.listen_key;
+        this.listen_key = data.listen_key
     }
 
     public to_dto (): UserDTO {
@@ -255,6 +255,6 @@ export class PremiumUser extends AuthenticatedUser {
             has_password: this.has_password,
             favorites: Array.from(this.favorites),
             created_at: this.created_at.toISOString(),
-        });
+        })
     }
 }

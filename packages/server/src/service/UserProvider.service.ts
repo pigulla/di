@@ -1,10 +1,10 @@
-import {Inject} from '@nestjs/common';
+import {Inject} from '@nestjs/common'
 
-import {User} from './di/';
-import {IAppDataProvider} from './AppDataProvider.service';
+import {User} from './di/'
+import {IAppDataProvider} from './AppDataProvider.service'
 
 export interface IUserProvider {
-    get_user (): User;
+    get_user (): User
 }
 
 export class UserProvider implements IUserProvider {
@@ -13,10 +13,10 @@ export class UserProvider implements IUserProvider {
     public constructor (
         @Inject('IAppDataProvider') app_data_provider: IAppDataProvider
     ) {
-        this.app_data_provider = app_data_provider;
+        this.app_data_provider = app_data_provider
     }
 
     public get_user (): User {
-        return this.app_data_provider.get_app_data().user;
+        return this.app_data_provider.get_app_data().user
     }
 }

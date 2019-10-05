@@ -1,27 +1,27 @@
-import joi from '@hapi/joi';
-import {O} from 'ts-toolbelt';
-import {LogLevel} from '@nestjs/common';
+import joi from '@hapi/joi'
+import {O} from 'ts-toolbelt'
+import {LogLevel} from '@nestjs/common'
 
 export type Config = O.Readonly<{
     server: {
-        host: string;
-        port: number;
-        loglevel: LogLevel;
-        logformat: 'json'|'pretty';
-    };
+        host: string
+        port: number
+        loglevel: LogLevel
+        logformat: 'json'|'pretty'
+    }
     vlc: {
-        path: string;
-        timeout: number;
-        initial_volume: number|null;
-    };
+        path: string
+        timeout: number
+        initial_volume: number|null
+    }
     digitally_imported: {
-        url: string;
+        url: string
         credentials: {
-            email: string;
-            password: string;
-        }|null;
-        listen_key: string|null;
-    };
+            email: string
+            password: string
+        }|null
+        listen_key: string|null
+    }
 }, any, 'deep'>;
 
 export const config_schema = joi.object().keys({
@@ -44,4 +44,4 @@ export const config_schema = joi.object().keys({
         }).optional().options({presence: 'required'}),
         listen_key: joi.string().hex().length(16).optional(),
     }).xor('credentials', 'listen_key').options({presence: 'required'}),
-}).options({presence: 'required'});
+}).options({presence: 'required'})

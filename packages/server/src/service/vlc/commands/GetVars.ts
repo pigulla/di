@@ -1,16 +1,16 @@
-import {VlcCommand, ParseError} from '../VlcCommand';
+import {VlcCommand, ParseError} from '../VlcCommand'
 
 export default class GetVars extends VlcCommand<[], Map<string, string>> {
     private static readonly regex = /^([^=]+)=(.*)$/i;
 
     public constructor () {
-        super({command: 'set'});
+        super({command: 'set'})
     }
 
     protected pre_parse_validation (response: string[]): void {
         for (const line of response) {
             if (!GetVars.regex.test(line)) {
-                throw new ParseError('Malformed response');
+                throw new ParseError('Malformed response')
             }
         }
     }
@@ -19,8 +19,8 @@ export default class GetVars extends VlcCommand<[], Map<string, string>> {
         // It's possible to set values with an equal sign in the name and/or the value - there's no feasible way to
         // handle that so we're not even going to try.
         return response.reduce((map, line) => {
-            const matches = GetVars.regex.exec(line) as string[];
-            return map.set(matches[1], matches[2]);
-        }, new Map<string, string>());
+            const matches = GetVars.regex.exec(line) as string[]
+            return map.set(matches[1], matches[2])
+        }, new Map<string, string>())
     }
 }

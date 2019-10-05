@@ -2,8 +2,8 @@ export class ClientError extends Error {
     public readonly cause: Error|null;
 
     public constructor (message: string, cause: Error|null = null) {
-        super(message);
+        super(message)
 
-        this.cause = cause;
+        this.cause = cause
     }
 }

@@ -1,19 +1,19 @@
-import dayjs, {Dayjs} from 'dayjs';
-import custom_parse_format from 'dayjs/plugin/customParseFormat';
+import dayjs, {Dayjs} from 'dayjs'
+import custom_parse_format from 'dayjs/plugin/customParseFormat'
 
-import {RawUserData, UserType, User} from './User';
-import {Channel, RawChannel} from './Channel';
-import {ChannelFilter, RawChannelFilter} from './ChannelFilter';
+import {RawUserData, UserType, User} from './User'
+import {Channel, RawChannel} from './Channel'
+import {ChannelFilter, RawChannelFilter} from './ChannelFilter'
 
-dayjs.extend(custom_parse_format);
+dayjs.extend(custom_parse_format)
 
 export interface RawAppData {
-    appVersion: string;
-    appDeployTime: string;
-    currentUserType: UserType;
-    user: RawUserData;
-    channels: RawChannel[];
-    channel_filters: RawChannelFilter[];
+    appVersion: string
+    appDeployTime: string
+    currentUserType: UserType
+    user: RawUserData
+    channels: RawChannel[]
+    channel_filters: RawChannelFilter[]
 }
 
 export class AppData {
@@ -37,6 +37,6 @@ export class AppData {
             data.channel_filters
                 .map(ChannelFilter.from_raw)
                 .sort((a, b) => a.position - b.position),
-        );
+        )
     }
 }

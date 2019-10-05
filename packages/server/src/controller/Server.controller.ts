@@ -1,9 +1,9 @@
-import {NormalizedPackageJson} from 'read-pkg';
-import {ServerStatusDTO} from '@digitally-imported/dto';
-import {Controller, Delete, HttpStatus, Res, Inject, Get, Put, HttpCode} from '@nestjs/common';
-import {Response} from 'express';
+import {NormalizedPackageJson} from 'read-pkg'
+import {ServerStatusDTO} from '@digitally-imported/dto'
+import {Controller, Delete, HttpStatus, Res, Inject, Get, Put, HttpCode} from '@nestjs/common'
+import {Response} from 'express'
 
-import {IAppDataProvider, IVlcControl} from '../service';
+import {IAppDataProvider, IVlcControl} from '../service'
 
 @Controller('/server')
 export class ServerController {
@@ -16,14 +16,14 @@ export class ServerController {
         @Inject('NormalizedPackageJson') package_json: NormalizedPackageJson,
         @Inject('IAppDataProvider') app_data_provider: IAppDataProvider,
     ) {
-        this.app_data_provider = app_data_provider;
-        this.package_json = package_json;
-        this.vlc_control = vlc_control;
+        this.app_data_provider = app_data_provider
+        this.package_json = package_json
+        this.vlc_control = vlc_control
     }
 
     @Get()
-    async status (): Promise<ServerStatusDTO> {
-        const app_data = this.app_data_provider.get_app_data();
+    public async status (): Promise<ServerStatusDTO> {
+        const app_data = this.app_data_provider.get_app_data()
 
         return {
             server: {
@@ -39,18 +39,18 @@ export class ServerController {
                 deploy_time: app_data.app_deploy_time.toISOString(),
                 user_type: app_data.current_user_type,
             },
-        };
+        }
     }
 
     @Delete()
-    async shutdown (@Res() response: Response): Promise<void> {
-        response.status(HttpStatus.NO_CONTENT).end();
-        process.kill(process.pid, 'SIGTERM');
+    public async shutdown (@Res() response: Response): Promise<void> {
+        response.status(HttpStatus.NO_CONTENT).end()
+        process.kill(process.pid, 'SIGTERM')
     }
 
     @Put('/update')
     @HttpCode(HttpStatus.NO_CONTENT)
-    async update (): Promise<void> {
-        await this.app_data_provider.load_app_data();
+    public async update (): Promise<void> {
+        await this.app_data_provider.load_app_data()
     }
 }

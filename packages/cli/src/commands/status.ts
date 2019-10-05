@@ -1,13 +1,13 @@
-import {PlaybackStateDTO} from '@digitally-imported/dto/lib';
-import * as Config from '@oclif/config';
+import {PlaybackStateDTO} from '@digitally-imported/dto/lib'
+import * as Config from '@oclif/config'
 
-import {FormattedOutputCommand, OutputOptions} from '../FormattedOutputCommand';
-import chalk from 'chalk';
+import {FormattedOutputCommand, OutputOptions} from '../FormattedOutputCommand'
+import chalk from 'chalk'
 
 export default class Status extends FormattedOutputCommand<PlaybackStateDTO> {
-    static description = 'Get server status.';
+    public static description = 'Get server status.';
 
-    static flags = {
+    public static flags = {
         ...FormattedOutputCommand.flags,
     }
 
@@ -24,28 +24,28 @@ export default class Status extends FormattedOutputCommand<PlaybackStateDTO> {
             table: {
                 channel: {
                     get ({channel}) {
-                        return channel ? channel.name : chalk.dim('none');
+                        return channel ? channel.name : chalk.dim('none')
                     },
                 },
                 volume: {
                     get ({volume}) {
-                        return Math.round(volume * 100) + '%';
+                        return Math.round(volume * 100) + '%'
                     },
                 },
                 now_playing: {
                     get ({now_playing}) {
-                        return now_playing ? 'yes' : 'no';
+                        return now_playing ? 'yes' : 'no'
                     },
                 },
             },
-        };
+        }
 
-        super(output_options, argv, config);
+        super(output_options, argv, config)
     }
 
-    async run (): Promise<void> {
-        const playback_state = await this.client.get_playback_state();
+    public async run (): Promise<void> {
+        const playback_state = await this.client.get_playback_state()
 
-        this.print_formatted(playback_state);
+        this.print_formatted(playback_state)
     }
 }

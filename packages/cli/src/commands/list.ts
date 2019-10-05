@@ -1,14 +1,14 @@
-import {flags} from '@oclif/command';
-import chalk from 'chalk';
-import {ChannelDTO} from '@digitally-imported/dto';
+import {flags} from '@oclif/command'
+import chalk from 'chalk'
+import {ChannelDTO} from '@digitally-imported/dto'
 
-import {FormattedOutputCommand, OutputOptions} from '../FormattedOutputCommand';
-import * as Config from '@oclif/config';
+import {FormattedOutputCommand, OutputOptions} from '../FormattedOutputCommand'
+import * as Config from '@oclif/config'
 
 export default class List extends FormattedOutputCommand<ChannelDTO[]> {
-    static description = 'List channels.';
+    public static description = 'List channels.';
 
-    static flags = {
+    public static flags = {
         ...FormattedOutputCommand.flags,
         'favorites-only': flags.boolean({
             char: 'o',
@@ -33,20 +33,20 @@ export default class List extends FormattedOutputCommand<ChannelDTO[]> {
                 name: {},
                 key: {
                     get (row: ChannelDTO) {
-                        return chalk.dim(row.key);
+                        return chalk.dim(row.key)
                     },
                 },
                 description: {},
             },
-        };
+        }
 
-        super(output_options, argv, config);
+        super(output_options, argv, config)
     }
 
-    async run (): Promise<void> {
-        const {flags} = this.parse(List);
-        const channels = await (flags['favorites-only'] ? this.client.get_favorites() : this.client.get_channels());
+    public async run (): Promise<void> {
+        const {flags} = this.parse(List)
+        const channels = await (flags['favorites-only'] ? this.client.get_favorites() : this.client.get_channels())
 
-        this.print_formatted(channels);
+        this.print_formatted(channels)
     }
 }

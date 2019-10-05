@@ -1,2 +1,2 @@
-export * from './ControlError';
-export * from './VlcCommand';
+export * from './ControlError'
+export * from './VlcCommand'

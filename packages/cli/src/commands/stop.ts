@@ -1,11 +1,11 @@
-import {BaseCommand} from '../BaseCommand';
+import {BaseCommand} from '../BaseCommand'
 
 export default class Stop extends BaseCommand {
-    static description = 'Stop playback.';
+    public static description = 'Stop playback.';
 
-    static flags = {...BaseCommand.flags}
+    public static flags = {...BaseCommand.flags}
 
-    async run (): Promise<void> {
-        await this.client.stop_playback();
+    public async run (): Promise<void> {
+        await this.client.stop_playback()
     }
 }

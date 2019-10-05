@@ -1,5 +1,5 @@
-import read_pkg, {NormalizedPackageJson} from 'read-pkg';
-import {Module, NestModule, MiddlewareConsumer} from '@nestjs/common';
+import read_pkg, {NormalizedPackageJson} from 'read-pkg'
+import {Module, NestModule, MiddlewareConsumer} from '@nestjs/common'
 
 import {
     AppDataProvider,
@@ -15,7 +15,7 @@ import {
     VlcControl,
     Logger,
     ILogger,
-} from './service/';
+} from './service/'
 import {
     ChannelFiltersController,
     ChannelsController,
@@ -24,8 +24,8 @@ import {
     ServerController,
     UserController,
     VolumeController,
-} from './controller/';
-import {AppVersionHeader, VlcInstanceMonitor} from './middleware';
+} from './controller/'
+import {AppVersionHeader, VlcInstanceMonitor} from './middleware'
 
 @Module({
     imports: [],
@@ -43,14 +43,14 @@ import {AppVersionHeader, VlcInstanceMonitor} from './middleware';
             provide: 'IConfigProvider',
             useFactory (): IConfigProvider {
                 // eslint-disable-next-line @typescript-eslint/no-var-requires
-                const config = require('config');
-                return new ConfigProvider(config.util.toObject());
+                const config = require('config')
+                return new ConfigProvider(config.util.toObject())
             },
         },
         {
             provide: 'NormalizedPackageJson',
             async useFactory (): Promise<NormalizedPackageJson> {
-                return read_pkg();
+                return read_pkg()
             },
         },
         {
@@ -69,9 +69,9 @@ import {AppVersionHeader, VlcInstanceMonitor} from './middleware';
             inject: ['ILogger', 'IDigitallyImported'],
             provide: 'IAppDataProvider',
             async useFactory (logger: ILogger, digitally_imported: IDigitallyImported): Promise<IAppDataProvider> {
-                const app_data_provider = new AppDataProvider(logger, digitally_imported);
-                await app_data_provider.load_app_data();
-                return app_data_provider;
+                const app_data_provider = new AppDataProvider(logger, digitally_imported)
+                await app_data_provider.load_app_data()
+                return app_data_provider
             },
         },
         {
@@ -82,9 +82,9 @@ import {AppVersionHeader, VlcInstanceMonitor} from './middleware';
             inject: ['ILogger', 'IConfigProvider'],
             provide: 'IVlcControl',
             async useFactory (logger: ILogger, config_provider: IConfigProvider): Promise<IVlcControl> {
-                const vlc_control = new VlcControl(logger, config_provider.vlc);
-                await vlc_control.start_instance();
-                return vlc_control;
+                const vlc_control = new VlcControl(logger, config_provider.vlc)
+                await vlc_control.start_instance()
+                return vlc_control
             },
         },
         {
@@ -97,9 +97,9 @@ export class AppModule implements NestModule {
     public configure (consumer: MiddlewareConsumer): void {
         consumer
             .apply(AppVersionHeader)
-            .forRoutes('*');
+            .forRoutes('*')
         consumer
             .apply(VlcInstanceMonitor)
-            .forRoutes('*');
+            .forRoutes('*')
     }
 }

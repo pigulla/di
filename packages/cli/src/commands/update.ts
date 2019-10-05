@@ -1,15 +1,15 @@
-import cli from 'cli-ux';
+import cli from 'cli-ux'
 
-import {BaseCommand} from '../BaseCommand';
+import {BaseCommand} from '../BaseCommand'
 
 export default class Update extends BaseCommand {
-    static description = 'Update data.';
+    public static description = 'Update data.';
 
-    static flags = {...BaseCommand.flags}
+    public static flags = {...BaseCommand.flags}
 
-    async run (): Promise<void> {
-        cli.action.start('Updating');
-        await this.client.update();
-        cli.action.stop();
+    public async run (): Promise<void> {
+        cli.action.start('Updating')
+        await this.client.update()
+        cli.action.stop()
     }
 }

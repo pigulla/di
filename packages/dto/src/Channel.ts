@@ -7,12 +7,12 @@ export class ChannelDTO {
     updated_at!: string|null;
     created_at!: string;
     images!: {
-        default: string;
-        compact: string;
-        banner: string|null;
+        default: string
+        compact: string
+        banner: string|null
     };
 
     constructor (channel: ChannelDTO) {
-        Object.assign(this, channel);
+        Object.assign(this, channel)
     }
 }

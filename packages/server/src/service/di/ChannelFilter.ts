@@ -1,14 +1,14 @@
-import {ChannelFilterDTO} from '@digitally-imported/dto';
+import {ChannelFilterDTO} from '@digitally-imported/dto'
 
 export interface RawChannelFilter {
-    channels: number[];
-    display: boolean;
-    id: number;
-    key: string;
-    meta: boolean;
-    name: string;
-    network_id: number;
-    position: number;
+    channels: number[]
+    display: boolean
+    id: number
+    key: string
+    meta: boolean
+    name: string
+    network_id: number
+    position: number
 }
 
 export class ChannelFilter {
@@ -30,7 +30,7 @@ export class ChannelFilter {
             key: this.key,
             name: this.name,
             meta: this.meta,
-        });
+        })
     }
 
     public static from_raw (data: RawChannelFilter): ChannelFilter {
@@ -42,6 +42,6 @@ export class ChannelFilter {
             data.meta,
             data.name,
             data.position
-        );
+        )
     }
 }

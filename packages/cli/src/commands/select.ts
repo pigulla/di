@@ -1,20 +1,17 @@
-import chalk from 'chalk';
-import inquirer, {ListQuestionOptions, QuestionCollection} from 'inquirer';
+/* eslint-disable import/no-duplicates */
 
+import chalk from 'chalk';
 import {flags} from '@oclif/command';
 // @ts-ignore
-import inquirer_autocomplete from 'inquirer-autocomplete-prompt';
+import * as inquirer_autocomplete from 'inquirer-autocomplete-prompt';
+import * as inquirer from 'inquirer';
+import {QuestionCollection} from 'inquirer';
 
 import {BaseCommand} from '../BaseCommand';
 import {ChannelDTO} from '@digitally-imported/dto/lib';
 
 interface Answers {
     channel: string;
-}
-
-interface AutocompleteQuestion<A> extends Pick<ListQuestionOptions<A>, 'choices' | 'filter' | 'pageSize'> {
-    type: 'autocomplete';
-    source: (answers: A, input: string) => Promise<Array<{name: string, value: any}>>;
 }
 
 inquirer.registerPrompt('autocomplete', inquirer_autocomplete);
@@ -25,7 +22,7 @@ export default class Select extends BaseCommand {
     static flags = {
         ...BaseCommand.flags,
         'favorites-only': flags.boolean({
-            char: 'f',
+            char: 'o',
             description: 'Select from favorites only.',
             default: false,
         }),
@@ -49,17 +46,18 @@ export default class Select extends BaseCommand {
                 channel_name: channel.name.toLowerCase(),
             }))
             .sort((a, b) => a.name.localeCompare(b.name));
-        const answers: Answers = await inquirer.prompt<Answers>({
+
+        const answers: Answers = await inquirer.prompt({
             type: 'autocomplete',
             name: 'channel',
             message: 'Select a channel',
             pageSize: 10,
-            async source (_answers, input) {
+            async source (_answers: Answers, input: string) {
                 return !input
                     ? choices
                     : choices.filter(({channel_name}) => channel_name.includes(input.toLowerCase()));
             },
-        } as AutocompleteQuestion<Answers> as any as QuestionCollection<Answers>);
+        } as any as QuestionCollection<Answers>);
 
         await this.client.start_playback(answers.channel);
     }

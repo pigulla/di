@@ -1,5 +1,4 @@
 import {BaseCommand} from '../BaseCommand';
-import {ServerNotRunningError} from '@digitally-imported/client/lib/error';
 
 export default class Status extends BaseCommand {
     static description = 'Test if the server is alive.';
@@ -7,16 +6,13 @@ export default class Status extends BaseCommand {
     static flags = {...BaseCommand.flags}
 
     async run (): Promise<void> {
-        try {
-            const status = await this.client.get_server_status();
-            this.log(`Server running (${status.server.version})`);
-        } catch (error) {
-            if (error instanceof ServerNotRunningError) {
-                this.log('Server is not running');
-                return this.exit(2);
-            }
+        const is_running = await this.client.is_alive();
 
-            throw error;
+        if (is_running) {
+            this.log('Server running');
+        } else {
+            this.log('Server not available');
+            this.exit(2);
         }
     }
 }

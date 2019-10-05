@@ -41,6 +41,23 @@ export class Client {
         return Bluebird.resolve(this.axios(config));
     }
 
+    public async is_alive (): Promise<boolean> {
+        try {
+            await this
+                .request({
+                    method: 'HEAD',
+                    url: '/server',
+                });
+            return true;
+        } catch (error) {
+            if (error instanceof ServerNotRunningError) {
+                return false;
+            }
+
+            throw error;
+        }
+    }
+
     public async get_server_status (): Promise<ServerStatusDTO> {
         return this
             .request({

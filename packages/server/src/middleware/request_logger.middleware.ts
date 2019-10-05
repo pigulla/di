@@ -7,7 +7,7 @@ export type RequestLogger = (request: IncomingMessage, response: ServerResponse,
 export function get_request_logger (pino: Pino): RequestLogger {
     const logger = pino_http({
         logger: pino,
-        useLevel: 'debug',
+        useLevel: 'trace',
     });
 
     return function request_logger (request: IncomingMessage, response: ServerResponse, next: Function): void {

@@ -28,7 +28,7 @@ export class ServerController {
         return {
             server: {
                 last_updated: this.app_data_provider.last_updated_at().toISOString(),
-                version: this.package_json.package_json.version,
+                version: this.package_json.version,
             },
             vlc: {
                 version: this.vlc_control.get_vlc_version(),

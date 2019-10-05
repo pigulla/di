@@ -7,11 +7,13 @@
   },
   "bugs": "https://github.com/pigulla/cli/issues",
   "dependencies": {
-    "@digitally-imported/client": "^1.0.0",
-    "@digitally-imported/dto": "^1.0.0",
+    "@digitally-imported/client": "../client",
+    "@digitally-imported/dto": "../dto",
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.13.3",
     "@oclif/plugin-help": "^2.2.1",
+    "chalk": "^2.4.2",
+    "csv-stringify": "^5.3.3",
     "inquirer": "^7.0.0",
     "inquirer-autocomplete-prompt": "^1.0.1",
     "json-strictify": "^6.0.0",
@@ -20,13 +22,12 @@
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",
     "@types/inquirer": "^6.5.0",
-    "@types/node": "^10.14.19",
-    "globby": "^10.0.1",
+    "@types/node": "^12.7.11",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.3"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.0.0"
   },
   "files": [
     "/bin",

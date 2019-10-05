@@ -1,8 +1,9 @@
 import {Command, flags} from '@oclif/command';
+import Parser from '@oclif/parser';
 import {Client} from '@digitally-imported/client';
 
 export abstract class BaseCommand extends Command {
-    protected client_instance: Client|null = null;
+    private client_instance: Client|null = null;
 
     public static flags = {
         endpoint: flags.string({
@@ -14,7 +15,7 @@ export abstract class BaseCommand extends Command {
     }
 
     protected get client (): Client {
-        const {flags} = this.parse(BaseCommand);
+        const {flags} = this.parse(this.constructor as Parser.Input<any>);
 
         if (!this.client_instance) {
             this.client_instance = new Client({

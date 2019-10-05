@@ -1,0 +1,21 @@
+{
+  "name": "@digitally-imported/meta",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext=.ts 'packages/**/*.ts'",
+    "build": "lerna exec 'rm -rf lib' && lerna run build",
+    "setup": "lerna exec 'rm -rf node_modules' && lerna bootstrap"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.3.2",
+    "@typescript-eslint/parser": "^2.3.2",
+    "eslint": "^6.5.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "lerna": "^3.16.4",
+    "typescript": "^3.6.3"
+  }
+}

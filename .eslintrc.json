@@ -1,0 +1,88 @@
+{
+    "extends": [
+        "eslint-config-standard",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint/eslint-plugin"
+    ],
+    "rules": {
+        "no-unused-vars": "off",
+        "comma-dangle": [
+            "error",
+            "always-multiline"
+        ],
+        "object-curly-spacing": [
+            "error",
+            "never"
+        ],
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "camelcase": "off",
+        "lines-between-class-members": [
+            "error",
+            "always",
+            {
+                "exceptAfterSingleLine": true
+            }
+        ],
+
+        "@typescript-eslint/explicit-member-accessibility": "off",
+        "@typescript-eslint/ban-ts-ignore": "off",
+        "@typescript-eslint/camelcase": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-parameter-properties": [
+            "error",
+            {
+                "allows": [
+                    "public readonly"
+                ]
+            }
+        ],
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "args": "none"
+            }
+        ],
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-object-literal-type-assertion": "off",
+        "@typescript-eslint/array-type": [
+            "error",
+            {
+                "default": "array-simple",
+                "readonly": "array-simple"
+            }
+        ],
+        "@typescript-eslint/interface-name-prefix": "off",
+        "@typescript-eslint/explicit-function-return-type": [
+            "error",
+            {
+                "allowExpressions": true
+            }
+        ],
+        "@typescript-eslint/member-delimiter-style": [
+            "error",
+            {
+                "multiline": {
+                    "delimiter": "semi",
+                    "requireLast": true
+                },
+                "singleline": {
+                    "delimiter": "comma",
+                    "requireLast": false
+                }
+            }
+        ]
+    }
+}

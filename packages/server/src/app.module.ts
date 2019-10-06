@@ -10,7 +10,7 @@ import {
     IConfigProvider,
     IDigitallyImported,
     IVlcControl,
-    ListenkeyProvider,
+    ListenKeyProvider,
     UserProvider,
     VlcControl,
     Logger,
@@ -75,8 +75,8 @@ import {AppVersionHeader, VlcInstanceMonitor} from './middleware'
             },
         },
         {
-            provide: 'IListenkeyProvider',
-            useClass: ListenkeyProvider,
+            provide: 'IListenKeyProvider',
+            useClass: ListenKeyProvider,
         },
         {
             inject: ['ILogger', 'IConfigProvider'],

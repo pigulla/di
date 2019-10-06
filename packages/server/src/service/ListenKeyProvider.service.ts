@@ -5,11 +5,11 @@ import {IAppDataProvider} from './AppDataProvider.service'
 import {IConfigProvider} from './ConfigProvider.service'
 import {ILogger} from './Logger.service'
 
-export interface IListenkeyProvider {
+export interface IListenKeyProvider {
     get_listen_key (): string
 }
 
-export class ListenkeyProvider implements IListenkeyProvider {
+export class ListenKeyProvider implements IListenKeyProvider {
     private readonly app_data_provider: IAppDataProvider;
     private readonly config_provider: IConfigProvider;
     private readonly logger: ILogger;
@@ -21,7 +21,7 @@ export class ListenkeyProvider implements IListenkeyProvider {
     ) {
         this.app_data_provider = app_data_provider
         this.config_provider = config_provider
-        this.logger = logger.for_service(ListenkeyProvider.name)
+        this.logger = logger.for_service(ListenKeyProvider.name)
 
         this.logger.log('Service instantiated')
     }

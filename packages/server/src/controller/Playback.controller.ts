@@ -16,7 +16,7 @@ import {
 } from '@nestjs/common'
 import {IsString} from 'class-validator'
 
-import {IChannelProvider, IListenkeyProvider, IVlcControl} from '../service'
+import {IChannelProvider, IListenKeyProvider, IVlcControl} from '../service'
 
 export class PlayDTO {
     @IsString()
@@ -27,15 +27,15 @@ export class PlayDTO {
 export class PlaybackController {
     private readonly vlc_control: IVlcControl;
     private readonly channel_provider: IChannelProvider;
-    private readonly listenkey_provider: IListenkeyProvider;
+    private readonly listen_key_provider: IListenKeyProvider;
 
     public constructor (
         @Inject('IVlcControl') vlc_control: IVlcControl,
         @Inject('IChannelProvider') channel_provider: IChannelProvider,
-        @Inject('IListenkeyProvider') listenkey_provider: IListenkeyProvider,
+        @Inject('IListenKeyProvider') listen_key_provider: IListenKeyProvider,
     ) {
         this.vlc_control = vlc_control
-        this.listenkey_provider = listenkey_provider
+        this.listen_key_provider = listen_key_provider
         this.channel_provider = channel_provider
     }
 
@@ -91,7 +91,7 @@ export class PlaybackController {
         }
 
         const channel = this.channel_provider.get_channel_by_key(identifier)
-        const url = channel.build_url(this.listenkey_provider.get_listen_key())
+        const url = channel.build_url(this.listen_key_provider.get_listen_key())
 
         await this.vlc_control.add(url)
 

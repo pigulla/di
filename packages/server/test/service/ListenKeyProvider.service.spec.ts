@@ -2,15 +2,15 @@ import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
-import {IAppDataProvider, ListenkeyProvider} from '../../src/service'
+import {IAppDataProvider, ListenKeyProvider} from '../../src/service'
 import {create_logger_stub, create_config_provider_stub, create_app_data_provider_stub, AppDataBuilder, UserBuilder, ConfigOverrides} from '../util'
 import {User} from '../../src/service/di'
 
-describe('ListenkeyProvider service', function () {
+describe('ListenKeyProvider service', function () {
     let app_data_provider: SinonStubbedInstance<IAppDataProvider>
-    let listenkey_provider: ListenkeyProvider
+    let listenkey_provider: ListenKeyProvider
 
-    async function get_provider (user: User, config_overrides: ConfigOverrides): Promise<ListenkeyProvider> {
+    async function get_provider (user: User, config_overrides: ConfigOverrides): Promise<ListenKeyProvider> {
         const app_data = new AppDataBuilder()
             .with_user(user)
             .build()
@@ -32,11 +32,11 @@ describe('ListenkeyProvider service', function () {
                     provide: 'IAppDataProvider',
                     useValue: app_data_provider,
                 },
-                ListenkeyProvider,
+                ListenKeyProvider,
             ],
         }).compile()
 
-        return module.get(ListenkeyProvider)
+        return module.get(ListenKeyProvider)
     }
 
     describe('when credentials are given', function () {

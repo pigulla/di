@@ -8,11 +8,20 @@
     "lint": "eslint --ext=.ts 'packages/**/*.ts'",
     "outdated": "lerna exec --no-bail 'npm outdated'",
     "build": "lerna exec 'rm -rf lib' && lerna run build",
-    "setup": "lerna exec 'rm -rf node_modules' && lerna bootstrap"
+    "setup": "lerna exec 'rm -rf node_modules' && lerna bootstrap",
+    "test": "npm run lint && nyc mocha packages/*/test/**/*.spec.ts",
+    "test:server": "mocha packages/server/test/**/*.spec.ts"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.3",
+    "@types/chai-as-promised": "^7.1.2",
+    "@types/mocha": "^5.2.7",
+    "@types/sinon": "^7.5.0",
+    "@types/sinon-chai": "^3.2.3",
     "@typescript-eslint/eslint-plugin": "^2.3.2",
     "@typescript-eslint/parser": "^2.3.2",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "eslint": "^6.5.1",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
@@ -20,6 +29,11 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "lerna": "^3.16.4",
+    "mocha": "^6.2.1",
+    "nyc": "^14.1.1",
+    "sinon": "^7.5.0",
+    "sinon-chai": "^3.3.0",
+    "ts-node": "^8.4.1",
     "typescript": "^3.6.3"
   }
 }

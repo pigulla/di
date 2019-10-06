@@ -30,10 +30,10 @@ export class ListenkeyProvider implements IListenkeyProvider {
         const listen_key = this.config_provider.digitally_imported.listen_key
         const user = this.app_data_provider.get_app_data().user
 
-        if (listen_key) {
-            return listen_key
-        } else if (user instanceof PremiumUser) {
+        if (user instanceof PremiumUser) {
             return (user as PremiumUser).listen_key
+        } else if (listen_key) {
+            return listen_key
         }
 
         throw new Error('No listenkey found')

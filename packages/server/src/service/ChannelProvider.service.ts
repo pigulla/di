@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@nestjs/common'
 
-import {Channel, ChannelFilter} from './di'
+import {AppData, Channel, ChannelFilter} from './di'
 import {IAppDataProvider} from './AppDataProvider.service'
 import {ILogger} from './Logger.service'
 
@@ -11,7 +11,6 @@ export interface IChannelProvider {
     get_channel_by_key (key: string): Channel
     get_channels (): Channel[]
     get_filters (): ChannelFilter[]
-    // get_filters (): Map<ChannelFilter, Channel[]>;
 }
 
 type ChannelIdentifier = string|number|Channel;
@@ -34,16 +33,14 @@ export class ChannelProvider implements IChannelProvider {
         this.app_data_provider = app_data_provider
 
         this.app_data_provider.on_update(this.update, this)
-        this.update()
+        this.update(app_data_provider.get_app_data())
     }
 
-    protected update (): void {
+    protected update ({channels, channel_filters}: AppData): void {
         this.logger.verbose('Updating channel information')
-
-        const {channels, channel_filters} = this.app_data_provider.get_app_data()
         this.logger.debug(`Received ${channels.length} channels and ${channel_filters.length} channel filters`)
 
-        this.filters = channel_filters
+        this.filters = channel_filters.slice()
         this.channels_by_id = new Map()
         this.channels_by_key = new Map()
         this.filters_by_id = new Map()
@@ -59,18 +56,8 @@ export class ChannelProvider implements IChannelProvider {
         }
     }
 
-    public get_channel_from_url (url: string): Channel|null {
-        const name = Channel.get_name_from_url(url)
-
-        if (!name || !this.channel_exists(name)) {
-            return null
-        }
-
-        return this.get_channel(name)
-    }
-
     public get_filters (): ChannelFilter[] {
-        return this.filters
+        return this.filters.slice()
     }
 
     public channel_exists (identifier: ChannelIdentifier): boolean {
@@ -89,7 +76,7 @@ export class ChannelProvider implements IChannelProvider {
         } else if (typeof identifier === 'number') {
             return this.get_channel_by_id(identifier)
         } else {
-            return identifier
+            return this.get_channel_by_id(identifier.id)
         }
     }
 
@@ -116,13 +103,4 @@ export class ChannelProvider implements IChannelProvider {
     public get_channels (): Channel[] {
         return [...this.channels_by_id.values()]
     }
-
-    // public get_filters (): Map<ChannelFilter, Channel[]> {
-    //     const k_v_pairs: Array<[ChannelFilter, Channel[]]> = this.filters.map(filter => [
-    //         filter,
-    //         [...filter.channels].map(id => this.get_channel_by_id(id)),
-    //     ]);
-    //
-    //     return new Map(k_v_pairs);
-    // }
 }

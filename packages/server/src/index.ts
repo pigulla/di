@@ -8,7 +8,7 @@ import {AppModule} from './app.module'
 import {IConfigProvider, ILogger} from './service'
 
 async function bootstrap (): Promise<void> {
-    const app = await NestFactory.create(AppModule, {logger: false})
+    const app = await NestFactory.create(AppModule)
 
     const config_provider = app.get<IConfigProvider>('IConfigProvider')
     const {port, host} = config_provider.server

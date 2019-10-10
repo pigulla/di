@@ -12,7 +12,7 @@ export class ConfigProvider implements IConfigProvider {
     public readonly vlc: IConfigProvider['vlc'];
 
     public constructor (config: any) {
-        const {value, error} = config_schema.validate<IConfigProvider>(config)
+        const {value, error} = config_schema.validate(config)
 
         if (error) {
             // The config service is instantiated before the logger service (because it depends on it) so we have to

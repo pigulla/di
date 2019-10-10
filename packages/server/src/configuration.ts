@@ -37,7 +37,7 @@ export const config_schema = joi.object().keys({
         initial_volume: joi.number().min(0).max(1.25).allow(null).optional().default(0.5),
     }).options({presence: 'required'}),
     digitally_imported: joi.object().keys({
-        url: joi.string().uri({scheme: 'https'}),
+        url: joi.string().uri({scheme: 'https'}).optional().default('https://www.di.fm'),
         credentials: joi.object().keys({
             email: joi.string().email(),
             password: joi.string().min(1),

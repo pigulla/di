@@ -17,75 +17,108 @@ describe('DigitallyImported service', function () {
     let config_provider: SinonStubbedInstance<IConfigProvider>
     let digitally_imported: DigitallyImported
 
-    beforeEach(async function () {
-        config_provider = create_config_provider_stub({
-            digitally_imported: {
-                url: 'https://di.fm.invalid',
-                credentials: {
-                    email: username,
-                    password,
+    describe('with configured credentials', function () {
+        beforeEach(async function () {
+            config_provider = create_config_provider_stub({
+                digitally_imported: {
+                    url: 'https://di.fm.invalid',
+                    credentials: {
+                        email: username,
+                        password,
+                    },
                 },
-            },
+            })
+
+            const module = await Test.createTestingModule({
+                providers: [
+                    {
+                        provide: 'ILogger',
+                        useValue: create_logger_stub(),
+                    },
+                    {
+                        provide: 'IConfigProvider',
+                        useValue: config_provider,
+                    },
+                    DigitallyImported,
+                ],
+            }).compile()
+
+            digitally_imported = module.get(DigitallyImported)
         })
 
-        const module = await Test.createTestingModule({
-            providers: [
-                {
-                    provide: 'ILogger',
-                    useValue: create_logger_stub(),
+        it('should throw on login failure', async function () {
+            new LoginEndpointBuilder()
+                .for_base_url(config_provider.digitally_imported.url)
+                .for_username(username)
+                .for_password(password)
+                .with_failure()
+                .build()
+
+            return expect(digitally_imported.load_app_data()).to.eventually.rejectedWith(AuthenticationError)
+        })
+
+        it('should return the user', async function () {
+            const expected = {
+                audio_token: '00112233445566778899aabbccddeeff',
+                session_key: '0123456789abcdef0123456789abcdef',
+                id: 123456,
+                api_key: '000102030405060708090a0b0c0d0e0f',
+                listen_key: 'fedcba9876543210',
+            }
+
+            new LoginEndpointBuilder()
+                .for_base_url(config_provider.digitally_imported.url)
+                .for_username(username)
+                .for_password(password)
+                .with_success()
+                .build()
+
+            const app_data = await digitally_imported.load_app_data()
+            expect(app_data.user).to.be.an.instanceOf(User)
+            expect(app_data.user.type).to.equal(UserType.PREMIUM)
+
+            const user: PremiumUser = app_data.user as PremiumUser
+            expect(user.audio_token).to.equal(expected.audio_token)
+            expect(user.api_key).to.equal(expected.api_key)
+            expect(user.session_key).to.equal(expected.session_key)
+            expect(user.listen_key).to.equal(expected.listen_key)
+        })
+    })
+
+    describe('with no configured credentials', function () {
+        beforeEach(async function () {
+            config_provider = create_config_provider_stub({
+                digitally_imported: {
+                    url: 'https://di.fm.invalid',
+                    listen_key: '1234567890abcdef',
                 },
-                {
-                    provide: 'IConfigProvider',
-                    useValue: config_provider,
-                },
-                DigitallyImported,
-            ],
-        }).compile()
+            })
 
-        digitally_imported = module.get(DigitallyImported)
-    })
+            const module = await Test.createTestingModule({
+                providers: [
+                    {
+                        provide: 'ILogger',
+                        useValue: create_logger_stub(),
+                    },
+                    {
+                        provide: 'IConfigProvider',
+                        useValue: config_provider,
+                    },
+                    DigitallyImported,
+                ],
+            }).compile()
 
-    it('should return a guest', function () {
-        new HomepageEndpointBuilder().build()
+            digitally_imported = module.get(DigitallyImported)
+        })
 
+        it('should return a guest', async function () {
+            new HomepageEndpointBuilder()
+                .for_base_url(config_provider.digitally_imported.url)
+                .build()
 
-    })
-
-    it('should throw on login failure', async function () {
-        new LoginEndpointBuilder()
-            .for_base_url(config_provider.digitally_imported.url)
-            .for_username(username)
-            .for_password(password)
-            .with_failure()
-            .build()
-
-        return expect(digitally_imported.load_app_data()).to.eventually.rejectedWith(AuthenticationError)
-    })
-
-    it('should return the user', async function () {
-        const expected = {
-            audio_token: '00112233445566778899aabbccddeeff',
-            session_key: '0123456789abcdef0123456789abcdef',
-            id: 123456,
-            api_key: '000102030405060708090a0b0c0d0e0f',
-            listen_key: 'fedcba9876543210',
-        }
-
-        new LoginEndpointBuilder()
-            .for_base_url(config_provider.digitally_imported.url)
-            .for_username(username)
-            .for_password(password)
-            .with_success()
-            .build()
-
-        const app_data = await digitally_imported.load_app_data()
-        expect(app_data.user).to.be.an.instanceOf(User)
-        expect(app_data.user.type).to.equal(UserType.PREMIUM)
-
-        const user: PremiumUser = app_data.user as PremiumUser
-        expect(user.audio_token).to.equal(expected.audio_token)
-        expect(user.api_key).to.equal(expected.api_key)
-        expect(user.session_key).to.equal(expected.session_key)
-        expect(user.listen_key).to.equal(expected.listen_key)
+            const app_data = await digitally_imported.load_app_data()
+            expect(app_data.user).to.be.an.instanceOf(User)
+            expect(app_data.user.type).to.equal(UserType.GUEST)
+        })
     })
 })

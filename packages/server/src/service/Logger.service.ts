@@ -18,6 +18,7 @@ export class Logger implements ILogger {
         this.pino = pino_instance || pino({
             customLevels: {
                 log: pino.levels.values.info,
+                verbose: pino.levels.values.trace,
             },
             level: log_level,
             prettyPrint: true,

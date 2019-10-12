@@ -1,12 +1,12 @@
 import dayjs, {Dayjs} from 'dayjs'
-import {Inject} from '@nestjs/common'
+import {Inject, OnModuleInit} from '@nestjs/common'
 
 import {AppData} from './di'
 import {IAppDataProvider} from './AppDataProvider.interface'
 import {IDigitallyImported} from './DigitallyImported.interface'
 import {ILogger} from './Logger.interface'
 
-export class AppDataProvider implements IAppDataProvider {
+export class AppDataProvider implements IAppDataProvider, OnModuleInit {
     private readonly digitally_imported: IDigitallyImported;
     private readonly logger: ILogger;
     private readonly update_callbacks: Array<[(app_data: AppData) => void, any]>;
@@ -24,6 +24,10 @@ export class AppDataProvider implements IAppDataProvider {
         this.last_update_at = null
 
         this.logger.log('Service instantiated')
+    }
+
+    public async onModuleInit (): Promise<void> {
+        await this.load_app_data()
     }
 
     public last_updated_at (): Dayjs {

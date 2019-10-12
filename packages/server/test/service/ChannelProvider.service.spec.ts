@@ -6,6 +6,7 @@ import {ChannelProvider, IAppDataProvider} from '../../src/service'
 import {create_logger_stub, create_app_data_provider_stub, AppDataBuilder, UserBuilder, ChannelBuilder} from '../util'
 import {progressive, classictechno, vocaltrance} from '../util/builder/Channel.builder'
 import {ambient, bass, deep} from '../util/builder/ChannelFilter.builder'
+import {AppData} from '../../src/service/di'
 
 describe('ChannelProvider service', function () {
     const user = new UserBuilder().build_premium()
@@ -21,6 +22,11 @@ describe('ChannelProvider service', function () {
 
     let app_data_provider: SinonStubbedInstance<IAppDataProvider>
     let channel_provider: ChannelProvider
+
+    function trigger_update (new_app_data: AppData): void {
+        const [fn, ctx] = app_data_provider.on_update.firstCall.args
+        fn.call(ctx, new_app_data)
+    }
 
     beforeEach(async function () {
         app_data_provider = create_app_data_provider_stub()
@@ -41,6 +47,7 @@ describe('ChannelProvider service', function () {
         }).compile()
 
         channel_provider = module.get(ChannelProvider)
+        trigger_update(app_data)
     })
 
     it('should update itself', function () {
@@ -51,8 +58,7 @@ describe('ChannelProvider service', function () {
         }
         app_data_provider.get_app_data.returns(new_app_data)
 
-        const [fn, ctx] = app_data_provider.on_update.firstCall.args
-        fn.call(ctx, new_app_data)
+        trigger_update(new_app_data)
 
         expect(channel_provider.get_channels()).to.have.length(0)
         expect(channel_provider.get_filters()).to.have.length(0)

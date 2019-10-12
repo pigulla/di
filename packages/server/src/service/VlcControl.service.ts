@@ -1,7 +1,7 @@
 import {EOL} from 'os'
 import {ChildProcessWithoutNullStreams, spawn} from 'child_process'
 
-import {Injectable, OnApplicationShutdown, Inject} from '@nestjs/common'
+import {Injectable, OnModuleInit, OnApplicationShutdown, Inject} from '@nestjs/common'
 
 import {new_promise, try_resolve} from '../promise_helper'
 import {Add, Help, Info, GetVolume, SetVolume, GetVars, Stop, IsPlaying, Play, Shutdown, Status, GetTime, GetTitle} from './vlc/commands'
@@ -13,7 +13,7 @@ import {IConfigProvider} from './ConfigProvider.interface'
 import {IVlcControl, UnknownCommandError} from './VlcControl.interface'
 
 @Injectable()
-export class VlcControl implements IVlcControl, OnApplicationShutdown {
+export class VlcControl implements IVlcControl, OnModuleInit, OnApplicationShutdown {
     private readonly logger: ILogger;
 
     // A custom prompt is set to make parsing the response a little easier.
@@ -36,6 +36,10 @@ export class VlcControl implements IVlcControl, OnApplicationShutdown {
         this.vlc_version = null
 
         this.logger.log('Service instantiated')
+    }
+
+    public async onModuleInit (): Promise<void> {
+        await this.start_instance()
     }
 
     public async onApplicationShutdown (_signal?: string): Promise<void> {

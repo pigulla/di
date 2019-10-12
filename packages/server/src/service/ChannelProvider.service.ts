@@ -21,9 +21,7 @@ export class ChannelProvider implements IChannelProvider {
     ) {
         this.logger = logger.for_service(ChannelProvider.name)
         this.app_data_provider = app_data_provider
-
         this.app_data_provider.on_update(this.update, this)
-        this.update(app_data_provider.get_app_data())
 
         this.logger.log('Service instantiated')
     }

@@ -8,38 +8,9 @@ import {Add, Help, Info, GetVolume, SetVolume, GetVars, Stop, IsPlaying, Play, S
 import {VlcCommand, VlcControlError} from './vlc/'
 import {StatusData} from './vlc/commands/Status'
 import {TrackInfo} from './vlc/commands/Info'
-import {ILogger} from './Logger.service'
-import {Config} from '../configuration'
-
-export class UnknownCommandError extends Error {
-    public constructor (command: string) {
-        super(`Unknown command "${command}"`)
-    }
-}
-
-type Options = Config['vlc'];
-
-export interface IVlcControl {
-    get_vlc_version (): string
-    get_vlc_pid (): number
-    is_running (): boolean
-
-    start_instance (): Promise<void>
-    stop_instance (): Promise<void>
-    get_time (): Promise<number>
-    get_title (): Promise<string>
-    status (): Promise<StatusData>
-    is_playing (): Promise<boolean>
-    help (): Promise<string[]>
-    shutdown (): Promise<void>
-    add (item: string): Promise<void>
-    play (): Promise<void>
-    info (): Promise<TrackInfo|null>
-    get_volume (): Promise<number>
-    set_volume (volume: number): Promise<void>
-    get_vars (): Promise<Map<string, string>>
-    stop (): Promise<void>
-}
+import {ILogger} from './Logger.interface'
+import {IConfigProvider} from './ConfigProvider.interface'
+import {IVlcControl, UnknownCommandError} from './VlcControl.interface'
 
 @Injectable()
 export class VlcControl implements IVlcControl, OnApplicationShutdown {
@@ -51,16 +22,16 @@ export class VlcControl implements IVlcControl, OnApplicationShutdown {
     // A custom welcome message is set to make verifying the other end is actually a VLC instance a little easier.
     private readonly welcome_message: string = Math.random().toString(36).slice(2);
 
-    private readonly options: Readonly<Options>;
+    private readonly config_provider: IConfigProvider;
     private vlc_process: ChildProcessWithoutNullStreams|null;
     private vlc_version: string|null;
 
     public constructor (
         @Inject('ILogger') logger: ILogger,
-            options: Options,
+        @Inject('IConfigProvider') config_provider: IConfigProvider,
     ) {
         this.logger = logger.for_service(VlcControl.name)
-        this.options = options
+        this.config_provider = config_provider
         this.vlc_process = null
         this.vlc_version = null
 
@@ -145,9 +116,9 @@ export class VlcControl implements IVlcControl, OnApplicationShutdown {
         }
 
         const {promise, resolve, reject} = new_promise<string>()
-        const {path, timeout} = this.options
-        const vlc = this.spawn_vlc(path)
-        const timeout_id = setTimeout(() => reject(new VlcControlError('Timeout')), timeout)
+        const {vlc_path, vlc_timeout, vlc_initial_volume} = this.config_provider
+        const vlc = this.spawn_vlc(vlc_path)
+        const timeout_id = setTimeout(() => reject(new VlcControlError('Timeout')), vlc_timeout)
 
         const on_error = (error: Error): void => {
             vlc.once('exit', () => reject(new VlcControlError('Unexpected error', error)))
@@ -173,8 +144,8 @@ export class VlcControl implements IVlcControl, OnApplicationShutdown {
                     .off('data', on_data)
             })
 
-        if (this.options.initial_volume !== null) {
-            await this.set_volume(this.options.initial_volume)
+        if (vlc_initial_volume !== null) {
+            await this.set_volume(vlc_initial_volume)
         }
     }
 

@@ -20,13 +20,9 @@ describe('DigitallyImported service', function () {
     describe('with configured credentials', function () {
         beforeEach(async function () {
             config_provider = create_config_provider_stub({
-                digitally_imported: {
-                    url: 'https://di.fm.invalid',
-                    credentials: {
-                        email: username,
-                        password,
-                    },
-                },
+                di_url: 'https://di.fm.invalid',
+                di_username: username,
+                di_password: password,
             })
 
             const module = await Test.createTestingModule({
@@ -48,7 +44,7 @@ describe('DigitallyImported service', function () {
 
         it('should throw on login failure', async function () {
             new LoginEndpointBuilder()
-                .for_base_url(config_provider.digitally_imported.url)
+                .for_base_url(config_provider.di_url)
                 .for_username(username)
                 .for_password(password)
                 .with_failure()
@@ -67,7 +63,7 @@ describe('DigitallyImported service', function () {
             }
 
             new LoginEndpointBuilder()
-                .for_base_url(config_provider.digitally_imported.url)
+                .for_base_url(config_provider.di_url)
                 .for_username(username)
                 .for_password(password)
                 .with_success()
@@ -88,10 +84,8 @@ describe('DigitallyImported service', function () {
     describe('with no configured credentials', function () {
         beforeEach(async function () {
             config_provider = create_config_provider_stub({
-                digitally_imported: {
-                    url: 'https://di.fm.invalid',
-                    listen_key: '1234567890abcdef',
-                },
+                di_url: 'https://di.fm.invalid',
+                di_listenkey: '1234567890abcdef',
             })
 
             const module = await Test.createTestingModule({
@@ -113,7 +107,7 @@ describe('DigitallyImported service', function () {
 
         it('should return a guest', async function () {
             new HomepageEndpointBuilder()
-                .for_base_url(config_provider.digitally_imported.url)
+                .for_base_url(config_provider.di_url)
                 .build()
 
             const app_data = await digitally_imported.load_app_data()

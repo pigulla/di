@@ -1,46 +1,35 @@
-import {O} from 'ts-toolbelt'
-import joi from '@hapi/joi'
 import merge from 'lodash.merge'
 
 import {IConfigProvider} from '../../../src/service'
-import {Config, config_schema} from '../../../src/configuration'
 
-type WriteableConfig = O.Writable<Config, keyof Config, 'deep'>
+type Config = Omit<IConfigProvider, 'has_credentials'|'has_listenkey'>
+export type ConfigOverrides = Partial<Config>
 
-export type ConfigOverrides = O.Optional<WriteableConfig, keyof Config, 'deep'>
+export const default_config: Config = {
+    server_hostname: 'localhost',
+    server_port: 4979,
 
-export const default_config: WriteableConfig = {
-    server: {
-        host: 'localhost',
-        port: 4979,
-        loglevel: 'warn',
-        logformat: 'pretty',
-    },
-    vlc: {
-        path: '/dev/null',
-        timeout: 1000,
-        initial_volume: 0.5,
-    },
-    digitally_imported: {
-        url: 'https://di.fm.local',
-        credentials: {
-            email: 'user@example.com',
-            password: '53cr37',
-        },
-        listen_key: null,
-    },
+    log_level: 'warn',
+
+    vlc_path: '/dev/null',
+    vlc_timeout: 1000,
+    vlc_initial_volume: 0.5,
+
+    di_url: 'https://di.fm.local',
+    di_username: 'user@example.com',
+    di_password: '53cr37',
+    di_listenkey: null,
 }
 
 export function create_config_provider_stub (overrides: ConfigOverrides = {}): IConfigProvider {
-    const config = merge({}, default_config, overrides)
+    const config: Config = merge({}, default_config, overrides)
 
-    if (config.digitally_imported.listen_key) {
-        delete config.digitally_imported.credentials
+    if (config.di_listenkey) {
+        config.di_username = null
+        config.di_password = null
     } else {
-        delete config.digitally_imported.listen_key
+        config.di_listenkey = null
     }
-
-    joi.attempt(config, config_schema)
 
     return config
 }

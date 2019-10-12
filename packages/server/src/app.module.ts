@@ -42,9 +42,7 @@ import {AppVersionHeader, VlcInstanceMonitor} from './middleware'
         {
             provide: 'IConfigProvider',
             useFactory (): IConfigProvider {
-                // eslint-disable-next-line @typescript-eslint/no-var-requires
-                const config = require('config')
-                return new ConfigProvider(config.util.toObject())
+                return new ConfigProvider(process.argv)
             },
         },
         {
@@ -54,8 +52,11 @@ import {AppVersionHeader, VlcInstanceMonitor} from './middleware'
             },
         },
         {
+            inject: ['IConfigProvider'],
             provide: 'ILogger',
-            useClass: Logger,
+            useFactory (config_provider: IConfigProvider): ILogger {
+                return new Logger(config_provider.log_level)
+            },
         },
         {
             provide: 'IDigitallyImported',
@@ -82,7 +83,7 @@ import {AppVersionHeader, VlcInstanceMonitor} from './middleware'
             inject: ['ILogger', 'IConfigProvider'],
             provide: 'IVlcControl',
             async useFactory (logger: ILogger, config_provider: IConfigProvider): Promise<IVlcControl> {
-                const vlc_control = new VlcControl(logger, config_provider.vlc)
+                const vlc_control = new VlcControl(logger, config_provider)
                 await vlc_control.start_instance()
                 return vlc_control
             },

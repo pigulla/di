@@ -45,11 +45,7 @@ describe('ListenKeyProvider service', function () {
                 .with_listen_key('0123456789abcdef')
                 .build_premium()
 
-            listenkey_provider = await get_provider(user, {
-                digitally_imported: {
-                    listen_key: null,
-                },
-            })
+            listenkey_provider = await get_provider(user, {di_listenkey: null})
         })
 
         it('should return the listen key', function () {
@@ -61,11 +57,7 @@ describe('ListenKeyProvider service', function () {
         beforeEach(async function () {
             const user = new UserBuilder().build_guest()
 
-            listenkey_provider = await get_provider(user, {
-                digitally_imported: {
-                    listen_key: '0011223344556677',
-                },
-            })
+            listenkey_provider = await get_provider(user, {di_listenkey: '0011223344556677'})
         })
 
         it('should return the listen key', function () {
@@ -77,11 +69,7 @@ describe('ListenKeyProvider service', function () {
         beforeEach(async function () {
             const user = new UserBuilder().build_guest()
 
-            listenkey_provider = await get_provider(user, {
-                digitally_imported: {
-                    listen_key: null,
-                },
-            })
+            listenkey_provider = await get_provider(user, {di_listenkey: null})
         })
 
         it('should throw', function () {

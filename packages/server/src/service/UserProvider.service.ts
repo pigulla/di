@@ -1,12 +1,9 @@
 import {Inject} from '@nestjs/common'
 
 import {User} from './di/'
-import {IAppDataProvider} from './AppDataProvider.service'
-import {ILogger} from './Logger.service'
-
-export interface IUserProvider {
-    get_user (): User
-}
+import {IAppDataProvider} from './AppDataProvider.interface'
+import {ILogger} from './Logger.interface'
+import {IUserProvider} from './UserProvider.interface'
 
 export class UserProvider implements IUserProvider {
     private readonly app_data_provider: IAppDataProvider

@@ -1,13 +1,10 @@
 import {Inject} from '@nestjs/common'
 
 import {PremiumUser} from './di'
-import {IAppDataProvider} from './AppDataProvider.service'
-import {IConfigProvider} from './ConfigProvider.service'
-import {ILogger} from './Logger.service'
-
-export interface IListenKeyProvider {
-    get_listen_key (): string
-}
+import {IAppDataProvider} from './AppDataProvider.interface'
+import {IConfigProvider} from './ConfigProvider.interface'
+import {ILogger} from './Logger.interface'
+import {IListenKeyProvider} from './ListenKeyProvider.interface'
 
 export class ListenKeyProvider implements IListenKeyProvider {
     private readonly app_data_provider: IAppDataProvider;
@@ -27,7 +24,7 @@ export class ListenKeyProvider implements IListenKeyProvider {
     }
 
     public get_listen_key (): string {
-        const listen_key = this.config_provider.digitally_imported.listen_key
+        const listen_key = this.config_provider.di_listenkey
         const user = this.app_data_provider.get_app_data().user
 
         if (user instanceof PremiumUser) {

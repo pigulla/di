@@ -1,21 +1,10 @@
 import dayjs, {Dayjs} from 'dayjs'
 import {Inject} from '@nestjs/common'
 
-import {IDigitallyImported} from './DigitallyImported.service'
 import {AppData} from './di'
-import {ILogger} from './Logger.service'
-
-export type UpdateCallback<T> = (value: T) => void;
-
-export interface UpdateNotifier<T> {
-    on_update (callback: UpdateCallback<T>, context?: any): void
-}
-
-export interface IAppDataProvider extends UpdateNotifier<AppData> {
-    load_app_data (): Promise<IAppDataProvider>
-    get_app_data (): AppData
-    last_updated_at (): Dayjs
-}
+import {IAppDataProvider} from './AppDataProvider.interface'
+import {IDigitallyImported} from './DigitallyImported.interface'
+import {ILogger} from './Logger.interface'
 
 export class AppDataProvider implements IAppDataProvider {
     private readonly digitally_imported: IDigitallyImported;

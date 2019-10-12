@@ -1,29 +1,26 @@
 import pino, {Logger as Pino} from 'pino'
-import {Inject, LoggerService} from '@nestjs/common'
+import {LogLevel} from '@nestjs/common'
 
-import {IConfigProvider} from './ConfigProvider.service'
 import {get_request_logger, RequestLogger} from '../middleware'
-
-export interface ILogger extends Required<LoggerService> {
-    get_request_logger(): RequestLogger
-    for_controller (name: string): ILogger
-    for_service (name: string): ILogger
-}
+import {ILogger} from './Logger.interface'
 
 export class Logger implements ILogger {
-    private readonly config: IConfigProvider;
+    private readonly log_level: LogLevel;
     private readonly pino: Pino;
     private readonly pino_request_logger: RequestLogger;
 
     public constructor (
-        @Inject('IConfigProvider') config: IConfigProvider,
-            pino_instance?: Pino,
-            request_logger?: RequestLogger,
+        log_level: LogLevel,
+        pino_instance?: Pino,
+        request_logger?: RequestLogger,
     ) {
-        this.config = config
+        this.log_level = log_level
         this.pino = pino_instance || pino({
-            level: config.server.loglevel,
-            prettyPrint: config.server.logformat === 'pretty',
+            customLevels: {
+                log: pino.levels.values.info,
+            },
+            level: log_level,
+            prettyPrint: true,
         })
         this.pino_request_logger = request_logger || get_request_logger(this.pino)
     }
@@ -33,11 +30,11 @@ export class Logger implements ILogger {
     }
 
     public for_controller (name: string): ILogger {
-        return new Logger(this.config, this.pino.child({controller: name}), this.pino_request_logger)
+        return new Logger(this.log_level, this.pino.child({controller: name}), this.pino_request_logger)
     }
 
     public for_service (name: string): ILogger {
-        return new Logger(this.config, this.pino.child({service: name}), this.pino_request_logger)
+        return new Logger(this.log_level, this.pino.child({service: name}), this.pino_request_logger)
     }
 
     public log (message: string): void {

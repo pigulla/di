@@ -1,21 +1,14 @@
+import {Injectable, Inject} from '@nestjs/common'
+
 import cheerio from 'cheerio'
 import superagent from 'superagent'
 import {NodeVM} from 'vm2'
-import {Injectable, Inject} from '@nestjs/common'
 
 import {AuthenticationError, AppData, RawAppData} from './di'
 import {UserType} from './di/User'
-import {IConfigProvider} from './ConfigProvider.service'
-import {ILogger} from './Logger.service'
-
-export interface Credentials {
-    email: string
-    password: string
-}
-
-export interface IDigitallyImported {
-    load_app_data (): Promise<AppData>
-}
+import {IConfigProvider} from './ConfigProvider.interface'
+import {ILogger} from './Logger.interface'
+import {IDigitallyImported, Credentials} from './DigitallyImported.interface'
 
 @Injectable()
 export class DigitallyImported implements IDigitallyImported {
@@ -27,8 +20,9 @@ export class DigitallyImported implements IDigitallyImported {
         @Inject('ILogger') logger: ILogger,
         @Inject('IConfigProvider') config: IConfigProvider
     ) {
-        this.url = config.digitally_imported.url
-        this.credentials = config.digitally_imported.credentials
+        this.url = config.di_url
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.credentials = config.di_listenkey ? null : {email: config.di_username!, password: config.di_password!}
         this.logger = logger.for_service(DigitallyImported.name)
 
         this.logger.log('Service instantiated')

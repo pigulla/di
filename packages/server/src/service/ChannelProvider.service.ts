@@ -1,19 +1,9 @@
 import {Inject, Injectable} from '@nestjs/common'
 
 import {AppData, Channel, ChannelFilter} from './di'
-import {IAppDataProvider} from './AppDataProvider.service'
-import {ILogger} from './Logger.service'
-
-export interface IChannelProvider {
-    channel_exists (identifier: ChannelIdentifier): boolean
-    get_channel (value: ChannelIdentifier): Channel
-    get_channel_by_id (id: number): Channel
-    get_channel_by_key (key: string): Channel
-    get_channels (): Channel[]
-    get_filters (): ChannelFilter[]
-}
-
-type ChannelIdentifier = string|number|Channel;
+import {IAppDataProvider} from './AppDataProvider.interface'
+import {ILogger} from './Logger.interface'
+import {IChannelProvider, ChannelIdentifier} from './ChannelProvider.interface'
 
 @Injectable()
 export class ChannelProvider implements IChannelProvider {
@@ -34,6 +24,8 @@ export class ChannelProvider implements IChannelProvider {
 
         this.app_data_provider.on_update(this.update, this)
         this.update(app_data_provider.get_app_data())
+
+        this.logger.log('Service instantiated')
     }
 
     protected update ({channels, channel_filters}: AppData): void {

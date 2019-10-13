@@ -1,15 +1,12 @@
 import {Inject} from '@nestjs/common'
 
 import {PremiumUser} from './di'
-import {IAppDataProvider} from './AppDataProvider.service'
-import {IConfigProvider} from './ConfigProvider.service'
-import {ILogger} from './Logger.service'
+import {IAppDataProvider} from './AppDataProvider.interface'
+import {IConfigProvider} from './ConfigProvider.interface'
+import {ILogger} from './Logger.interface'
+import {IListenKeyProvider} from './ListenKeyProvider.interface'
 
-export interface IListenkeyProvider {
-    get_listen_key (): string
-}
-
-export class ListenkeyProvider implements IListenkeyProvider {
+export class ListenKeyProvider implements IListenKeyProvider {
     private readonly app_data_provider: IAppDataProvider;
     private readonly config_provider: IConfigProvider;
     private readonly logger: ILogger;
@@ -21,19 +18,19 @@ export class ListenkeyProvider implements IListenkeyProvider {
     ) {
         this.app_data_provider = app_data_provider
         this.config_provider = config_provider
-        this.logger = logger.for_service(ListenkeyProvider.name)
+        this.logger = logger.for_service(ListenKeyProvider.name)
 
         this.logger.log('Service instantiated')
     }
 
     public get_listen_key (): string {
-        const listen_key = this.config_provider.digitally_imported.listen_key
+        const listen_key = this.config_provider.di_listenkey
         const user = this.app_data_provider.get_app_data().user
 
-        if (listen_key) {
-            return listen_key
-        } else if (user instanceof PremiumUser) {
+        if (user instanceof PremiumUser) {
             return (user as PremiumUser).listen_key
+        } else if (listen_key) {
+            return listen_key
         }
 
         throw new Error('No listenkey found')

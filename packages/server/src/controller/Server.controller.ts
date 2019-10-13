@@ -37,7 +37,7 @@ export class ServerController {
             digitally_imported: {
                 app_version: app_data.app_version,
                 deploy_time: app_data.app_deploy_time.toISOString(),
-                user_type: app_data.current_user_type,
+                user_type: app_data.user.type,
             },
         }
     }

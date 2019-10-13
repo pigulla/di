@@ -1,23 +1,12 @@
 import dayjs, {Dayjs} from 'dayjs'
-import {Inject} from '@nestjs/common'
+import {Inject, OnModuleInit} from '@nestjs/common'
 
-import {IDigitallyImported} from './DigitallyImported.service'
 import {AppData} from './di'
-import {ILogger} from './Logger.service'
+import {IAppDataProvider} from './AppDataProvider.interface'
+import {IDigitallyImported} from './DigitallyImported.interface'
+import {ILogger} from './Logger.interface'
 
-export type UpdateCallback<T> = (value: T) => void;
-
-export interface UpdateNotifier<T> {
-    on_update (callback: UpdateCallback<T>, context?: any): void
-}
-
-export interface IAppDataProvider extends UpdateNotifier<AppData> {
-    load_app_data (): Promise<IAppDataProvider>
-    get_app_data (): AppData
-    last_updated_at (): Dayjs
-}
-
-export class AppDataProvider implements IAppDataProvider {
+export class AppDataProvider implements IAppDataProvider, OnModuleInit {
     private readonly digitally_imported: IDigitallyImported;
     private readonly logger: ILogger;
     private readonly update_callbacks: Array<[(app_data: AppData) => void, any]>;
@@ -35,6 +24,10 @@ export class AppDataProvider implements IAppDataProvider {
         this.last_update_at = null
 
         this.logger.log('Service instantiated')
+    }
+
+    public async onModuleInit (): Promise<void> {
+        await this.load_app_data()
     }
 
     public last_updated_at (): Dayjs {

@@ -1,5 +1,5 @@
 import {ChannelFilterDTO} from '@digitally-imported/dto'
-import {ClassSerializerInterceptor, Controller, Get, Inject, UseInterceptors} from '@nestjs/common'
+import {Controller, Get, Inject} from '@nestjs/common'
 
 import {IChannelProvider} from '../service'
 
@@ -14,7 +14,6 @@ export class ChannelFiltersController {
     }
 
     @Get('/channelfilters')
-    @UseInterceptors(ClassSerializerInterceptor)
     public list_channel_filters (): ChannelFilterDTO[] {
         return this.channel_provider.get_filters().map(filter => filter.to_dto())
     }

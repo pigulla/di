@@ -1,35 +1,50 @@
-import {sync as which} from 'which'
-
-import {Config, config_schema} from '../configuration'
-
-export class ConfigError extends Error {};
-
-export interface IConfigProvider extends Config {};
+import {yargs, CliOptions} from './yargs'
+import {IConfigProvider} from './ConfigProvider.interface'
 
 export class ConfigProvider implements IConfigProvider {
-    public readonly server: IConfigProvider['server'];
-    public readonly digitally_imported: IConfigProvider['digitally_imported'];
-    public readonly vlc: IConfigProvider['vlc'];
+    private readonly options: CliOptions
 
-    public constructor (config: any) {
-        const {value, error} = config_schema.validate<IConfigProvider>(config)
+    public constructor (argv: string[]) {
+        this.options = yargs.parse(argv) as any as CliOptions
+    }
 
-        if (error) {
-            // The config service is instantiated before the logger service (because it depends on it) so we have to
-            // manually create some output here.
-            const config_error = new ConfigError(`Validation error: ${error.message}`)
-            console.error(config_error)
-            throw config_error
-        }
+    public get server_hostname (): IConfigProvider['server_hostname'] {
+        return this.options.hostname
+    }
 
-        this.server = value.server
-        this.digitally_imported = Object.assign(
-            {credentials: null, listen_key: null},
-            value.digitally_imported
-        )
-        this.vlc = Object.assign(
-            value.vlc,
-            value.vlc.path === null ? {path: which('vlc')} : {}
-        )
+    public get server_port (): IConfigProvider['server_port'] {
+        return this.options.port
+    }
+
+    public get log_level (): IConfigProvider['log_level'] {
+        return this.options.logLevel
+    }
+
+    public get vlc_path (): IConfigProvider['vlc_path'] {
+        return this.options.vlcPath
+    }
+
+    public get vlc_timeout (): IConfigProvider['vlc_timeout'] {
+        return this.options.vlcTimeout
+    }
+
+    public get vlc_initial_volume (): IConfigProvider['vlc_initial_volume'] {
+        return this.options.vlcInitialVolume
+    }
+
+    public get di_url (): IConfigProvider['di_url'] {
+        return this.options.url
+    }
+
+    public get di_username (): IConfigProvider['di_username'] {
+        return this.options.username || null
+    }
+
+    public get di_password (): IConfigProvider['di_password'] {
+        return this.options.password || null
+    }
+
+    public get di_listenkey (): IConfigProvider['di_listenkey'] {
+        return this.options.listenkey || null
     }
 }

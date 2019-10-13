@@ -18,16 +18,3 @@ export function new_promise<T> (): PromiseParts<T> {
     // @ts-ignore - We know that the callback in the Promise-constructor is run synchronously
     return {promise, resolve: resolver, reject: rejector}
 }
-
-export function try_resolve<T> (
-    fn: () => T,
-    resolve: (result: T) => void,
-    reject: (error?: any) => void
-): void {
-    try {
-        const result = fn()
-        resolve(result)
-    } catch (error) {
-        reject(error)
-    }
-}

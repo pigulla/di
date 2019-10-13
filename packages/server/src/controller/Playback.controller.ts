@@ -1,7 +1,6 @@
 import {ChannelDTO, PlaybackStateDTO} from '@digitally-imported/dto'
 import {
     Body,
-    ClassSerializerInterceptor,
     Controller,
     Delete,
     Get,
@@ -12,30 +11,30 @@ import {
     InternalServerErrorException,
     NotFoundException,
     Put,
-    UseInterceptors,
 } from '@nestjs/common'
-import {IsString} from 'class-validator'
 
-import {IChannelProvider, IListenkeyProvider, IVlcControl} from '../service'
+import {IChannelProvider, IListenKeyProvider, IVlcControl} from '../service'
+import {IsNotEmpty, IsString} from 'class-validator'
 
 export class PlayDTO {
     @IsString()
-    public readonly channel!: string;
+    @IsNotEmpty()
+    public readonly channel!: string
 }
 
 @Controller('/playback')
 export class PlaybackController {
     private readonly vlc_control: IVlcControl;
     private readonly channel_provider: IChannelProvider;
-    private readonly listenkey_provider: IListenkeyProvider;
+    private readonly listen_key_provider: IListenKeyProvider;
 
     public constructor (
         @Inject('IVlcControl') vlc_control: IVlcControl,
         @Inject('IChannelProvider') channel_provider: IChannelProvider,
-        @Inject('IListenkeyProvider') listenkey_provider: IListenkeyProvider,
+        @Inject('IListenKeyProvider') listen_key_provider: IListenKeyProvider,
     ) {
         this.vlc_control = vlc_control
-        this.listenkey_provider = listenkey_provider
+        this.listen_key_provider = listen_key_provider
         this.channel_provider = channel_provider
     }
 
@@ -50,7 +49,6 @@ export class PlaybackController {
     }
 
     @Get()
-    @UseInterceptors(ClassSerializerInterceptor)
     public async current (): Promise<PlaybackStateDTO> {
         const state: PlaybackStateDTO = {
             now_playing: false,
@@ -65,14 +63,14 @@ export class PlaybackController {
         }
 
         const {filename, now_playing} = info
-        const matches = /^(.+)\?[a-z0-9]+$/.exec(filename)
+        const matches = /^(?:.+)\?([a-z0-9]+)$/.exec(filename)
 
         if (!matches) {
             throw new InternalServerErrorException()
         }
         const channel = this.channel_provider.get_channel_by_key(matches[1])
 
-        return Object.assign(state, {now_playing, channel})
+        return Object.assign(state, {now_playing, channel: channel.to_dto()})
     }
 
     @Delete()
@@ -82,7 +80,6 @@ export class PlaybackController {
     }
 
     @Put()
-    @UseInterceptors(ClassSerializerInterceptor)
     public async play (@Body() play_dto: PlayDTO): Promise<ChannelDTO> {
         const {channel: identifier} = play_dto
 
@@ -91,7 +88,7 @@ export class PlaybackController {
         }
 
         const channel = this.channel_provider.get_channel_by_key(identifier)
-        const url = channel.build_url(this.listenkey_provider.get_listen_key())
+        const url = channel.build_url(this.listen_key_provider.get_listen_key())
 
         await this.vlc_control.add(url)
 

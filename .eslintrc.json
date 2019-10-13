@@ -85,5 +85,19 @@
                 }
             }
         ]
-    }
+    },
+    "overrides": [
+        {
+            "files": ["packages/*/test/**/*"],
+            "env": {
+                "mocha": true
+            }
+        },
+        {
+            "files": ["packages/*/test/**/*.spec.ts"],
+            "rules": {
+                "no-unused-expressions": "off"
+            }
+        }
+    ]
 }

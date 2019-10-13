@@ -1,5 +1,5 @@
 import {UserDTO} from '@digitally-imported/dto'
-import {Controller, Get, Inject, UseInterceptors, ClassSerializerInterceptor} from '@nestjs/common'
+import {Controller, Get, Inject} from '@nestjs/common'
 
 import {IUserProvider} from '../service'
 
@@ -14,7 +14,6 @@ export class UserController {
     }
 
     @Get()
-    @UseInterceptors(ClassSerializerInterceptor)
     public get_user (): Partial<UserDTO> {
         const user = this.user_provider.get_user()
 

@@ -3,8 +3,7 @@ import {
     Controller,
     Get,
     Inject,
-    UseInterceptors,
-    ClassSerializerInterceptor, ForbiddenException,
+    ForbiddenException,
 } from '@nestjs/common'
 
 import {IChannelProvider, IUserProvider} from '../service'
@@ -24,7 +23,6 @@ export class FavoritesController {
     }
 
     @Get()
-    @UseInterceptors(ClassSerializerInterceptor)
     public list_favorites (): ChannelDTO[] {
         const user = this.user_provider.get_user()
 

@@ -1,7 +1,6 @@
 import {ChannelDTO, PlaybackStateDTO} from '@digitally-imported/dto'
 import {
     Body,
-    ClassSerializerInterceptor,
     Controller,
     Delete,
     Get,
@@ -12,15 +11,15 @@ import {
     InternalServerErrorException,
     NotFoundException,
     Put,
-    UseInterceptors,
 } from '@nestjs/common'
-import {IsString} from 'class-validator'
 
 import {IChannelProvider, IListenKeyProvider, IVlcControl} from '../service'
+import {IsNotEmpty, IsString} from 'class-validator'
 
 export class PlayDTO {
     @IsString()
-    public readonly channel!: string;
+    @IsNotEmpty()
+    public readonly channel!: string
 }
 
 @Controller('/playback')
@@ -50,7 +49,6 @@ export class PlaybackController {
     }
 
     @Get()
-    @UseInterceptors(ClassSerializerInterceptor)
     public async current (): Promise<PlaybackStateDTO> {
         const state: PlaybackStateDTO = {
             now_playing: false,
@@ -82,7 +80,6 @@ export class PlaybackController {
     }
 
     @Put()
-    @UseInterceptors(ClassSerializerInterceptor)
     public async play (@Body() play_dto: PlayDTO): Promise<ChannelDTO> {
         const {channel: identifier} = play_dto
 

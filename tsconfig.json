@@ -1,17 +1,19 @@
 {
     "compilerOptions": {
-        "declaration": true,
-        "importHelpers": true,
         "allowJs": false,
-        "experimentalDecorators": true,
-        "module": "commonjs",
-        "strict": true,
-        "target": "es2017",
+        "declaration": true,
+        "emitDecoratorMetadata": true,
         "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
+        "importHelpers": true,
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "noImplicitReturns": true,
-        "noImplicitAny": true,
-        "noImplicitThis": true
+        "strict": true,
+        "target": "es2017"
     }
 }

@@ -4,26 +4,26 @@ import {Inject, OnModuleInit} from '@nestjs/common'
 import {AppData} from './di'
 import {IAppDataProvider} from './AppDataProvider.interface'
 import {IDigitallyImported} from './DigitallyImported.interface'
-import {ILogger} from './logger'
+import {ILogger} from './Logger.interface'
 
 export class AppDataProvider implements IAppDataProvider, OnModuleInit {
-    private readonly digitally_imported: IDigitallyImported
-    private readonly logger: ILogger
-    private readonly update_callbacks: Array<[(app_data: AppData) => void, any]>
-    private last_update_at: Dayjs|null
-    private app_data: AppData|null
+    private readonly digitally_imported: IDigitallyImported;
+    private readonly logger: ILogger;
+    private readonly update_callbacks: Array<[(app_data: AppData) => void, any]>;
+    private last_update_at: Dayjs|null;
+    private app_data: AppData|null;
 
     public constructor (
         @Inject('ILogger') logger: ILogger,
         @Inject('IDigitallyImported') digitally_imported: IDigitallyImported,
     ) {
-        this.logger = logger.child_for_service(AppDataProvider.name)
+        this.logger = logger.for_service(AppDataProvider.name)
         this.update_callbacks = []
         this.digitally_imported = digitally_imported
         this.app_data = null
         this.last_update_at = null
 
-        this.logger.debug('Service instantiated')
+        this.logger.log('Service instantiated')
     }
 
     public async onModuleInit (): Promise<void> {

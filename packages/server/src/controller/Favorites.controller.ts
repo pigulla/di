@@ -1,30 +1,37 @@
-import {Controller, Get, Inject, ForbiddenException} from '@nestjs/common'
-
 import {ChannelDTO} from '@digitally-imported/dto'
+import {
+    Controller,
+    Get,
+    Inject,
+    ForbiddenException,
+} from '@nestjs/common'
 
-import {IFavoritesProvider, CredentialsUnavailableError} from '../service'
+import {IChannelProvider, IUserProvider} from '../service'
+import {AuthenticatedUser} from '../service/di'
 
-@Controller()
+@Controller('/channels/favorites')
 export class FavoritesController {
-    private readonly favorites_provider: IFavoritesProvider
+    private readonly channel_provider: IChannelProvider;
+    private readonly user_provider: IUserProvider;
 
     public constructor (
-        @Inject('IFavoritesProvider') favorites_provider: IFavoritesProvider,
+        @Inject('IChannelProvider') channel_provider: IChannelProvider,
+        @Inject('IUserProvider') user_provider: IUserProvider,
     ) {
-        this.favorites_provider = favorites_provider
+        this.channel_provider = channel_provider
+        this.user_provider = user_provider
     }
 
-    @Get('/favorites')
-    public async list_favorites (): Promise<ChannelDTO[]> {
-        try {
-            const favorites = await this.favorites_provider.get_all()
-            return favorites.map(favorite => favorite.to_dto())
-        } catch (error) {
-            if (error instanceof CredentialsUnavailableError) {
-                throw new ForbiddenException()
-            }
+    @Get()
+    public list_favorites (): ChannelDTO[] {
+        const user = this.user_provider.get_user()
 
-            throw error
+        if (user.is_public()) {
+            throw new ForbiddenException()
         }
+
+        return Array.from((user as AuthenticatedUser).favorites)
+            .map(id => this.channel_provider.get_channel_by_id(id))
+            .map(channel => channel.to_dto())
     }
 }

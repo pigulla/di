@@ -1,8 +1,6 @@
-import {Quality} from './di'
-import {LogLevel} from './logger'
-import {Credentials} from './config'
+import {LogLevel} from '@nestjs/common'
 
-export class ConfigError extends Error {}
+export class ConfigError extends Error {};
 
 export type IConfigProvider = {
     server_hostname: string
@@ -12,11 +10,10 @@ export type IConfigProvider = {
 
     vlc_path: string
     vlc_timeout: number
-    vlc_initial_volume: number|null
+    vlc_initial_volume: number
 
     di_url: string
-    di_listenkey: string
-    di_frequency_ms: number
-    di_quality: Quality
-    di_credentials: Credentials|null
+    di_username: string|null
+    di_password: string|null
+    di_listenkey: string|null
 }

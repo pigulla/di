@@ -1,19 +1,11 @@
-type ChannelFilterProperties = {
-    channels: number[]
-    id: number
-    key: string
-    meta: boolean
-    name: string
-}
-
 export class ChannelFilterDTO {
-    channels!: number[]
-    id!: number
-    key!: string
-    meta!: boolean
-    name!: string
+    channels!: number[];
+    id!: number;
+    key!: string;
+    meta!: boolean;
+    name!: string;
 
-    public static create (properties: ChannelFilterProperties): ChannelFilterDTO {
-        return Object.assign(new ChannelFilterDTO(), properties)
+    constructor (channel_filter: ChannelFilterDTO) {
+        Object.assign(this, channel_filter)
     }
 }

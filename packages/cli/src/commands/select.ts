@@ -1,11 +1,14 @@
+/* eslint-disable import/no-duplicates */
+
 import chalk from 'chalk'
+import {flags} from '@oclif/command'
 // @ts-ignore
 import * as inquirer_autocomplete from 'inquirer-autocomplete-prompt'
 import * as inquirer from 'inquirer'
-
-import {ChannelDTO} from '@digitally-imported/dto/lib'
+import {QuestionCollection} from 'inquirer'
 
 import {BaseCommand} from '../BaseCommand'
+import {ChannelDTO} from '@digitally-imported/dto/lib'
 
 interface Answers {
     channel: string
@@ -16,8 +19,20 @@ inquirer.registerPrompt('autocomplete', inquirer_autocomplete)
 export default class Select extends BaseCommand {
     public static description = 'Interactively select a channel to play.'
 
+    public static flags = {
+        ...BaseCommand.flags,
+        'favorites-only': flags.boolean({
+            char: 'o',
+            description: 'Select from favorites only.',
+            default: false,
+        }),
+    }
+
     public async run (): Promise<void> {
-        const channels = await this.client.get_channels()
+        const {flags} = this.parse(Select)
+        const favorites_only = flags['favorites-only']
+
+        const channels = await (favorites_only ? this.client.get_favorites() : this.client.get_channels())
         const max_name_length = channels.reduce((len, {name}) => Math.max(name.length, len), 0)
 
         function format_name (channel: ChannelDTO): string {
@@ -42,7 +57,7 @@ export default class Select extends BaseCommand {
                     ? choices
                     : choices.filter(({channel_name}) => channel_name.includes(input.toLowerCase()))
             },
-        } as any as inquirer.QuestionCollection<Answers>)
+        } as any as QuestionCollection<Answers>)
 
         await this.client.start_playback(answers.channel)
     }

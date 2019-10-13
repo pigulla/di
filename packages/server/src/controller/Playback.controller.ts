@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsString} from 'class-validator'
+import {ChannelDTO, PlaybackStateDTO} from '@digitally-imported/dto'
 import {
     Body,
     Controller,
@@ -8,15 +8,15 @@ import {
     HttpCode,
     HttpStatus,
     Inject,
+    InternalServerErrorException,
     NotFoundException,
     Put,
 } from '@nestjs/common'
 
-import {ChannelDTO, PlayDTO, PlaybackStateDTO} from '@digitally-imported/dto'
+import {IChannelProvider, IListenKeyProvider, IVlcControl} from '../service'
+import {IsNotEmpty, IsString} from 'class-validator'
 
-import {IChannelsProvider, IPlaybackControl, IConfigProvider, INowPlayingProvider} from '../service'
-
-class ValidatedPlayDTO extends PlayDTO {
+export class PlayDTO {
     @IsString()
     @IsNotEmpty()
     public readonly channel!: string
@@ -24,27 +24,24 @@ class ValidatedPlayDTO extends PlayDTO {
 
 @Controller('/playback')
 export class PlaybackController {
-    private readonly playback_control: IPlaybackControl
-    private readonly channel_provider: IChannelsProvider
-    private readonly config_provider: IConfigProvider
-    private readonly now_playing_provider: INowPlayingProvider
+    private readonly vlc_control: IVlcControl;
+    private readonly channel_provider: IChannelProvider;
+    private readonly listen_key_provider: IListenKeyProvider;
 
     public constructor (
-        @Inject('IPlaybackControl') vlc_control: IPlaybackControl,
-        @Inject('IChannelsProvider') channel_provider: IChannelsProvider,
-        @Inject('IConfigProvider') config_provider: IConfigProvider,
-        @Inject('INowPlayingProvider') now_playing_provider: INowPlayingProvider,
+        @Inject('IVlcControl') vlc_control: IVlcControl,
+        @Inject('IChannelProvider') channel_provider: IChannelProvider,
+        @Inject('IListenKeyProvider') listen_key_provider: IListenKeyProvider,
     ) {
-        this.playback_control = vlc_control
+        this.vlc_control = vlc_control
+        this.listen_key_provider = listen_key_provider
         this.channel_provider = channel_provider
-        this.config_provider = config_provider
-        this.now_playing_provider = now_playing_provider
     }
 
     @Head()
     @HttpCode(HttpStatus.NO_CONTENT)
     public async is_playing (): Promise<void> {
-        const is_playing = await this.playback_control.is_playing()
+        const is_playing = await this.vlc_control.is_playing()
 
         if (!is_playing) {
             throw new NotFoundException()
@@ -53,43 +50,47 @@ export class PlaybackController {
 
     @Get()
     public async current (): Promise<PlaybackStateDTO> {
-        const channel_key = await this.playback_control.get_current_channel_key()
-
-        if (!channel_key) {
-            throw new NotFoundException()
+        const state: PlaybackStateDTO = {
+            now_playing: false,
+            channel: null,
+            volume: await this.vlc_control.get_volume(),
         }
 
-        const now_playing = this.now_playing_provider.get_by_channel_key(channel_key)
-        const channel = this.channel_provider.get(channel_key)
+        const info = await this.vlc_control.info()
 
-        return {
-            now_playing: {
-                artist: now_playing.display_artist,
-                title: now_playing.display_title,
-            },
-            channel: channel.to_dto(),
+        if (!info) {
+            return state
         }
+
+        const {filename, now_playing} = info
+        const matches = /^(?:.+)\?([a-z0-9]+)$/.exec(filename)
+
+        if (!matches) {
+            throw new InternalServerErrorException()
+        }
+        const channel = this.channel_provider.get_channel_by_key(matches[1])
+
+        return Object.assign(state, {now_playing, channel: channel.to_dto()})
     }
 
     @Delete()
     @HttpCode(HttpStatus.NO_CONTENT)
     public async stop (): Promise<void> {
-        await this.playback_control.stop()
+        await this.vlc_control.stop()
     }
 
     @Put()
-    public async play (@Body() play_dto: ValidatedPlayDTO): Promise<ChannelDTO> {
+    public async play (@Body() play_dto: PlayDTO): Promise<ChannelDTO> {
         const {channel: identifier} = play_dto
 
         if (!this.channel_provider.channel_exists(identifier)) {
             throw new NotFoundException()
         }
 
-        const {di_listenkey, di_quality} = this.config_provider
-        const channel = this.channel_provider.get(identifier)
-        const url = channel.build_url(di_listenkey, di_quality)
+        const channel = this.channel_provider.get_channel_by_key(identifier)
+        const url = channel.build_url(this.listen_key_provider.get_listen_key())
 
-        await this.playback_control.play(url)
+        await this.vlc_control.add(url)
 
         return channel.to_dto()
     }

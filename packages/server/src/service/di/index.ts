@@ -1,5 +1,5 @@
 export * from './AppData'
-export * from './AuthenticationResponse'
+export * from './AuthenticationError'
 export * from './Channel'
 export * from './ChannelFilter'
-export * from './NowPlaying'
+export * from './User'

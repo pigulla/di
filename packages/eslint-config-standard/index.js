@@ -1,6 +1,6 @@
-module.exports = {
+{
     "extends": [
-        "standard",
+        "eslint-config-standard",
         "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
@@ -8,9 +8,14 @@ module.exports = {
         "@typescript-eslint/eslint-plugin"
     ],
     "rules": {
+        "no-unused-vars": "off",
         "comma-dangle": [
             "error",
             "always-multiline"
+        ],
+        "object-curly-spacing": [
+            "error",
+            "never"
         ],
         "indent": [
             "error",
@@ -18,13 +23,6 @@ module.exports = {
             {
                 "SwitchCase": 1
             }
-        ],
-        "max-len": ["error", 120],
-        "no-console": "error",
-        "no-unused-vars": "off",
-        "object-curly-spacing": [
-            "error",
-            "never"
         ],
         "semi": [
             "error",
@@ -38,9 +36,7 @@ module.exports = {
                 "exceptAfterSingleLine": true
             }
         ],
-        "no-dupe-class-members": "off",
-        "no-process-env": "error",
-        "no-process-exit": "error",
+
         "@typescript-eslint/explicit-member-accessibility": "error",
         "@typescript-eslint/ban-ts-ignore": "off",
         "@typescript-eslint/camelcase": "off",
@@ -92,12 +88,15 @@ module.exports = {
     },
     "overrides": [
         {
-            "files": ["test/**/*"],
-            "rules": {
-                "no-unused-expressions": "off"
-            },
+            "files": ["packages/*/test/**/*"],
             "env": {
                 "mocha": true
+            }
+        },
+        {
+            "files": ["packages/*/test/**/*.spec.ts"],
+            "rules": {
+                "no-unused-expressions": "off"
             }
         }
     ]

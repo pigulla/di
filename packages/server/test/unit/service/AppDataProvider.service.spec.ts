@@ -1,28 +1,25 @@
+import {spy, SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import dayjs from 'dayjs'
 import mockdate from 'mockdate'
-import {spy, SinonStubbedInstance, stub} from 'sinon'
 
-import {DigitallyImported, AppDataProvider} from '@src/service'
-import {AppData} from '@src/service/di'
-
-import {create_logger_stub, create_digitally_imported_stub, AppDataBuilder} from '@test/util'
+import {DigitallyImported, AppDataProvider} from '../../../src/service'
+import {create_logger_stub, create_digitally_imported_stub, AppDataBuilder, UserBuilder} from '../../util'
+import {AppData} from '../../../src/service/di'
 
 describe('AppDataProvider service', function () {
     let app_data_provider: AppDataProvider
     let di: SinonStubbedInstance<DigitallyImported>
 
     beforeEach(async function () {
-        const logger = create_logger_stub()
         di = create_digitally_imported_stub()
-        logger.child_for_service.returns(create_logger_stub())
 
         const module = await Test.createTestingModule({
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: logger,
+                    useValue: create_logger_stub(),
                 },
                 {
                     provide: 'IDigitallyImported',
@@ -33,14 +30,6 @@ describe('AppDataProvider service', function () {
         }).compile()
 
         app_data_provider = module.get(AppDataProvider)
-    })
-
-    it('should load app data when the module is initialized', async function () {
-        const load_app_data_stub = stub(app_data_provider, 'load_app_data')
-        load_app_data_stub.resolves()
-
-        await app_data_provider.onModuleInit()
-        expect(app_data_provider.load_app_data).to.have.been.calledOnce
     })
 
     describe('when no app data has been loaded yet', function () {
@@ -60,7 +49,8 @@ describe('AppDataProvider service', function () {
         beforeEach(async function () {
             mockdate.set(now.toDate())
 
-            app_data = new AppDataBuilder().build()
+            const user = new UserBuilder().build_guest()
+            app_data = new AppDataBuilder().with_user(user).build()
             di.load_app_data.resolves(app_data)
 
             await app_data_provider.load_app_data()

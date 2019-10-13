@@ -1,3 +1,4 @@
+import {ChannelDTO} from '@digitally-imported/dto'
 import {
     Controller,
     Get,
@@ -6,23 +7,21 @@ import {
     NotFoundException,
 } from '@nestjs/common'
 
-import {ChannelDTO} from '@digitally-imported/dto'
-
-import {IChannelsProvider} from '../service'
+import {IChannelProvider} from '../service'
 
 @Controller()
 export class ChannelsController {
-    private readonly channel_provider: IChannelsProvider
+    private readonly channel_provider: IChannelProvider;
 
     public constructor (
-        @Inject('IChannelsProvider') channel_provider: IChannelsProvider,
+        @Inject('IChannelProvider') channel_provider: IChannelProvider,
     ) {
         this.channel_provider = channel_provider
     }
 
     @Get('/channels')
     public list_channels (): ChannelDTO[] {
-        return this.channel_provider.get_all().map(channel => channel.to_dto())
+        return this.channel_provider.get_channels().map(channel => channel.to_dto())
     }
 
     @Get('/channel/:key')
@@ -31,6 +30,6 @@ export class ChannelsController {
             throw new NotFoundException()
         }
 
-        return this.channel_provider.get(key).to_dto()
+        return this.channel_provider.get_channel_by_key(key).to_dto()
     }
 }

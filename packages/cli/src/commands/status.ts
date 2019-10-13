@@ -1,9 +1,8 @@
-import chalk from 'chalk'
+import {PlaybackStateDTO} from '@digitally-imported/dto/lib'
 import * as Config from '@oclif/config'
 
-import {PlaybackStateDTO} from '@digitally-imported/dto/lib'
-
 import {FormattedOutputCommand, OutputOptions} from '../FormattedOutputCommand'
+import chalk from 'chalk'
 
 export default class Status extends FormattedOutputCommand<PlaybackStateDTO> {
     public static description = 'Get server status.';
@@ -24,12 +23,17 @@ export default class Status extends FormattedOutputCommand<PlaybackStateDTO> {
             },
             table: {
                 channel: {
-                    get ({channel}: PlaybackStateDTO) {
+                    get ({channel}) {
                         return channel ? channel.name : chalk.dim('none')
                     },
                 },
+                volume: {
+                    get ({volume}) {
+                        return Math.round(volume * 100) + '%'
+                    },
+                },
                 now_playing: {
-                    get ({now_playing}: PlaybackStateDTO) {
+                    get ({now_playing}) {
                         return now_playing ? 'yes' : 'no'
                     },
                 },

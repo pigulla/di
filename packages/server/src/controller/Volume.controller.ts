@@ -1,46 +1,37 @@
-import {IsNotEmpty, IsNumber, Max, Min} from 'class-validator'
-import {
-    Body,
-    Controller,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Inject,
-    Put,
-} from '@nestjs/common'
+import {Body, Controller, Inject, Put, Get, HttpStatus, HttpCode} from '@nestjs/common'
+import {IsNumber, Max, Min} from 'class-validator'
 
-import {IPlaybackControl} from '../service'
+import {IVlcControl} from '../service'
 
 export class VolumeDTO {
     @IsNumber()
     @Min(0)
-    @Max(125)
-    @IsNotEmpty()
+    @Max(1.25)
     public readonly volume!: number
 }
 
 @Controller('/volume')
 export class VolumeController {
-    private readonly playback_control: IPlaybackControl
+    private readonly vlc_control: IVlcControl;
 
     public constructor (
-        @Inject('IPlaybackControl') vlc_control: IPlaybackControl,
+        @Inject('IVlcControl') vlc_control: IVlcControl,
     ) {
-        this.playback_control = vlc_control
+        this.vlc_control = vlc_control
     }
 
     @Get()
     public async get_volume (): Promise<VolumeDTO> {
-        const volume = await this.playback_control.get_volume()
+        const volume = await this.vlc_control.get_volume()
 
-        return {
-            volume: Math.round(volume * 100),
-        }
+        return {volume}
     }
 
     @Put()
     @HttpCode(HttpStatus.NO_CONTENT)
     public async set_volume (@Body() volume_dto: VolumeDTO): Promise<void> {
-        await this.playback_control.set_volume(volume_dto.volume / 100)
+        const {volume} = volume_dto
+
+        await this.vlc_control.set_volume(volume)
     }
 }

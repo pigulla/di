@@ -1,86 +1,118 @@
+import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
-import dayjs from 'dayjs'
-import {SinonStubbedInstance} from 'sinon'
 
-import {DigitallyImported, IConfigProvider, DigitallyImportedError} from '@src/service'
-import {Channel, ChannelFilter, NowPlaying} from '@src/service/di'
-
-import {create_config_provider_stub, create_logger_stub} from '@test/util'
-import {load_nock_recording, RecordingName} from '@test/util/load_nock_recording'
+import {IConfigProvider, DigitallyImported} from '../../../src/service'
+import {
+    create_logger_stub,
+    create_config_provider_stub, HomepageEndpointBuilder,
+} from '../../util'
+import {AuthenticationError, PremiumUser, User, UserType} from '../../../src/service/di'
+import {LoginEndpointBuilder} from '../../util/builder'
 
 describe('DigitallyImported service', function () {
+    const username = 'hairy_potter@n3rd.org'
+    const password = 'secret'
+
     let config_provider: SinonStubbedInstance<IConfigProvider>
     let digitally_imported: DigitallyImported
 
-    beforeEach(async function () {
-        const logger = create_logger_stub()
-        logger.child_for_service.returns(create_logger_stub())
+    describe('with configured credentials', function () {
+        beforeEach(async function () {
+            config_provider = create_config_provider_stub({
+                di_url: 'https://di.fm.invalid',
+                di_username: username,
+                di_password: password,
+            })
 
-        config_provider = create_config_provider_stub({
-            di_url: 'https://www.di.fm',
+            const module = await Test.createTestingModule({
+                providers: [
+                    {
+                        provide: 'ILogger',
+                        useValue: create_logger_stub(),
+                    },
+                    {
+                        provide: 'IConfigProvider',
+                        useValue: config_provider,
+                    },
+                    DigitallyImported,
+                ],
+            }).compile()
+
+            digitally_imported = module.get(DigitallyImported)
         })
 
-        const module = await Test.createTestingModule({
-            providers: [
-                {
-                    provide: 'ILogger',
-                    useValue: logger,
-                },
-                {
-                    provide: 'IConfigProvider',
-                    useValue: config_provider,
-                },
-                DigitallyImported,
-            ],
-        }).compile()
+        it('should throw on login failure', async function () {
+            new LoginEndpointBuilder()
+                .for_base_url(config_provider.di_url)
+                .for_username(username)
+                .for_password(password)
+                .with_failure()
+                .build()
 
-        digitally_imported = module.get(DigitallyImported)
+            return expect(digitally_imported.load_app_data()).to.eventually.rejectedWith(AuthenticationError)
+        })
+
+        it('should return the user', async function () {
+            const expected = {
+                audio_token: '00112233445566778899aabbccddeeff',
+                session_key: '0123456789abcdef0123456789abcdef',
+                id: 123456,
+                api_key: '000102030405060708090a0b0c0d0e0f',
+                listen_key: 'fedcba9876543210',
+            }
+
+            new LoginEndpointBuilder()
+                .for_base_url(config_provider.di_url)
+                .for_username(username)
+                .for_password(password)
+                .with_success()
+                .build()
+
+            const app_data = await digitally_imported.load_app_data()
+            expect(app_data.user).to.be.an.instanceOf(User)
+            expect(app_data.user.type).to.equal(UserType.PREMIUM)
+
+            const user: PremiumUser = app_data.user as PremiumUser
+            expect(user.audio_token).to.equal(expected.audio_token)
+            expect(user.api_key).to.equal(expected.api_key)
+            expect(user.session_key).to.equal(expected.session_key)
+            expect(user.listen_key).to.equal(expected.listen_key)
+        })
     })
 
-    it('should parse the "now playing" data', async function () {
-        load_nock_recording(RecordingName.DI_CURRENTLY_PLAYING)
-        const data = await digitally_imported.load_now_playing()
+    describe('with no configured credentials', function () {
+        beforeEach(async function () {
+            config_provider = create_config_provider_stub({
+                di_url: 'https://di.fm.invalid',
+                di_listenkey: '1234567890abcdef',
+            })
 
-        for (const now_playing of data) {
-            expect(now_playing).to.be.an.instanceOf(NowPlaying)
-        }
-    })
+            const module = await Test.createTestingModule({
+                providers: [
+                    {
+                        provide: 'ILogger',
+                        useValue: create_logger_stub(),
+                    },
+                    {
+                        provide: 'IConfigProvider',
+                        useValue: config_provider,
+                    },
+                    DigitallyImported,
+                ],
+            }).compile()
 
-    it('should parse the app data', async function () {
-        load_nock_recording(RecordingName.DI_HOMEPAGE)
-        const app_data = await digitally_imported.load_app_data()
+            digitally_imported = module.get(DigitallyImported)
+        })
 
-        expect(app_data.app_version).to.be.a('string')
-        expect(app_data.app_deploy_time).to.be.an.instanceOf(dayjs)
+        it('should return a guest', async function () {
+            new HomepageEndpointBuilder()
+                .for_base_url(config_provider.di_url)
+                .build()
 
-        for (const channel of app_data.channels) {
-            expect(channel).to.be.an.instanceOf(Channel)
-        }
-
-        for (const channel_filter of app_data.channel_filters) {
-            expect(channel_filter).to.be.an.instanceOf(ChannelFilter)
-        }
-    })
-
-    it('should fail if there is no script tag', async function () {
-        load_nock_recording(RecordingName.DI_NO_SCRIPT_TAG)
-
-        await expect(digitally_imported.load_app_data())
-            .to.be.rejectedWith(DigitallyImportedError, 'Script tag not found')
-    })
-
-    it('should fail if the script tag does not call the interceptor', async function () {
-        load_nock_recording(RecordingName.DI_NO_INTERCEPTOR_CALL)
-
-        await expect(digitally_imported.load_app_data())
-            .to.be.rejectedWith(DigitallyImportedError, 'Interceptor not called')
-    })
-
-    it('should fail if the interceptor does not return data', async function () {
-        load_nock_recording(RecordingName.DI_EMPTY_INTERCEPTOR_CALL)
-
-        await expect(digitally_imported.load_app_data())
-            .to.be.rejectedWith(DigitallyImportedError, /Could not extract appdata/)
+            const app_data = await digitally_imported.load_app_data()
+            expect(app_data.user).to.be.an.instanceOf(User)
+            expect(app_data.user.type).to.equal(UserType.GUEST)
+        })
     })
 })

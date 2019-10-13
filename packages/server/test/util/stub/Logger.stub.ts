@@ -1,18 +1,16 @@
-import {stub, SinonStubbedInstance} from 'sinon'
+import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {ILogger} from '@src/service/logger'
+import {ILogger} from '../../../src/service'
 
 export function create_logger_stub (): SinonStubbedInstance<ILogger> {
     return {
-        fatal: stub(),
-        error: stub(),
-        warn: stub(),
-        info: stub(),
-        debug: stub(),
-        trace: stub(),
-        set_level: stub(),
-        child: stub(),
-        child_for_controller: stub(),
-        child_for_service: stub(),
+        debug: sinon.stub(),
+        error: sinon.stub(),
+        log: sinon.stub(),
+        verbose: sinon.stub(),
+        warn: sinon.stub(),
+        get_request_logger: sinon.stub(),
+        for_controller: sinon.stub<any>().returnsThis(),
+        for_service: sinon.stub<any>().returnsThis(),
     }
 }

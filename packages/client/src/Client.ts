@@ -1,28 +1,11 @@
-import Axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios'
+import {ChannelDTO, ChannelFilterDTO, PlaybackStateDTO, ServerStatusDTO, UserDTO} from '@digitally-imported/dto'
+import {FORBIDDEN, NOT_FOUND, NO_CONTENT} from 'http-status-codes'
+import Axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios'
 import Bluebird from 'bluebird'
-import {
-    FORBIDDEN,
-    NO_CONTENT,
-    NOT_FOUND,
-    OK,
-} from 'http-status-codes'
 
-import {
-    ChannelDTO,
-    ChannelFilterDTO,
-    NowPlayingDTO,
-    PlaybackStateDTO,
-    PlayDTO,
-    ServerStatusDTO,
-    VolumeDTO,
-} from '@digitally-imported/dto'
-
-import {ChannelNotFoundError, ClientError, ServerNotRunningError} from './error'
-
-type AxiosFactory = (config?: AxiosRequestConfig) => AxiosInstance
+import {ClientError, PremiumAccountRequiredError, ServerNotRunningError} from './error'
 
 export type Options = {
-    axios_factory?: AxiosFactory
     endpoint: string
 }
 
@@ -30,7 +13,7 @@ export class Client {
     private readonly axios: AxiosInstance;
 
     public constructor (options: Options) {
-        this.axios = (options.axios_factory || Axios.create)({
+        this.axios = Axios.create({
             baseURL: options.endpoint,
         })
 
@@ -43,8 +26,14 @@ export class Client {
                     throw new ServerNotRunningError()
                 }
 
-                throw new ClientError((error as AxiosError).message, error)
-            },
+                const response: AxiosResponse = error.response
+
+                if (response.status === FORBIDDEN) {
+                    throw new PremiumAccountRequiredError()
+                }
+
+                throw new ClientError('Client error', error)
+            }
         )
     }
 
@@ -69,14 +58,6 @@ export class Client {
         }
     }
 
-    public async shutdown (): Promise<void> {
-        await this
-            .request({
-                method: 'DELETE',
-                url: '/server',
-            })
-    }
-
     public async get_server_status (): Promise<ServerStatusDTO> {
         return this
             .request({
@@ -90,18 +71,16 @@ export class Client {
         await this
             .request({
                 method: 'PUT',
-                url: '/server/update',
+                url: '/update',
             })
     }
 
     public async set_volume (value: number): Promise<void> {
-        const data: VolumeDTO = {volume: value}
-
         await this
             .request({
                 method: 'PUT',
                 url: '/volume',
-                data,
+                data: {volume: value},
             })
     }
 
@@ -126,22 +105,13 @@ export class Client {
         return response.status === NO_CONTENT
     }
 
-    public async start_playback (channel_key: string): Promise<ChannelDTO> {
-        const data: PlayDTO = {channel: channel_key}
-
-        const response = await this
+    public async start_playback (channel: string): Promise<void> {
+        await this
             .request({
                 method: 'PUT',
                 url: '/playback',
-                data,
-                validateStatus: status => [OK, NOT_FOUND].includes(status),
+                data: {channel},
             })
-
-        if (response.status === NOT_FOUND) {
-            throw new ChannelNotFoundError(channel_key)
-        }
-
-        return response.data
     }
 
     public async stop_playback (): Promise<void> {
@@ -153,25 +123,12 @@ export class Client {
     }
 
     public async get_playback_state (): Promise<PlaybackStateDTO> {
-        const response = await this
+        return this
             .request({
                 method: 'GET',
                 url: '/playback',
-                validateStatus: status => [OK, NOT_FOUND].includes(status),
             })
-
-        return response.status === NOT_FOUND ? null : response.data
-    }
-
-    public async get_favorites (): Promise<ChannelDTO[]> {
-        const response = await this
-            .request({
-                method: 'GET',
-                url: '/favorites',
-                validateStatus: status => [OK, FORBIDDEN].includes(status),
-            })
-
-        return response.status === FORBIDDEN ? null : response.data
+            .get('data')
     }
 
     public async get_channels (): Promise<ChannelDTO[]> {
@@ -183,19 +140,22 @@ export class Client {
             .get('data')
     }
 
-    public async get_channel (channel_key: string): Promise<ChannelDTO> {
-        const response = await this
+    public async get_channel (key: string): Promise<ChannelDTO> {
+        return this
             .request({
                 method: 'GET',
-                url: `/channel/${channel_key}`,
-                validateStatus: status => [OK, NOT_FOUND].includes(status),
+                url: `/channels/${key}`,
             })
+            .get('data')
+    }
 
-        if (response.status === NOT_FOUND) {
-            throw new ChannelNotFoundError(channel_key)
-        }
-
-        return response.data
+    public async get_favorites (): Promise<ChannelDTO[]> {
+        return this
+            .request({
+                method: 'GET',
+                url: '/channels/favorites',
+            })
+            .get('data')
     }
 
     public get_channel_filters (): Promise<ChannelFilterDTO[]> {
@@ -207,37 +167,12 @@ export class Client {
             .get('data')
     }
 
-    private async get_now_playing_on_channel (channel_key: string): Promise<NowPlayingDTO> {
-        const response = await this
+    public get_user (): Promise<UserDTO> {
+        return this
             .request({
                 method: 'GET',
-                url: `/channel/${channel_key}/now_playing`,
-                validateStatus: status => [OK, NOT_FOUND].includes(status),
-            })
-
-        if (response.status === NOT_FOUND) {
-            throw new ChannelNotFoundError(channel_key)
-        }
-
-        return response.data
-    }
-
-    private async get_now_playing_on_channels (): Promise<Map<string, NowPlayingDTO>> {
-        const response: NowPlayingDTO[] = await this
-            .request({
-                method: 'GET',
-                url: '/channels/now_playing',
+                url: '/user',
             })
             .get('data')
-
-        return response.reduce((map, now_playing) => map.set(now_playing.channel_key, now_playing), new Map())
-    }
-
-    public get_now_playing (): Promise<Map<string, NowPlayingDTO>>
-    public get_now_playing (channel_key: string): Promise<NowPlayingDTO>
-    public get_now_playing (channel_key?: string): Promise<NowPlayingDTO|Map<string, NowPlayingDTO>> {
-        return channel_key === undefined
-            ? this.get_now_playing_on_channels()
-            : this.get_now_playing_on_channel(channel_key)
     }
 }

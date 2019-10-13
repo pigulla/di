@@ -1,54 +1,40 @@
-import {NotFoundException} from '@nestjs/common'
+import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
-import {SinonStubbedInstance} from 'sinon'
-
-import {PlaybackController} from '@src/controller'
-import {IChannelsProvider, IConfigProvider, INowPlayingProvider, IPlaybackControl} from '@src/service'
-import {Quality} from '@src/service/di'
 
 import {
-    ChannelBuilder,
-    create_channels_provider_stub,
-    create_config_provider_stub,
-    create_now_playing_provider_stub,
-    create_playback_control_stub,
-    prebuilt_channel, NowPlayingBuilder,
+    create_vlc_control_stub,
+    create_channel_provider_stub,
+    create_listen_key_provider_stub, ChannelBuilder, TrackInfoBuilder,
 } from '../../util'
+import {PlaybackController} from '../../../src/controller'
+import {IChannelProvider, IListenKeyProvider, IVlcControl} from '../../../src/service'
+import {InternalServerErrorException, NotFoundException} from '@nestjs/common'
 
 describe('Playback controller', function () {
     let controller: PlaybackController
-    let playback_control_stub: SinonStubbedInstance<IPlaybackControl>
-    let channels_provider_stub: SinonStubbedInstance<IChannelsProvider>
-    let config_provider_stub: SinonStubbedInstance<IConfigProvider>
-    let now_playing_provider_stub: SinonStubbedInstance<INowPlayingProvider>
+    let vlc_control_stub: SinonStubbedInstance<IVlcControl>
+    let channel_provider_stub: SinonStubbedInstance<IChannelProvider>
+    let listen_key_provider_stub: SinonStubbedInstance<IListenKeyProvider>
 
     beforeEach(async function () {
-        playback_control_stub = create_playback_control_stub()
-        channels_provider_stub = create_channels_provider_stub()
-        now_playing_provider_stub = create_now_playing_provider_stub()
-        config_provider_stub = create_config_provider_stub({
-            di_listenkey: 'my-listen-key',
-            di_quality: Quality.MP3_320,
-        })
+        vlc_control_stub = create_vlc_control_stub()
+        channel_provider_stub = create_channel_provider_stub()
+        listen_key_provider_stub = create_listen_key_provider_stub()
 
         const module = await Test.createTestingModule({
             providers: [
                 {
-                    provide: 'IPlaybackControl',
-                    useValue: playback_control_stub,
+                    provide: 'IVlcControl',
+                    useValue: vlc_control_stub,
                 },
                 {
-                    provide: 'IChannelsProvider',
-                    useValue: channels_provider_stub,
+                    provide: 'IChannelProvider',
+                    useValue: channel_provider_stub,
                 },
                 {
-                    provide: 'IConfigProvider',
-                    useValue: config_provider_stub,
-                },
-                {
-                    provide: 'INowPlayingProvider',
-                    useValue: now_playing_provider_stub,
+                    provide: 'IListenKeyProvider',
+                    useValue: listen_key_provider_stub,
                 },
                 PlaybackController,
             ],
@@ -58,52 +44,64 @@ describe('Playback controller', function () {
     })
 
     describe('when the current state is queried', function () {
-        const {progressive} = prebuilt_channel
-
-        it('should return empty data if nothing is playing', async function () {
-            playback_control_stub.get_current_channel_key.resolves(null)
-
-            await expect(controller.current()).to.be.rejectedWith(NotFoundException)
+        beforeEach(function () {
+            vlc_control_stub.get_volume.resolves(0.77)
         })
 
-        it('should return the data if something is playing', async function () {
-            playback_control_stub.get_current_channel_key.resolves(progressive.key)
-
-            const now_playing = new NowPlayingBuilder()
-                .for_channel(progressive)
-                .with_display_artist('Hairy Potter')
-                .with_display_title('Hookwarts')
-                .build()
-            now_playing_provider_stub.get_by_channel_key.withArgs(progressive.key).returns(now_playing)
-            channels_provider_stub.get.withArgs(progressive.key).returns(progressive)
+        it('should succeed if nothing is playing', async function () {
+            vlc_control_stub.info.resolves(null)
 
             await expect(controller.current()).to.eventually.deep.equal({
-                channel: progressive.to_dto(),
-                now_playing: {
-                    artist: now_playing.display_artist,
-                    title: now_playing.display_title,
-                },
+                now_playing: false,
+                channel: null,
+                volume: 0.77,
             })
+        })
+
+        it('should succeed if something is playing', async function () {
+            const channel = ChannelBuilder.build_progressive()
+            const track_info = new TrackInfoBuilder()
+                .with_now_playing('Hairy Potter - Hookwarts')
+                .with_filename(`http://www.di.fm.local/stream?${channel.key}`)
+                .build()
+            vlc_control_stub.info.resolves(track_info)
+            channel_provider_stub.get_channel_by_key.withArgs(channel.key).returns(channel)
+
+            await expect(controller.current()).to.eventually.deep.equal({
+                now_playing: 'Hairy Potter - Hookwarts',
+                channel: channel.to_dto(),
+                volume: 0.77,
+            })
+        })
+
+        it('should fail if the filename reported by VLC is invalid', async function () {
+            const track_info = new TrackInfoBuilder()
+                .with_now_playing('Hairy Potter - Hookwarts')
+                .with_filename('invalid')
+                .build()
+            vlc_control_stub.info.resolves(track_info)
+
+            await expect(controller.current()).to.eventually.be.rejectedWith(InternalServerErrorException)
         })
     })
 
     describe('when checked if playback is active', function () {
         it('should succeed when playing', async function () {
-            playback_control_stub.is_playing.resolves(true)
+            vlc_control_stub.is_playing.resolves(true)
 
             await expect(controller.is_playing()).to.eventually.be.undefined
         })
 
         it('should fail when not playing', async function () {
-            playback_control_stub.is_playing.resolves(false)
+            vlc_control_stub.is_playing.resolves(false)
 
-            await expect(controller.is_playing()).to.be.rejectedWith(NotFoundException)
+            await expect(controller.is_playing()).to.eventually.be.rejectedWith(NotFoundException)
         })
     })
 
     describe('when playback is stopped', function () {
         it('should work', async function () {
-            playback_control_stub.stop.resolves()
+            vlc_control_stub.stop.resolves()
 
             await expect(controller.stop()).to.eventually.be.undefined
         })
@@ -113,19 +111,18 @@ describe('Playback controller', function () {
         it('should work if the channel exists', async function () {
             const channel = new ChannelBuilder().with_key('progressive').build()
 
-            channels_provider_stub.channel_exists.withArgs('progressive').returns(true)
-            channels_provider_stub.get.withArgs('progressive').returns(channel)
+            listen_key_provider_stub.get_listen_key.returns('my-listen-key')
+            channel_provider_stub.channel_exists.withArgs('progressive').returns(true)
+            channel_provider_stub.get_channel_by_key.withArgs('progressive').returns(channel)
 
             await expect(controller.play({channel: 'progressive'})).to.eventually.deep.equal(channel.to_dto())
-            expect(playback_control_stub.play)
-                .to.have.been.calledOnceWithExactly(channel.build_url('my-listen-key', Quality.MP3_320))
+            expect(vlc_control_stub.add).to.have.been.calledOnceWithExactly(channel.build_url('my-listen-key'))
         })
 
         it('should fail if the channel does not exist', async function () {
-            channels_provider_stub.channel_exists.withArgs('progressive').returns(false)
+            channel_provider_stub.channel_exists.withArgs('progressive').returns(false)
 
-            await expect(controller.play({channel: 'progressive'}))
-                .to.be.rejectedWith(NotFoundException)
+            await expect(controller.play({channel: 'progressive'})).to.eventually.be.rejectedWith(NotFoundException)
         })
     })
 })

@@ -2,9 +2,9 @@ import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
-import {IAppDataProvider, ListenKeyProvider} from '../../src/service'
-import {create_logger_stub, create_config_provider_stub, create_app_data_provider_stub, AppDataBuilder, UserBuilder, ConfigOverrides} from '../util'
-import {User} from '../../src/service/di'
+import {IAppDataProvider, ListenKeyProvider} from '../../../src/service'
+import {create_logger_stub, create_config_provider_stub, create_app_data_provider_stub, AppDataBuilder, UserBuilder, ConfigOverrides} from '../../util'
+import {User} from '../../../src/service/di'
 
 describe('ListenKeyProvider service', function () {
     let app_data_provider: SinonStubbedInstance<IAppDataProvider>

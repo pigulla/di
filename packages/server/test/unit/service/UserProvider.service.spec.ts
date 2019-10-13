@@ -2,8 +2,8 @@ import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
-import {UserProvider, IAppDataProvider} from '../../src/service'
-import {create_logger_stub, create_app_data_provider_stub, AppDataBuilder, UserBuilder} from '../util'
+import {UserProvider, IAppDataProvider} from '../../../src/service'
+import {create_logger_stub, create_app_data_provider_stub, AppDataBuilder, UserBuilder} from '../../util'
 
 describe('UserProvider service', function () {
     const user = new UserBuilder().build_premium()

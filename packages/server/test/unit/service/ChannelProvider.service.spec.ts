@@ -2,11 +2,11 @@ import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
-import {ChannelProvider, IAppDataProvider} from '../../src/service'
-import {create_logger_stub, create_app_data_provider_stub, AppDataBuilder, UserBuilder, ChannelBuilder} from '../util'
-import {progressive, classictechno, vocaltrance} from '../util/builder/Channel.builder'
-import {ambient, bass, deep} from '../util/builder/ChannelFilter.builder'
-import {AppData} from '../../src/service/di'
+import {ChannelProvider, IAppDataProvider} from '../../../src/service'
+import {create_logger_stub, create_app_data_provider_stub, AppDataBuilder, UserBuilder, ChannelBuilder} from '../../util'
+import {progressive, classictechno, vocaltrance} from '../../util/builder/Channel.builder'
+import {ambient, bass, deep} from '../../util/builder/ChannelFilter.builder'
+import {AppData} from '../../../src/service/di'
 
 describe('ChannelProvider service', function () {
     const user = new UserBuilder().build_premium()

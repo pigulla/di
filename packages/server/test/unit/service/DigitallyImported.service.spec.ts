@@ -2,13 +2,13 @@ import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
-import {IConfigProvider, DigitallyImported} from '../../src/service'
+import {IConfigProvider, DigitallyImported} from '../../../src/service'
 import {
     create_logger_stub,
     create_config_provider_stub, HomepageEndpointBuilder,
-} from '../util'
-import {AuthenticationError, PremiumUser, User, UserType} from '../../src/service/di'
-import {LoginEndpointBuilder} from '../util/builder'
+} from '../../util'
+import {AuthenticationError, PremiumUser, User, UserType} from '../../../src/service/di'
+import {LoginEndpointBuilder} from '../../util/builder'
 
 describe('DigitallyImported service', function () {
     const username = 'hairy_potter@n3rd.org'

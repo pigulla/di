@@ -65,14 +65,14 @@ export class PlaybackController {
         }
 
         const {filename, now_playing} = info
-        const matches = /^(.+)\?[a-z0-9]+$/.exec(filename)
+        const matches = /^(?:.+)\?([a-z0-9]+)$/.exec(filename)
 
         if (!matches) {
             throw new InternalServerErrorException()
         }
         const channel = this.channel_provider.get_channel_by_key(matches[1])
 
-        return Object.assign(state, {now_playing, channel})
+        return Object.assign(state, {now_playing, channel: channel.to_dto()})
     }
 
     @Delete()

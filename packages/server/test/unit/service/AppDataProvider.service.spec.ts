@@ -4,9 +4,9 @@ import {expect} from 'chai'
 import dayjs from 'dayjs'
 import mockdate from 'mockdate'
 
-import {DigitallyImported, AppDataProvider} from '../../src/service'
-import {create_logger_stub, create_digitally_imported_stub, AppDataBuilder, UserBuilder} from '../util'
-import {AppData} from '../../src/service/di'
+import {DigitallyImported, AppDataProvider} from '../../../src/service'
+import {create_logger_stub, create_digitally_imported_stub, AppDataBuilder, UserBuilder} from '../../util'
+import {AppData} from '../../../src/service/di'
 
 describe('AppDataProvider service', function () {
     let app_data_provider: AppDataProvider

@@ -8,6 +8,6 @@ export class UserDTO {
     created_at!: string|null;
 
     constructor (user: UserDTO) {
-        Object.assign(this, user);
+        Object.assign(this, user)
     }
 }

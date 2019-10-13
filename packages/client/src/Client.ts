@@ -1,12 +1,12 @@
-import {ChannelDTO, ChannelFilterDTO, PlaybackStateDTO, ServerStatusDTO, UserDTO} from '@digitally-imported/dto';
-import {FORBIDDEN, NOT_FOUND, NO_CONTENT} from 'http-status-codes';
-import Axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
-import Bluebird from 'bluebird';
+import {ChannelDTO, ChannelFilterDTO, PlaybackStateDTO, ServerStatusDTO, UserDTO} from '@digitally-imported/dto'
+import {FORBIDDEN, NOT_FOUND, NO_CONTENT} from 'http-status-codes'
+import Axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios'
+import Bluebird from 'bluebird'
 
-import {ClientError, PremiumAccountRequiredError, ServerNotRunningError} from './error';
+import {ClientError, PremiumAccountRequiredError, ServerNotRunningError} from './error'
 
 export type Options = {
-    endpoint: string;
+    endpoint: string
 }
 
 export class Client {
@@ -15,30 +15,30 @@ export class Client {
     public constructor (options: Options) {
         this.axios = Axios.create({
             baseURL: options.endpoint,
-        });
+        })
 
         this.axios.interceptors.response.use(
             response => response,
             function (error) {
                 if (!error.isAxiosError) {
-                    throw error;
+                    throw error
                 } else if (error.code === 'ECONNREFUSED') {
-                    throw new ServerNotRunningError();
+                    throw new ServerNotRunningError()
                 }
 
-                const response: AxiosResponse = error.response;
+                const response: AxiosResponse = error.response
 
                 if (response.status === FORBIDDEN) {
-                    throw new PremiumAccountRequiredError();
+                    throw new PremiumAccountRequiredError()
                 }
 
-                throw new ClientError('Client error', error);
+                throw new ClientError('Client error', error)
             }
-        );
+        )
     }
 
     private request (config: AxiosRequestConfig): Bluebird<AxiosResponse> {
-        return Bluebird.resolve(this.axios(config));
+        return Bluebird.resolve(this.axios(config))
     }
 
     public async is_alive (): Promise<boolean> {
@@ -47,14 +47,14 @@ export class Client {
                 .request({
                     method: 'HEAD',
                     url: '/server',
-                });
-            return true;
+                })
+            return true
         } catch (error) {
             if (error instanceof ServerNotRunningError) {
-                return false;
+                return false
             }
 
-            throw error;
+            throw error
         }
     }
 
@@ -64,7 +64,7 @@ export class Client {
                 method: 'GET',
                 url: '/server',
             })
-            .get('data');
+            .get('data')
     }
 
     public async update (): Promise<void> {
@@ -72,7 +72,7 @@ export class Client {
             .request({
                 method: 'PUT',
                 url: '/update',
-            });
+            })
     }
 
     public async set_volume (value: number): Promise<void> {
@@ -81,7 +81,7 @@ export class Client {
                 method: 'PUT',
                 url: '/volume',
                 data: {volume: value},
-            });
+            })
     }
 
     public async get_volume (): Promise<number> {
@@ -91,7 +91,7 @@ export class Client {
                 url: '/volume',
             })
             .get('data')
-            .get('volume');
+            .get('volume')
     }
 
     public async is_playing (): Promise<boolean> {
@@ -100,9 +100,9 @@ export class Client {
                 method: 'HEAD',
                 url: '/playback',
                 validateStatus: status => [NO_CONTENT, NOT_FOUND].includes(status),
-            });
+            })
 
-        return response.status === NO_CONTENT;
+        return response.status === NO_CONTENT
     }
 
     public async start_playback (channel: string): Promise<void> {
@@ -111,7 +111,7 @@ export class Client {
                 method: 'PUT',
                 url: '/playback',
                 data: {channel},
-            });
+            })
     }
 
     public async stop_playback (): Promise<void> {
@@ -119,7 +119,7 @@ export class Client {
             .request({
                 method: 'DELETE',
                 url: '/playback',
-            });
+            })
     }
 
     public async get_playback_state (): Promise<PlaybackStateDTO> {
@@ -128,7 +128,7 @@ export class Client {
                 method: 'GET',
                 url: '/playback',
             })
-            .get('data');
+            .get('data')
     }
 
     public async get_channels (): Promise<ChannelDTO[]> {
@@ -137,7 +137,7 @@ export class Client {
                 method: 'GET',
                 url: '/channels',
             })
-            .get('data');
+            .get('data')
     }
 
     public async get_channel (key: string): Promise<ChannelDTO> {
@@ -146,7 +146,7 @@ export class Client {
                 method: 'GET',
                 url: `/channels/${key}`,
             })
-            .get('data');
+            .get('data')
     }
 
     public async get_favorites (): Promise<ChannelDTO[]> {
@@ -155,7 +155,7 @@ export class Client {
                 method: 'GET',
                 url: '/channels/favorites',
             })
-            .get('data');
+            .get('data')
     }
 
     public get_channel_filters (): Promise<ChannelFilterDTO[]> {
@@ -164,7 +164,7 @@ export class Client {
                 method: 'GET',
                 url: '/channelfilters',
             })
-            .get('data');
+            .get('data')
     }
 
     public get_user (): Promise<UserDTO> {
@@ -173,6 +173,6 @@ export class Client {
                 method: 'GET',
                 url: '/user',
             })
-            .get('data');
+            .get('data')
     }
 }

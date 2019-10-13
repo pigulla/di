@@ -1,13 +1,13 @@
-import joi from '@hapi/joi';
+import joi from '@hapi/joi'
 
-import {VlcCommand, ParseError} from '../VlcCommand';
+import {VlcCommand, ParseError} from '../VlcCommand'
 
 export interface TrackInfo {
-    artist: string;
-    filename: string;
-    title: string;
-    genre: string;
-    now_playing: string;
+    artist: string
+    filename: string
+    title: string
+    genre: string
+    now_playing: string
 }
 
 export const track_info_schema = joi.object().keys({
@@ -16,24 +16,24 @@ export const track_info_schema = joi.object().keys({
     title: joi.string(),
     genre: joi.string(),
     now_playing: joi.string(),
-}).options({presence: 'required'});
+}).options({presence: 'required'})
 
 export default class Info extends VlcCommand<[], TrackInfo|null> {
     private stream_0_index: number|null = null;
 
     protected pre_parse_validation (response: string[]): void {
-        const index = response.findIndex(line => line.includes('Stream 0'));
+        const index = response.findIndex(line => line.includes('Stream 0'))
 
         if (response.length > 0 && index === -1) {
-            throw new ParseError('Stream information not found');
+            throw new ParseError('Stream information not found')
         }
 
-        this.stream_0_index = response.length === 0 ? null : index;
+        this.stream_0_index = response.length === 0 ? null : index
     }
 
     protected do_parse (response: string[]): TrackInfo|null {
         if (this.stream_0_index === null) {
-            return null;
+            return null
         }
 
         return response
@@ -46,6 +46,6 @@ export default class Info extends VlcCommand<[], TrackInfo|null> {
                 genre: '',
                 filename: '',
                 now_playing: '',
-            });
+            })
     }
 }

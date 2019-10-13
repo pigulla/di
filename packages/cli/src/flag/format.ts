@@ -1,5 +1,5 @@
-import {flags} from '@oclif/command';
-import {IOptionFlag} from '@oclif/command/lib/flags';
+import {flags} from '@oclif/command'
+import {IOptionFlag} from '@oclif/command/lib/flags'
 
 export enum Format {
     table = 'table',
@@ -15,5 +15,5 @@ export function format (formats: Format[] = [Format.table, Format.json, Format.c
         default: 'table',
         required: false,
         env: 'DI_OUTPUT_FORMAT',
-    })();
+    })()
 }

@@ -1,12 +1,12 @@
-import * as Config from '@oclif/config';
-import {UserDTO} from '@digitally-imported/dto/lib';
+import * as Config from '@oclif/config'
+import {UserDTO} from '@digitally-imported/dto/lib'
 
-import {FormattedOutputCommand, OutputOptions} from '../FormattedOutputCommand';
+import {FormattedOutputCommand, OutputOptions} from '../FormattedOutputCommand'
 
 export default class User extends FormattedOutputCommand<UserDTO> {
-    static description = 'Get user info.';
+    public static description = 'Get user info.';
 
-    static flags = {
+    public static flags = {
         ...FormattedOutputCommand.flags,
     }
 
@@ -31,14 +31,14 @@ export default class User extends FormattedOutputCommand<UserDTO> {
                 has_password: {},
                 created_at: {},
             },
-        };
+        }
 
-        super(output_options, argv, config);
+        super(output_options, argv, config)
     }
 
-    async run (): Promise<void> {
-        const user = await this.client.get_user();
+    public async run (): Promise<void> {
+        const user = await this.client.get_user()
 
-        this.print_formatted(user);
+        this.print_formatted(user)
     }
 }

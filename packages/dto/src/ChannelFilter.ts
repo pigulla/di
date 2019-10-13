@@ -6,6 +6,6 @@ export class ChannelFilterDTO {
     name!: string;
 
     constructor (channel_filter: ChannelFilterDTO) {
-        Object.assign(this, channel_filter);
+        Object.assign(this, channel_filter)
     }
 }

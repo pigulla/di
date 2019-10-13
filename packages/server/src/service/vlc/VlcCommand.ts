@@ -1,17 +1,17 @@
-import snake_case from 'lodash.snakecase';
+import snake_case from 'lodash.snakecase'
 
 export class ParseError extends Error {
     public constructor (message: string) {
-        super(`Parse error: ${message}`);
+        super(`Parse error: ${message}`)
     }
 }
 
 interface Options {
     // The name of the command to execute (as defined by VLC). If not set it is inferred by snake-casing the class name.
-    command?: string;
+    command?: string
 
     // If set, fail the pre-parse check if the number of lines returned from VLC does not match.
-    expected_result_length?: number;
+    expected_result_length?: number
 }
 
 /**
@@ -21,14 +21,14 @@ export abstract class VlcCommand<Params extends any[], Result> {
     public readonly command: string;
     public readonly options: Readonly<Omit<Options, 'command'>>;
 
-    constructor (options: Partial<Options> = {}) {
+    public constructor (options: Partial<Options> = {}) {
         const {command, ...opts} = Object.assign({}, {
             command: snake_case(this.constructor.name),
             expected_result_length: undefined,
-        }, options);
+        }, options)
 
-        this.command = command;
-        this.options = opts;
+        this.command = command
+        this.options = opts
     }
 
     /**
@@ -53,7 +53,7 @@ export abstract class VlcCommand<Params extends any[], Result> {
      * @param args
      */
     public build_arg_string (args: Params): string {
-        return args.map(arg => String(arg)).join(' ');
+        return args.map(arg => String(arg)).join(' ')
     }
 
     /**
@@ -62,13 +62,13 @@ export abstract class VlcCommand<Params extends any[], Result> {
      * @param response
      */
     public parse (response: string[]): Result {
-        const expected_length = this.options.expected_result_length;
+        const expected_length = this.options.expected_result_length
         if (expected_length !== undefined && response.length !== expected_length) {
-            throw new ParseError('Unexpected response length');
+            throw new ParseError('Unexpected response length')
         }
 
-        this.pre_parse_validation(response);
-        return this.do_parse(response);
+        this.pre_parse_validation(response)
+        return this.do_parse(response)
     }
 }
 
@@ -76,15 +76,15 @@ export abstract class VlcCommand<Params extends any[], Result> {
  * Simplified class for commands that do not expect a response from VLC.
  */
 export abstract class NoResultVlcCommand<Params extends any[]> extends VlcCommand<Params, void> {
-    constructor (options: Partial<Options> = {}) {
+    public constructor (options: Partial<Options> = {}) {
         const opts = Object.assign({}, {
             expected_result_length: 0,
-        }, options);
+        }, options)
 
-        super(opts);
+        super(opts)
     }
 
     protected do_parse (_response: string[]): void {
-        return undefined;
+        return undefined
     }
 }

@@ -3,6 +3,8 @@ yarn.lock
 *-debug.log
 *-error.log
 .idea/
+.nyc_output/
+coverage/
 node_modules/
 packages/*/lib
 

@@ -1,4 +1,4 @@
-import {ChannelDTO} from './Channel';
+import {ChannelDTO} from './Channel'
 
 export class PlaybackStateDTO {
     channel!: ChannelDTO|null;

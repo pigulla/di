@@ -1,21 +1,14 @@
-import cheerio from 'cheerio';
-import superagent from 'superagent';
-import {NodeVM} from 'vm2';
-import {Injectable, Inject} from '@nestjs/common';
+import {Injectable, Inject} from '@nestjs/common'
 
-import {AuthenticationError, AppData, RawAppData} from './di';
-import {UserType} from './di/User';
-import {IConfigProvider} from './ConfigProvider.service';
-import {ILogger} from './Logger.service';
+import cheerio from 'cheerio'
+import superagent from 'superagent'
+import {NodeVM} from 'vm2'
 
-export interface Credentials {
-    email: string;
-    password: string;
-}
-
-export interface IDigitallyImported {
-    load_app_data (): Promise<AppData>;
-}
+import {AuthenticationError, AppData, RawAppData} from './di'
+import {UserType} from './di/User'
+import {IConfigProvider} from './ConfigProvider.interface'
+import {ILogger} from './Logger.interface'
+import {IDigitallyImported, Credentials} from './DigitallyImported.interface'
 
 @Injectable()
 export class DigitallyImported implements IDigitallyImported {
@@ -27,15 +20,16 @@ export class DigitallyImported implements IDigitallyImported {
         @Inject('ILogger') logger: ILogger,
         @Inject('IConfigProvider') config: IConfigProvider
     ) {
-        this.url = config.digitally_imported.url;
-        this.credentials = config.digitally_imported.credentials;
-        this.logger = logger.for_service(DigitallyImported.name);
+        this.url = config.di_url
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.credentials = config.di_listenkey ? null : {email: config.di_username!, password: config.di_password!}
+        this.logger = logger.for_service(DigitallyImported.name)
 
-        this.logger.log('Service instantiated');
+        this.logger.log('Service instantiated')
     }
 
     private extract_app_data (html: string): RawAppData {
-        let raw_app_data: RawAppData|null = null;
+        let raw_app_data: RawAppData|null = null
 
         const vm = new NodeVM({
             console: 'off',
@@ -45,31 +39,31 @@ export class DigitallyImported implements IDigitallyImported {
                 di: {
                     app: {
                         start (value: RawAppData) {
-                            raw_app_data = value;
+                            raw_app_data = value
                         },
                     },
                 },
             },
-        });
+        })
 
         const app_script_tag = cheerio.load(html)('script').toArray()
-            .filter(node => node.firstChild && node.firstChild.data && node.firstChild.data.includes('di.app.start'));
-        const src = app_script_tag[0].firstChild.data || '';
+            .filter(node => node.firstChild && node.firstChild.data && node.firstChild.data.includes('di.app.start'))
+        const src = app_script_tag[0].firstChild.data || ''
 
         try {
-            vm.run(src, '/di');
+            vm.run(src, '/di')
             if (!raw_app_data) {
-                throw new Error('Interceptor not called');
+                throw new Error('Interceptor not called')
             }
         } catch (error) {
-            throw new Error(`Could not extract appdata (${error.message})`);
+            throw new Error(`Could not extract appdata (${error.message})`)
         }
 
-        return raw_app_data;
+        return raw_app_data
     }
 
     public async load_app_data (): Promise<AppData> {
-        const agent = superagent.agent();
+        const agent = superagent.agent()
 
         const response = !this.credentials
             ? await agent.get(this.url)
@@ -77,18 +71,18 @@ export class DigitallyImported implements IDigitallyImported {
                 'member_session[password]': this.credentials.password,
                 'member_session[username]': this.credentials.email,
                 'member_session[remember_me]': 0,
-            });
+            })
 
-        const raw_app_data = this.extract_app_data(response.text);
+        const raw_app_data = this.extract_app_data(response.text)
 
         if (this.credentials && raw_app_data.currentUserType === UserType.GUEST) {
             // We sent credentials but we're not logged in, so something must have gone wrong.
-            throw new AuthenticationError();
+            throw new AuthenticationError()
         }
 
-        const app_data = AppData.from_raw(raw_app_data);
+        const app_data = AppData.from_raw(raw_app_data)
 
-        this.logger.log('AppData successfully retrieved');
-        return app_data;
+        this.logger.log('AppData successfully retrieved')
+        return app_data
     }
 }

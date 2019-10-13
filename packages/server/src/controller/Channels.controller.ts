@@ -1,39 +1,35 @@
-import {ChannelDTO} from '@digitally-imported/dto';
+import {ChannelDTO} from '@digitally-imported/dto'
 import {
     Controller,
     Get,
     Inject,
     Param,
     NotFoundException,
-    UseInterceptors,
-    ClassSerializerInterceptor,
-} from '@nestjs/common';
+} from '@nestjs/common'
 
-import {IChannelProvider} from '../service';
+import {IChannelProvider} from '../service'
 
 @Controller()
 export class ChannelsController {
     private readonly channel_provider: IChannelProvider;
 
-    constructor (
+    public constructor (
         @Inject('IChannelProvider') channel_provider: IChannelProvider,
     ) {
-        this.channel_provider = channel_provider;
+        this.channel_provider = channel_provider
     }
 
     @Get('/channels')
-    @UseInterceptors(ClassSerializerInterceptor)
-    list_channels (): ChannelDTO[] {
-        return this.channel_provider.get_channels().map(channel => channel.to_dto());
+    public list_channels (): ChannelDTO[] {
+        return this.channel_provider.get_channels().map(channel => channel.to_dto())
     }
 
     @Get('/channel/:key')
-    @UseInterceptors(ClassSerializerInterceptor)
-    get_channel (@Param('key') key: string): ChannelDTO {
+    public get_channel (@Param('key') key: string): ChannelDTO {
         if (!this.channel_provider.channel_exists(key)) {
-            throw new NotFoundException();
+            throw new NotFoundException()
         }
 
-        return this.channel_provider.get_channel_by_key(key).to_dto();
+        return this.channel_provider.get_channel_by_key(key).to_dto()
     }
 }

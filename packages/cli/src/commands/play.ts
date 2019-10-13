@@ -1,11 +1,11 @@
-import {BaseCommand} from '../BaseCommand';
+import {BaseCommand} from '../BaseCommand'
 
 export default class Play extends BaseCommand {
-    static description = 'Play a channel.';
+    public static description = 'Play a channel.';
 
-    static flags = {...BaseCommand.flags}
+    public static flags = {...BaseCommand.flags}
 
-    static args = [
+    public static args = [
         {
             name: 'channel',
             required: true,
@@ -13,9 +13,9 @@ export default class Play extends BaseCommand {
         },
     ]
 
-    async run (): Promise<void> {
-        const {args} = this.parse(Play);
+    public async run (): Promise<void> {
+        const {args} = this.parse(Play)
 
-        await this.client.start_playback(args.channel);
+        await this.client.start_playback(args.channel)
     }
 }

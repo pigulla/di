@@ -1,17 +1,17 @@
-import {VlcCommand, ParseError} from '../VlcCommand';
+import {VlcCommand, ParseError} from '../VlcCommand'
 
 export default class IsPlaying extends VlcCommand<[], boolean> {
-    constructor () {
-        super({expected_result_length: 1});
+    public constructor () {
+        super({expected_result_length: 1})
     }
 
     protected pre_parse_validation (response: string[]): void {
         if (!response[0].match(/^[01]$/)) {
-            throw new ParseError('Malformed response');
+            throw new ParseError('Malformed response')
         }
     }
 
     protected do_parse (response: string[]): boolean {
-        return response[0] === '1';
+        return response[0] === '1'
     }
 }

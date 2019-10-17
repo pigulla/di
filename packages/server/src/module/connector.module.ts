@@ -6,6 +6,7 @@ import {
 } from '../service/'
 import {MiscModule} from './misc.module'
 import {VlcInstanceMonitor} from '../middleware'
+import {ChildProcessFacade} from '../service/vlc'
 
 @Module({
     imports: [
@@ -20,6 +21,10 @@ import {VlcInstanceMonitor} from '../middleware'
         {
             provide: 'IVlcControl',
             useClass: VlcControl,
+        },
+        {
+            provide: 'IChildProcessFacade',
+            useClass: ChildProcessFacade,
         },
     ],
     exports: [

@@ -9,10 +9,11 @@
     "outdated": "lerna exec --no-bail 'npm outdated'",
     "build": "lerna exec 'rm -rf lib' && lerna run build",
     "setup": "lerna exec 'rm -rf node_modules' && lerna bootstrap",
-    "test": "npm run lint && nyc mocha packages/*/test/**/*.spec.ts",
-    "test:server": "mocha packages/server/test/**/*.spec.ts"
+    "test": "npm run lint && npm run test-with-coverage && npm audit",
+    "test-with-coverage": "nyc mocha 'packages/*/test/**/*.spec.ts'"
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^0.1.3",
     "@types/chai": "^4.2.3",
     "@types/chai-as-promised": "^7.1.2",
     "@types/mocha": "^5.2.7",

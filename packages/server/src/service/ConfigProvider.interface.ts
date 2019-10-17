@@ -10,7 +10,7 @@ export type IConfigProvider = {
 
     vlc_path: string
     vlc_timeout: number
-    vlc_initial_volume: number
+    vlc_initial_volume: number|null
 
     di_url: string
     di_username: string|null

@@ -1,5 +1,6 @@
 export * from './AppDataProvider.stub'
 export * from './ChannelProvider.stub'
+export * from './ChildProcessFacade.stub'
 export * from './ConfigProvider.stub'
 export * from './DigitallyImported.stub'
 export * from './ListenKeyProvider.stub'

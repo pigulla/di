@@ -1,7 +1,7 @@
 import {Injectable, OnModuleInit, OnApplicationShutdown, Inject} from '@nestjs/common'
 
 import * as vlc_commands from './vlc/commands'
-import {ChildProcessFacade, VlcCommand, VlcControlError} from './vlc'
+import {VlcCommand, VlcControlError, IChildProcessFacade} from './vlc'
 import {ILogger} from './Logger.interface'
 import {IConfigProvider} from './ConfigProvider.interface'
 import {IVlcControl, UnknownCommandError} from './VlcControl.interface'
@@ -19,29 +19,18 @@ export class VlcControl implements IVlcControl, OnModuleInit, OnApplicationShutd
     private readonly welcome_message: string = Math.random().toString(36).slice(2);
 
     private readonly config_provider: IConfigProvider;
-    private vlc_process: ChildProcessFacade
+    private vlc_process: IChildProcessFacade
     private vlc_version: string|null;
 
     public constructor (
         @Inject('ILogger') logger: ILogger,
         @Inject('IConfigProvider') config_provider: IConfigProvider,
+        @Inject('IChildProcessFacade') child_process_facade: IChildProcessFacade,
     ) {
-        const args = [
-            '--intf',
-            'cli',
-            '--lua-config',
-            `cli={prompt="${VlcControl.prompt}",welcome="${this.welcome_message}",width=240}`,
-        ]
-
         this.logger = logger.for_service(VlcControl.name)
         this.config_provider = config_provider
         this.vlc_version = null
-        this.vlc_process = new ChildProcessFacade({
-            logger: this.logger,
-            path: this.config_provider.vlc_path,
-            args,
-            timeout_ms: this.config_provider.vlc_timeout,
-        })
+        this.vlc_process = child_process_facade
 
         this.logger.log('Service instantiated')
     }
@@ -54,7 +43,36 @@ export class VlcControl implements IVlcControl, OnModuleInit, OnApplicationShutd
         await this.stop_instance()
     }
 
-    public static split_lines (data: string|Buffer): string[] {
+    public is_running (): boolean {
+        return this.vlc_process.is_running()
+    }
+
+    public get_vlc_version (): string {
+        if (this.vlc_version === null) {
+            throw new Error('Version not available')
+        }
+
+        return this.vlc_version
+    }
+
+    public get_vlc_pid (): number {
+        return this.vlc_process.get_pid()
+    }
+
+    public async start_instance (): Promise<void> {
+        const response = await this.vlc_process.start(VlcControl.prompt, this.welcome_message)
+        this.vlc_version = this.parse_version_from_initial_response(response)
+
+        if (this.config_provider.vlc_initial_volume !== null) {
+            await this.set_volume(this.config_provider.vlc_initial_volume)
+        }
+    }
+
+    public async stop_instance (): Promise<void> {
+        await this.vlc_process.stop()
+    }
+
+    private static split_lines (data: string|Buffer): string[] {
         return data.toString().split(/\r?\n/).filter(line => line.length > 0)
     }
 
@@ -73,35 +91,6 @@ export class VlcControl implements IVlcControl, OnModuleInit, OnApplicationShutd
         }
 
         return version_matches[1]
-    }
-
-    public is_running (): boolean {
-        return this.vlc_process.running
-    }
-
-    public get_vlc_version (): string {
-        if (this.vlc_version === null) {
-            throw new Error('Version not available')
-        }
-
-        return this.vlc_version
-    }
-
-    public get_vlc_pid (): number {
-        return this.vlc_process.pid
-    }
-
-    public async start_instance (): Promise<void> {
-        const response = await this.vlc_process.start()
-        this.vlc_version = this.parse_version_from_initial_response(response)
-
-        if (this.config_provider.vlc_initial_volume !== null) {
-            await this.set_volume(this.config_provider.vlc_initial_volume)
-        }
-    }
-
-    public async stop_instance (): Promise<void> {
-        await this.vlc_process.stop()
     }
 
     private async send (command: string, args: string): Promise<string[]> {

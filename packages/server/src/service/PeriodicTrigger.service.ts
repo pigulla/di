@@ -8,7 +8,7 @@ export type Options = {
     interval_ms: number
 }
 
-export class PeriodicUpdater implements IPeriodicTrigger, OnApplicationShutdown {
+export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationShutdown {
     private readonly logger: ILogger
     private readonly options: Options
     private interval_id: NodeJS.Timer|null
@@ -47,7 +47,7 @@ export class PeriodicUpdater implements IPeriodicTrigger, OnApplicationShutdown 
         }
 
         this.logger.log('Stopping service')
-        clearInterval(this.interval_id)
+        clearTimeout(this.interval_id)
         this.interval_id = null
     }
 

@@ -45,20 +45,6 @@ export class Channel {
         }
     ) {}
 
-    public static get_name_from_url (url: string): string|null {
-        let pathname
-
-        try {
-            pathname = (new URL(url)).pathname
-        } catch (error) {
-            return null
-        }
-
-        const matches = /^\/premium(?:_(?:medium|high))?\/(.+)\.pls$/.exec(pathname)
-
-        return matches ? matches[1] : null
-    }
-
     public build_url (listen_key: string, quality: Quality = Quality.AAC_128): string {
         return `http://listen.di.fm/${quality}/${this.key}.pls?listen_key=${listen_key}`
     }

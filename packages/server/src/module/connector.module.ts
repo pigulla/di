@@ -1,9 +1,11 @@
 import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common'
 
 import {
-    DigitallyImported, IDigitallyImported, INowPlayingProvider, NowPlayingProvider,
+    IDigitallyImported, DigitallyImported,
+    INowPlayingProvider, NowPlayingProvider,
+    IPeriodicTrigger, PeriodicTrigger,
     VlcControl,
-    ILogger, IPeriodicTrigger, PeriodicUpdater,
+    ILogger,
 } from '../service/'
 import {MiscModule} from './misc.module'
 import {VlcInstanceMonitor} from '../middleware'
@@ -38,7 +40,7 @@ import {ChildProcessFacade} from '../service/vlc'
                 now_playing_provider: INowPlayingProvider,
                 digitally_imported: IDigitallyImported,
             ): Promise<IPeriodicTrigger> {
-                const periodic_updater = new PeriodicUpdater(logger, {
+                const periodic_updater = new PeriodicTrigger(logger, {
                     interval_ms: 10_000,
                     async callback (): Promise<void> {
                         const data = await digitally_imported.load_now_playing()

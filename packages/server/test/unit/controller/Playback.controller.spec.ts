@@ -5,22 +5,24 @@ import {expect} from 'chai'
 import {
     create_vlc_control_stub,
     create_channel_provider_stub,
-    create_listen_key_provider_stub, ChannelBuilder, TrackInfoBuilder,
+    create_config_provider_stub, ChannelBuilder, TrackInfoBuilder,
 } from '../../util'
 import {PlaybackController} from '../../../src/controller'
-import {IChannelProvider, IListenKeyProvider, IVlcControl} from '../../../src/service'
+import {IChannelProvider, IConfigProvider, IVlcControl} from '../../../src/service'
 import {InternalServerErrorException, NotFoundException} from '@nestjs/common'
 
 describe('Playback controller', function () {
     let controller: PlaybackController
     let vlc_control_stub: SinonStubbedInstance<IVlcControl>
     let channel_provider_stub: SinonStubbedInstance<IChannelProvider>
-    let listen_key_provider_stub: SinonStubbedInstance<IListenKeyProvider>
+    let config_provider_stub: SinonStubbedInstance<IConfigProvider>
 
     beforeEach(async function () {
         vlc_control_stub = create_vlc_control_stub()
         channel_provider_stub = create_channel_provider_stub()
-        listen_key_provider_stub = create_listen_key_provider_stub()
+        config_provider_stub = create_config_provider_stub({
+            di_listenkey: 'my-listen-key',
+        })
 
         const module = await Test.createTestingModule({
             providers: [
@@ -33,8 +35,8 @@ describe('Playback controller', function () {
                     useValue: channel_provider_stub,
                 },
                 {
-                    provide: 'IListenKeyProvider',
-                    useValue: listen_key_provider_stub,
+                    provide: 'IConfigProvider',
+                    useValue: config_provider_stub,
                 },
                 PlaybackController,
             ],
@@ -65,7 +67,7 @@ describe('Playback controller', function () {
                 .with_filename(`http://www.di.fm.local/stream?${channel.key}`)
                 .build()
             vlc_control_stub.info.resolves(track_info)
-            channel_provider_stub.get_channel_by_key.withArgs(channel.key).returns(channel)
+            channel_provider_stub.get_by_key.withArgs(channel.key).returns(channel)
 
             await expect(controller.current()).to.eventually.deep.equal({
                 now_playing: 'Hairy Potter - Hookwarts',
@@ -111,9 +113,8 @@ describe('Playback controller', function () {
         it('should work if the channel exists', async function () {
             const channel = new ChannelBuilder().with_key('progressive').build()
 
-            listen_key_provider_stub.get_listen_key.returns('my-listen-key')
             channel_provider_stub.channel_exists.withArgs('progressive').returns(true)
-            channel_provider_stub.get_channel_by_key.withArgs('progressive').returns(channel)
+            channel_provider_stub.get_by_key.withArgs('progressive').returns(channel)
 
             await expect(controller.play({channel: 'progressive'})).to.eventually.deep.equal(channel.to_dto())
             expect(vlc_control_stub.add).to.have.been.calledOnceWithExactly(channel.build_url('my-listen-key'))

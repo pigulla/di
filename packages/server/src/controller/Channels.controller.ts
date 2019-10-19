@@ -21,7 +21,7 @@ export class ChannelsController {
 
     @Get('/channels')
     public list_channels (): ChannelDTO[] {
-        return this.channel_provider.get_channels().map(channel => channel.to_dto())
+        return this.channel_provider.get_all().map(channel => channel.to_dto())
     }
 
     @Get('/channel/:key')
@@ -30,6 +30,6 @@ export class ChannelsController {
             throw new NotFoundException()
         }
 
-        return this.channel_provider.get_channel_by_key(key).to_dto()
+        return this.channel_provider.get_by_key(key).to_dto()
     }
 }

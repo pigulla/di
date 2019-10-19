@@ -36,15 +36,11 @@ export class ConfigProvider implements IConfigProvider {
         return this.options.url
     }
 
-    public get di_username (): IConfigProvider['di_username'] {
-        return this.options.username || null
-    }
-
-    public get di_password (): IConfigProvider['di_password'] {
-        return this.options.password || null
-    }
-
     public get di_listenkey (): IConfigProvider['di_listenkey'] {
-        return this.options.listenkey || null
+        return this.options.listenkey
+    }
+
+    public get di_frequency_ms (): IConfigProvider['di_frequency_ms'] {
+        return this.options.frequency
     }
 }

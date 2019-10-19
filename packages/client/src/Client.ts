@@ -1,4 +1,4 @@
-import {ChannelDTO, ChannelFilterDTO, PlaybackStateDTO, ServerStatusDTO, UserDTO} from '@digitally-imported/dto'
+import {ChannelDTO, ChannelFilterDTO, PlaybackStateDTO, ServerStatusDTO} from '@digitally-imported/dto'
 import {FORBIDDEN, NOT_FOUND, NO_CONTENT} from 'http-status-codes'
 import Axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios'
 import Bluebird from 'bluebird'
@@ -163,15 +163,6 @@ export class Client {
             .request({
                 method: 'GET',
                 url: '/channelfilters',
-            })
-            .get('data')
-    }
-
-    public get_user (): Promise<UserDTO> {
-        return this
-            .request({
-                method: 'GET',
-                url: '/user',
             })
             .get('data')
     }

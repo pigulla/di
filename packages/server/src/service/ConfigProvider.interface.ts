@@ -13,7 +13,6 @@ export type IConfigProvider = {
     vlc_initial_volume: number|null
 
     di_url: string
-    di_username: string|null
-    di_password: string|null
-    di_listenkey: string|null
+    di_listenkey: string
+    di_frequency_ms: number
 }

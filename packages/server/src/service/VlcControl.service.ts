@@ -49,7 +49,7 @@ export class VlcControl implements IVlcControl, OnModuleInit, OnApplicationShutd
 
     public get_vlc_version (): string {
         if (this.vlc_version === null) {
-            throw new Error('Version not available')
+            throw new Error('Version not yet available')
         }
 
         return this.vlc_version

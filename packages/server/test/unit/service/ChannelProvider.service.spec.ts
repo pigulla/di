@@ -3,19 +3,17 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
 import {ChannelProvider, IAppDataProvider} from '../../../src/service'
-import {create_logger_stub, create_app_data_provider_stub, AppDataBuilder, UserBuilder, ChannelBuilder} from '../../util'
+import {create_logger_stub, create_app_data_provider_stub, AppDataBuilder, ChannelBuilder} from '../../util'
 import {progressive, classictechno, vocaltrance} from '../../util/builder/Channel.builder'
 import {ambient, bass, deep} from '../../util/builder/ChannelFilter.builder'
 import {AppData} from '../../../src/service/di'
 
 describe('ChannelProvider service', function () {
-    const user = new UserBuilder().build_premium()
     const invalid_channel = new ChannelBuilder()
         .with_id(0)
         .with_key('invalid_key')
         .build()
     const app_data = new AppDataBuilder()
-        .with_user(user)
         .with_channels([progressive, classictechno, vocaltrance])
         .with_channel_filters([ambient, bass, deep])
         .build()
@@ -60,7 +58,7 @@ describe('ChannelProvider service', function () {
 
         trigger_update(new_app_data)
 
-        expect(channel_provider.get_channels()).to.have.length(0)
+        expect(channel_provider.get_all()).to.have.length(0)
         expect(channel_provider.get_filters()).to.have.length(0)
     })
 
@@ -69,7 +67,7 @@ describe('ChannelProvider service', function () {
     })
 
     it('should return channels', function () {
-        expect(channel_provider.get_channels()).to.have.members(app_data.channels)
+        expect(channel_provider.get_all()).to.have.members(app_data.channels)
     })
 
     describe('should check if a channel exists', function () {
@@ -91,18 +89,18 @@ describe('ChannelProvider service', function () {
 
     describe('should return a channel', function () {
         it('by its id', function () {
-            expect(() => channel_provider.get_channel_by_id(invalid_channel.id)).to.throw()
-            expect(channel_provider.get_channel_by_id(progressive.id)).to.equal(progressive)
+            expect(() => channel_provider.get_by_id(invalid_channel.id)).to.throw()
+            expect(channel_provider.get_by_id(progressive.id)).to.equal(progressive)
         })
 
         it('by its key', function () {
-            expect(() => channel_provider.get_channel_by_key(invalid_channel.key)).to.throw()
-            expect(channel_provider.get_channel_by_key(progressive.key)).to.equal(progressive)
+            expect(() => channel_provider.get_by_key(invalid_channel.key)).to.throw()
+            expect(channel_provider.get_by_key(progressive.key)).to.equal(progressive)
         })
 
         it('by itself', function () {
-            expect(() => channel_provider.get_channel(invalid_channel)).to.throw()
-            expect(channel_provider.get_channel(progressive)).to.equal(progressive)
+            expect(() => channel_provider.get(invalid_channel)).to.throw()
+            expect(channel_provider.get(progressive)).to.equal(progressive)
         })
     })
 })

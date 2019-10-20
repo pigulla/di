@@ -3,6 +3,7 @@ import {existsSync as exists} from 'fs'
 import {sync as which} from 'which'
 import {Options} from 'yargs'
 import {LogLevel} from '@nestjs/common'
+import {Quality} from '@server/service/di'
 
 export interface CliOptions {
     // Server
@@ -17,9 +18,9 @@ export interface CliOptions {
 
     // Digitally Imported
     url: string
-    username?: string
-    password?: string
-    listenkey?: string
+    listenkey: string
+    frequency: number
+    quality: Quality
 }
 
 const server_options: {[key: string]: Options} = {
@@ -33,7 +34,7 @@ const server_options: {[key: string]: Options} = {
     },
     port: {
         group: 'Server',
-        alias: 'o',
+        alias: 'p',
         requiresArg: true,
         default: 4979,
         describe: 'The port to listen on',
@@ -137,33 +138,39 @@ const di_options: {[key: string]: Options} = {
         hidden: true,
         type: 'string',
     },
-    username: {
+    frequency: {
         group: 'Digitally Imported',
-        alias: 'u',
+        alias: 'f',
         requiresArg: true,
-        describe: 'The username of your account (usually your email-address)',
-        type: 'string',
-        conflicts: ['listenkey'],
-        implies: ['password'],
+        default: 30,
+        describe: 'The frequency in seconds with which DI is polled for "now playing" data',
+        type: 'number',
+        coerce (arg: any): number {
+            if (!/^\d+$/.test(arg)) {
+                throw new Error('The frequency must be an integer')
+            }
+
+            return parseInt(arg, 10)
+        },
     },
-    password: {
+    quality: {
         group: 'Digitally Imported',
-        alias: 'p',
+        alias: 'q',
         requiresArg: true,
-        describe: 'The password of your account',
+        describe: 'The quality setting for the stream',
+        default: Quality.AAC_128,
         type: 'string',
-        conflicts: ['listenkey'],
-        implies: ['username'],
+        choices: Object.values(Quality),
     },
     listenkey: {
         group: 'Digitally Imported',
         alias: 'k',
+        required: true,
         requiresArg: true,
         describe: 'The DI listenkey',
         type: 'string',
-        conflicts: ['username', 'password'],
         coerce (arg: any): boolean {
-            if (/^[a-f0-9]{16}$/i.test(arg)) {
+            if (!/^[a-f0-9]{16}$/i.test(arg)) {
                 throw new Error('Listenkey must be a 16 characters long hexadecimal string')
             }
 

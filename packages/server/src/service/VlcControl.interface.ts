@@ -1,5 +1,5 @@
-import {StatusData} from './vlc/commands/Status'
 import {TrackInfo} from './vlc/commands/Info'
+import {StatusData} from './vlc/commands/Status'
 
 export class UnknownCommandError extends Error {
     public constructor (command: string) {

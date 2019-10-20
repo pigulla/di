@@ -1,4 +1,4 @@
-import {TrackInfo} from '../../../src/service/vlc/commands/Info'
+import {TrackInfo} from '@server/service/vlc/commands/Info'
 
 export class TrackInfoBuilder {
     private artist: string = 'Artist'

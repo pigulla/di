@@ -1,4 +1,4 @@
-import {VlcCommand, ParseError} from '../VlcCommand'
+import {VlcCommand, ParseError} from '@server/service/vlc'
 
 export default class GetTime extends VlcCommand<[], number> {
     public constructor () {

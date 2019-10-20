@@ -1,7 +1,7 @@
 import {Body, Controller, Inject, Put, Get, HttpStatus, HttpCode} from '@nestjs/common'
 import {IsNumber, Max, Min} from 'class-validator'
 
-import {IVlcControl} from '../service'
+import {IVlcControl} from '@server/service'
 
 export class VolumeDTO {
     @IsNumber()

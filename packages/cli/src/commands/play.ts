@@ -1,4 +1,4 @@
-import {BaseCommand} from '../BaseCommand'
+import {BaseCommand} from '@cli/BaseCommand'
 
 export default class Play extends BaseCommand {
     public static description = 'Play a channel.';

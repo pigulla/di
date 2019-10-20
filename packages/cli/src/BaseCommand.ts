@@ -1,5 +1,6 @@
 import {Command, flags} from '@oclif/command'
 import Parser from '@oclif/parser'
+
 import {Client} from '@digitally-imported/client'
 
 export abstract class BaseCommand extends Command {

@@ -1,6 +1,6 @@
 import joi from '@hapi/joi'
 
-import {VlcCommand, ParseError} from '../VlcCommand'
+import {VlcCommand, ParseError} from '@server/service/vlc'
 
 export interface TrackInfo {
     artist: string

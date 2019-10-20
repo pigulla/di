@@ -1,9 +1,10 @@
 import {NormalizedPackageJson} from 'read-pkg'
-import {ServerStatusDTO} from '@digitally-imported/dto'
 import {Controller, Delete, HttpStatus, Res, Inject, Get, Put, HttpCode} from '@nestjs/common'
 import {Response} from 'express'
 
-import {IAppDataProvider, IVlcControl} from '../service'
+import {ServerStatusDTO} from '@digitally-imported/dto'
+
+import {IAppDataProvider, IVlcControl} from '@server/service'
 
 @Controller('/server')
 export class ServerController {
@@ -37,7 +38,6 @@ export class ServerController {
             digitally_imported: {
                 app_version: app_data.app_version,
                 deploy_time: app_data.app_deploy_time.toISOString(),
-                user_type: app_data.user.type,
             },
         }
     }

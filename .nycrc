@@ -1,7 +1,9 @@
 {
+    "extends": "@istanbuljs/nyc-config-typescript",
     "reporter": [
         "html",
-        "text"
+        "text",
+        "lcov"
     ],
     "all": true,
     "extension": [
@@ -9,5 +11,10 @@
     ],
     "include": [
         "packages/*/src/**/*.ts"
-    ]
+    ],
+    "require": [
+        "ts-node/register",
+        "source-map-support/register"
+    ],
+    "cache": false
 }

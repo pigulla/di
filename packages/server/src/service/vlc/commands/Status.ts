@@ -1,6 +1,6 @@
 import joi from '@hapi/joi'
 
-import {ParseError, VlcCommand} from '../VlcCommand'
+import {ParseError, VlcCommand} from '@server/service/vlc'
 import {volume_to_percentage} from './index'
 
 export interface StatusData {

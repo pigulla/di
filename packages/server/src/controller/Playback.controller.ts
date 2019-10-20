@@ -67,7 +67,10 @@ export class PlaybackController {
         const channel = this.channel_provider.get_by_key(channel_key)
 
         return {
-            now_playing: now_playing.toString(),
+            now_playing: {
+                artist: now_playing.display_artist,
+                title: now_playing.display_title,
+            },
             channel: channel.to_dto(),
         }
     }

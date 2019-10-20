@@ -28,11 +28,6 @@ export default class Status extends FormattedOutputCommand<PlaybackStateDTO> {
                         return channel ? channel.name : chalk.dim('none')
                     },
                 },
-                volume: {
-                    get ({volume}) {
-                        return Math.round(volume * 100) + '%'
-                    },
-                },
                 now_playing: {
                     get ({now_playing}) {
                         return now_playing ? 'yes' : 'no'

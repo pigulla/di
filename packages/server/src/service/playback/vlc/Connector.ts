@@ -21,7 +21,7 @@ export interface IConnector {
 
 export class Connector implements IConnector {
     // A custom prompt is set to make parsing the response a little easier.
-    private static readonly prompt: string = '###';
+    public static readonly prompt: string = '###';
 
     // A custom welcome message is set to make verifying the other end is actually a VLC instance a little easier.
     private readonly welcome_message: string = Math.random().toString(36).slice(2);

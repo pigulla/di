@@ -1,4 +1,4 @@
-import {NowPlaying, Channel} from '../../../src/service/di'
+import {NowPlaying, Channel} from '@server/service/di'
 
 export class NowPlayingBuilder {
     private channel_id: number = 7

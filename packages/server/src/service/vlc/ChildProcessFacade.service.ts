@@ -1,11 +1,11 @@
 import {EOL} from 'os'
 import {ChildProcessWithoutNullStreams, spawn} from 'child_process'
-
-import {new_promise} from '../../promise_helper'
-import {ILogger} from '../Logger.interface'
-import {IChildProcessFacade} from './ChildProcessFacade.interface'
 import {Inject} from '@nestjs/common'
-import {IConfigProvider} from '../ConfigProvider.interface'
+
+import {new_promise} from '@server/promise_helper'
+import {ILogger} from '@server/service/Logger.interface'
+import {IConfigProvider} from '@server/service/ConfigProvider.interface'
+import {IChildProcessFacade} from './ChildProcessFacade.interface'
 
 export type Options = {
     logger: ILogger

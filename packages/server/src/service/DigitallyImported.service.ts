@@ -1,13 +1,12 @@
 import {Injectable, Inject} from '@nestjs/common'
-
 import cheerio from 'cheerio'
 import superagent from 'superagent'
 import {NodeVM} from 'vm2'
 
-import {AppData, RawAppData, NowPlaying, RawNowPlaying} from './di'
 import {IConfigProvider} from './ConfigProvider.interface'
-import {ILogger} from './Logger.interface'
+import {AppData, RawAppData, NowPlaying, RawNowPlaying} from './di'
 import {IDigitallyImported} from './DigitallyImported.interface'
+import {ILogger} from './Logger.interface'
 
 @Injectable()
 export class DigitallyImported implements IDigitallyImported {

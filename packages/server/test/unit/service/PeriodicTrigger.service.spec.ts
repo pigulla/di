@@ -2,7 +2,8 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {spy, useFakeTimers, SinonFakeTimers} from 'sinon'
 
-import {PeriodicTrigger, ILogger, Options} from '../../../src/service'
+import {PeriodicTrigger, ILogger, Options} from '@server/service'
+
 import {create_logger_stub} from '../../util'
 
 describe('PeriodicTrigger service', function () {

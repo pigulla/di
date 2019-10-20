@@ -1,6 +1,6 @@
 import dayjs, {Dayjs} from 'dayjs'
 
-import {Channel} from '../../../src/service/di'
+import {Channel} from '@server/service/di'
 
 export class ChannelBuilder {
     private director: string = 'D. Rector'

@@ -1,4 +1,4 @@
-import {NoResultVlcCommand} from '../VlcCommand'
+import {NoResultVlcCommand} from '@server/service/vlc'
 
 export default class Shutdown extends NoResultVlcCommand<[]> {
 }

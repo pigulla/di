@@ -1,4 +1,3 @@
-import {ChannelDTO} from '@digitally-imported/dto'
 import {
     Controller,
     Get,
@@ -7,7 +6,9 @@ import {
     NotFoundException,
 } from '@nestjs/common'
 
-import {IChannelProvider} from '../service'
+import {ChannelDTO} from '@digitally-imported/dto'
+
+import {IChannelProvider} from '@server/service'
 
 @Controller()
 export class ChannelsController {

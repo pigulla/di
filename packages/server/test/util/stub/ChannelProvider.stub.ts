@@ -1,6 +1,6 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IChannelProvider} from '../../../src/service'
+import {IChannelProvider} from '@server/service'
 
 export function create_channel_provider_stub (): SinonStubbedInstance<IChannelProvider> {
     return {

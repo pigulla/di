@@ -1,6 +1,6 @@
 import merge from 'lodash.merge'
 
-import {IConfigProvider} from '../../../src/service'
+import {IConfigProvider} from '@server/service'
 
 export type ConfigOverrides = Partial<IConfigProvider>
 

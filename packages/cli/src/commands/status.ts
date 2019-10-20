@@ -1,8 +1,9 @@
-import {PlaybackStateDTO} from '@digitally-imported/dto/lib'
+import chalk from 'chalk'
 import * as Config from '@oclif/config'
 
-import {FormattedOutputCommand, OutputOptions} from '../FormattedOutputCommand'
-import chalk from 'chalk'
+import {PlaybackStateDTO} from '@digitally-imported/dto/lib'
+
+import {FormattedOutputCommand, OutputOptions} from '@cli/FormattedOutputCommand'
 
 export default class Status extends FormattedOutputCommand<PlaybackStateDTO> {
     public static description = 'Get server status.';

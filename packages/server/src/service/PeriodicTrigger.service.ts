@@ -1,6 +1,7 @@
-import {IPeriodicTrigger} from './PeriodicTrigger.interface'
 import {Inject, OnApplicationShutdown} from '@nestjs/common'
+
 import {ILogger} from './Logger.interface'
+import {IPeriodicTrigger} from './PeriodicTrigger.interface'
 
 export type Options = {
     callback: Function

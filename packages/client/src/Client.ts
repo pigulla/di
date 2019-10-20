@@ -1,7 +1,8 @@
-import {ChannelDTO, ChannelFilterDTO, PlaybackStateDTO, ServerStatusDTO} from '@digitally-imported/dto'
-import {FORBIDDEN, NOT_FOUND, NO_CONTENT} from 'http-status-codes'
 import Axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios'
 import Bluebird from 'bluebird'
+import {FORBIDDEN, NOT_FOUND, NO_CONTENT} from 'http-status-codes'
+
+import {ChannelDTO, ChannelFilterDTO, PlaybackStateDTO, ServerStatusDTO} from '@digitally-imported/dto'
 
 import {ClientError, PremiumAccountRequiredError, ServerNotRunningError} from './error'
 

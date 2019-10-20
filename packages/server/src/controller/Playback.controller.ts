@@ -1,4 +1,4 @@
-import {ChannelDTO, PlaybackStateDTO} from '@digitally-imported/dto'
+import {IsNotEmpty, IsString} from 'class-validator'
 import {
     Body,
     Controller,
@@ -13,8 +13,9 @@ import {
     Put,
 } from '@nestjs/common'
 
-import {IChannelProvider, IVlcControl, IConfigProvider} from '../service'
-import {IsNotEmpty, IsString} from 'class-validator'
+import {ChannelDTO, PlaybackStateDTO} from '@digitally-imported/dto'
+
+import {IChannelProvider, IVlcControl, IConfigProvider} from '@server/service'
 
 export class PlayDTO {
     @IsString()

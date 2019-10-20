@@ -1,6 +1,6 @@
 {
     "extends": [
-        "eslint-config-standard",
+        "standard",
         "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
@@ -9,6 +9,7 @@
     ],
     "rules": {
         "no-unused-vars": "off",
+        "no-console": "error",
         "comma-dangle": [
             "error",
             "always-multiline"
@@ -36,7 +37,6 @@
                 "exceptAfterSingleLine": true
             }
         ],
-
         "@typescript-eslint/explicit-member-accessibility": "error",
         "@typescript-eslint/ban-ts-ignore": "off",
         "@typescript-eslint/camelcase": "off",
@@ -88,15 +88,67 @@
     },
     "overrides": [
         {
-            "files": ["packages/*/test/**/*"],
+            "files": [
+                "packages/*/test/**/*"
+            ],
             "env": {
                 "mocha": true
             }
         },
         {
-            "files": ["packages/*/test/**/*.spec.ts"],
+            "files": [
+                "packages/*/test/**/*.spec.ts"
+            ],
             "rules": {
                 "no-unused-expressions": "off"
+            }
+        },
+        {
+            "files": ["packages/cli/**/*"],
+            "rules": {
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        "paths": ["@client", "@dto", "@server"],
+                        "patterns": ["@client/*", "@dto/*", "@server/*"]
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["packages/client/**/*"],
+            "rules": {
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        "paths": ["@cli", "@dto", "@server"],
+                        "patterns": ["@cli/*", "@dto/*", "@server/*"]
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["packages/dto/**/*"],
+            "rules": {
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        "paths": ["@cli", "@client", "@server"],
+                        "patterns": ["@cli/*", "@client/*", "@server/*"]
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["packages/server/**/*"],
+            "rules": {
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        "paths": ["@cli", "@client", "@dto"],
+                        "patterns": ["@cli/*", "@client/*", "@dto/*"]
+                    }
+                ]
             }
         }
     ]

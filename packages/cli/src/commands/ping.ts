@@ -1,4 +1,4 @@
-import {BaseCommand} from '../BaseCommand'
+import {BaseCommand} from '@cli/BaseCommand'
 
 export default class Status extends BaseCommand {
     public static description = 'Test if the server is alive.';

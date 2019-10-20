@@ -4,8 +4,8 @@ import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common'
 import {
     IConfigProvider, ConfigProvider,
     ILogger, Logger,
-} from '../service/'
-import {AppVersionHeader} from '../middleware'
+} from '@server/service/'
+import {AppVersionHeader} from '@server/middleware'
 
 @Module({
     imports: [],

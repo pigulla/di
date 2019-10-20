@@ -6,10 +6,10 @@ import {
     IPeriodicTrigger, PeriodicTrigger,
     VlcControl,
     ILogger,
-} from '../service/'
+} from '@server/service/'
+import {VlcInstanceMonitor} from '@server/middleware'
+import {ChildProcessFacade} from '@server/service/vlc'
 import {MiscModule} from './misc.module'
-import {VlcInstanceMonitor} from '../middleware'
-import {ChildProcessFacade} from '../service/vlc'
 
 @Module({
     imports: [

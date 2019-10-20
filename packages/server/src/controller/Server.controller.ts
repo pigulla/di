@@ -1,9 +1,10 @@
 import {NormalizedPackageJson} from 'read-pkg'
-import {ServerStatusDTO} from '@digitally-imported/dto'
 import {Controller, Delete, HttpStatus, Res, Inject, Get, Put, HttpCode} from '@nestjs/common'
 import {Response} from 'express'
 
-import {IAppDataProvider, IVlcControl} from '../service'
+import {ServerStatusDTO} from '@digitally-imported/dto'
+
+import {IAppDataProvider, IVlcControl} from '@server/service'
 
 @Controller('/server')
 export class ServerController {

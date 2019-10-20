@@ -1,5 +1,5 @@
-import {yargs, CliOptions} from './yargs'
 import {IConfigProvider} from './ConfigProvider.interface'
+import {yargs, CliOptions} from './yargs'
 
 export class ConfigProvider implements IConfigProvider {
     private readonly options: CliOptions

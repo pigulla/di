@@ -1,15 +1,16 @@
 import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
+import {InternalServerErrorException, NotFoundException} from '@nestjs/common'
 import {expect} from 'chai'
+
+import {PlaybackController} from '@server/controller'
+import {IChannelProvider, IConfigProvider, IVlcControl} from '@server/service'
 
 import {
     create_vlc_control_stub,
     create_channel_provider_stub,
     create_config_provider_stub, ChannelBuilder, TrackInfoBuilder,
 } from '../../util'
-import {PlaybackController} from '../../../src/controller'
-import {IChannelProvider, IConfigProvider, IVlcControl} from '../../../src/service'
-import {InternalServerErrorException, NotFoundException} from '@nestjs/common'
 
 describe('Playback controller', function () {
     let controller: PlaybackController

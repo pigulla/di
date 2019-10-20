@@ -1,6 +1,6 @@
 import {Module} from '@nestjs/common'
 
-import {AppDataProvider, ChannelProvider} from '../service/'
+import {AppDataProvider, ChannelProvider} from '@server/service/'
 import {MiscModule} from './misc.module'
 import {ConnectorModule} from './connector.module'
 

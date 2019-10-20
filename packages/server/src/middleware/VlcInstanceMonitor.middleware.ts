@@ -1,7 +1,7 @@
 import {Injectable, NestMiddleware, Inject, ServiceUnavailableException} from '@nestjs/common'
 import {Request, Response} from 'express'
 
-import {IVlcControl} from '../service'
+import {IVlcControl} from '@server/service'
 
 @Injectable()
 export class VlcInstanceMonitor implements NestMiddleware {

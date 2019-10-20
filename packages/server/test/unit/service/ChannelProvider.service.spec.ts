@@ -1,12 +1,21 @@
+import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
-import {expect} from 'chai'
 
-import {ChannelProvider, IAppDataProvider} from '../../../src/service'
-import {create_logger_stub, create_app_data_provider_stub, AppDataBuilder, ChannelBuilder} from '../../util'
-import {progressive, classictechno, vocaltrance} from '../../util/builder/Channel.builder'
-import {ambient, bass, deep} from '../../util/builder/ChannelFilter.builder'
-import {AppData} from '../../../src/service/di'
+import {ChannelProvider, IAppDataProvider} from '@server/service'
+import {AppData} from '@server/service/di'
+
+import {
+    create_logger_stub,
+    create_app_data_provider_stub,
+    AppDataBuilder,
+    ChannelBuilder,
+    prebuilt_channel,
+    prebuilt_channel_filter,
+} from '../../util'
+
+const {progressive, classictechno, vocaltrance} = prebuilt_channel
+const {ambient, bass, deep} = prebuilt_channel_filter
 
 describe('ChannelProvider service', function () {
     const invalid_channel = new ChannelBuilder()

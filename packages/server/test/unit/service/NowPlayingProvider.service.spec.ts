@@ -1,9 +1,12 @@
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
-import {NowPlayingProvider} from '../../../src/service'
-import {create_logger_stub, NowPlayingBuilder, progressive, vocaltrance, classictechno} from '../../util'
-import {NowPlaying} from '../../../src/service/di'
+import {NowPlayingProvider} from '@server/service'
+import {NowPlaying} from '@server/service/di'
+
+import {create_logger_stub, NowPlayingBuilder, prebuilt_channel} from '../../util'
+
+const {progressive, vocaltrance, classictechno} = prebuilt_channel
 
 describe('NowPlayingProvider service', function () {
     let now_playing_provider: NowPlayingProvider

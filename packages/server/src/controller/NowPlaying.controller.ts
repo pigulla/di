@@ -1,4 +1,3 @@
-import {NowPlayingDTO} from '@digitally-imported/dto'
 import {
     Controller,
     Get,
@@ -7,7 +6,9 @@ import {
     NotFoundException,
 } from '@nestjs/common'
 
-import {INowPlayingProvider} from '../service'
+import {NowPlayingDTO} from '@digitally-imported/dto'
+
+import {INowPlayingProvider} from '@server/service'
 
 @Controller()
 export class NowPlayingController {

@@ -1,6 +1,6 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IChildProcessFacade} from '../../../src/service/vlc'
+import {IChildProcessFacade} from '@server/service/vlc'
 
 export function create_child_process_facade_stub (): SinonStubbedInstance<IChildProcessFacade> {
     return {

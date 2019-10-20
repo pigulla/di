@@ -1,5 +1,5 @@
-import {NowPlaying} from './di'
 import {ChannelIdentifier} from './ChannelProvider.interface'
+import {NowPlaying} from './di'
 
 export interface INowPlayingProvider {
     update (data: NowPlaying[]): void

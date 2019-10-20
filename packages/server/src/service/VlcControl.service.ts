@@ -1,12 +1,12 @@
 import {Injectable, OnModuleInit, OnApplicationShutdown, Inject} from '@nestjs/common'
 
-import * as vlc_commands from './vlc/commands'
-import {VlcCommand, VlcControlError, IChildProcessFacade} from './vlc'
-import {ILogger} from './Logger.interface'
 import {IConfigProvider} from './ConfigProvider.interface'
-import {IVlcControl, UnknownCommandError} from './VlcControl.interface'
+import {ILogger} from './Logger.interface'
+import {VlcCommand, VlcControlError, IChildProcessFacade} from './vlc'
+import * as vlc_commands from './vlc/commands'
 import {StatusData} from './vlc/commands/Status'
 import {TrackInfo} from './vlc/commands/Info'
+import {IVlcControl, UnknownCommandError} from './VlcControl.interface'
 
 @Injectable()
 export class VlcControl implements IVlcControl, OnModuleInit, OnApplicationShutdown {

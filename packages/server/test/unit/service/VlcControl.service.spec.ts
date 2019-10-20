@@ -4,9 +4,14 @@ import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
-import {IConfigProvider, VlcControl} from '../../../src/service'
-import {create_child_process_facade_stub, create_logger_stub, create_config_provider_stub} from '../../util'
-import {ChildProcessFacade} from '../../../src/service/vlc'
+import {IConfigProvider, VlcControl} from '@server/service'
+import {ChildProcessFacade} from '@server/service/vlc'
+
+import {
+    create_child_process_facade_stub,
+    create_logger_stub,
+    create_config_provider_stub,
+} from '../../util'
 
 describe('VlcControl service', function () {
     let config_provider: IConfigProvider

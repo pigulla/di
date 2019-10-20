@@ -1,6 +1,6 @@
 import {LoggerService} from '@nestjs/common'
 
-import {RequestLogger} from '../middleware'
+import {RequestLogger} from '@server/middleware'
 
 export interface ILogger extends Required<LoggerService> {
     get_request_logger(): RequestLogger

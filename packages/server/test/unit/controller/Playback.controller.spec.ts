@@ -6,10 +6,13 @@ import {expect} from 'chai'
 import {PlaybackController} from '@server/controller'
 import {IChannelProvider, IConfigProvider, IVlcControl} from '@server/service'
 
+import {Quality} from '@server/service/di'
 import {
-    create_vlc_control_stub,
+    ChannelBuilder,
     create_channel_provider_stub,
-    create_config_provider_stub, ChannelBuilder, TrackInfoBuilder,
+    create_config_provider_stub,
+    create_vlc_control_stub,
+    TrackInfoBuilder,
 } from '../../util'
 
 describe('Playback controller', function () {
@@ -23,6 +26,7 @@ describe('Playback controller', function () {
         channel_provider_stub = create_channel_provider_stub()
         config_provider_stub = create_config_provider_stub({
             di_listenkey: 'my-listen-key',
+            di_quality: Quality.MP3_320,
         })
 
         const module = await Test.createTestingModule({
@@ -118,13 +122,15 @@ describe('Playback controller', function () {
             channel_provider_stub.get_by_key.withArgs('progressive').returns(channel)
 
             await expect(controller.play({channel: 'progressive'})).to.eventually.deep.equal(channel.to_dto())
-            expect(vlc_control_stub.add).to.have.been.calledOnceWithExactly(channel.build_url('my-listen-key'))
+            expect(vlc_control_stub.add)
+                .to.have.been.calledOnceWithExactly(channel.build_url('my-listen-key', Quality.MP3_320))
         })
 
         it('should fail if the channel does not exist', async function () {
             channel_provider_stub.channel_exists.withArgs('progressive').returns(false)
 
-            await expect(controller.play({channel: 'progressive'})).to.eventually.be.rejectedWith(NotFoundException)
+            await expect(controller.play({channel: 'progressive'}))
+                .to.eventually.be.rejectedWith(NotFoundException)
         })
     })
 })

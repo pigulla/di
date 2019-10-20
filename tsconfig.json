@@ -17,30 +17,14 @@
         "target": "es2017",
         "baseUrl": ".",
         "paths": {
-            "@cli": [
-                "packages/cli/src/index.ts"
-            ],
-            "@cli/*": [
-                "packages/cli/src/*"
-            ],
-            "@client": [
-                "packages/client/src/index.ts"
-            ],
-            "@client/*": [
-                "packages/client/src/*"
-            ],
-            "@dto": [
-                "packages/dto/src/index.ts"
-            ],
-            "@dto/*": [
-                "packages/dto/src/*"
-            ],
-            "@server": [
-                "packages/server/src/index.ts"
-            ],
-            "@server/*": [
-                "packages/server/src/*"
-            ]
+            "@cli": ["packages/cli/src/index.ts"],
+            "@cli/*": ["packages/cli/src/*"],
+            "@client": ["packages/client/src/index.ts"],
+            "@client/*": ["packages/client/src/*"],
+            "@dto": ["packages/dto/src/index.ts"],
+            "@dto/*": ["packages/dto/src/*"],
+            "@server": ["packages/server/src/index.ts"],
+            "@server/*": ["packages/server/src/*"]
         }
     }
 }

@@ -42,7 +42,8 @@ export class DigitallyImported implements IDigitallyImported {
         })
 
         const app_script_tag = cheerio.load(html)('script').toArray()
-            .filter(node => node && node.firstChild && node.firstChild.data && node.firstChild.data.includes('di.app.start'))
+            .filter(node => node && node.firstChild &&
+                node.firstChild.data && node.firstChild.data.includes('di.app.start'))
         const src = (app_script_tag && app_script_tag[0] && app_script_tag[0].firstChild.data) || ''
 
         try {

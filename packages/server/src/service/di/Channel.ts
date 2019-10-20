@@ -6,9 +6,9 @@ import {ChannelDTO} from '@digitally-imported/dto'
 dayjs.extend(utc)
 
 export enum Quality {
-    AAC_64 = 'premium_medium',
-    AAC_128 = 'premium',
-    MP3_320 = 'premium_high',
+    AAC_64 = 'AAC_64',
+    AAC_128 = 'AAC_128',
+    MP3_320 = 'MP3_320',
 }
 
 export interface RawChannel {
@@ -30,6 +30,12 @@ export interface RawChannel {
 }
 
 export class Channel {
+    private static quality_to_url_map: {[P in Quality]: string} = {
+        [Quality.AAC_64]: 'premium_medium',
+        [Quality.AAC_128]: 'premium',
+        [Quality.MP3_320]: 'premium_high',
+    }
+
     /* eslint-disable-next-line no-useless-constructor */
     public constructor (
         public readonly director: string,
@@ -46,8 +52,10 @@ export class Channel {
         }
     ) {}
 
-    public build_url (listen_key: string, quality: Quality = Quality.AAC_128): string {
-        return `http://listen.di.fm/${quality}/${this.key}.pls?listen_key=${listen_key}`
+    public build_url (listen_key: string, quality: Quality): string {
+        const quality_path = Channel.quality_to_url_map[quality]
+
+        return `http://listen.di.fm/${quality_path}/${this.key}.pls?listen_key=${listen_key}`
     }
 
     private static process_image_url (value: string): string {

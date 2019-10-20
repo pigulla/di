@@ -88,8 +88,9 @@ export class PlaybackController {
             throw new NotFoundException()
         }
 
+        const {di_listenkey, di_quality} = this.config_provider
         const channel = this.channel_provider.get_by_key(identifier)
-        const url = channel.build_url(this.config_provider.di_listenkey)
+        const url = channel.build_url(di_listenkey, di_quality)
 
         await this.vlc_control.add(url)
 

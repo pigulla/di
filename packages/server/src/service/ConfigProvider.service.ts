@@ -1,5 +1,5 @@
+import {yargs, CliOptions} from '@server/yargs'
 import {IConfigProvider} from './ConfigProvider.interface'
-import {yargs, CliOptions} from './yargs'
 
 export class ConfigProvider implements IConfigProvider {
     private readonly options: CliOptions
@@ -42,5 +42,9 @@ export class ConfigProvider implements IConfigProvider {
 
     public get di_frequency_ms (): IConfigProvider['di_frequency_ms'] {
         return this.options.frequency
+    }
+
+    public get di_quality (): IConfigProvider['di_quality'] {
+        return this.options.quality
     }
 }

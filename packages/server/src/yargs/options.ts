@@ -3,6 +3,7 @@ import {existsSync as exists} from 'fs'
 import {sync as which} from 'which'
 import {Options} from 'yargs'
 import {LogLevel} from '@nestjs/common'
+import {Quality} from '@server/service/di'
 
 export interface CliOptions {
     // Server
@@ -19,6 +20,7 @@ export interface CliOptions {
     url: string
     listenkey: string
     frequency: number
+    quality: Quality
 }
 
 const server_options: {[key: string]: Options} = {
@@ -150,6 +152,15 @@ const di_options: {[key: string]: Options} = {
 
             return parseInt(arg, 10)
         },
+    },
+    quality: {
+        group: 'Digitally Imported',
+        alias: 'q',
+        requiresArg: true,
+        describe: 'The quality setting for the stream',
+        default: Quality.AAC_128,
+        type: 'string',
+        choices: Object.values(Quality),
     },
     listenkey: {
         group: 'Digitally Imported',

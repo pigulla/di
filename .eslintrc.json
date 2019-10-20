@@ -8,15 +8,9 @@
         "@typescript-eslint/eslint-plugin"
     ],
     "rules": {
-        "no-unused-vars": "off",
-        "no-console": "error",
         "comma-dangle": [
             "error",
             "always-multiline"
-        ],
-        "object-curly-spacing": [
-            "error",
-            "never"
         ],
         "indent": [
             "error",
@@ -24,6 +18,14 @@
             {
                 "SwitchCase": 1
             }
+        ],
+        "max-depth": ["error", 4],
+        "max-len": ["error", 120],
+        "no-console": "error",
+        "no-unused-vars": "off",
+        "object-curly-spacing": [
+            "error",
+            "never"
         ],
         "semi": [
             "error",

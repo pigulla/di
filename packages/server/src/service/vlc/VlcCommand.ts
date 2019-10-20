@@ -43,7 +43,8 @@ export abstract class VlcCommand<Params extends any[], Result> {
      *
      * @param response
      */
-    protected pre_parse_validation (_response: string[]): void { // eslint-disable-line @typescript-eslint/no-empty-function
+    protected pre_parse_validation (_response: string[]): void {
+        // empty default implementation
     }
 
     /**

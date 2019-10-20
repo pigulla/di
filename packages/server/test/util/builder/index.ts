@@ -1,20 +1,6 @@
-import {classictechno, progressive, vocaltrance} from './Channel.builder'
-import {ambient, bass, deep} from './ChannelFilter.builder'
-
 export * from './AppData.builder'
-export {ChannelBuilder} from './Channel.builder'
-export {ChannelFilterBuilder} from './ChannelFilter.builder'
+export * from './Channel.builder'
+export * from './ChannelFilter.builder'
 export * from './NowPlaying.builder'
+export * from './prebuilt'
 export * from './TrackInfo.builder'
-
-export const prebuilt_channel = {
-    progressive,
-    classictechno,
-    vocaltrance,
-}
-
-export const prebuilt_channel_filter = {
-    ambient,
-    bass,
-    deep,
-}

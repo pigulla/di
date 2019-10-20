@@ -6,7 +6,7 @@ import {ValidationPipe} from '@nestjs/common'
 
 import {AppModule} from './app.module'
 import {Logger} from './service'
-import {yargs, CliOptions} from './service/yargs'
+import {yargs, CliOptions} from './yargs'
 
 async function bootstrap (): Promise<void> {
     const {logLevel, hostname, port} = yargs.argv as any as CliOptions

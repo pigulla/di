@@ -1,4 +1,5 @@
 import {LogLevel} from '@nestjs/common'
+import {Quality} from '@server/service/di'
 
 export class ConfigError extends Error {};
 
@@ -15,4 +16,5 @@ export type IConfigProvider = {
     di_url: string
     di_listenkey: string
     di_frequency_ms: number
+    di_quality: Quality
 }

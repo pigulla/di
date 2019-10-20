@@ -1,4 +1,4 @@
-import {Inject, OnApplicationShutdown} from '@nestjs/common'
+import {Inject, OnApplicationBootstrap, OnApplicationShutdown} from '@nestjs/common'
 
 import {ILogger} from './Logger.interface'
 import {IPeriodicTrigger} from './PeriodicTrigger.interface'
@@ -9,7 +9,7 @@ export type Options = {
     interval_ms: number
 }
 
-export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationShutdown {
+export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap, OnApplicationShutdown {
     private readonly logger: ILogger
     private readonly options: Options
     private interval_id: NodeJS.Timer|null
@@ -23,6 +23,10 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationShutdown 
         this.interval_id = null
 
         this.logger.log('Service instantiated')
+    }
+
+    public onApplicationBootstrap (): void {
+        this.start()
     }
 
     public onApplicationShutdown (_signal?: string): void {

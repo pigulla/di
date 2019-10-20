@@ -37,7 +37,7 @@ import {AppVersionHeader} from '@server/middleware'
         'ILogger',
     ],
 })
-export class MiscModule implements NestModule {
+export class UtilityModule implements NestModule {
     public configure (consumer: MiddlewareConsumer): void {
         consumer
             .apply(AppVersionHeader)

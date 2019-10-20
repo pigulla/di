@@ -6,19 +6,18 @@ import {
     NowPlayingController,
     PlaybackController,
     ServerController,
-    VolumeController,
 } from './controller/'
 import {
-    AppDataModule,
-    ConnectorModule,
-    MiscModule,
+    DigitallyImportedModule,
+    PlaybackControlModule,
+    UtilityModule,
 } from './module'
 
 @Module({
     imports: [
-        MiscModule,
-        ConnectorModule,
-        AppDataModule,
+        DigitallyImportedModule,
+        PlaybackControlModule,
+        UtilityModule,
     ],
     controllers: [
         ChannelsController,
@@ -26,7 +25,6 @@ import {
         NowPlayingController,
         PlaybackController,
         ServerController,
-        VolumeController,
     ],
     providers: [],
 })

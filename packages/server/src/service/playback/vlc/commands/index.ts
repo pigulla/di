@@ -1,17 +1,12 @@
 import clamp from 'lodash.clamp'
 
 export {default as Add} from './Add'
-export {default as GetTime} from './GetTime'
 export {default as GetTitle} from './GetTitle'
-export {default as GetVars} from './GetVars'
 export {default as GetVolume} from './GetVolume'
-export {default as Help} from './Help'
-export {default as Info} from './Info'
 export {default as IsPlaying} from './IsPlaying'
 export {default as Play} from './Play'
 export {default as Shutdown} from './Shutdown'
 export {default as SetVolume} from './SetVolume'
-export {default as Status} from './Status'
 export {default as Stop} from './Stop'
 
 export function volume_from_percentage (percent: number): number {

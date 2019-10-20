@@ -1,6 +1,6 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IPeriodicTrigger} from '@src/service'
+import {IPeriodicTrigger} from '@server/service'
 
 export function create_periodic_trigger_stub (): SinonStubbedInstance<IPeriodicTrigger> {
     return {

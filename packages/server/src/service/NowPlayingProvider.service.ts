@@ -1,26 +1,26 @@
 import {Inject, Injectable} from '@nestjs/common'
 
-import {ChannelIdentifier} from './ChannelsProvider.interface'
+import {ChannelIdentifier} from './ChannelProvider.interface'
 import {NowPlaying} from './di'
-import {ILogger} from './logger'
+import {ILogger} from './Logger.interface'
 import {INowPlayingProvider} from './NowPlayingProvider.interface'
 
 @Injectable()
 export class NowPlayingProvider implements INowPlayingProvider {
-    private readonly logger: ILogger
-    private readonly by_id: Map<number, NowPlaying> = new Map()
-    private readonly by_key: Map<string, NowPlaying> = new Map()
+    private readonly logger: ILogger;
+    private readonly by_id: Map<number, NowPlaying> = new Map();
+    private readonly by_key: Map<string, NowPlaying> = new Map();
 
     public constructor (
         @Inject('ILogger') logger: ILogger,
     ) {
-        this.logger = logger.child_for_service(NowPlayingProvider.name)
+        this.logger = logger.for_service(NowPlayingProvider.name)
 
-        this.logger.debug('Service instantiated')
+        this.logger.log('Service instantiated')
     }
 
     public update (data: NowPlaying[]): void {
-        this.logger.debug('Updating "now playing" information')
+        this.logger.verbose('Updating "now playing" information')
 
         this.by_id.clear()
         this.by_key.clear()
@@ -34,8 +34,10 @@ export class NowPlayingProvider implements INowPlayingProvider {
     public get (identifier: ChannelIdentifier): NowPlaying {
         if (typeof identifier === 'string') {
             return this.get_by_channel_key(identifier)
-        } else {
+        } else if (typeof identifier === 'number') {
             return this.get_by_channel_id(identifier)
+        } else {
+            return this.get_by_channel_id(identifier.id)
         }
     }
 

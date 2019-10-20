@@ -1,4 +1,4 @@
-import {VlcCommand} from '../VlcCommand'
+import {VlcCommand} from '@server/service/vlc'
 
 export default class GetTitle extends VlcCommand<[], string> {
     public constructor () {

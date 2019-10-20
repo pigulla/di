@@ -60,17 +60,17 @@ export class ChannelProvider implements IChannelProvider {
         }
     }
 
-    public get_channel (identifier: ChannelIdentifier): Channel {
+    public get (identifier: ChannelIdentifier): Channel {
         if (typeof identifier === 'string') {
-            return this.get_channel_by_key(identifier)
+            return this.get_by_key(identifier)
         } else if (typeof identifier === 'number') {
-            return this.get_channel_by_id(identifier)
+            return this.get_by_id(identifier)
         } else {
-            return this.get_channel_by_id(identifier.id)
+            return this.get_by_id(identifier.id)
         }
     }
 
-    public get_channel_by_id (id: number): Channel {
+    public get_by_id (id: number): Channel {
         const channel = this.channels_by_id.get(id)
 
         if (!channel) {
@@ -80,7 +80,7 @@ export class ChannelProvider implements IChannelProvider {
         return channel
     }
 
-    public get_channel_by_key (key: string): Channel {
+    public get_by_key (key: string): Channel {
         const channel = this.channels_by_key.get(key)
 
         if (!channel) {
@@ -90,7 +90,7 @@ export class ChannelProvider implements IChannelProvider {
         return channel
     }
 
-    public get_channels (): Channel[] {
+    public get_all (): Channel[] {
         return [...this.channels_by_id.values()]
     }
 }

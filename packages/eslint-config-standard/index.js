@@ -1,6 +1,6 @@
 {
     "extends": [
-        "eslint-config-standard",
+        "standard",
         "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
@@ -8,14 +8,9 @@
         "@typescript-eslint/eslint-plugin"
     ],
     "rules": {
-        "no-unused-vars": "off",
         "comma-dangle": [
             "error",
             "always-multiline"
-        ],
-        "object-curly-spacing": [
-            "error",
-            "never"
         ],
         "indent": [
             "error",
@@ -23,6 +18,14 @@
             {
                 "SwitchCase": 1
             }
+        ],
+        "max-depth": ["error", 4],
+        "max-len": ["error", 120],
+        "no-console": "error",
+        "no-unused-vars": "off",
+        "object-curly-spacing": [
+            "error",
+            "never"
         ],
         "semi": [
             "error",
@@ -36,7 +39,6 @@
                 "exceptAfterSingleLine": true
             }
         ],
-
         "@typescript-eslint/explicit-member-accessibility": "error",
         "@typescript-eslint/ban-ts-ignore": "off",
         "@typescript-eslint/camelcase": "off",
@@ -88,15 +90,67 @@
     },
     "overrides": [
         {
-            "files": ["packages/*/test/**/*"],
+            "files": [
+                "packages/*/test/**/*"
+            ],
             "env": {
                 "mocha": true
             }
         },
         {
-            "files": ["packages/*/test/**/*.spec.ts"],
+            "files": [
+                "packages/*/test/**/*.spec.ts"
+            ],
             "rules": {
                 "no-unused-expressions": "off"
+            }
+        },
+        {
+            "files": ["packages/cli/**/*"],
+            "rules": {
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        "paths": ["@client", "@dto", "@server"],
+                        "patterns": ["@client/*", "@dto/*", "@server/*"]
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["packages/client/**/*"],
+            "rules": {
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        "paths": ["@cli", "@dto", "@server"],
+                        "patterns": ["@cli/*", "@dto/*", "@server/*"]
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["packages/dto/**/*"],
+            "rules": {
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        "paths": ["@cli", "@client", "@server"],
+                        "patterns": ["@cli/*", "@client/*", "@server/*"]
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["packages/server/**/*"],
+            "rules": {
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        "paths": ["@cli", "@client", "@dto"],
+                        "patterns": ["@cli/*", "@client/*", "@dto/*"]
+                    }
+                ]
             }
         }
     ]

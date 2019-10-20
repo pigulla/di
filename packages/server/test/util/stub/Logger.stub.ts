@@ -1,6 +1,6 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {ILogger} from '../../../src/service'
+import {ILogger} from '@server/service'
 
 export function create_logger_stub (): SinonStubbedInstance<ILogger> {
     return {

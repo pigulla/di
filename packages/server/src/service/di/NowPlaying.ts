@@ -11,25 +11,16 @@ export interface RawNowPlaying {
 }
 
 export class NowPlaying {
-    public readonly channel_id: number
-    public readonly channel_key: string
-    public readonly display_artist: string
-    public readonly display_title: string
-
+    // eslint-disable-next-line no-useless-constructor
     public constructor (
-        channel_id: number,
-        channel_key: string,
-        display_artist: string,
-        display_title: string,
-    ) {
-        this.channel_id = channel_id
-        this.channel_key = channel_key
-        this.display_artist = display_artist
-        this.display_title = display_title
-    }
+        public readonly channel_id: number,
+        public readonly channel_key: string,
+        public readonly display_artist: string,
+        public readonly display_title: string,
+    ) {}
 
     public to_dto (): NowPlayingDTO {
-        return NowPlayingDTO.create(this)
+        return new NowPlayingDTO(this)
     }
 
     public static from_raw (data: RawNowPlaying): NowPlaying {

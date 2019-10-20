@@ -1,6 +1,6 @@
-import {Inject, OnApplicationBootstrap, OnApplicationShutdown} from '@nestjs/common'
+import {Inject, OnApplicationShutdown} from '@nestjs/common'
 
-import {ILogger} from './logger'
+import {ILogger} from './Logger.interface'
 import {IPeriodicTrigger} from './PeriodicTrigger.interface'
 
 export type Options = {
@@ -9,7 +9,7 @@ export type Options = {
     interval_ms: number
 }
 
-export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap, OnApplicationShutdown {
+export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationShutdown {
     private readonly logger: ILogger
     private readonly options: Options
     private interval_id: NodeJS.Timer|null
@@ -22,11 +22,7 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap
         this.options = Object.assign({scope: null}, options)
         this.interval_id = null
 
-        this.logger.debug('Service instantiated')
-    }
-
-    public onApplicationBootstrap (): void {
-        this.start()
+        this.logger.log('Service instantiated')
     }
 
     public onApplicationShutdown (_signal?: string): void {
@@ -42,7 +38,7 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap
             return
         }
 
-        this.logger.debug('Starting service')
+        this.logger.log('Starting service')
         this.interval_id = this.schedule()
     }
 
@@ -51,7 +47,7 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap
             return
         }
 
-        this.logger.debug('Stopping service')
+        this.logger.log('Stopping service')
         clearTimeout(this.interval_id)
         this.interval_id = null
     }
@@ -62,9 +58,7 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap
         return setTimeout(() => {
             Promise.resolve(callback.call(scope))
                 .catch(error => this.logger.error(`Update failed: ${error.message}`))
-                .then(() => {
-                    this.interval_id = this.schedule()
-                })
+                .then(() => this.schedule())
         }, interval_ms)
     }
 }

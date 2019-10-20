@@ -1,12 +1,13 @@
+import dayjs from 'dayjs'
+import mockdate from 'mockdate'
 import {spy, SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
-import dayjs from 'dayjs'
-import mockdate from 'mockdate'
 
-import {DigitallyImported, AppDataProvider} from '../../../src/service'
-import {create_logger_stub, create_digitally_imported_stub, AppDataBuilder, UserBuilder} from '../../util'
-import {AppData} from '../../../src/service/di'
+import {DigitallyImported, AppDataProvider} from '@server/service'
+import {AppData} from '@server/service/di'
+
+import {create_logger_stub, create_digitally_imported_stub, AppDataBuilder} from '../../util'
 
 describe('AppDataProvider service', function () {
     let app_data_provider: AppDataProvider
@@ -49,8 +50,7 @@ describe('AppDataProvider service', function () {
         beforeEach(async function () {
             mockdate.set(now.toDate())
 
-            const user = new UserBuilder().build_guest()
-            app_data = new AppDataBuilder().with_user(user).build()
+            app_data = new AppDataBuilder().build()
             di.load_app_data.resolves(app_data)
 
             await app_data_provider.load_app_data()

@@ -1,4 +1,4 @@
-import {ChannelDTO, PlaybackStateDTO} from '@digitally-imported/dto'
+import {IsNotEmpty, IsString} from 'class-validator'
 import {
     Body,
     Controller,
@@ -13,8 +13,9 @@ import {
     Put,
 } from '@nestjs/common'
 
-import {IChannelProvider, IListenKeyProvider, IVlcControl} from '../service'
-import {IsNotEmpty, IsString} from 'class-validator'
+import {ChannelDTO, PlaybackStateDTO} from '@digitally-imported/dto'
+
+import {IChannelProvider, IVlcControl, IConfigProvider} from '@server/service'
 
 export class PlayDTO {
     @IsString()
@@ -26,16 +27,16 @@ export class PlayDTO {
 export class PlaybackController {
     private readonly vlc_control: IVlcControl;
     private readonly channel_provider: IChannelProvider;
-    private readonly listen_key_provider: IListenKeyProvider;
+    private readonly config_provider: IConfigProvider;
 
     public constructor (
         @Inject('IVlcControl') vlc_control: IVlcControl,
         @Inject('IChannelProvider') channel_provider: IChannelProvider,
-        @Inject('IListenKeyProvider') listen_key_provider: IListenKeyProvider,
+        @Inject('IConfigProvider') config_provider: IConfigProvider,
     ) {
         this.vlc_control = vlc_control
-        this.listen_key_provider = listen_key_provider
         this.channel_provider = channel_provider
+        this.config_provider = config_provider
     }
 
     @Head()
@@ -68,7 +69,7 @@ export class PlaybackController {
         if (!matches) {
             throw new InternalServerErrorException()
         }
-        const channel = this.channel_provider.get_channel_by_key(matches[1])
+        const channel = this.channel_provider.get_by_key(matches[1])
 
         return Object.assign(state, {now_playing, channel: channel.to_dto()})
     }
@@ -87,8 +88,9 @@ export class PlaybackController {
             throw new NotFoundException()
         }
 
-        const channel = this.channel_provider.get_channel_by_key(identifier)
-        const url = channel.build_url(this.listen_key_provider.get_listen_key())
+        const {di_listenkey, di_quality} = this.config_provider
+        const channel = this.channel_provider.get_by_key(identifier)
+        const url = channel.build_url(di_listenkey, di_quality)
 
         await this.vlc_control.add(url)
 

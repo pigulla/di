@@ -1,6 +1,6 @@
 import {CLIError} from '@oclif/errors'
 
-import {BaseCommand} from '../BaseCommand'
+import {BaseCommand} from '@cli/BaseCommand'
 
 interface ParsedInput {
     relative: boolean

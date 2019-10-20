@@ -1,4 +1,4 @@
-import {ChannelIdentifier} from './ChannelsProvider.interface'
+import {ChannelIdentifier} from './ChannelProvider.interface'
 import {NowPlaying} from './di'
 
 export interface INowPlayingProvider {

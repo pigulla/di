@@ -1,9 +1,10 @@
 import {flags} from '@oclif/command'
+import * as Config from '@oclif/config'
 import chalk from 'chalk'
+
 import {ChannelDTO} from '@digitally-imported/dto'
 
-import {FormattedOutputCommand, OutputOptions} from '../FormattedOutputCommand'
-import * as Config from '@oclif/config'
+import {FormattedOutputCommand, OutputOptions} from '@cli/FormattedOutputCommand'
 
 export default class List extends FormattedOutputCommand<ChannelDTO[]> {
     public static description = 'List channels.';

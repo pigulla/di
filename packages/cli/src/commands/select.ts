@@ -1,14 +1,12 @@
-/* eslint-disable import/no-duplicates */
-
 import chalk from 'chalk'
 import {flags} from '@oclif/command'
 // @ts-ignore
 import * as inquirer_autocomplete from 'inquirer-autocomplete-prompt'
 import * as inquirer from 'inquirer'
-import {QuestionCollection} from 'inquirer'
 
-import {BaseCommand} from '../BaseCommand'
 import {ChannelDTO} from '@digitally-imported/dto/lib'
+
+import {BaseCommand} from '@cli/BaseCommand'
 
 interface Answers {
     channel: string
@@ -57,7 +55,7 @@ export default class Select extends BaseCommand {
                     ? choices
                     : choices.filter(({channel_name}) => channel_name.includes(input.toLowerCase()))
             },
-        } as any as QuestionCollection<Answers>)
+        } as any as inquirer.QuestionCollection<Answers>)
 
         await this.client.start_playback(answers.channel)
     }

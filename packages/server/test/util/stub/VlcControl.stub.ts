@@ -1,6 +1,6 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IVlcControl} from '../../../src/service'
+import {IVlcControl} from '@server/service'
 
 export function create_vlc_control_stub (): SinonStubbedInstance<IVlcControl> {
     return {

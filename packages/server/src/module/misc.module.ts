@@ -2,12 +2,10 @@ import read_pkg, {NormalizedPackageJson} from 'read-pkg'
 import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common'
 
 import {
-    ConfigProvider,
-    IConfigProvider,
-    Logger,
-    ILogger,
-} from '../service/'
-import {AppVersionHeader} from '../middleware'
+    IConfigProvider, ConfigProvider,
+    ILogger, Logger,
+} from '@server/service/'
+import {AppVersionHeader} from '@server/middleware'
 
 @Module({
     imports: [],

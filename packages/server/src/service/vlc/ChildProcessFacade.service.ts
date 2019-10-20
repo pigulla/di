@@ -1,8 +1,11 @@
 import {EOL} from 'os'
 import {ChildProcessWithoutNullStreams, spawn} from 'child_process'
+import {Inject} from '@nestjs/common'
 
-import {new_promise} from '../../promise_helper'
-import {ILogger} from '../Logger.interface'
+import {new_promise} from '@server/promise_helper'
+import {ILogger} from '@server/service/Logger.interface'
+import {IConfigProvider} from '@server/service/ConfigProvider.interface'
+import {IChildProcessFacade} from './ChildProcessFacade.interface'
 
 export type Options = {
     logger: ILogger
@@ -11,26 +14,29 @@ export type Options = {
     timeout_ms: number
 }
 
-export class ChildProcessFacade {
+export class ChildProcessFacade implements IChildProcessFacade {
     private readonly logger: ILogger
     private readonly path: string
-    private readonly args: string[]
     private readonly timeout_ms: number
     private child_process: ChildProcessWithoutNullStreams|null
 
-    public constructor (options: Options) {
-        this.logger = options.logger
-        this.path = options.path
-        this.args = options.args
-        this.timeout_ms = options.timeout_ms
+    public constructor (
+        @Inject('ILogger') logger: ILogger,
+        @Inject('IConfigProvider') config_provider: IConfigProvider,
+    ) {
+        this.logger = logger.for_service(ChildProcessFacade.name)
+        this.path = config_provider.vlc_path
+        this.timeout_ms = config_provider.vlc_timeout
         this.child_process = null
+
+        this.logger.log('Service instantiated')
     }
 
-    public get running (): boolean {
+    public is_running (): boolean {
         return this.child_process !== null
     }
 
-    public get pid (): number {
+    public get_pid (): number {
         return this.process.pid
     }
 
@@ -42,12 +48,18 @@ export class ChildProcessFacade {
         return this.child_process
     }
 
-    private spawn (): ChildProcessWithoutNullStreams {
-        if (this.running) {
+    private spawn (prompt: string, welcome_message: string): ChildProcessWithoutNullStreams {
+        if (this.is_running()) {
             throw new Error('Instance already running')
         }
 
-        const child_process = spawn(this.path, this.args)
+        const args = [
+            '--intf',
+            'cli',
+            '--lua-config',
+            `cli={prompt="${prompt}",welcome="${welcome_message}",width=240}`,
+        ]
+        const child_process = spawn(this.path, args)
 
         child_process.stdout.on('readable', child_process.stdout.read)
         child_process.stderr.on('readable', child_process.stderr.read)
@@ -62,9 +74,9 @@ export class ChildProcessFacade {
         return child_process
     }
 
-    public async start (): Promise<string> {
+    public async start (prompt: string, welcome_message: string): Promise<string> {
         const {promise, resolve, reject} = new_promise<string>()
-        const child_process = this.spawn()
+        const child_process = this.spawn(prompt, welcome_message)
 
         const timeout_id = setTimeout(() => reject(new Error('Timeout')), this.timeout_ms)
 

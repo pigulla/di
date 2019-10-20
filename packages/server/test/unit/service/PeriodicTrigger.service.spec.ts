@@ -1,34 +1,29 @@
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
-import {match, stub, useFakeTimers, SinonFakeTimers, SinonStubbedInstance, SinonStub} from 'sinon'
-import {Merge} from 'type-fest'
+import {spy, useFakeTimers, SinonFakeTimers} from 'sinon'
 
-import {PeriodicTrigger, Options} from '@src/service'
-import {ILogger} from '@src/service/logger'
+import {PeriodicTrigger, ILogger, Options} from '@server/service'
 
-import {create_logger_stub} from '@test/util'
+import {create_logger_stub} from '../../util'
 
 describe('PeriodicTrigger service', function () {
-    let options: Merge<Options, {callback: SinonStub}>
-    let logger_stub: SinonStubbedInstance<ILogger>
+    let options: Options
     let clock: SinonFakeTimers
     let periodic_trigger: PeriodicTrigger
     let tickAsync: (ms: number) => Promise<void>
 
     beforeEach(async function () {
         options = {
-            callback: stub(),
+            callback: spy(),
             scope: {},
             interval_ms: 5_000,
         }
-
-        logger_stub = create_logger_stub()
 
         const module = await Test.createTestingModule({
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: logger_stub,
+                    useValue: create_logger_stub(),
                 },
                 {
                     inject: ['ILogger'],
@@ -55,22 +50,8 @@ describe('PeriodicTrigger service', function () {
         clock.restore()
     })
 
-    describe('when it has not yet been started', function () {
-        it('should not be running by default', function () {
-            expect(periodic_trigger.is_running()).to.be.false
-        })
-
-        it('should start on application bootstrap', function () {
-            periodic_trigger.onApplicationBootstrap()
-
-            expect(periodic_trigger.is_running()).to.be.true
-        })
-
-        it('should not stop', function () {
-            periodic_trigger.stop()
-
-            expect(clock.countTimers()).to.equal(0)
-        })
+    it('should not be running by default', function () {
+        expect(periodic_trigger.is_running()).to.be.false
     })
 
     describe('when started', function () {
@@ -82,25 +63,9 @@ describe('PeriodicTrigger service', function () {
             expect(periodic_trigger.is_running()).to.be.true
         })
 
-        it('should stop on application shutdown', function () {
-            periodic_trigger.onApplicationShutdown()
-
-            expect(periodic_trigger.is_running()).to.be.false
-        })
-
-        it('should be stoppable', function () {
+        it('should be stoppabled', function () {
             periodic_trigger.stop()
             expect(periodic_trigger.is_running()).to.be.false
-        })
-
-        it('should log errors', async function () {
-            const error = new Error('oh_noes')
-
-            options.callback.rejects(error)
-            periodic_trigger.start()
-
-            await tickAsync(5_000)
-            expect(logger_stub.error).to.have.been.calledOnceWithExactly(match(/oh_noes/))
         })
 
         it('should not invoke the callback', function () {

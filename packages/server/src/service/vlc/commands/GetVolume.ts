@@ -1,4 +1,4 @@
-import {VlcCommand, ParseError} from '../VlcCommand'
+import {VlcCommand, ParseError} from '@server/service/vlc'
 import {volume_to_percentage} from './index'
 
 export default class VolumeGet extends VlcCommand<[], number> {

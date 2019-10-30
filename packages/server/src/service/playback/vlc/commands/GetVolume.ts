@@ -1,7 +1,7 @@
-import {VlcCommand, ParseError} from '@server/service/vlc'
+import {Command, ParseError} from '@server/service/playback/vlc'
 import {volume_to_percentage} from './index'
 
-export default class VolumeGet extends VlcCommand<[], number> {
+export default class VolumeGet extends Command<[], number> {
     public constructor () {
         super({command: 'volume', expected_result_length: 1})
     }

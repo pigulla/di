@@ -12,6 +12,6 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "tslib": "^1.10.0"
+    "type-fest": "^0.8.1"
   }
 }

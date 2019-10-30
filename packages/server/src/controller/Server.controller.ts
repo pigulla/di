@@ -4,37 +4,35 @@ import {Response} from 'express'
 
 import {ServerStatusDTO} from '@digitally-imported/dto'
 
-import {IAppDataProvider, IVlcControl} from '@server/service'
+import {IAppDataProvider, IPlaybackControl} from '@server/service'
 
 @Controller('/server')
 export class ServerController {
     private readonly app_data_provider: IAppDataProvider;
     private readonly package_json: NormalizedPackageJson;
-    private readonly vlc_control: IVlcControl;
+    private readonly playbach_control: IPlaybackControl;
 
     public constructor (
-        @Inject('IVlcControl') vlc_control: IVlcControl,
+        @Inject('IPlaybackControl') playback_control: IPlaybackControl,
         @Inject('NormalizedPackageJson') package_json: NormalizedPackageJson,
         @Inject('IAppDataProvider') app_data_provider: IAppDataProvider,
     ) {
         this.app_data_provider = app_data_provider
         this.package_json = package_json
-        this.vlc_control = vlc_control
+        this.playbach_control = playback_control
     }
 
     @Get()
     public async status (): Promise<ServerStatusDTO> {
         const app_data = this.app_data_provider.get_app_data()
+        const meta_information = await this.playbach_control.get_meta_information()
 
         return {
             server: {
                 last_updated: this.app_data_provider.last_updated_at().toISOString(),
                 version: this.package_json.version,
             },
-            vlc: {
-                version: this.vlc_control.get_vlc_version(),
-                pid: this.vlc_control.get_vlc_pid(),
-            },
+            playback_control: meta_information,
             digitally_imported: {
                 app_version: app_data.app_version,
                 deploy_time: app_data.app_deploy_time.toISOString(),

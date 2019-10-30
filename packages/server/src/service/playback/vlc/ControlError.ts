@@ -1,4 +1,4 @@
-export class VlcControlError extends Error {
+export class ControlError extends Error {
     public readonly cause: Error|null;
 
     public constructor (message: string, cause: Error|null = null) {

@@ -8,14 +8,13 @@ import {
     HttpCode,
     HttpStatus,
     Inject,
-    InternalServerErrorException,
     NotFoundException,
     Put,
 } from '@nestjs/common'
 
 import {ChannelDTO, PlaybackStateDTO} from '@digitally-imported/dto'
 
-import {IChannelProvider, IVlcControl, IConfigProvider} from '@server/service'
+import {IChannelProvider, IPlaybackControl, IConfigProvider, INowPlayingProvider} from '@server/service'
 
 export class PlayDTO {
     @IsString()
@@ -25,24 +24,27 @@ export class PlayDTO {
 
 @Controller('/playback')
 export class PlaybackController {
-    private readonly vlc_control: IVlcControl;
-    private readonly channel_provider: IChannelProvider;
-    private readonly config_provider: IConfigProvider;
+    private readonly playback_control: IPlaybackControl
+    private readonly channel_provider: IChannelProvider
+    private readonly config_provider: IConfigProvider
+    private readonly now_playing_provider: INowPlayingProvider
 
     public constructor (
-        @Inject('IVlcControl') vlc_control: IVlcControl,
+        @Inject('IPlaybackControl') vlc_control: IPlaybackControl,
         @Inject('IChannelProvider') channel_provider: IChannelProvider,
         @Inject('IConfigProvider') config_provider: IConfigProvider,
+        @Inject('INowPlayingProvider') now_playing_provider: INowPlayingProvider,
     ) {
-        this.vlc_control = vlc_control
+        this.playback_control = vlc_control
         this.channel_provider = channel_provider
         this.config_provider = config_provider
+        this.now_playing_provider = now_playing_provider
     }
 
     @Head()
     @HttpCode(HttpStatus.NO_CONTENT)
     public async is_playing (): Promise<void> {
-        const is_playing = await this.vlc_control.is_playing()
+        const is_playing = await this.playback_control.is_playing()
 
         if (!is_playing) {
             throw new NotFoundException()
@@ -51,33 +53,32 @@ export class PlaybackController {
 
     @Get()
     public async current (): Promise<PlaybackStateDTO> {
-        const state: PlaybackStateDTO = {
-            now_playing: false,
-            channel: null,
-            volume: await this.vlc_control.get_volume(),
+        const is_playing = await this.playback_control.is_playing()
+        const channel_key = await this.playback_control.get_channel_key()
+
+        if (!is_playing || !channel_key) {
+            return {
+                now_playing: false,
+                channel: null,
+            }
         }
 
-        const info = await this.vlc_control.info()
+        const now_playing = this.now_playing_provider.get_by_channel_key(channel_key)
+        const channel = this.channel_provider.get_by_key(channel_key)
 
-        if (!info) {
-            return state
+        return {
+            now_playing: {
+                artist: now_playing.display_artist,
+                title: now_playing.display_title,
+            },
+            channel: channel.to_dto(),
         }
-
-        const {filename, now_playing} = info
-        const matches = /^(?:.+)\?([a-z0-9]+)$/.exec(filename)
-
-        if (!matches) {
-            throw new InternalServerErrorException()
-        }
-        const channel = this.channel_provider.get_by_key(matches[1])
-
-        return Object.assign(state, {now_playing, channel: channel.to_dto()})
     }
 
     @Delete()
     @HttpCode(HttpStatus.NO_CONTENT)
     public async stop (): Promise<void> {
-        await this.vlc_control.stop()
+        await this.playback_control.stop()
     }
 
     @Put()
@@ -92,7 +93,7 @@ export class PlaybackController {
         const channel = this.channel_provider.get_by_key(identifier)
         const url = channel.build_url(di_listenkey, di_quality)
 
-        await this.vlc_control.add(url)
+        await this.playback_control.play(url)
 
         return channel.to_dto()
     }

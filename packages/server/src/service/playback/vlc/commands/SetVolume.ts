@@ -1,4 +1,4 @@
-import {NoResultVlcCommand} from '@server/service/vlc'
+import {NoResultVlcCommand} from '@server/service/playback/vlc'
 import {volume_from_percentage} from './index'
 
 /**

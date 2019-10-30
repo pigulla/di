@@ -1,35 +1,34 @@
 import {EOL} from 'os'
 import {ChildProcessWithoutNullStreams, spawn} from 'child_process'
-import {Inject} from '@nestjs/common'
 
 import {new_promise} from '@server/promise_helper'
-import {ILogger} from '@server/service/Logger.interface'
-import {IConfigProvider} from '@server/service/ConfigProvider.interface'
-import {IChildProcessFacade} from './ChildProcessFacade.interface'
+
+export interface IChildProcessFacade {
+    is_running (): boolean
+    get_pid (): number
+    start (prompt: string, welcome_message: string): Promise<string>
+    stop (): Promise<void>
+    send (command: string, args: string): Promise<string>
+}
 
 export type Options = {
-    logger: ILogger
     path: string
     args: string[]
     timeout_ms: number
 }
 
 export class ChildProcessFacade implements IChildProcessFacade {
-    private readonly logger: ILogger
     private readonly path: string
     private readonly timeout_ms: number
     private child_process: ChildProcessWithoutNullStreams|null
 
     public constructor (
-        @Inject('ILogger') logger: ILogger,
-        @Inject('IConfigProvider') config_provider: IConfigProvider,
+        path: string,
+        timeout_ms: number,
     ) {
-        this.logger = logger.for_service(ChildProcessFacade.name)
-        this.path = config_provider.vlc_path
-        this.timeout_ms = config_provider.vlc_timeout
+        this.path = path
+        this.timeout_ms = timeout_ms
         this.child_process = null
-
-        this.logger.log('Service instantiated')
     }
 
     public is_running (): boolean {
@@ -66,11 +65,9 @@ export class ChildProcessFacade implements IChildProcessFacade {
         child_process.once('close', (code: number, _signal: string) => {
             if (code === 0) {
                 // The process did not exit on its own
-                this.logger.error('Child process exited prematurely')
             }
         })
 
-        this.logger.verbose(`Child process spawned with pid ${child_process.pid}`)
         return child_process
     }
 
@@ -102,9 +99,8 @@ export class ChildProcessFacade implements IChildProcessFacade {
     }
 
     public stop (): Promise<void> {
-        this.logger.verbose('Stopping child process')
-
         const {promise, resolve} = new_promise<void>()
+
         this.process.once('close', (_code, _signal) => resolve())
         this.process.kill()
 
@@ -112,8 +108,6 @@ export class ChildProcessFacade implements IChildProcessFacade {
     }
 
     public send (command: string, args: string): Promise<string> {
-        this.logger.debug(`Sending command ${command}(${args})`)
-
         const {promise, resolve} = new_promise<string>()
 
         this.process.stdout.once('data', resolve)

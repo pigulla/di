@@ -1,6 +1,7 @@
 import snake_case from 'lodash.snakecase'
+import {ControlError} from '@server/service/playback/vlc/ControlError'
 
-export class ParseError extends Error {
+export class ParseError extends ControlError {
     public constructor (message: string) {
         super(`Parse error: ${message}`)
     }
@@ -17,7 +18,7 @@ interface Options {
 /**
  * The base class for VLC commands.
  */
-export abstract class VlcCommand<Params extends any[], Result> {
+export abstract class Command<Params extends any[], Result> {
     public readonly command: string;
     public readonly options: Readonly<Omit<Options, 'command'>>;
 
@@ -76,7 +77,7 @@ export abstract class VlcCommand<Params extends any[], Result> {
 /**
  * Simplified class for commands that do not expect a response from VLC.
  */
-export abstract class NoResultVlcCommand<Params extends any[]> extends VlcCommand<Params, void> {
+export abstract class NoResultVlcCommand<Params extends any[]> extends Command<Params, void> {
     public constructor (options: Partial<Options> = {}) {
         const opts = Object.assign({}, {
             expected_result_length: 0,

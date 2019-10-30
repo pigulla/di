@@ -19,7 +19,6 @@
                 "SwitchCase": 1
             }
         ],
-        "max-depth": ["error", 4],
         "max-len": ["error", 120],
         "no-console": "error",
         "no-unused-vars": "off",

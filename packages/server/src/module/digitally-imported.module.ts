@@ -2,13 +2,12 @@ import {Module} from '@nestjs/common'
 
 import {
     AppDataProvider,
-    ChannelsProvider,
-    FavoritesProvider,
+    ChannelProvider,
     IDigitallyImported, DigitallyImported,
+    ILogger,
     INowPlayingProvider, NowPlayingProvider,
     IPeriodicTrigger, PeriodicTrigger,
-} from '../service'
-import {ILogger} from '../service/logger'
+} from '@server/service/'
 import {UtilityModule} from './utility.module'
 
 @Module({
@@ -26,12 +25,8 @@ import {UtilityModule} from './utility.module'
             useClass: AppDataProvider,
         },
         {
-            provide: 'IChannelsProvider',
-            useClass: ChannelsProvider,
-        },
-        {
-            provide: 'IFavoritesProvider',
-            useClass: FavoritesProvider,
+            provide: 'IChannelProvider',
+            useClass: ChannelProvider,
         },
         {
             inject: ['ILogger', 'INowPlayingProvider', 'IDigitallyImported'],
@@ -65,8 +60,7 @@ import {UtilityModule} from './utility.module'
     ],
     exports: [
         'IAppDataProvider',
-        'IChannelsProvider',
-        'IFavoritesProvider',
+        'IChannelProvider',
         'INowPlayingProvider',
     ],
 })

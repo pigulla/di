@@ -1,12 +1,14 @@
-import {JsonObject} from 'type-fest'
+import {JsonValue} from 'type-fest'
+
+export interface ControlInformation {
+    [key: string]: JsonValue
+    pid: number
+}
 
 export interface IPlaybackControl {
-    get_current_channel_key (): Promise<string|null>
-    get_pid (): number
-    get_playback_backend_information (): Promise<JsonObject>
-    get_volume (): Promise<number>
-    is_playing (): Promise<boolean>
     play (url: string): Promise<void>
-    set_volume (volume: number): Promise<void>
     stop (): Promise<void>
+    get_channel_key (): Promise<string|null>
+    is_playing (): Promise<boolean>
+    get_meta_information (): Promise<ControlInformation>
 }

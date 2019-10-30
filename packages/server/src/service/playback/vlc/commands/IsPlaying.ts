@@ -1,6 +1,6 @@
-import {VlcCommand, ParseError} from '@server/service/vlc'
+import {Command, ParseError} from '@server/service/playback/vlc'
 
-export default class IsPlaying extends VlcCommand<[], boolean> {
+export default class IsPlaying extends Command<[], boolean> {
     public constructor () {
         super({expected_result_length: 1})
     }

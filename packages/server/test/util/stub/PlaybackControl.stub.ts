@@ -1,16 +1,13 @@
-import {stub, SinonStubbedInstance} from 'sinon'
+import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IPlaybackControl} from '@src/service'
+import {IPlaybackControl} from '@server/service'
 
 export function create_playback_control_stub (): SinonStubbedInstance<IPlaybackControl> {
     return {
-        get_current_channel_key: stub(),
-        get_pid: stub(),
-        get_playback_backend_information: stub(),
-        get_volume: stub(),
-        is_playing: stub(),
-        play: stub(),
-        set_volume: stub(),
-        stop: stub(),
+        play: sinon.stub(),
+        stop: sinon.stub(),
+        get_channel_key: sinon.stub(),
+        is_playing: sinon.stub(),
+        get_meta_information: sinon.stub(),
     }
 }

@@ -1,48 +1,21 @@
 import read_pkg, {NormalizedPackageJson} from 'read-pkg'
 import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common'
-import {sync as which} from 'which'
-import pino from 'pino'
 
-import {IConfigProvider, ConfigProvider, ServerProcessProxy, IServerProcessProxy} from '../service'
-import {ILogger, PinoLogger} from '../service/logger'
-import {AppVersionHeader} from '../middleware'
-import {create_argv_parser, IArgvParser} from '../service/config'
+import {
+    IConfigProvider, ConfigProvider,
+    ILogger, Logger,
+} from '@server/service/'
+import {AppVersionHeader} from '@server/middleware'
 
 @Module({
     imports: [],
     controllers: [],
     providers: [
         {
-            provide: 'argv',
-            // @ts-ignore
-            useFactory (): string[] {
-                // @ts-ignore
-                return global.process_argv
-            },
-        },
-        {
-            provide: 'DefaultVlcBinary',
-            useFactory (): string|null {
-                try {
-                    return which('vlc')
-                } catch {
-                    return null
-                }
-            },
-        },
-        {
-            provide: 'IArgvParser',
-            inject: ['DefaultVlcBinary'],
-            useFactory (default_vlc_binary: string|null): IArgvParser {
-                return create_argv_parser({
-                    default_vlc_binary,
-                    auto_exit: true,
-                })
-            },
-        },
-        {
             provide: 'IConfigProvider',
-            useClass: ConfigProvider,
+            useFactory (): IConfigProvider {
+                return new ConfigProvider(process.argv)
+            },
         },
         {
             provide: 'NormalizedPackageJson',
@@ -51,25 +24,17 @@ import {create_argv_parser, IArgvParser} from '../service/config'
             },
         },
         {
-            provide: 'ILogger',
             inject: ['IConfigProvider'],
+            provide: 'ILogger',
             useFactory (config_provider: IConfigProvider): ILogger {
-                const root_logger = pino({prettyPrint: true})
-                return new PinoLogger(root_logger).set_level(config_provider.log_level)
-            },
-        },
-        {
-            provide: 'IServerProcessProxy',
-            useFactory (): IServerProcessProxy {
-                return new ServerProcessProxy(process)
+                return new Logger(config_provider.log_level)
             },
         },
     ],
     exports: [
         'IConfigProvider',
-        'ILogger',
-        'IServerProcessProxy',
         'NormalizedPackageJson',
+        'ILogger',
     ],
 })
 export class UtilityModule implements NestModule {

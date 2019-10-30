@@ -1,4 +1,4 @@
-import {NoResultVlcCommand} from '@server/service/vlc'
+import {NoResultVlcCommand} from '@server/service/playback/vlc'
 
 export default class Add extends NoResultVlcCommand<[string]> {
 }

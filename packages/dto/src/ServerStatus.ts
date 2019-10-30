@@ -1,7 +1,9 @@
+import {JsonValue} from 'type-fest'
+
 export interface ServerStatusDTO {
-    vlc: {
-        version: string
+    playback_control: {
         pid: number
+        [key: string]: JsonValue
     }
     digitally_imported: {
         app_version: string

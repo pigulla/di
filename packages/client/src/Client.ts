@@ -34,7 +34,7 @@ export class Client {
                 }
 
                 throw new ClientError('Client error', error)
-            }
+            },
         )
     }
 

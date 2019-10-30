@@ -3,8 +3,5 @@
         "ts-node/register",
         "tsconfig-paths/register",
         "mocha.setup.ts"
-    ],
-    "file": [
-        "mocha.hooks.ts"
     ]
 }

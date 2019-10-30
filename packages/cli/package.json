@@ -7,7 +7,7 @@
   },
   "bugs": "https://github.com/pigulla/cli/issues",
   "dependencies": {
-    "@digitally-imported/client": "../client",
+    "@digitally-imported/client": "file:../client",
     "@digitally-imported/dto": "file:../dto",
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.13.3",

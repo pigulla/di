@@ -15,7 +15,7 @@ export class DigitallyImported implements IDigitallyImported {
 
     public constructor (
         @Inject('ILogger') logger: ILogger,
-        @Inject('IConfigProvider') config: IConfigProvider
+        @Inject('IConfigProvider') config: IConfigProvider,
     ) {
         this.url = config.di_url
         this.logger = logger.for_service(DigitallyImported.name)

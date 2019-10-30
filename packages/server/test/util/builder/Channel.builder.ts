@@ -84,7 +84,7 @@ export class ChannelBuilder {
                 default: this.image_default,
                 compact: this.image_compact,
                 banner: this.image_banner,
-            }
+            },
         )
     }
 }

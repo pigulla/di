@@ -2,14 +2,7 @@ import {EOL} from 'os'
 import {ChildProcessWithoutNullStreams, spawn} from 'child_process'
 
 import {new_promise} from '@server/promise_helper'
-
-export interface IChildProcessFacade {
-    is_running (): boolean
-    get_pid (): number
-    start (prompt: string, welcome_message: string): Promise<string>
-    stop (): Promise<void>
-    send (command: string, args: string): Promise<string>
-}
+import {IChildProcessFacade} from './ChildProcessFacade.interface'
 
 export type Options = {
     path: string

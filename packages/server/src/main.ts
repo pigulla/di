@@ -4,7 +4,7 @@ import {NormalizedPackageJson} from 'read-pkg'
 import {NestFactory} from '@nestjs/core'
 import {ValidationPipe} from '@nestjs/common'
 
-import {AppModule} from './app.module'
+import {AppModule} from './module/app.module'
 import {Logger} from './service'
 import {yargs, CliOptions} from './yargs'
 

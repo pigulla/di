@@ -1,7 +1,7 @@
 import {Module} from '@nestjs/common'
 
 import {UtilityModule} from './utility.module'
-import {VlcControl} from '@server/service/playback'
+import {ChildProcessFacade, Connector, VlcControl} from '@server/service/playback/vlc'
 
 @Module({
     imports: [
@@ -9,6 +9,14 @@ import {VlcControl} from '@server/service/playback'
     ],
     controllers: [],
     providers: [
+        {
+            provide: 'ChildProcessFacadeCtor',
+            useValue: ChildProcessFacade,
+        },
+        {
+            provide: 'ConnectorCtor',
+            useValue: Connector,
+        },
         {
             provide: 'IPlaybackControl',
             useClass: VlcControl,

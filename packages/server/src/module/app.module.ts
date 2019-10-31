@@ -6,12 +6,12 @@ import {
     NowPlayingController,
     PlaybackController,
     ServerController,
-} from './controller/'
+} from '../controller/'
 import {
     DigitallyImportedModule,
     PlaybackControlModule,
     UtilityModule,
-} from './module'
+} from '../module'
 
 @Module({
     imports: [

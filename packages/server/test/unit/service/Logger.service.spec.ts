@@ -4,25 +4,7 @@ import {expect} from 'chai'
 
 import {Logger} from '@server/service'
 
-type PinoStub = {
-    trace: SinonSpy
-    debug: SinonSpy
-    warn: SinonSpy
-    error: SinonSpy
-    info: SinonSpy
-    child: SinonSpy
-}
-
-function create_pino_stub (): PinoStub {
-    return {
-        trace: spy(),
-        debug: spy(),
-        warn: spy(),
-        error: spy(),
-        info: spy(),
-        child: spy(),
-    }
-}
+import {create_pino_stub, PinoStub} from '../../util/stub'
 
 describe('Logger service', function () {
     let request_logger: SinonSpy
@@ -50,10 +32,14 @@ describe('Logger service', function () {
         expect(pino_stub.child).to.have.been.calledOnceWith({service: 'my-service'})
     })
 
+    it('should return the request logger', function () {
+        expect(logger.get_request_logger()).to.equal(request_logger)
+    })
+
     describe('when told to log', function () {
         it('should do so on the "log" level', function () {
-            logger.debug('test')
-            expect(pino_stub.debug).to.have.been.calledOnceWithExactly('test')
+            logger.log('test')
+            expect(pino_stub.info).to.have.been.calledOnceWithExactly('test')
         })
 
         it('should do so on the "error" level', function () {

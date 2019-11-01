@@ -1,7 +1,7 @@
 import pino, {Logger as Pino} from 'pino'
 import {LogLevel} from '@nestjs/common'
 
-import {get_request_logger, RequestLogger} from '@server/middleware'
+import {create_request_logger, RequestLogger} from '@server/middleware'
 import {ILogger} from './Logger.interface'
 
 export class Logger implements ILogger {
@@ -23,7 +23,7 @@ export class Logger implements ILogger {
             level: log_level,
             prettyPrint: true,
         })
-        this.pino_request_logger = request_logger || get_request_logger(this.pino)
+        this.pino_request_logger = request_logger || create_request_logger(this.pino)
     }
 
     public get_request_logger (): RequestLogger {

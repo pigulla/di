@@ -81,7 +81,7 @@ export class Connector implements IConnector {
         } else if (lines[count - 1] !== Connector.prompt) {
             throw new ControlError('Unexpected prompt')
         } else if (count === 3 && lines[0].match(/^Error/) && lines[1].match(/^Unknown command/)) {
-            throw new ControlError(command)
+            throw new ControlError(`Unknown command: ${command}`)
         }
 
         return lines.slice(0, -1)

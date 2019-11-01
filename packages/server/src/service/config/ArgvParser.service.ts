@@ -1,27 +1,11 @@
 import {existsSync as exists} from 'fs'
 
+import Yargs, {Options} from 'yargs'
 import {sync as which} from 'which'
-import {Options} from 'yargs'
-import {LogLevel} from '@nestjs/common'
-import {Quality} from '@server/service/di'
 
-export interface CliOptions {
-    // Server
-    hostname: string
-    port: number
-    logLevel: LogLevel
-
-    // VLC
-    vlcPath: string
-    vlcTimeout: number
-    vlcInitialVolume: number
-
-    // Digitally Imported
-    url: string
-    listenkey: string
-    frequency: number
-    quality: Quality
-}
+import {IArgvParser} from './ArgvParser.interface'
+import {ApplicationOptions} from './ApplicationOptions'
+import {Quality} from '../di'
 
 const server_options: {[key: string]: Options} = {
     hostname: {
@@ -179,8 +163,24 @@ const di_options: {[key: string]: Options} = {
     },
 }
 
-export const cli_options: {[key: string]: Options} = {
+const cli_options: {[key: string]: Options} = {
     ...server_options,
     ...vlc_options,
     ...di_options,
+}
+
+export const argv_parser: IArgvParser = function (argv: string[]): ApplicationOptions {
+    return Yargs
+        .scriptName('di')
+        .env('DI_')
+        .options(cli_options)
+        .check(function (argv) {
+            if (!argv.username && !argv.listenkey) {
+                throw new Error('Either "username" and "password" or "listenkey" is required')
+            }
+
+            return true
+        })
+        .strict()
+        .parse(argv) as any as ApplicationOptions
 }

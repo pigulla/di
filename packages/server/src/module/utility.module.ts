@@ -5,6 +5,7 @@ import {
     IConfigProvider, ConfigProvider,
     ILogger, Logger,
 } from '@server/service/'
+import {argv_parser} from '../service/config'
 import {AppVersionHeader} from '@server/middleware'
 
 @Module({
@@ -12,10 +13,16 @@ import {AppVersionHeader} from '@server/middleware'
     controllers: [],
     providers: [
         {
+            provide: 'argv',
+            useValue: process.argv,
+        },
+        {
+            provide: 'IArgvParser',
+            useValue: argv_parser,
+        },
+        {
             provide: 'IConfigProvider',
-            useFactory (): IConfigProvider {
-                return new ConfigProvider(process.argv)
-            },
+            useClass: ConfigProvider,
         },
         {
             provide: 'NormalizedPackageJson',

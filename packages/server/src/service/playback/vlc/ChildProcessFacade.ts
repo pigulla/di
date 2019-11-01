@@ -92,7 +92,7 @@ export class ChildProcessFacade implements IChildProcessFacade {
     }
 
     public stop (): Promise<void> {
-        const {promise, resolve} = new_promise<void>()
+        const {promise, resolve} = new_promise()
 
         this.process.once('close', (_code, _signal) => resolve())
         this.process.kill()

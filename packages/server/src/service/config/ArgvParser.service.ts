@@ -174,13 +174,6 @@ export const argv_parser: IArgvParser = function (argv: string[]): ApplicationOp
         .scriptName('di')
         .env('DI_')
         .options(cli_options)
-        .check(function (argv) {
-            if (!argv.username && !argv.listenkey) {
-                throw new Error('Either "username" and "password" or "listenkey" is required')
-            }
-
-            return true
-        })
         .strict()
         .parse(argv) as any as ApplicationOptions
 }

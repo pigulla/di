@@ -12,6 +12,9 @@
     "include": [
         "packages/*/src/**/*.ts"
     ],
+    "exclude": [
+        "packages/server/src/module/**/*.ts"
+    ],
     "require": [
         "ts-node/register",
         "source-map-support/register"

@@ -4,12 +4,12 @@ import {NormalizedPackageJson} from 'read-pkg'
 import {NestFactory} from '@nestjs/core'
 import {ValidationPipe} from '@nestjs/common'
 
-import {AppModule} from './app.module'
+import {AppModule} from './module/app.module'
 import {Logger} from './service'
-import {yargs, CliOptions} from './yargs'
+import {argv_parser} from './service/config'
 
 async function bootstrap (): Promise<void> {
-    const {logLevel, hostname, port} = yargs.argv as any as CliOptions
+    const {logLevel, hostname, port} = argv_parser(process.argv)
     const root_logger = new Logger(logLevel)
     const app = await NestFactory.create(AppModule, {logger: root_logger})
 

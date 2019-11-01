@@ -24,12 +24,12 @@ export default class Status extends FormattedOutputCommand<PlaybackStateDTO> {
             },
             table: {
                 channel: {
-                    get ({channel}) {
+                    get ({channel}: PlaybackStateDTO) {
                         return channel ? channel.name : chalk.dim('none')
                     },
                 },
                 now_playing: {
-                    get ({now_playing}) {
+                    get ({now_playing}: PlaybackStateDTO) {
                         return now_playing ? 'yes' : 'no'
                     },
                 },

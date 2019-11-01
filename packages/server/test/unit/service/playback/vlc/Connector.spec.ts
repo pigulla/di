@@ -18,7 +18,7 @@ describe('VLC Connector', function () {
     }
 
     function child_process_respond (
-        overrides: { version?: string, prompt?: string, welcome_message?: string } = {}
+        overrides: { version?: string, prompt?: string, welcome_message?: string } = {},
     ): void {
         child_process_facade_stub.start.callsFake(function (prompt: string, welcome_message: string) {
             return Promise.resolve([

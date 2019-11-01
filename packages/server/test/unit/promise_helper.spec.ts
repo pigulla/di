@@ -1,8 +1,8 @@
 import {expect} from 'chai'
 
-import {new_promise} from '@src/new_promise'
+import {new_promise} from '@server/promise_helper'
 
-describe('The new_promise function', function () {
+describe('The promise helper', function () {
     it('should return the resolver', async function () {
         const {promise, resolve} = new_promise<number>()
 
@@ -15,6 +15,6 @@ describe('The new_promise function', function () {
         const error = new Error()
 
         reject(error)
-        await expect(promise).to.be.rejectedWith(error)
+        await expect(promise).to.eventually.be.rejectedWith(error)
     })
 })

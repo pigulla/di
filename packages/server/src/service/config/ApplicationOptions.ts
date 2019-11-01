@@ -1,10 +1,5 @@
-import {Quality} from '../di'
-import {LogLevel} from '../logger'
-
-export interface Credentials {
-    username: string
-    password: string
-}
+import {LogLevel} from '@nestjs/common'
+import {Quality} from '@server/service/di'
 
 export interface ApplicationOptions {
     // Server
@@ -22,5 +17,4 @@ export interface ApplicationOptions {
     listenkey: string
     frequency: number
     quality: Quality
-    credentials: Credentials|null
 }

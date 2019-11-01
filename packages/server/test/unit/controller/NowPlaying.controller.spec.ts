@@ -1,15 +1,15 @@
-import {NotFoundException} from '@nestjs/common'
-import {Test} from '@nestjs/testing'
-import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
+import {Test} from '@nestjs/testing'
+import {NotFoundException} from '@nestjs/common'
+import {expect} from 'chai'
 
-import {NowPlayingController} from '@src/controller'
-import {INowPlayingProvider} from '@src/service'
+import {NowPlayingController} from '@server/controller'
+import {INowPlayingProvider} from '@server/service'
 
 import {
     create_now_playing_provider_stub,
     prebuilt_channel, NowPlayingBuilder,
-} from '@test/util'
+} from '../../util'
 
 describe('NowPlaying controller', function () {
     let controller: NowPlayingController

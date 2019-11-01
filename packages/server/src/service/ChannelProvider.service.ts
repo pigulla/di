@@ -17,7 +17,7 @@ export class ChannelProvider implements IChannelProvider {
 
     public constructor (
         @Inject('ILogger') logger: ILogger,
-        @Inject('IAppDataProvider') app_data_provider: IAppDataProvider
+        @Inject('IAppDataProvider') app_data_provider: IAppDataProvider,
     ) {
         this.logger = logger.for_service(ChannelProvider.name)
         this.app_data_provider = app_data_provider

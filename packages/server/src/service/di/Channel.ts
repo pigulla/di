@@ -49,7 +49,7 @@ export class Channel {
             readonly default: string
             readonly compact: string
             readonly banner: string|null
-        }
+        },
     ) {}
 
     public build_url (listen_key: string, quality: Quality): string {
@@ -97,7 +97,7 @@ export class Channel {
                 compact: Channel.process_image_url(compact),
                 default: Channel.process_image_url(dflt),
                 banner: banner ? Channel.process_image_url(banner) : null,
-            }
+            },
         )
     }
 }

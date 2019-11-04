@@ -9,12 +9,10 @@ import {Channel, ChannelFilter, NowPlaying} from '@server/service/di'
 import {
     create_logger_stub,
     create_config_provider_stub,
-    create_polly,
 } from '../../util'
-import {Polly} from '@pollyjs/core'
+import {load_nock_recording} from '../../util/load_nock_recording'
 
 describe('DigitallyImported service', function () {
-    let polly: Polly
     let config_provider: SinonStubbedInstance<IConfigProvider>
     let digitally_imported: DigitallyImported
 
@@ -40,17 +38,8 @@ describe('DigitallyImported service', function () {
         digitally_imported = module.get(DigitallyImported)
     })
 
-    afterEach(async function () {
-        if (polly) {
-            await polly.stop()
-        }
-    })
-
     it('should parse the "now playing" data', async function () {
-        polly = create_polly('di-homepage')
-
-        polly.server.get('https://www.di.fm')
-
+        load_nock_recording('currently-playing')
         const data = await digitally_imported.load_now_playing()
 
         for (const now_playing of data) {
@@ -59,10 +48,7 @@ describe('DigitallyImported service', function () {
     })
 
     it('should parse the "app" data', async function () {
-        polly = create_polly('di-now-playing')
-
-        polly.server.get('https://www.di.fm/_papi/v1/di/currently_playing')
-
+        load_nock_recording('homepage')
         const app_data = await digitally_imported.load_app_data()
 
         expect(app_data.app_version).to.be.a('string')

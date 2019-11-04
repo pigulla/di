@@ -14,15 +14,15 @@ import {
 import {NormalizedPackageJson} from 'read-pkg'
 
 describe('Server controller', function () {
-    let controller: ServerController
-    let playback_control_stub: SinonStubbedInstance<IPlaybackControl>
-    let app_data_provider_stub: SinonStubbedInstance<IAppDataProvider>
-    let package_json: NormalizedPackageJson = {
+    const package_json: NormalizedPackageJson = {
         _id: 'package-id',
         readme: 'README',
         name: 'my-package',
         version: '0.42.17',
     }
+    let controller: ServerController
+    let playback_control_stub: SinonStubbedInstance<IPlaybackControl>
+    let app_data_provider_stub: SinonStubbedInstance<IAppDataProvider>
 
     beforeEach(async function () {
         playback_control_stub = create_playback_control_stub()

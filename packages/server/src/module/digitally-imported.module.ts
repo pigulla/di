@@ -37,7 +37,7 @@ import {UtilityModule} from './utility.module'
                 digitally_imported: IDigitallyImported,
             ): Promise<IPeriodicTrigger> {
                 return new PeriodicTrigger(logger, {
-                    interval_ms: 10_000,
+                    timeout_id: 10_000,
                     async callback (): Promise<void> {
                         const data = await digitally_imported.load_now_playing()
 

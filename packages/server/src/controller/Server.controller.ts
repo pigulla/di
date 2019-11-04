@@ -10,7 +10,7 @@ import {IAppDataProvider, IPlaybackControl} from '@server/service'
 export class ServerController {
     private readonly app_data_provider: IAppDataProvider;
     private readonly package_json: NormalizedPackageJson;
-    private readonly playbach_control: IPlaybackControl;
+    private readonly playback_control: IPlaybackControl;
 
     public constructor (
         @Inject('IPlaybackControl') playback_control: IPlaybackControl,
@@ -19,13 +19,13 @@ export class ServerController {
     ) {
         this.app_data_provider = app_data_provider
         this.package_json = package_json
-        this.playbach_control = playback_control
+        this.playback_control = playback_control
     }
 
     @Get()
     public async status (): Promise<ServerStatusDTO> {
         const app_data = this.app_data_provider.get_app_data()
-        const meta_information = await this.playbach_control.get_meta_information()
+        const meta_information = await this.playback_control.get_meta_information()
 
         return {
             server: {

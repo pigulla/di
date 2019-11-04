@@ -31,10 +31,14 @@ export class VlcControl implements IPlaybackControl, OnModuleInit, OnApplication
     }
 
     public async onModuleInit (): Promise<void> {
+        this.logger.log('Starting service')
+
         return this.connector.start_instance(this.config_provider.vlc_initial_volume)
     }
 
     public async onApplicationShutdown (_signal?: string): Promise<void> {
+        this.logger.log('Stopping service')
+
         return this.connector.stop_instance()
     }
 
@@ -67,4 +71,13 @@ export class VlcControl implements IPlaybackControl, OnModuleInit, OnApplication
     public async is_playing (): Promise<boolean> {
         return this.connector.is_playing()
     }
+
+    public async get_volume (): Promise<number> {
+        return this.connector.get_volume()
+    }
+
+    public async set_volume (volume: number): Promise<void> {
+        return this.connector.set_volume(volume)
+    }
+
 }

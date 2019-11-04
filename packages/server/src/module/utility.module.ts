@@ -14,7 +14,11 @@ import {AppVersionHeader} from '@server/middleware'
     providers: [
         {
             provide: 'argv',
-            useValue: process.argv,
+            // @ts-ignore
+            useFactory (): string[] {
+                // @ts-ignore
+                return global.process_argv
+            },
         },
         {
             provide: 'IArgvParser',

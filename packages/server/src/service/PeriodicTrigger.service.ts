@@ -62,7 +62,9 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap
         return setTimeout(() => {
             Promise.resolve(callback.call(scope))
                 .catch(error => this.logger.error(`Update failed: ${error.message}`))
-                .then(() => this.schedule())
+                .then(() => {
+                    this.interval_id = this.schedule()
+                })
         }, interval_ms)
     }
 }

@@ -6,6 +6,7 @@ import {
     NowPlayingController,
     PlaybackController,
     ServerController,
+    VolumeController,
 } from '../controller/'
 import {
     DigitallyImportedModule,
@@ -25,6 +26,7 @@ import {
         NowPlayingController,
         PlaybackController,
         ServerController,
+        VolumeController,
     ],
     providers: [],
 })

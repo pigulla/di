@@ -10,5 +10,7 @@ export interface IPlaybackControl {
     stop (): Promise<void>
     get_channel_key (): Promise<string|null>
     is_playing (): Promise<boolean>
+    get_volume (): Promise<number>
+    set_volume (volume: number): Promise<void>
     get_meta_information (): Promise<ControlInformation>
 }

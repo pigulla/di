@@ -1,11 +1,12 @@
 import read_pkg, {NormalizedPackageJson} from 'read-pkg'
 import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common'
+import {sync as which} from 'which'
 
 import {
     IConfigProvider, ConfigProvider,
     ILogger, Logger,
 } from '@server/service/'
-import {argv_parser} from '../service/config'
+import {create_argv_parser, IArgvParser} from '../service/config'
 import {AppVersionHeader} from '@server/middleware'
 
 @Module({
@@ -17,8 +18,24 @@ import {AppVersionHeader} from '@server/middleware'
             useValue: process.argv,
         },
         {
+            provide: 'DefaultVlcBinary',
+            useFactory (): string|null {
+                try {
+                    return which('vlc')
+                } catch {
+                    return null
+                }
+            },
+        },
+        {
             provide: 'IArgvParser',
-            useValue: argv_parser,
+            inject: ['DefaultVlcBinary'],
+            useFactory (default_vlc_binary: string|null): IArgvParser {
+                return create_argv_parser({
+                    default_vlc_binary,
+                    auto_exit: true,
+                })
+            },
         },
         {
             provide: 'IConfigProvider',
@@ -31,8 +48,8 @@ import {AppVersionHeader} from '@server/middleware'
             },
         },
         {
-            inject: ['IConfigProvider'],
             provide: 'ILogger',
+            inject: ['IConfigProvider'],
             useFactory (config_provider: IConfigProvider): ILogger {
                 return new Logger(config_provider.log_level)
             },

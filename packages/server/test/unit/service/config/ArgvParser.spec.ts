@@ -1,8 +1,8 @@
 import {expect} from 'chai'
 import hook_std, {HookPromise} from 'hook-std'
 
-import {create_argv_parser, IArgvParser} from '@src/service/config'
-import {Quality} from '@src/service/di'
+import {create_argv_parser, IArgvParser} from '@server/service/config'
+import {Quality} from '@server/service/di'
 
 function expect_yargs_error (cb: Function, message: RegExp): void {
     try {
@@ -18,7 +18,6 @@ describe('The ArgvParser', function () {
     let unhook_promise: HookPromise
 
     beforeEach(function () {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         unhook_promise = hook_std.stderr(_output => {})
     })
 
@@ -36,7 +35,7 @@ describe('The ArgvParser', function () {
             })
 
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456']),
+                () => argv_parser(['--listenkey', '1234567890123456'], false),
                 /executable could not be auto detected/i,
             )
         })
@@ -48,7 +47,7 @@ describe('The ArgvParser', function () {
                 default_vlc_binary: __filename,
             })
 
-            expect(() => argv_parser(['--listenkey', '1234567890123456'])).to.not.throw()
+            expect(() => argv_parser(['--listenkey', '1234567890123456'], false)).to.not.throw()
         })
 
         it('should fail if it does not exist', function () {
@@ -59,7 +58,7 @@ describe('The ArgvParser', function () {
             })
 
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456']),
+                () => argv_parser(['--listenkey', '1234567890123456'], false),
                 /executable not found/i,
             )
         })
@@ -77,7 +76,7 @@ describe('The ArgvParser', function () {
         })
 
         it('should work with minimal options', function () {
-            const result = argv_parser(['--listenkey', '1234567890123456'])
+            const result = argv_parser(['--listenkey', '1234567890123456'], false)
             expect(result.listenkey).to.equal('1234567890123456')
         })
 
@@ -90,7 +89,7 @@ describe('The ArgvParser', function () {
                 '--vlc-path', '/usr/local/bin/vlc',
                 '-t', '1234',
                 '-i', '0.77',
-            ])
+            ], false)
 
             expect(result).to.include({
                 listenkey: '1234567890123456',
@@ -105,98 +104,65 @@ describe('The ArgvParser', function () {
 
         it('should require a listenkey', function () {
             expect_yargs_error(
-                () => argv_parser(['--quality', Quality.AAC_128]),
+                () => argv_parser(['--quality', Quality.AAC_128], false),
                 /listenkey/i,
             )
         })
 
         it('should reject unknown options', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456', '--foo']),
+                () => argv_parser(['--listenkey', '1234567890123456', '--foo'], false),
                 /Unknown argument/i,
             )
         })
 
         it('should reject invalid values for DI listenkey', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', 'zz34567890123456']),
+                () => argv_parser(['--listenkey', 'zz34567890123456'], false),
                 /listenkey/i,
             )
         })
 
         it('should reject invalid values for the server port', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', 'zz34567890123456', '--port', 'x']),
+                () => argv_parser(['--listenkey', 'zz34567890123456', '--port', 'x'], false),
                 /must be an integer/i,
             )
         })
 
         it('should reject out-of-bound values for the server port', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', 'zz34567890123456', '--port', '100000']),
+                () => argv_parser(['--listenkey', 'zz34567890123456', '--port', '100000'], false),
                 /must be below/i,
             )
         })
 
         it('should reject invalid values for VLC initial volume', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456', '--vlc-initial-volume', '1.1.5']),
+                () => argv_parser(['--listenkey', '1234567890123456', '--vlc-initial-volume', '1.1.5'], false),
                 /floating point number/i,
             )
         })
 
         it('should reject out-of-bound values for VLC initial volume', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456', '--vlc-initial-volume', '1.5']),
+                () => argv_parser(['--listenkey', '1234567890123456', '--vlc-initial-volume', '1.5'], false),
                 /must be between/i,
             )
         })
 
         it('should reject invalid values for refresh frequency', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456', '-f', '10x']),
+                () => argv_parser(['--listenkey', '1234567890123456', '-f', '10x'], false),
                 /must be an integer/,
             )
         })
 
         it('should reject invalid values for the VLC timeout', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456', '-t', '10x']),
+                () => argv_parser(['--listenkey', '1234567890123456', '-t', '10x'], false),
                 /must be an integer/,
             )
-        })
-
-        it('should reject if a username is given but a password is not', function () {
-            expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456', '--username', 'test@example.local']),
-                /Missing dependent arguments/,
-            )
-        })
-
-        it('should reject if a password is given but a username is not', function () {
-            expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456', '--password', '53cr37']),
-                /Missing dependent arguments/,
-            )
-        })
-
-        it('should provide credentials if both username and password is set', function () {
-            const result = argv_parser([
-                '--listenkey', '1234567890123456',
-                '-u', 'test@example.local',
-                '-w', '53cr37',
-            ])
-
-            expect(result).to.deep.include({
-                listenkey: '1234567890123456',
-                credentials: {
-                    password: '53cr37',
-                    username: 'test@example.local',
-                },
-            })
-
-            expect(result).not.to.have.property('username')
-            expect(result).not.to.have.property('password')
         })
     })
 })

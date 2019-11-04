@@ -1,20 +1,17 @@
-import {HttpStatus} from '@nestjs/common'
+import dayjs from 'dayjs'
+import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
-import dayjs from 'dayjs'
-import {mockResponse} from 'mock-req-res'
-import {NormalizedPackageJson} from 'read-pkg'
-import {SinonStubbedInstance} from 'sinon'
-import {JsonObject} from 'type-fest'
 
-import {ServerController} from '@src/controller'
-import {IAppDataProvider, IPlaybackControl, IServerProcessProxy} from '@src/service'
+import {ServerController} from '@server/controller'
+import {ControlInformation, IAppDataProvider, IPlaybackControl} from '@server/service'
 
 import {
     AppDataBuilder,
     create_app_data_provider_stub,
-    create_playback_control_stub, create_server_process_proxy_stub,
+    create_playback_control_stub,
 } from '../../util'
+import {NormalizedPackageJson} from 'read-pkg'
 
 describe('Server controller', function () {
     const package_json: NormalizedPackageJson = {
@@ -26,12 +23,10 @@ describe('Server controller', function () {
     let controller: ServerController
     let playback_control_stub: SinonStubbedInstance<IPlaybackControl>
     let app_data_provider_stub: SinonStubbedInstance<IAppDataProvider>
-    let server_process_proxy_stub: SinonStubbedInstance<IServerProcessProxy>
 
     beforeEach(async function () {
         playback_control_stub = create_playback_control_stub()
         app_data_provider_stub = create_app_data_provider_stub()
-        server_process_proxy_stub = create_server_process_proxy_stub()
 
         const module = await Test.createTestingModule({
             providers: [
@@ -47,10 +42,6 @@ describe('Server controller', function () {
                     provide: 'NormalizedPackageJson',
                     useValue: package_json,
                 },
-                {
-                    provide: 'IServerProcessProxy',
-                    useValue: server_process_proxy_stub,
-                },
                 ServerController,
             ],
         }).compile()
@@ -61,14 +52,14 @@ describe('Server controller', function () {
     it('should return the current status', async function () {
         const last_updated_at = dayjs('2019-10-06T16:34:59.157Z')
         const app_data = new AppDataBuilder().build()
-        const backend_information: JsonObject = {
+        const meta_information: ControlInformation = {
             pid: 42,
             foo: 'bar',
         }
 
         app_data_provider_stub.get_app_data.returns(app_data)
         app_data_provider_stub.last_updated_at.returns(last_updated_at)
-        playback_control_stub.get_playback_backend_information.resolves(backend_information)
+        playback_control_stub.get_meta_information.resolves(meta_information)
 
         const status = await controller.status()
         expect(status).to.deep.equal({
@@ -90,14 +81,5 @@ describe('Server controller', function () {
     it('should load the app data when requested', async function () {
         await controller.update()
         expect(app_data_provider_stub.load_app_data).to.have.been.calledOnce
-    })
-
-    it('should shut down the server when requested', async function () {
-        const response = mockResponse()
-        await controller.shutdown(response)
-
-        expect(response.status).to.have.been.calledOnceWithExactly(HttpStatus.NO_CONTENT)
-        expect(response.end).to.have.been.calledOnce
-        expect(server_process_proxy_stub.terminate).to.have.been.calledOnce
     })
 })

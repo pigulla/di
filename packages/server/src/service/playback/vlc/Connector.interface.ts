@@ -1,6 +1,8 @@
+import {StatusData} from '@server/service/playback/vlc/commands/Status'
+
 export interface IConnector {
     add (item: string): Promise<void>
-    get_title (): Promise<string>
+    get_status (): Promise<StatusData>
     get_vlc_pid (): number
     get_vlc_version (): string
     get_volume (): Promise<number>

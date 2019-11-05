@@ -30,7 +30,7 @@ export interface RawChannel {
 }
 
 export class Channel {
-    private static quality_to_url_map: {[P in Quality]: string} = {
+    private static readonly quality_to_url_map: {[P in Quality]: string} = {
         [Quality.AAC_64]: 'premium_medium',
         [Quality.AAC_128]: 'premium',
         [Quality.MP3_320]: 'premium_high',
@@ -51,6 +51,16 @@ export class Channel {
             readonly banner: string|null
         },
     ) {}
+
+    public static get_key_from_url (url: string): string {
+        const {pathname} = new URL(url)
+
+        if (!/^\/[_a-z0-9]+/i.test(pathname)) {
+            throw new Error('Failed to parse channel key from url')
+        }
+
+        return pathname.substr(1)
+    }
 
     public build_url (listen_key: string, quality: Quality): string {
         const quality_path = Channel.quality_to_url_map[quality]

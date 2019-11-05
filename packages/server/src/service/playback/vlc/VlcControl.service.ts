@@ -1,10 +1,10 @@
 import {Injectable, OnModuleInit, OnApplicationShutdown, Inject} from '@nestjs/common'
 
 import {IConfigProvider, ILogger, IPlaybackControl, ControlInformation} from '@server/service'
-import {ControlError} from '@server/service/playback/vlc/ControlError'
 
 import {IConnector} from './Connector.interface'
 import {IChildProcessFacade} from './ChildProcessFacade.interface'
+import {Channel} from '@server/service/di'
 
 type ChildProcessFacadeCtor = new (path: string, timeout_ms: number) => IChildProcessFacade
 type ConnectorCtor = new (child_process_facade: IChildProcessFacade) => IConnector
@@ -49,15 +49,10 @@ export class VlcControl implements IPlaybackControl, OnModuleInit, OnApplication
         }
     }
 
-    public async get_channel_key (): Promise<string> {
-        const filename = await this.connector.get_title()
-        const matches = /^(?:.+)\?([a-z0-9]+)$/.exec(filename)
+    public async get_current_channel_key (): Promise<string|null> {
+        const {new_input} = await this.connector.get_status()
 
-        if (!matches) {
-            throw new ControlError('Could not parse channel key from title')
-        }
-
-        return matches[1]
+        return new_input ? Channel.get_key_from_url(new_input) : null
     }
 
     public async play (url: string): Promise<void> {

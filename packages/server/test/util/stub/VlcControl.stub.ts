@@ -7,7 +7,7 @@ export function create_vlc_control_stub (): SinonStubbedInstance<VlcControl> {
         onModuleInit: sinon.stub(),
         onApplicationShutdown: sinon.stub(),
         get_meta_information: sinon.stub(),
-        get_channel_key: sinon.stub(),
+        get_current_channel_key: sinon.stub(),
         play: sinon.stub(),
         stop: sinon.stub(),
         is_playing: sinon.stub(),

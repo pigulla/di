@@ -18,7 +18,7 @@ describe('PeriodicTrigger service', function () {
         options = {
             callback: stub(),
             scope: {},
-            interval_ms: 5_000,
+            timeout_id: 5_000,
         }
 
         logger_stub = create_logger_stub()

@@ -31,8 +31,4 @@ export class NowPlaying {
             data.track.display_title,
         )
     }
-
-    public toString (): string {
-        return `${this.display_artist} - ${this.display_title}`
-    }
 }

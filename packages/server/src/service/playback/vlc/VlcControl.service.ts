@@ -79,5 +79,4 @@ export class VlcControl implements IPlaybackControl, OnModuleInit, OnApplication
     public async set_volume (volume: number): Promise<void> {
         return this.connector.set_volume(volume)
     }
-
 }

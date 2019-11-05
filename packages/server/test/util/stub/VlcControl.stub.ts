@@ -11,5 +11,7 @@ export function create_vlc_control_stub (): SinonStubbedInstance<VlcControl> {
         play: sinon.stub(),
         stop: sinon.stub(),
         is_playing: sinon.stub(),
+        set_volume: sinon.stub(),
+        get_volume: sinon.stub(),
     }
 }

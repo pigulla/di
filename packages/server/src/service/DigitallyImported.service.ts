@@ -8,6 +8,8 @@ import {AppData, RawAppData, NowPlaying, RawNowPlaying} from './di'
 import {IDigitallyImported} from './DigitallyImported.interface'
 import {ILogger} from './Logger.interface'
 
+export class DigitallyImportedError extends Error {}
+
 @Injectable()
 export class DigitallyImported implements IDigitallyImported {
     private readonly logger: ILogger;
@@ -44,15 +46,19 @@ export class DigitallyImported implements IDigitallyImported {
         const app_script_tag = cheerio.load(html)('script').toArray()
             .filter(node => node && node.firstChild &&
                 node.firstChild.data && node.firstChild.data.includes('di.app.start'))
-        const src = (app_script_tag && app_script_tag[0] && app_script_tag[0].firstChild.data) || ''
+        const src = (app_script_tag && app_script_tag[0] && app_script_tag[0].firstChild.data)
+
+        if (!src) {
+            throw new DigitallyImportedError('Script tag not found')
+        }
 
         try {
             vm.run(src, '/di')
             if (!raw_app_data) {
-                throw new Error('Interceptor not called')
+                throw new DigitallyImportedError('Interceptor not called')
             }
         } catch (error) {
-            throw new Error(`Could not extract appdata (${error.message})`)
+            throw new DigitallyImportedError(`Could not extract appdata (${error.message})`)
         }
 
         return raw_app_data

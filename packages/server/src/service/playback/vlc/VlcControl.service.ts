@@ -1,12 +1,13 @@
+import {spawn} from 'child_process'
+
 import {Injectable, OnModuleInit, OnApplicationShutdown, Inject} from '@nestjs/common'
 
 import {IConfigProvider, ILogger, IPlaybackControl, ControlInformation} from '@server/service'
 
 import {IConnector} from './Connector.interface'
-import {IChildProcessFacade} from './ChildProcessFacade.interface'
+import {IChildProcessFacade, ChildProcessFacadeCtor} from './ChildProcessFacade.interface'
 import {Channel} from '@server/service/di'
 
-type ChildProcessFacadeCtor = new (path: string, timeout_ms: number) => IChildProcessFacade
 type ConnectorCtor = new (child_process_facade: IChildProcessFacade) => IConnector
 
 @Injectable()
@@ -21,7 +22,11 @@ export class VlcControl implements IPlaybackControl, OnModuleInit, OnApplication
         @Inject('ChildProcessFacadeCtor') ChildProcessFacade: ChildProcessFacadeCtor,
         @Inject('ConnectorCtor') Connector: ConnectorCtor,
     ) {
-        const child_process_facade = new ChildProcessFacade(config_provider.vlc_path, config_provider.vlc_timeout)
+        const child_process_facade = new ChildProcessFacade(
+            config_provider.vlc_path,
+            config_provider.vlc_timeout,
+            spawn,
+        )
 
         this.logger = logger.for_service(VlcControl.name)
         this.config_provider = config_provider

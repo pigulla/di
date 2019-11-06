@@ -53,13 +53,20 @@ export class Channel {
     ) {}
 
     public static get_key_from_url (url: string): string {
+        const regex_pls = /^\/premium(?:_high|_medium)?\/([a-z0-9]+)\.pls$/
+        const regex_srv = /^\/([a-z0-9]+)(?:_hi|_aac)?$/
         const {pathname} = new URL(url)
+        let matches
 
-        if (!/^\/[_a-z0-9]+/i.test(pathname)) {
+        /* eslint-disable no-cond-assign */
+        if (matches = regex_pls.exec(pathname)) {
+            return matches[1]
+        } else if (matches = regex_srv.exec(pathname)) {
+            return matches[1]
+        } else {
             throw new Error('Failed to parse channel key from url')
         }
-
-        return pathname.substr(1)
+        /* eslint-enable no-cond-assign */
     }
 
     public build_url (listen_key: string, quality: Quality): string {

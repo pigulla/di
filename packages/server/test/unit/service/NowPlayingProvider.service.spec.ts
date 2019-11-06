@@ -52,12 +52,12 @@ describe('NowPlayingProvider service', function () {
 
         it('should return the channels by id', function () {
             expect(now_playing_provider.get_by_channel_id(progressive.id)).to.equal(now_playing_items[0])
-            expect(() => now_playing_provider.get_by_channel_id(classictechno.id)).to.throw()
+            expect(() => now_playing_provider.get(classictechno.id)).to.throw()
         })
 
         it('should return the channels by key', function () {
             expect(now_playing_provider.get_by_channel_key(progressive.key)).to.equal(now_playing_items[0])
-            expect(() => now_playing_provider.get_by_channel_key(classictechno.key)).to.throw()
+            expect(() => now_playing_provider.get(classictechno.key)).to.throw()
         })
     })
 })

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import mockdate from 'mockdate'
-import {spy, SinonStubbedInstance} from 'sinon'
+import {spy, SinonStubbedInstance, stub} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
@@ -31,6 +31,14 @@ describe('AppDataProvider service', function () {
         }).compile()
 
         app_data_provider = module.get(AppDataProvider)
+    })
+
+    it('should load app data when the module is initialized', async function () {
+        const load_app_data_stub = stub(app_data_provider, 'load_app_data')
+        load_app_data_stub.resolves()
+
+        await app_data_provider.onModuleInit()
+        expect(app_data_provider.load_app_data).to.have.been.calledOnce
     })
 
     describe('when no app data has been loaded yet', function () {

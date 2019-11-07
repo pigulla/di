@@ -1,4 +1,4 @@
-import {IServerProcessProxy} from './ServerProcessProxy.interface'
+import {IServerProcessProxy} from '@server/service/ServerProcessProxy.interface'
 
 export class ServerProcessProxy implements IServerProcessProxy {
     private readonly process: NodeJS.Process

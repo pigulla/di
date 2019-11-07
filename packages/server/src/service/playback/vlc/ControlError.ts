@@ -1,5 +1,5 @@
 export class ControlError extends Error {
-    public readonly cause: Error|null;
+    public readonly cause: Error|null
 
     public constructor (message: string, cause: Error|null = null) {
         super(message)

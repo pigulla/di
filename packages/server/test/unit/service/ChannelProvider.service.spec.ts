@@ -99,12 +99,12 @@ describe('ChannelProvider service', function () {
     describe('should return a channel', function () {
         it('by its id', function () {
             expect(() => channel_provider.get_by_id(invalid_channel.id)).to.throw()
-            expect(channel_provider.get_by_id(progressive.id)).to.equal(progressive)
+            expect(channel_provider.get(progressive.id)).to.equal(progressive)
         })
 
         it('by its key', function () {
             expect(() => channel_provider.get_by_key(invalid_channel.key)).to.throw()
-            expect(channel_provider.get_by_key(progressive.key)).to.equal(progressive)
+            expect(channel_provider.get(progressive.key)).to.equal(progressive)
         })
 
         it('by itself', function () {

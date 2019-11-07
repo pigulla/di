@@ -18,7 +18,7 @@ describe('PeriodicTrigger service', function () {
         options = {
             callback: stub(),
             scope: {},
-            timeout_id: 5_000,
+            interval_ms: 5_000,
         }
 
         logger_stub = create_logger_stub()
@@ -54,21 +54,22 @@ describe('PeriodicTrigger service', function () {
         clock.restore()
     })
 
-    it('should not be running by default', function () {
-        expect(periodic_trigger.is_running()).to.be.false
-    })
+    describe('when it has not yet been started', function () {
+        it('should not be running by default', function () {
+            expect(periodic_trigger.is_running()).to.be.false
+        })
 
-    it('should start on application bootstrap', function () {
-        periodic_trigger.onApplicationBootstrap()
+        it('should start on application bootstrap', function () {
+            periodic_trigger.onApplicationBootstrap()
 
-        expect(periodic_trigger.is_running()).to.be.true
-    })
+            expect(periodic_trigger.is_running()).to.be.true
+        })
 
-    it('should stop on application shutdown', function () {
-        periodic_trigger.start()
-        periodic_trigger.onApplicationShutdown()
+        it('should not stop', function () {
+            periodic_trigger.stop()
 
-        expect(periodic_trigger.is_running()).to.be.false
+            expect(clock.countTimers()).to.equal(0)
+        })
     })
 
     describe('when started', function () {
@@ -78,6 +79,12 @@ describe('PeriodicTrigger service', function () {
 
         it('should run', function () {
             expect(periodic_trigger.is_running()).to.be.true
+        })
+
+        it('should stop on application shutdown', function () {
+            periodic_trigger.onApplicationShutdown()
+
+            expect(periodic_trigger.is_running()).to.be.false
         })
 
         it('should be stoppable', function () {

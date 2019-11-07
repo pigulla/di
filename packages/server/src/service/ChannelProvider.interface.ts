@@ -9,4 +9,4 @@ export interface IChannelProvider {
     get_filters (): ChannelFilter[]
 }
 
-export type ChannelIdentifier = string|number|Channel;
+export type ChannelIdentifier = string|number|Channel

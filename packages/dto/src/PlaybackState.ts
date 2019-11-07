@@ -1,8 +1,8 @@
 import {ChannelDTO} from './Channel'
 
 export class PlaybackStateDTO {
-    channel!: ChannelDTO|null
-    now_playing!: false|{
+    channel!: ChannelDTO
+    now_playing!: {
         artist: string
         title: string
     }

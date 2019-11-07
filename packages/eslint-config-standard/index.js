@@ -38,6 +38,8 @@
                 "exceptAfterSingleLine": true
             }
         ],
+        "no-process-env": "error",
+        "no-process-exit": "error",
         "@typescript-eslint/explicit-member-accessibility": "error",
         "@typescript-eslint/ban-ts-ignore": "off",
         "@typescript-eslint/camelcase": "off",

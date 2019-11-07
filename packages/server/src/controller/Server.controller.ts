@@ -4,22 +4,25 @@ import {Response} from 'express'
 
 import {ServerStatusDTO} from '@digitally-imported/dto'
 
-import {IAppDataProvider, IPlaybackControl} from '@server/service'
+import {IAppDataProvider, IPlaybackControl, IServerProcessProxy} from '@server/service'
 
 @Controller('/server')
 export class ServerController {
-    private readonly app_data_provider: IAppDataProvider;
-    private readonly package_json: NormalizedPackageJson;
-    private readonly playback_control: IPlaybackControl;
+    private readonly app_data_provider: IAppDataProvider
+    private readonly package_json: NormalizedPackageJson
+    private readonly playback_control: IPlaybackControl
+    private readonly server_process_proxy: IServerProcessProxy
 
     public constructor (
         @Inject('IPlaybackControl') playback_control: IPlaybackControl,
         @Inject('NormalizedPackageJson') package_json: NormalizedPackageJson,
         @Inject('IAppDataProvider') app_data_provider: IAppDataProvider,
+        @Inject('IServerProcessProxy') server_process_proxy: IServerProcessProxy,
     ) {
         this.app_data_provider = app_data_provider
         this.package_json = package_json
         this.playback_control = playback_control
+        this.server_process_proxy = server_process_proxy
     }
 
     @Get()
@@ -43,7 +46,7 @@ export class ServerController {
     @Delete()
     public async shutdown (@Res() response: Response): Promise<void> {
         response.status(HttpStatus.NO_CONTENT).end()
-        process.kill(process.pid, 'SIGTERM')
+        this.server_process_proxy.terminate()
     }
 
     @Put('/update')

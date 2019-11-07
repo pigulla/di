@@ -3,12 +3,13 @@ import {EOL} from 'os'
 import {SinonStubbedInstance} from 'sinon'
 import {expect} from 'chai'
 
-import {ChildProcessFacade, Connector} from '@server/service/playback/vlc'
+import {Connector, IChildProcessFacade} from '@server/service/playback/vlc'
+import {State} from '@server/service/playback/vlc/commands/Status'
 
 import {create_child_process_facade_stub} from '../../../../util'
 
 describe('VLC Connector', function () {
-    let child_process_facade_stub: SinonStubbedInstance<ChildProcessFacade>
+    let child_process_facade_stub: SinonStubbedInstance<IChildProcessFacade>
     let vlc_connector: Connector
 
     function child_process_respond_on_start_with_lines (lines: string[]): void {
@@ -193,9 +194,17 @@ describe('VLC Connector', function () {
         })
 
         it('get_title()', async function () {
-            child_process_respond_on_send('get_title', '', 'song title')
-            const result = await vlc_connector.get_title()
-            expect(result).to.equal('song title')
+            child_process_respond_on_send('status', '', [
+                '( new input: http://prem2.di.fm:80/progressive?abcd1234efab5678 )',
+                '( audio volume: 90 )',
+                '( state playing )',
+            ])
+            const result = await vlc_connector.get_status()
+            expect(result).to.deep.equal({
+                new_input: 'http://prem2.di.fm:80/progressive?abcd1234efab5678',
+                audio_volume: 90,
+                state: State.PLAYING,
+            })
         })
 
         it('play()', async function () {

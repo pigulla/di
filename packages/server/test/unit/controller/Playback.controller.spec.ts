@@ -61,36 +61,21 @@ describe('Playback controller', function () {
         const {progressive} = prebuilt_channel
 
         it('should return empty data if nothing is playing', async function () {
-            playback_control_stub.is_playing.resolves(false)
-            playback_control_stub.get_channel_key.resolves(progressive.key)
+            playback_control_stub.get_current_channel_key.resolves(null)
 
-            await expect(controller.current()).to.eventually.deep.equal({
-                now_playing: false,
-                channel: null,
-            })
-        })
-
-        it('should return empty data if no channel is set', async function () {
-            playback_control_stub.is_playing.resolves(true)
-            playback_control_stub.get_channel_key.resolves(null)
-
-            await expect(controller.current()).to.eventually.deep.equal({
-                now_playing: false,
-                channel: null,
-            })
+            await expect(controller.current()).to.eventually.be.rejectedWith(NotFoundException)
         })
 
         it('should return the data if something is playing', async function () {
-            playback_control_stub.is_playing.resolves(true)
-            playback_control_stub.get_channel_key.resolves(progressive.key)
+            playback_control_stub.get_current_channel_key.resolves(progressive.key)
 
             const now_playing = new NowPlayingBuilder()
                 .for_channel(progressive)
                 .with_display_artist('Hairy Potter')
                 .with_display_title('Hookwarts')
                 .build()
-            channel_provider_stub.get_by_key.withArgs(progressive.key).returns(progressive)
             now_playing_provider_stub.get_by_channel_key.withArgs(progressive.key).returns(now_playing)
+            channel_provider_stub.get_by_key.withArgs(progressive.key).returns(progressive)
 
             await expect(controller.current()).to.eventually.deep.equal({
                 channel: progressive.to_dto(),

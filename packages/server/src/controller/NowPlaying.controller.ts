@@ -12,7 +12,7 @@ import {INowPlayingProvider} from '@server/service'
 
 @Controller()
 export class NowPlayingController {
-    private readonly now_playing_provider: INowPlayingProvider;
+    private readonly now_playing_provider: INowPlayingProvider
 
     public constructor (
         @Inject('INowPlayingProvider') now_playing_provider: INowPlayingProvider,

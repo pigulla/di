@@ -1,7 +1,7 @@
-import {expect} from 'chai'
 import {stub} from 'sinon'
+import {expect} from 'chai'
 
-import {ServerProcessProxy} from '@src/service'
+import {ServerProcessProxy} from '@server/service'
 
 describe('ServerProcessProxy service', function () {
     it('should terminate the process', function () {

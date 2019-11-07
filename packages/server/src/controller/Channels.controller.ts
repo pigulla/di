@@ -12,7 +12,7 @@ import {IChannelProvider} from '@server/service'
 
 @Controller()
 export class ChannelsController {
-    private readonly channel_provider: IChannelProvider;
+    private readonly channel_provider: IChannelProvider
 
     public constructor (
         @Inject('IChannelProvider') channel_provider: IChannelProvider,

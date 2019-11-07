@@ -1,6 +1,6 @@
 import Axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios'
 import Bluebird from 'bluebird'
-import {FORBIDDEN, NOT_FOUND, NO_CONTENT} from 'http-status-codes'
+import {FORBIDDEN, NOT_FOUND, NO_CONTENT, OK} from 'http-status-codes'
 
 import {ChannelDTO, ChannelFilterDTO, PlaybackStateDTO, ServerStatusDTO} from '@digitally-imported/dto'
 
@@ -124,12 +124,14 @@ export class Client {
     }
 
     public async get_playback_state (): Promise<PlaybackStateDTO> {
-        return this
+        const response = await this
             .request({
                 method: 'GET',
                 url: '/playback',
+                validateStatus: status => [OK, NOT_FOUND].includes(status),
             })
-            .get('data')
+
+        return response.status === NOT_FOUND ? null : response.data
     }
 
     public async get_channels (): Promise<ChannelDTO[]> {

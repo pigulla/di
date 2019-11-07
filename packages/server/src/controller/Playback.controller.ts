@@ -53,14 +53,10 @@ export class PlaybackController {
 
     @Get()
     public async current (): Promise<PlaybackStateDTO> {
-        const is_playing = await this.playback_control.is_playing()
-        const channel_key = await this.playback_control.get_channel_key()
+        const channel_key = await this.playback_control.get_current_channel_key()
 
-        if (!is_playing || !channel_key) {
-            return {
-                now_playing: false,
-                channel: null,
-            }
+        if (!channel_key) {
+            throw new NotFoundException()
         }
 
         const now_playing = this.now_playing_provider.get_by_channel_key(channel_key)

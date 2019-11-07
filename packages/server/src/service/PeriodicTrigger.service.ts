@@ -6,7 +6,7 @@ import {IPeriodicTrigger} from './PeriodicTrigger.interface'
 export type Options = {
     callback: Function
     scope?: any
-    timeout_id: number
+    interval_ms: number
 }
 
 export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap, OnApplicationShutdown {
@@ -57,12 +57,14 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap
     }
 
     private schedule (): NodeJS.Timer {
-        const {callback, scope, timeout_id} = this.options
+        const {callback, scope, interval_ms} = this.options
 
         return setTimeout(() => {
             Promise.resolve(callback.call(scope))
                 .catch(error => this.logger.error(`Update failed: ${error.message}`))
-                .then(() => this.schedule())
-        }, timeout_id)
+                .then(() => {
+                    this.interval_id = this.schedule()
+                })
+        }, interval_ms)
     }
 }

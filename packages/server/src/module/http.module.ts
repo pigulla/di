@@ -30,4 +30,4 @@ import {
     ],
     providers: [],
 })
-export class AppModule {}
+export class HttpModule {}

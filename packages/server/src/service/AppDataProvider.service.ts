@@ -7,11 +7,11 @@ import {IDigitallyImported} from './DigitallyImported.interface'
 import {ILogger} from './Logger.interface'
 
 export class AppDataProvider implements IAppDataProvider, OnModuleInit {
-    private readonly digitally_imported: IDigitallyImported;
-    private readonly logger: ILogger;
-    private readonly update_callbacks: Array<[(app_data: AppData) => void, any]>;
-    private last_update_at: Dayjs|null;
-    private app_data: AppData|null;
+    private readonly digitally_imported: IDigitallyImported
+    private readonly logger: ILogger
+    private readonly update_callbacks: Array<[(app_data: AppData) => void, any]>
+    private last_update_at: Dayjs|null
+    private app_data: AppData|null
 
     public constructor (
         @Inject('ILogger') logger: ILogger,

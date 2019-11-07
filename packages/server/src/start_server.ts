@@ -4,7 +4,7 @@ import {NormalizedPackageJson} from 'read-pkg'
 import {NestFactory} from '@nestjs/core'
 import {ValidationPipe} from '@nestjs/common'
 
-import {AppModule} from './module/app.module'
+import {HttpModule} from './module/http.module'
 import {Logger} from './service'
 import {create_argv_parser} from './service/config'
 
@@ -17,7 +17,7 @@ export async function start_server (argv: string[] = []): Promise<ShutdownFn> {
     const argv_parser = create_argv_parser({skip_vlc_validation: true})
     const {logLevel, hostname, port} = argv_parser(argv)
     const root_logger = new Logger(logLevel)
-    const app = await NestFactory.create(AppModule, {logger: root_logger})
+    const app = await NestFactory.create(HttpModule, {logger: root_logger})
 
     app.useLogger(root_logger)
     app.useGlobalPipes(new ValidationPipe({whitelist: true, transform: true}))

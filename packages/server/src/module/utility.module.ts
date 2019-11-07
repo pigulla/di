@@ -4,7 +4,7 @@ import {sync as which} from 'which'
 
 import {
     IConfigProvider, ConfigProvider,
-    ILogger, Logger,
+    ILogger, Logger, ServerProcessProxy, IServerProcessProxy,
 } from '@server/service/'
 import {create_argv_parser, IArgvParser} from '../service/config'
 import {AppVersionHeader} from '@server/middleware'
@@ -56,6 +56,12 @@ import {AppVersionHeader} from '@server/middleware'
             inject: ['IConfigProvider'],
             useFactory (config_provider: IConfigProvider): ILogger {
                 return new Logger(config_provider.log_level)
+            },
+        },
+        {
+            provide: 'IServerProcessProxy',
+            useFactory (): IServerProcessProxy {
+                return new ServerProcessProxy(process)
             },
         },
     ],

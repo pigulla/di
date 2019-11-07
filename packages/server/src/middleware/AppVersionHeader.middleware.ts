@@ -5,7 +5,7 @@ import {NormalizedPackageJson} from 'read-pkg'
 @Injectable()
 export class AppVersionHeader implements NestMiddleware {
     public static readonly HEADER_NAME = 'X-App-Version'
-    private readonly package_json: NormalizedPackageJson;
+    private readonly package_json: NormalizedPackageJson
 
     public constructor (
         @Inject('NormalizedPackageJson') package_json: NormalizedPackageJson,

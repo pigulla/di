@@ -19,8 +19,8 @@ interface Options {
  * The base class for VLC commands.
  */
 export abstract class Command<Params extends any[], Result> {
-    public readonly command: string;
-    public readonly options: Readonly<Omit<Options, 'command'>>;
+    public readonly command: string
+    public readonly options: Readonly<Omit<Options, 'command'>>
 
     public constructor (options: Partial<Options> = {}) {
         const {command, ...opts} = Object.assign({}, {
@@ -37,7 +37,7 @@ export abstract class Command<Params extends any[], Result> {
      *
      * @param response
      */
-    protected abstract do_parse (response: string[]): Result;
+    protected abstract do_parse (response: string[]): Result
 
     /**
      * Implement this function to perform basic sanity checks on the response before parse() is called.

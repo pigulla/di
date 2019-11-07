@@ -7,9 +7,9 @@ import {INowPlayingProvider} from './NowPlayingProvider.interface'
 
 @Injectable()
 export class NowPlayingProvider implements INowPlayingProvider {
-    private readonly logger: ILogger;
-    private readonly by_id: Map<number, NowPlaying> = new Map();
-    private readonly by_key: Map<string, NowPlaying> = new Map();
+    private readonly logger: ILogger
+    private readonly by_id: Map<number, NowPlaying> = new Map()
+    private readonly by_key: Map<string, NowPlaying> = new Map()
 
     public constructor (
         @Inject('ILogger') logger: ILogger,

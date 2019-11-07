@@ -12,8 +12,8 @@ export class DigitallyImportedError extends Error {}
 
 @Injectable()
 export class DigitallyImported implements IDigitallyImported {
-    private readonly logger: ILogger;
-    private readonly url: string;
+    private readonly logger: ILogger
+    private readonly url: string
 
     public constructor (
         @Inject('ILogger') logger: ILogger,

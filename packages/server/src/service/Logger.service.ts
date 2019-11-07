@@ -5,9 +5,9 @@ import {create_request_logger, RequestLogger} from '@server/middleware'
 import {ILogger} from './Logger.interface'
 
 export class Logger implements ILogger {
-    private readonly log_level: LogLevel;
-    private readonly pino: Pino;
-    private readonly pino_request_logger: RequestLogger;
+    private readonly log_level: LogLevel
+    private readonly pino: Pino
+    private readonly pino_request_logger: RequestLogger
 
     public constructor (
         log_level: LogLevel,

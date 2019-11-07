@@ -5,7 +5,7 @@ import {new_promise} from '@server/new_promise'
 import {IChildProcessFacade} from './ChildProcessFacade.interface'
 
 export type SpawnFn =
-    (command: string, args?: string[], options?: SpawnOptionsWithoutStdio) => ChildProcessWithoutNullStreams;
+    (command: string, args?: string[], options?: SpawnOptionsWithoutStdio) => ChildProcessWithoutNullStreams
 
 export class ChildProcessFacadeError extends Error {}
 

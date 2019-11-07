@@ -9,13 +9,13 @@ import {StatusData} from './commands/Status'
 
 export class Connector implements IConnector {
     // A custom prompt is set to make parsing the response a little easier.
-    public static readonly prompt: string = '###';
+    public static readonly prompt: string = '###'
 
     // A custom welcome message is set to make verifying the other end is actually a VLC instance a little easier.
     private readonly welcome_message: string = randomBytes(8).toString('hex')
 
     private process: IChildProcessFacade
-    private vlc_version: string|null;
+    private vlc_version: string|null
 
     public constructor (child_process_facade: IChildProcessFacade) {
         this.process = child_process_facade

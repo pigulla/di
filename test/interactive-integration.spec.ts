@@ -6,7 +6,7 @@ import {start_server} from '@server/start_server'
 import {Client} from '@client'
 
 const sleep = promisify(setTimeout)
-const VOLUME_MAX = 45
+const VOLUME_MAX = 75
 const VOLUME_STEP = 5
 
 async function run (): Promise<void> {
@@ -70,7 +70,7 @@ async function run (): Promise<void> {
 
     spinner.start('Playing channel for 5 seconds')
     await sleep(5000)
-    spinner.info()
+    await print_playback_state()
 
     spinner.start('Stopping server')
     await stop()

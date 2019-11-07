@@ -67,8 +67,9 @@ import {AppVersionHeader} from '@server/middleware'
     ],
     exports: [
         'IConfigProvider',
-        'NormalizedPackageJson',
         'ILogger',
+        'IServerProcessProxy',
+        'NormalizedPackageJson',
     ],
 })
 export class UtilityModule implements NestModule {

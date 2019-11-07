@@ -6,7 +6,7 @@ import {IChannelProvider} from '@server/service'
 
 @Controller()
 export class ChannelFiltersController {
-    private readonly channel_provider: IChannelProvider;
+    private readonly channel_provider: IChannelProvider
 
     public constructor (
         @Inject('IChannelProvider') channel_provider: IChannelProvider,

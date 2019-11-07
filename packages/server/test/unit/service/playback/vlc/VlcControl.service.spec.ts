@@ -1,9 +1,12 @@
+import {spawn} from 'child_process'
+
 import {SinonStub, SinonStubbedInstance, stub} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
 import {IConfigProvider} from '@server/service'
-import {IChildProcessFacade, IConnector, VlcControl, ControlError} from '@server/service/playback/vlc'
+import {IChildProcessFacade, IConnector, VlcControl} from '@server/service/playback/vlc'
+import {State} from '@server/service/playback/vlc/commands/Status'
 
 import {
     create_logger_stub,
@@ -13,7 +16,6 @@ import {
 } from '../../../../util'
 
 describe('VlcControl service', function () {
-    // @ts-ignore
     let vlc_control: VlcControl
     let config_provider: SinonStubbedInstance<IConfigProvider>
     let child_process_facade_stub: SinonStubbedInstance<IChildProcessFacade>
@@ -62,7 +64,7 @@ describe('VlcControl service', function () {
     })
 
     it('should use the injected constructors', function () {
-        expect(child_process_facade_ctor).to.have.been.calledOnceWithExactly('/usr/bin/vlc', 5000)
+        expect(child_process_facade_ctor).to.have.been.calledOnceWithExactly('/usr/bin/vlc', 5000, spawn)
         expect(child_process_facade_ctor).to.have.been.calledWithNew
         expect(connector_ctor).to.have.been.calledOnceWithExactly(child_process_facade_stub)
         expect(connector_ctor).to.have.been.calledWithNew
@@ -90,16 +92,14 @@ describe('VlcControl service', function () {
         })
     })
 
-    it('should infer the channel key from the connector title', async function () {
-        connector_stub.get_title.resolves('foobar?progressive42')
+    it('should return the status', async function () {
+        connector_stub.get_status.resolves({
+            state: State.PLAYING,
+            new_input: 'http://prem2.di.fm:80/progressive?abcd1234efab5678',
+            audio_volume: 44,
+        })
 
-        await expect(vlc_control.get_channel_key()).to.eventually.equal('progressive42')
-    })
-
-    it('should throw if the channel key can not be inferred from the connector title', async function () {
-        connector_stub.get_title.resolves('foobar?not-valid')
-
-        await expect(vlc_control.get_channel_key()).to.eventually.be.rejectedWith(ControlError)
+        await expect(vlc_control.get_current_channel_key()).to.eventually.equal('progressive')
     })
 
     it('should play an url', async function () {
@@ -118,5 +118,18 @@ describe('VlcControl service', function () {
         connector_stub.is_playing.resolves(true)
 
         await expect(vlc_control.is_playing()).to.eventually.equal(true)
+    })
+
+    it('should get the volume', async function () {
+        connector_stub.get_volume.resolves(42)
+
+        await expect(vlc_control.get_volume()).to.eventually.equal(42)
+    })
+
+    it('should set the volume', async function () {
+        connector_stub.set_volume.resolves(undefined)
+
+        await expect(vlc_control.set_volume(42)).to.eventually.be.undefined
+        expect(connector_stub.set_volume).to.have.been.called.calledOnceWithExactly(42)
     })
 })

@@ -35,7 +35,7 @@ describe('The ArgvParser', function () {
             })
 
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456'], false),
+                () => argv_parser(['--listenkey', '1234567890123456']),
                 /executable could not be auto detected/i,
             )
         })
@@ -47,7 +47,7 @@ describe('The ArgvParser', function () {
                 default_vlc_binary: __filename,
             })
 
-            expect(() => argv_parser(['--listenkey', '1234567890123456'], false)).to.not.throw()
+            expect(() => argv_parser(['--listenkey', '1234567890123456'])).to.not.throw()
         })
 
         it('should fail if it does not exist', function () {
@@ -58,7 +58,7 @@ describe('The ArgvParser', function () {
             })
 
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456'], false),
+                () => argv_parser(['--listenkey', '1234567890123456']),
                 /executable not found/i,
             )
         })
@@ -76,7 +76,7 @@ describe('The ArgvParser', function () {
         })
 
         it('should work with minimal options', function () {
-            const result = argv_parser(['--listenkey', '1234567890123456'], false)
+            const result = argv_parser(['--listenkey', '1234567890123456'])
             expect(result.listenkey).to.equal('1234567890123456')
         })
 
@@ -89,7 +89,7 @@ describe('The ArgvParser', function () {
                 '--vlc-path', '/usr/local/bin/vlc',
                 '-t', '1234',
                 '-i', '0.77',
-            ], false)
+            ])
 
             expect(result).to.include({
                 listenkey: '1234567890123456',
@@ -104,63 +104,63 @@ describe('The ArgvParser', function () {
 
         it('should require a listenkey', function () {
             expect_yargs_error(
-                () => argv_parser(['--quality', Quality.AAC_128], false),
+                () => argv_parser(['--quality', Quality.AAC_128]),
                 /listenkey/i,
             )
         })
 
         it('should reject unknown options', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456', '--foo'], false),
+                () => argv_parser(['--listenkey', '1234567890123456', '--foo']),
                 /Unknown argument/i,
             )
         })
 
         it('should reject invalid values for DI listenkey', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', 'zz34567890123456'], false),
+                () => argv_parser(['--listenkey', 'zz34567890123456']),
                 /listenkey/i,
             )
         })
 
         it('should reject invalid values for the server port', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', 'zz34567890123456', '--port', 'x'], false),
+                () => argv_parser(['--listenkey', 'zz34567890123456', '--port', 'x']),
                 /must be an integer/i,
             )
         })
 
         it('should reject out-of-bound values for the server port', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', 'zz34567890123456', '--port', '100000'], false),
+                () => argv_parser(['--listenkey', 'zz34567890123456', '--port', '100000']),
                 /must be below/i,
             )
         })
 
         it('should reject invalid values for VLC initial volume', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456', '--vlc-initial-volume', '1.1.5'], false),
+                () => argv_parser(['--listenkey', '1234567890123456', '--vlc-initial-volume', '1.1.5']),
                 /floating point number/i,
             )
         })
 
         it('should reject out-of-bound values for VLC initial volume', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456', '--vlc-initial-volume', '1.5'], false),
+                () => argv_parser(['--listenkey', '1234567890123456', '--vlc-initial-volume', '1.5']),
                 /must be between/i,
             )
         })
 
         it('should reject invalid values for refresh frequency', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456', '-f', '10x'], false),
+                () => argv_parser(['--listenkey', '1234567890123456', '-f', '10x']),
                 /must be an integer/,
             )
         })
 
         it('should reject invalid values for the VLC timeout', function () {
             expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456', '-t', '10x'], false),
+                () => argv_parser(['--listenkey', '1234567890123456', '-t', '10x']),
                 /must be an integer/,
             )
         })

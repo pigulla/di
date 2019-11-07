@@ -7,13 +7,13 @@ import {IChannelProvider, ChannelIdentifier} from './ChannelProvider.interface'
 
 @Injectable()
 export class ChannelProvider implements IChannelProvider {
-    private readonly app_data_provider: IAppDataProvider;
-    private readonly logger: ILogger;
-    private filters: ChannelFilter[] = [];
-    private channels_by_id: Map<number, Channel> = new Map();
-    private channels_by_key: Map<string, Channel> = new Map();
-    private filters_by_id: Map<number, ChannelFilter> = new Map();
-    private filters_by_key: Map<string, ChannelFilter> = new Map();
+    private readonly app_data_provider: IAppDataProvider
+    private readonly logger: ILogger
+    private filters: ChannelFilter[] = []
+    private channels_by_id: Map<number, Channel> = new Map()
+    private channels_by_key: Map<string, Channel> = new Map()
+    private filters_by_id: Map<number, ChannelFilter> = new Map()
+    private filters_by_key: Map<string, ChannelFilter> = new Map()
 
     public constructor (
         @Inject('ILogger') logger: ILogger,

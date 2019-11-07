@@ -2,7 +2,7 @@ import {IncomingMessage, ServerResponse} from 'http'
 import {Logger as Pino} from 'pino'
 import pino_http from 'pino-http'
 
-export type RequestLogger = (request: IncomingMessage, response: ServerResponse, next: Function) => void;
+export type RequestLogger = (request: IncomingMessage, response: ServerResponse, next: Function) => void
 
 export function create_request_logger (pino: Pino): RequestLogger {
     const logger = pino_http({

@@ -1,18 +1,21 @@
+import {randomBytes} from 'crypto'
+
 import {IChildProcessFacade} from './ChildProcessFacade.interface'
 import {ControlError} from './ControlError'
 import {Command} from './Command'
 import * as vlc_commands from './commands'
 import {IConnector} from './Connector.interface'
+import {StatusData} from './commands/Status'
 
 export class Connector implements IConnector {
     // A custom prompt is set to make parsing the response a little easier.
-    public static readonly prompt: string = '###';
+    public static readonly prompt: string = '###'
 
     // A custom welcome message is set to make verifying the other end is actually a VLC instance a little easier.
-    private readonly welcome_message: string = Math.random().toString(36).slice(2);
+    private readonly welcome_message: string = randomBytes(8).toString('hex')
 
     private process: IChildProcessFacade
-    private vlc_version: string|null;
+    private vlc_version: string|null
 
     public constructor (child_process_facade: IChildProcessFacade) {
         this.process = child_process_facade
@@ -110,8 +113,8 @@ export class Connector implements IConnector {
         return this.exec_command(vlc_commands.IsPlaying, [])
     }
 
-    public async get_title (): Promise<string> {
-        return this.exec_command(vlc_commands.GetTitle, [])
+    public async get_status (): Promise<StatusData> {
+        return this.exec_command(vlc_commands.Status, [])
     }
 
     public async play (): Promise<void> {

@@ -1,8 +1,8 @@
 import {expect} from 'chai'
 
-import {new_promise} from '@server/promise_helper'
+import {new_promise} from '@server/new_promise'
 
-describe('The promise helper', function () {
+describe('The new_promise function', function () {
     it('should return the resolver', async function () {
         const {promise, resolve} = new_promise<number>()
 

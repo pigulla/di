@@ -1,7 +1,7 @@
 import {LogLevel} from '@nestjs/common'
 import {Quality} from '@server/service/di'
 
-export class ConfigError extends Error {};
+export class ConfigError extends Error {}
 
 export type IConfigProvider = {
     server_hostname: string

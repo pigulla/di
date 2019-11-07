@@ -4,7 +4,7 @@ import {sync as which} from 'which'
 
 import {
     IConfigProvider, ConfigProvider,
-    ILogger, Logger,
+    ILogger, Logger, ServerProcessProxy, IServerProcessProxy,
 } from '@server/service/'
 import {create_argv_parser, IArgvParser} from '../service/config'
 import {AppVersionHeader} from '@server/middleware'
@@ -15,7 +15,11 @@ import {AppVersionHeader} from '@server/middleware'
     providers: [
         {
             provide: 'argv',
-            useValue: process.argv,
+            // @ts-ignore
+            useFactory (): string[] {
+                // @ts-ignore
+                return global.process_argv
+            },
         },
         {
             provide: 'DefaultVlcBinary',
@@ -54,11 +58,18 @@ import {AppVersionHeader} from '@server/middleware'
                 return new Logger(config_provider.log_level)
             },
         },
+        {
+            provide: 'IServerProcessProxy',
+            useFactory (): IServerProcessProxy {
+                return new ServerProcessProxy(process)
+            },
+        },
     ],
     exports: [
         'IConfigProvider',
-        'NormalizedPackageJson',
         'ILogger',
+        'IServerProcessProxy',
+        'NormalizedPackageJson',
     ],
 })
 export class UtilityModule implements NestModule {

@@ -3,7 +3,7 @@ import {expect} from 'chai'
 
 import {PinoLogger} from '@server/service'
 
-import {create_pino_stub, PinoStub} from '../../util/stub'
+import {create_pino_stub, PinoStub} from '../../../util/stub'
 
 describe('Logger service', function () {
     let pino_stub: PinoStub

@@ -6,6 +6,7 @@ import {Command} from './Command'
 import * as vlc_commands from './commands'
 import {IConnector} from './Connector.interface'
 import {StatusData} from './commands/Status'
+import {ILogger} from '../..'
 
 export class Connector implements IConnector {
     // A custom prompt is set to make parsing the response a little easier.
@@ -14,11 +15,16 @@ export class Connector implements IConnector {
     // A custom welcome message is set to make verifying the other end is actually a VLC instance a little easier.
     private readonly welcome_message: string = randomBytes(8).toString('hex')
 
+    private readonly logger: ILogger
     private process: IChildProcessFacade
     private vlc_version: string|null
 
-    public constructor (child_process_facade: IChildProcessFacade) {
+    public constructor (
+        child_process_facade: IChildProcessFacade,
+        logger: ILogger,
+    ) {
         this.process = child_process_facade
+        this.logger = logger.child_for_service(Connector.name)
         this.vlc_version = null
     }
 
@@ -96,6 +102,8 @@ export class Connector implements IConnector {
     ): Promise<ReturnType<C['parse']>> {
         const command = new Ctor()
         const args_string = command.build_arg_string(params)
+
+        this.logger.debug('Executing command', {command: `${command.command} ${args_string}`})
         const result = await this.send(command.command, args_string)
 
         return command.parse(result)

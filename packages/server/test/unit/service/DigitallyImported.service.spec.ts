@@ -14,6 +14,9 @@ describe('DigitallyImported service', function () {
     let digitally_imported: DigitallyImported
 
     beforeEach(async function () {
+        const logger = create_logger_stub()
+        logger.child_for_service.returns(create_logger_stub())
+
         config_provider = create_config_provider_stub({
             di_url: 'https://www.di.fm',
         })
@@ -22,7 +25,7 @@ describe('DigitallyImported service', function () {
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: create_logger_stub(),
+                    useValue: logger,
                 },
                 {
                     provide: 'IConfigProvider',

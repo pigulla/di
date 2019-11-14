@@ -1,13 +1,13 @@
 import merge from 'lodash.merge'
 
-import {IConfigProvider} from '@server/service'
+import {IConfigProvider, LogLevel} from '@server/service'
 import {Quality} from '@server/service/di'
 
 export const default_config: IConfigProvider = {
     server_hostname: 'localhost',
     server_port: 4979,
 
-    log_level: 'warn',
+    log_level: LogLevel.WARN,
 
     vlc_path: '/dev/null',
     vlc_timeout: 1000,

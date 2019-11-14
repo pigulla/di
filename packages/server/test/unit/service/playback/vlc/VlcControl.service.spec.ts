@@ -4,7 +4,7 @@ import {SinonStub, SinonStubbedInstance, stub} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
-import {IConfigProvider} from '@server/service'
+import {IConfigProvider, ILogger} from '@server/service'
 import {IChildProcessFacade, IConnector, VlcControl} from '@server/service/playback/vlc'
 import {State} from '@server/service/playback/vlc/commands/Status'
 
@@ -17,6 +17,7 @@ import {
 
 describe('VlcControl service', function () {
     let vlc_control: VlcControl
+    let child_logger: SinonStubbedInstance<ILogger>
     let config_provider: SinonStubbedInstance<IConfigProvider>
     let child_process_facade_stub: SinonStubbedInstance<IChildProcessFacade>
     let connector_stub: SinonStubbedInstance<IConnector>
@@ -24,6 +25,10 @@ describe('VlcControl service', function () {
     let connector_ctor: SinonStub
 
     beforeEach(async function () {
+        const logger = create_logger_stub()
+        child_logger = create_logger_stub()
+        logger.child_for_service.returns(child_logger)
+
         child_process_facade_ctor = stub()
         connector_ctor = stub()
 
@@ -42,7 +47,7 @@ describe('VlcControl service', function () {
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: create_logger_stub(),
+                    useValue: logger,
                 },
                 {
                     provide: 'IConfigProvider',
@@ -66,7 +71,7 @@ describe('VlcControl service', function () {
     it('should use the injected constructors', function () {
         expect(child_process_facade_ctor).to.have.been.calledOnceWithExactly('/usr/bin/vlc', 5000, spawn)
         expect(child_process_facade_ctor).to.have.been.calledWithNew
-        expect(connector_ctor).to.have.been.calledOnceWithExactly(child_process_facade_stub)
+        expect(connector_ctor).to.have.been.calledOnceWithExactly(child_process_facade_stub, child_logger)
         expect(connector_ctor).to.have.been.calledWithNew
     })
 
@@ -111,7 +116,7 @@ describe('VlcControl service', function () {
     it('should stop the instance', async function () {
         await vlc_control.stop()
 
-        expect(connector_stub.stop_instance).to.have.been.calledOnceWithExactly()
+        expect(connector_stub.stop).to.have.been.calledOnceWithExactly()
     })
 
     it('should return whether it is currently playing', async function () {

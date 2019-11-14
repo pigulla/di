@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf lib/ && tsc --build tsconfig.json",
-    "dev": "../../node_modules/.bin/ts-node -r tsconfig-paths/register src/main.ts --log-level=verbose"
+    "dev": "../../node_modules/.bin/ts-node -r tsconfig-paths/register src/main.ts --log-level=trace"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "license": "MIT",

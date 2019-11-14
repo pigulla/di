@@ -1,6 +1,6 @@
 import {Inject, OnApplicationBootstrap, OnApplicationShutdown} from '@nestjs/common'
 
-import {ILogger} from './Logger.interface'
+import {ILogger} from './logger'
 import {IPeriodicTrigger} from './PeriodicTrigger.interface'
 
 export type Options = {
@@ -22,7 +22,7 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap
         this.options = Object.assign({scope: null}, options)
         this.interval_id = null
 
-        this.logger.log('Service instantiated')
+        this.logger.debug('Service instantiated')
     }
 
     public onApplicationBootstrap (): void {
@@ -42,7 +42,7 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap
             return
         }
 
-        this.logger.log('Starting service')
+        this.logger.debug('Starting service')
         this.interval_id = this.schedule()
     }
 
@@ -51,7 +51,7 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap
             return
         }
 
-        this.logger.log('Stopping service')
+        this.logger.debug('Stopping service')
         clearTimeout(this.interval_id)
         this.interval_id = null
     }

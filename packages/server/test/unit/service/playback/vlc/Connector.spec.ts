@@ -6,7 +6,7 @@ import {expect} from 'chai'
 import {Connector, IChildProcessFacade} from '@server/service/playback/vlc'
 import {State} from '@server/service/playback/vlc/commands/Status'
 
-import {create_child_process_facade_stub} from '../../../../util'
+import {create_child_process_facade_stub, create_logger_stub} from '../../../../util'
 
 describe('VLC Connector', function () {
     let child_process_facade_stub: SinonStubbedInstance<IChildProcessFacade>
@@ -41,8 +41,11 @@ describe('VLC Connector', function () {
     }
 
     beforeEach(async function () {
+        const logger = create_logger_stub()
+        logger.child_for_service.returns(create_logger_stub())
+
         child_process_facade_stub = create_child_process_facade_stub()
-        vlc_connector = new Connector(child_process_facade_stub)
+        vlc_connector = new Connector(child_process_facade_stub, logger)
     })
 
     it('should proxy the running state', async function () {

@@ -8,7 +8,7 @@ import {IConnector} from './Connector.interface'
 import {IChildProcessFacade, ChildProcessFacadeCtor} from './ChildProcessFacade.interface'
 import {Channel} from '@server/service/di'
 
-type ConnectorCtor = new (child_process_facade: IChildProcessFacade) => IConnector
+type ConnectorCtor = new (child_process_facade: IChildProcessFacade, logger: ILogger) => IConnector
 
 @Injectable()
 export class VlcControl implements IPlaybackControl, OnModuleInit, OnApplicationShutdown {
@@ -28,21 +28,21 @@ export class VlcControl implements IPlaybackControl, OnModuleInit, OnApplication
             spawn,
         )
 
-        this.logger = logger.for_service(VlcControl.name)
+        this.logger = logger.child_for_service(VlcControl.name)
         this.config_provider = config_provider
-        this.connector = new Connector(child_process_facade)
+        this.connector = new Connector(child_process_facade, this.logger)
 
-        this.logger.log('Service instantiated')
+        this.logger.debug('Service instantiated')
     }
 
     public async onModuleInit (): Promise<void> {
-        this.logger.log('Starting service')
+        this.logger.debug('Starting service')
 
         return this.connector.start_instance(this.config_provider.vlc_initial_volume)
     }
 
     public async onApplicationShutdown (_signal?: string): Promise<void> {
-        this.logger.log('Stopping service')
+        this.logger.debug('Stopping service')
 
         return this.connector.stop_instance()
     }
@@ -65,7 +65,7 @@ export class VlcControl implements IPlaybackControl, OnModuleInit, OnApplication
     }
 
     public async stop (): Promise<void> {
-        return this.connector.stop_instance()
+        return this.connector.stop()
     }
 
     public async is_playing (): Promise<boolean> {

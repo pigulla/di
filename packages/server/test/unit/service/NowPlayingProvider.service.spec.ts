@@ -12,11 +12,14 @@ describe('NowPlayingProvider service', function () {
     let now_playing_provider: NowPlayingProvider
 
     beforeEach(async function () {
+        const logger = create_logger_stub()
+        logger.child_for_service.returns(create_logger_stub())
+
         const module = await Test.createTestingModule({
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: create_logger_stub(),
+                    useValue: logger,
                 },
                 NowPlayingProvider,
             ],

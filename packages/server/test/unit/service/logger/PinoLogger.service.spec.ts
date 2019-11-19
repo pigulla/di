@@ -29,7 +29,6 @@ describe('Logger service', function () {
         expect(pino_stub.child).to.have.been.calledOnceWith({service: 'my-service'})
     })
 
-
     describe('when told to log', function () {
         const data = {}
 

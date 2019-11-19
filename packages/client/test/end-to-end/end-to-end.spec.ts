@@ -17,7 +17,7 @@ describe('End-to-end test', function () {
     }
 
     it('is_alive()', async function () {
-await sleep(1)
+        await sleep(1)
         await expect(client.is_alive()).to.eventually.be.true
     })
 
@@ -66,8 +66,8 @@ await sleep(1)
         await sleep(500)
         await expect(client.is_playing()).to.eventually.be.true
 
-        await client.stop_playback()
-        await sleep(500)
-        await expect(client.is_playing()).to.eventually.be.false
+        // await client.stop_playback()
+        // await sleep(500)
+        // await expect(client.is_playing()).to.eventually.be.false
     })
 })

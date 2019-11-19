@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-class-members */
 import Axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios'
 import Bluebird from 'bluebird'
 import {
@@ -98,7 +99,7 @@ export class Client {
     }
 
     public async set_volume (value: number): Promise<void> {
-        const data: VolumeDTO  = {volume: value}
+        const data: VolumeDTO = {volume: value}
 
         await this
             .request({
@@ -139,6 +140,7 @@ export class Client {
                 data,
             })
             .catch(function (error: AxiosError) {
+                // eslint-disable-next-line no-undef
                 if (error?.response?.status === NOT_FOUND) {
                     throw new ChannelNotFoundError(channel_key)
                 }
@@ -182,6 +184,7 @@ export class Client {
                 url: `/channel/${channel_key}`,
             })
             .catch(function (error: AxiosError) {
+                // eslint-disable-next-line no-undef
                 if (error?.response?.status === NOT_FOUND) {
                     throw new ChannelNotFoundError(channel_key)
                 }
@@ -207,6 +210,7 @@ export class Client {
                 url: `/channel/${channel_key}/now_playing`,
             })
             .catch(function (error: AxiosError) {
+                // eslint-disable-next-line no-undef
                 if (error?.response?.status === NOT_FOUND) {
                     throw new ChannelNotFoundError(channel_key)
                 }
@@ -230,8 +234,8 @@ export class Client {
     public get_now_playing (): Promise<Map<string, NowPlayingDTO>>
     public get_now_playing (channel_key: string): Promise<NowPlayingDTO>
     public get_now_playing (channel_key?: string): Promise<NowPlayingDTO|Map<string, NowPlayingDTO>> {
-        return channel_key === undefined ?
-            this.get_now_playing_on_channels() :
-            this.get_now_playing_on_channel(channel_key)
+        return channel_key === undefined
+            ? this.get_now_playing_on_channels()
+            : this.get_now_playing_on_channel(channel_key)
     }
 }

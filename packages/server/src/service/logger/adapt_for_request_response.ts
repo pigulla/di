@@ -1,17 +1,18 @@
 import {IncomingMessage, ServerResponse} from 'http'
+
 import {Logger as Pino} from 'pino'
 import pino_http from 'pino-http'
 
-export type RequestLogger = (request: IncomingMessage, response: ServerResponse, next: Function) => void
+import {RequestResponseLogger} from '@server/service'
 
-export function create_request_logger (pino: Pino): RequestLogger {
-    const logger = pino_http({
+export function adapt_for_request_response (pino: Pino): RequestResponseLogger {
+    const http_logger = pino_http({
         logger: pino,
         useLevel: 'trace',
     })
 
     return function request_logger (request: IncomingMessage, response: ServerResponse, next: Function): void {
-        logger(request, response)
+        http_logger(request, response)
         next()
     }
 }

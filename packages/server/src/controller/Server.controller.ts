@@ -28,14 +28,17 @@ export class ServerController {
     @Get()
     public async status (): Promise<ServerStatusDTO> {
         const app_data = this.app_data_provider.get_app_data()
-        const meta_information = await this.playback_control.get_meta_information()
+        const backend_info = await this.playback_control.get_playback_backend_information()
 
         return {
             server: {
                 last_updated: this.app_data_provider.last_updated_at().toISOString(),
                 version: this.package_json.version,
             },
-            playback_control: meta_information,
+            playback_control: {
+                pid: this.playback_control.get_pid(),
+                ...backend_info,
+            },
             digitally_imported: {
                 app_version: app_data.app_version,
                 deploy_time: app_data.app_deploy_time.toISOString(),

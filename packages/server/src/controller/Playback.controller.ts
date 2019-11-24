@@ -12,11 +12,11 @@ import {
     Put,
 } from '@nestjs/common'
 
-import {ChannelDTO, PlaybackStateDTO} from '@digitally-imported/dto'
+import {ChannelDTO, PlayDTO, PlaybackStateDTO} from '@digitally-imported/dto'
 
 import {IChannelProvider, IPlaybackControl, IConfigProvider, INowPlayingProvider} from '@server/service'
 
-export class PlayDTO {
+class ValidatedPlayDTO extends PlayDTO {
     @IsString()
     @IsNotEmpty()
     public readonly channel!: string
@@ -78,7 +78,7 @@ export class PlaybackController {
     }
 
     @Put()
-    public async play (@Body() play_dto: PlayDTO): Promise<ChannelDTO> {
+    public async play (@Body() play_dto: ValidatedPlayDTO): Promise<ChannelDTO> {
         const {channel: identifier} = play_dto
 
         if (!this.channel_provider.channel_exists(identifier)) {

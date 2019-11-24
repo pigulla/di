@@ -14,13 +14,15 @@ describe('AppDataProvider service', function () {
     let di: SinonStubbedInstance<DigitallyImported>
 
     beforeEach(async function () {
+        const logger = create_logger_stub()
         di = create_digitally_imported_stub()
+        logger.child_for_service.returns(create_logger_stub())
 
         const module = await Test.createTestingModule({
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: create_logger_stub(),
+                    useValue: logger,
                 },
                 {
                     provide: 'IDigitallyImported',

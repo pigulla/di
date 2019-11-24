@@ -10,7 +10,7 @@
     "build": "lerna exec 'rm -rf lib' && lerna run build",
     "setup": "rm -rf node_modules && npm install && lerna exec 'rm -rf node_modules' && lerna exec 'npm install'",
     "test": "npm run lint && npm run test-with-coverage && npm run audit:all",
-    "audit:all": "lerna exec 'npm audit'",
+    "audit:all": "npm audit && lerna exec 'npm audit'",
     "test-with-coverage": "nyc mocha --file mocha.hooks.ts 'packages/*/test/**/*.spec.ts'",
     "interactive-integration-test": "ts-node --require tsconfig-paths/register test/interactive-integration.spec.ts"
   },

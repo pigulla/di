@@ -5,6 +5,7 @@ import yargs, {Options} from 'yargs'
 import {IArgvParser} from './ArgvParser.interface'
 import {ApplicationOptions} from './ApplicationOptions'
 import {Quality} from '../di'
+import {LogLevel} from '@server/service'
 
 interface ArgvParserOptions {
     skip_vlc_validation: boolean
@@ -59,8 +60,8 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             group: 'Server',
             alias: 'l',
             requiresArg: true,
-            choices: ['error', 'warn', 'log', 'debug', 'verbose'],
-            default: 'log',
+            choices: Object.values(LogLevel),
+            default: LogLevel.INFO,
             type: 'string',
         },
     }

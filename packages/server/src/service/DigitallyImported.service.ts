@@ -6,7 +6,7 @@ import {NodeVM} from 'vm2'
 import {IConfigProvider} from './ConfigProvider.interface'
 import {AppData, RawAppData, NowPlaying, RawNowPlaying} from './di'
 import {IDigitallyImported} from './DigitallyImported.interface'
-import {ILogger} from './Logger.interface'
+import {ILogger} from './logger'
 
 export class DigitallyImportedError extends Error {}
 
@@ -20,9 +20,9 @@ export class DigitallyImported implements IDigitallyImported {
         @Inject('IConfigProvider') config: IConfigProvider,
     ) {
         this.url = config.di_url
-        this.logger = logger.for_service(DigitallyImported.name)
+        this.logger = logger.child_for_service(DigitallyImported.name)
 
-        this.logger.log('Service instantiated')
+        this.logger.debug('Service instantiated')
     }
 
     private extract_app_data (html: string): RawAppData {
@@ -44,8 +44,7 @@ export class DigitallyImported implements IDigitallyImported {
         })
 
         const app_script_tag = cheerio.load(html)('script').toArray()
-            .filter(node => node && node.firstChild &&
-                node.firstChild.data && node.firstChild.data.includes('di.app.start'))
+            .filter(node => node?.firstChild?.data?.includes('di.app.start') || false)
         const src = (app_script_tag && app_script_tag[0] && app_script_tag[0].firstChild.data)
 
         if (!src) {
@@ -75,7 +74,7 @@ export class DigitallyImported implements IDigitallyImported {
         const raw_app_data = this.extract_app_data(response.text)
         const app_data = AppData.from_raw(raw_app_data)
 
-        this.logger.log('AppData successfully retrieved')
+        this.logger.debug('AppData successfully retrieved')
         return app_data
     }
 }

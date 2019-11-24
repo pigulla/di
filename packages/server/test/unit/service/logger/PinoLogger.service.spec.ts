@@ -1,9 +1,9 @@
-import {expect} from 'chai'
 import {Logger as Pino} from 'pino'
+import {expect} from 'chai'
 
-import {PinoLogger} from '@src/service/logger'
+import {PinoLogger} from '@server/service'
 
-import {create_pino_stub, PinoStub} from '@test/util/stub'
+import {create_pino_stub, PinoStub} from '../../../util/stub'
 
 describe('Logger service', function () {
     let pino_stub: PinoStub

@@ -3,7 +3,7 @@ import * as Config from '@oclif/config'
 
 import {PlaybackStateDTO} from '@digitally-imported/dto/lib'
 
-import {FormattedOutputCommand, OutputOptions} from '@cli/FormattedOutputCommand'
+import {FormattedOutputCommand, OutputOptions} from '../FormattedOutputCommand'
 
 export default class Status extends FormattedOutputCommand<PlaybackStateDTO> {
     public static description = 'Get server status.';

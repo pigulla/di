@@ -1,5 +1,5 @@
-import {LogLevel} from '@nestjs/common'
 import {Quality} from '@server/service/di'
+import {LogLevel} from '@server/service/logger'
 
 export class ConfigError extends Error {}
 

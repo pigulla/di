@@ -1,6 +1,6 @@
 import {stub, SinonStubbedInstance} from 'sinon'
 
-import {IVlcHttpClient} from '@src/service/playback/'
+import {IVlcHttpClient} from '@server/service/playback/vlc'
 
 export function create_vlc_http_client_stub (): SinonStubbedInstance<IVlcHttpClient> {
     return {

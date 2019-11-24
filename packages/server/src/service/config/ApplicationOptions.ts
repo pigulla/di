@@ -1,4 +1,4 @@
-import {LogLevel} from '@nestjs/common'
+import {LogLevel} from '@server/service'
 import {Quality} from '@server/service/di'
 
 export interface ApplicationOptions {

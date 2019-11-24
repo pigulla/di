@@ -1,10 +1,18 @@
 import {Injectable, Inject} from '@nestjs/common'
 import cheerio from 'cheerio'
-import superagent from 'superagent'
+import superagent, {SuperAgentStatic} from 'superagent'
 import {NodeVM} from 'vm2'
 
 import {IConfigProvider} from './ConfigProvider.interface'
-import {AppData, RawAppData, NowPlaying, RawNowPlaying} from './di'
+import {
+    AppData,
+    RawAppData,
+    NowPlaying,
+    RawNowPlaying,
+    parse_authentication_response,
+    FailedAuthentcationResponse,
+    AuthenticationFailureError,
+} from './di'
 import {IDigitallyImported} from './DigitallyImported.interface'
 import {ILogger} from './logger'
 
@@ -69,9 +77,39 @@ export class DigitallyImported implements IDigitallyImported {
         return (response.body as RawNowPlaying[]).map(NowPlaying.from_raw)
     }
 
+    public async load_favorites (email: string, password: string): Promise<string[]> {
+        const agent = superagent.agent()
+        const response = await agent
+            .post(`${this.url}/login`)
+            .type('form')
+            .set('x-requested-with', 'XMLHttpRequest')
+            .send({
+                'member_session[password]': password,
+                'member_session[username]': email,
+                'member_session[remember_me]': 0,
+            })
+        const auth_response = parse_authentication_response(response.body)
+
+        if (auth_response instanceof FailedAuthentcationResponse) {
+            throw new AuthenticationFailureError(auth_response)
+        }
+
+        const raw_app_data = await this.load_raw_app_data(agent)
+
+        return raw_app_data.channels
+            .filter(channel => channel.favorite)
+            .sort((a, b) => (a.favorite_position || 0) - (b.favorite_position || 0))
+            .map(channel => channel.key)
+    }
+
+    private async load_raw_app_data (agent: SuperAgentStatic): Promise<RawAppData> {
+        const response = await agent.get(this.url)
+
+        return this.extract_app_data(response.text)
+    }
+
     public async load_app_data (): Promise<AppData> {
-        const response = await superagent.get(this.url)
-        const raw_app_data = this.extract_app_data(response.text)
+        const raw_app_data = await this.load_raw_app_data(superagent)
         const app_data = AppData.from_raw(raw_app_data)
 
         this.logger.debug('AppData successfully retrieved')

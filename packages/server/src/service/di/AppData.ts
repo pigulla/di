@@ -11,6 +11,7 @@ export interface RawAppData {
     appDeployTime: string
     channels: RawChannel[]
     channel_filters: RawChannelFilter[]
+    currentUserType: string
 }
 
 export class AppData {
@@ -20,6 +21,7 @@ export class AppData {
         public readonly app_deploy_time: Dayjs,
         public readonly channels: Channel[],
         public readonly channel_filters: ChannelFilter[],
+        public readonly currentUserType: string,
     ) {}
 
     public static from_raw (data: RawAppData): AppData {
@@ -30,6 +32,7 @@ export class AppData {
             data.channel_filters
                 .sort((a, b) => a.position - b.position)
                 .map(ChannelFilter.from_raw),
+            data.currentUserType,
         )
     }
 }

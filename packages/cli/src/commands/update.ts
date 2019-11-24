@@ -1,6 +1,6 @@
 import cli from 'cli-ux'
 
-import {BaseCommand} from '@cli/BaseCommand'
+import {BaseCommand} from '../BaseCommand'
 
 export default class Update extends BaseCommand {
     public static description = 'Update data.';

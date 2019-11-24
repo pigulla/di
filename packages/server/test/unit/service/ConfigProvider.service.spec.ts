@@ -1,7 +1,7 @@
 import {expect} from 'chai'
-import {stub, SinonStub} from 'sinon'
+import {SinonStub, stub} from 'sinon'
 
-import {ConfigProvider} from '@server/service'
+import {ConfigProvider, LogLevel} from '@server/service'
 import {Test} from '@nestjs/testing'
 import {ApplicationOptions} from '@server/service/config'
 import {Quality} from '@server/service/di'
@@ -43,7 +43,7 @@ describe('ConfigProvider service', function () {
         const options: ApplicationOptions = {
             hostname: 'example.local',
             port: 1337,
-            logLevel: 'warn',
+            logLevel: LogLevel.WARN,
             vlcPath: '/usr/bin/vlc',
             vlcInitialVolume: 0.666,
             vlcTimeout: 1500,

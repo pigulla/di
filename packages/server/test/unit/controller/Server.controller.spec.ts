@@ -4,16 +4,17 @@ import {HttpStatus} from '@nestjs/common'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {mockResponse} from 'mock-req-res'
+import {NormalizedPackageJson} from 'read-pkg'
+import {JsonObject} from 'type-fest'
 
 import {ServerController} from '@server/controller'
-import {ControlInformation, IAppDataProvider, IPlaybackControl, IServerProcessProxy} from '@server/service'
+import {IAppDataProvider, IPlaybackControl, IServerProcessProxy} from '@server/service'
 
 import {
     AppDataBuilder,
     create_app_data_provider_stub,
     create_playback_control_stub, create_server_process_proxy_stub,
 } from '../../util'
-import {NormalizedPackageJson} from 'read-pkg'
 
 describe('Server controller', function () {
     const package_json: NormalizedPackageJson = {
@@ -60,14 +61,14 @@ describe('Server controller', function () {
     it('should return the current status', async function () {
         const last_updated_at = dayjs('2019-10-06T16:34:59.157Z')
         const app_data = new AppDataBuilder().build()
-        const meta_information: ControlInformation = {
+        const backend_information: JsonObject = {
             pid: 42,
             foo: 'bar',
         }
 
         app_data_provider_stub.get_app_data.returns(app_data)
         app_data_provider_stub.last_updated_at.returns(last_updated_at)
-        playback_control_stub.get_meta_information.resolves(meta_information)
+        playback_control_stub.get_playback_backend_information.resolves(backend_information)
 
         const status = await controller.status()
         expect(status).to.deep.equal({

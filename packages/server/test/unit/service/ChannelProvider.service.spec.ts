@@ -36,14 +36,16 @@ describe('ChannelProvider service', function () {
     }
 
     beforeEach(async function () {
+        const logger = create_logger_stub()
         app_data_provider = create_app_data_provider_stub()
         app_data_provider.get_app_data.returns(app_data)
+        logger.child_for_service.returns(create_logger_stub())
 
         const module = await Test.createTestingModule({
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: create_logger_stub(),
+                    useValue: logger,
                 },
                 {
                     provide: 'IAppDataProvider',

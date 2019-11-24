@@ -4,7 +4,7 @@ import {Inject, OnModuleInit} from '@nestjs/common'
 import {AppData} from './di'
 import {IAppDataProvider} from './AppDataProvider.interface'
 import {IDigitallyImported} from './DigitallyImported.interface'
-import {ILogger} from './Logger.interface'
+import {ILogger} from './logger'
 
 export class AppDataProvider implements IAppDataProvider, OnModuleInit {
     private readonly digitally_imported: IDigitallyImported
@@ -17,13 +17,13 @@ export class AppDataProvider implements IAppDataProvider, OnModuleInit {
         @Inject('ILogger') logger: ILogger,
         @Inject('IDigitallyImported') digitally_imported: IDigitallyImported,
     ) {
-        this.logger = logger.for_service(AppDataProvider.name)
+        this.logger = logger.child_for_service(AppDataProvider.name)
         this.update_callbacks = []
         this.digitally_imported = digitally_imported
         this.app_data = null
         this.last_update_at = null
 
-        this.logger.log('Service instantiated')
+        this.logger.debug('Service instantiated')
     }
 
     public async onModuleInit (): Promise<void> {

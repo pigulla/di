@@ -1,10 +1,11 @@
 import {expect} from 'chai'
 import {SinonStub, stub} from 'sinon'
-
-import {ConfigProvider, LogLevel} from '@server/service'
 import {Test} from '@nestjs/testing'
+
+import {ConfigProvider} from '@server/service'
 import {ApplicationOptions} from '@server/service/config'
 import {Quality} from '@server/service/di'
+import {LogLevel} from '@server/service/logger'
 
 describe('ConfigProvider service', function () {
     let argv_parser_stub: SinonStub

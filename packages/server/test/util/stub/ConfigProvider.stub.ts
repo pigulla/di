@@ -1,7 +1,8 @@
 import merge from 'lodash.merge'
 
-import {IConfigProvider, LogLevel} from '@server/service'
+import {IConfigProvider} from '@server/service'
 import {Quality} from '@server/service/di'
+import {LogLevel} from '@server/service/logger'
 
 export const default_config: IConfigProvider = {
     server_hostname: 'localhost',

@@ -6,9 +6,8 @@ import {ValidationPipe} from '@nestjs/common'
 import pino from 'pino'
 
 import {HttpModule} from './module/http.module'
-import {adapt_for_nest, LogLevel, PinoLogger} from './service'
+import {adapt_for_request_response, adapt_for_nest, ILogger, LogLevel, PinoLogger} from './service/logger'
 import {create_argv_parser} from './service/config'
-import {adapt_for_request_response, ILogger} from '@server/service/logger'
 
 type ShutdownFn = () => Promise<void>
 

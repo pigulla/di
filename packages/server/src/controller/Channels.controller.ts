@@ -31,6 +31,6 @@ export class ChannelsController {
             throw new NotFoundException()
         }
 
-        return this.channel_provider.get_by_key(key).to_dto()
+        return this.channel_provider.get(key).to_dto()
     }
 }

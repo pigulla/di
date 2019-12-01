@@ -34,10 +34,8 @@ export class NowPlayingProvider implements INowPlayingProvider {
     public get (identifier: ChannelIdentifier): NowPlaying {
         if (typeof identifier === 'string') {
             return this.get_by_channel_key(identifier)
-        } else if (typeof identifier === 'number') {
-            return this.get_by_channel_id(identifier)
         } else {
-            return this.get_by_channel_id(identifier.id)
+            return this.get_by_channel_id(identifier)
         }
     }
 

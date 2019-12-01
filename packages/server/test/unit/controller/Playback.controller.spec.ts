@@ -75,7 +75,7 @@ describe('Playback controller', function () {
                 .with_display_title('Hookwarts')
                 .build()
             now_playing_provider_stub.get_by_channel_key.withArgs(progressive.key).returns(now_playing)
-            channels_provider_stub.get_by_key.withArgs(progressive.key).returns(progressive)
+            channels_provider_stub.get.withArgs(progressive.key).returns(progressive)
 
             await expect(controller.current()).to.eventually.deep.equal({
                 channel: progressive.to_dto(),
@@ -114,7 +114,7 @@ describe('Playback controller', function () {
             const channel = new ChannelBuilder().with_key('progressive').build()
 
             channels_provider_stub.channel_exists.withArgs('progressive').returns(true)
-            channels_provider_stub.get_by_key.withArgs('progressive').returns(channel)
+            channels_provider_stub.get.withArgs('progressive').returns(channel)
 
             await expect(controller.play({channel: 'progressive'})).to.eventually.deep.equal(channel.to_dto())
             expect(playback_control_stub.play)

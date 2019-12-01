@@ -60,31 +60,19 @@ export class ChannelsProvider implements IChannelsProvider {
         }
     }
 
+    public get (id: number): Channel
+    public get (key: string): Channel
     public get (identifier: ChannelIdentifier): Channel {
+        let channel: Channel|undefined
+
         if (typeof identifier === 'string') {
-            return this.get_by_key(identifier)
-        } else if (typeof identifier === 'number') {
-            return this.get_by_id(identifier)
+            channel = this.channels_by_key.get(identifier)
         } else {
-            return this.get_by_id(identifier.id)
-        }
-    }
-
-    public get_by_id (id: number): Channel {
-        const channel = this.channels_by_id.get(id)
-
-        if (!channel) {
-            throw new Error(`Channel with id ${id} not found`)
+            channel = this.channels_by_id.get(identifier)
         }
 
-        return channel
-    }
-
-    public get_by_key (key: string): Channel {
-        const channel = this.channels_by_key.get(key)
-
         if (!channel) {
-            throw new Error(`Channel with key "${key}" not found`)
+            throw new Error(`Channel "${identifier}" not found`)
         }
 
         return channel

@@ -40,7 +40,7 @@ describe('Channels controller', function () {
 
     it('should return a specific channel', function () {
         channels_provider_stub.channel_exists.withArgs(progressive.key).returns(true)
-        channels_provider_stub.get_by_key.withArgs(progressive.key).returns(progressive)
+        channels_provider_stub.get.withArgs(progressive.key).returns(progressive)
 
         const result = controller.get_channel(progressive.key)
         expect(result).to.deep.equal(progressive.to_dto())

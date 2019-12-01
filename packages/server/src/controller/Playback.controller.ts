@@ -60,7 +60,7 @@ export class PlaybackController {
         }
 
         const now_playing = this.now_playing_provider.get_by_channel_key(channel_key)
-        const channel = this.channel_provider.get_by_key(channel_key)
+        const channel = this.channel_provider.get(channel_key)
 
         return {
             now_playing: {
@@ -86,7 +86,7 @@ export class PlaybackController {
         }
 
         const {di_listenkey, di_quality} = this.config_provider
-        const channel = this.channel_provider.get_by_key(identifier)
+        const channel = this.channel_provider.get(identifier)
         const url = channel.build_url(di_listenkey, di_quality)
 
         await this.playback_control.play(url)

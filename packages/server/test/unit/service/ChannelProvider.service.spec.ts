@@ -2,7 +2,7 @@ import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 
-import {ChannelProvider, IAppDataProvider} from '@server/service'
+import {ChannelsProvider, IAppDataProvider} from '@server/service'
 import {AppData} from '@server/service/di'
 
 import {
@@ -17,7 +17,7 @@ import {
 const {progressive, classictechno, vocaltrance} = prebuilt_channel
 const {ambient, bass, deep} = prebuilt_channel_filter
 
-describe('ChannelProvider service', function () {
+describe('ChannelsProvider service', function () {
     const invalid_channel = new ChannelBuilder()
         .with_id(0)
         .with_key('invalid_key')
@@ -28,7 +28,7 @@ describe('ChannelProvider service', function () {
         .build()
 
     let app_data_provider: SinonStubbedInstance<IAppDataProvider>
-    let channel_provider: ChannelProvider
+    let channels_provider: ChannelsProvider
 
     function trigger_update (new_app_data: AppData): void {
         const [fn, ctx] = app_data_provider.on_update.firstCall.args
@@ -51,11 +51,11 @@ describe('ChannelProvider service', function () {
                     provide: 'IAppDataProvider',
                     useValue: app_data_provider,
                 },
-                ChannelProvider,
+                ChannelsProvider,
             ],
         }).compile()
 
-        channel_provider = module.get(ChannelProvider)
+        channels_provider = module.get(ChannelsProvider)
         trigger_update(app_data)
     })
 
@@ -69,49 +69,49 @@ describe('ChannelProvider service', function () {
 
         trigger_update(new_app_data)
 
-        expect(channel_provider.get_all()).to.have.length(0)
-        expect(channel_provider.get_filters()).to.have.length(0)
+        expect(channels_provider.get_all()).to.have.length(0)
+        expect(channels_provider.get_filters()).to.have.length(0)
     })
 
     it('should return channel filters', function () {
-        expect(channel_provider.get_filters()).to.have.members(app_data.channel_filters)
+        expect(channels_provider.get_filters()).to.have.members(app_data.channel_filters)
     })
 
     it('should return channels', function () {
-        expect(channel_provider.get_all()).to.have.members(app_data.channels)
+        expect(channels_provider.get_all()).to.have.members(app_data.channels)
     })
 
     describe('should check if a channel exists', function () {
         it('by id', function () {
-            expect(channel_provider.channel_exists(invalid_channel.id)).to.be.false
-            expect(channel_provider.channel_exists(progressive.id)).to.be.true
+            expect(channels_provider.channel_exists(invalid_channel.id)).to.be.false
+            expect(channels_provider.channel_exists(progressive.id)).to.be.true
         })
 
         it('by key', function () {
-            expect(channel_provider.channel_exists(invalid_channel.key)).to.be.false
-            expect(channel_provider.channel_exists(progressive.key)).to.be.true
+            expect(channels_provider.channel_exists(invalid_channel.key)).to.be.false
+            expect(channels_provider.channel_exists(progressive.key)).to.be.true
         })
 
         it('by itself', function () {
-            expect(channel_provider.channel_exists(invalid_channel)).to.be.false
-            expect(channel_provider.channel_exists(progressive)).to.be.true
+            expect(channels_provider.channel_exists(invalid_channel)).to.be.false
+            expect(channels_provider.channel_exists(progressive)).to.be.true
         })
     })
 
     describe('should return a channel', function () {
         it('by its id', function () {
-            expect(() => channel_provider.get_by_id(invalid_channel.id)).to.throw()
-            expect(channel_provider.get(progressive.id)).to.equal(progressive)
+            expect(() => channels_provider.get_by_id(invalid_channel.id)).to.throw()
+            expect(channels_provider.get(progressive.id)).to.equal(progressive)
         })
 
         it('by its key', function () {
-            expect(() => channel_provider.get_by_key(invalid_channel.key)).to.throw()
-            expect(channel_provider.get(progressive.key)).to.equal(progressive)
+            expect(() => channels_provider.get_by_key(invalid_channel.key)).to.throw()
+            expect(channels_provider.get(progressive.key)).to.equal(progressive)
         })
 
         it('by itself', function () {
-            expect(() => channel_provider.get(invalid_channel)).to.throw()
-            expect(channel_provider.get(progressive)).to.equal(progressive)
+            expect(() => channels_provider.get(invalid_channel)).to.throw()
+            expect(channels_provider.get(progressive)).to.equal(progressive)
         })
     })
 })

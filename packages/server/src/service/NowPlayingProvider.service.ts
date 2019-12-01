@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@nestjs/common'
 
-import {ChannelIdentifier} from './ChannelProvider.interface'
+import {ChannelIdentifier} from './ChannelsProvider.interface'
 import {NowPlaying} from './di'
 import {ILogger} from './logger'
 import {INowPlayingProvider} from './NowPlayingProvider.interface'

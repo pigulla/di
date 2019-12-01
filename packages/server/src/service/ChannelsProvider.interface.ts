@@ -1,6 +1,6 @@
 import {Channel, ChannelFilter} from './di'
 
-export interface IChannelProvider {
+export interface IChannelsProvider {
     channel_exists (identifier: ChannelIdentifier): boolean
     get (identifier: ChannelIdentifier): Channel
     get_by_id (id: number): Channel

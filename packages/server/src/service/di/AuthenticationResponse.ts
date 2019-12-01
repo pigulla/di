@@ -18,7 +18,7 @@ export interface RawSuccessfulAuthenticationResponse {
 
 export type RawAuthenticationResponse = RawFailedAuthenticationResponse|RawSuccessfulAuthenticationResponse
 
-export class FailedAuthentcationResponse {
+export class FailedAuthenticationResponse {
     // eslint-disable-next-line no-useless-constructor
     public constructor (
         public readonly auth: boolean,
@@ -40,11 +40,11 @@ export class SuccessfulAuthenticationResponse {
     ) {}
 }
 
-export type AuthenticationResponse = FailedAuthentcationResponse|SuccessfulAuthenticationResponse
+export type AuthenticationResponse = FailedAuthenticationResponse|SuccessfulAuthenticationResponse
 
 export function parse_authentication_response (raw: JsonObject): AuthenticationResponse {
     if (raw.auth === false) {
-        return new FailedAuthentcationResponse(
+        return new FailedAuthenticationResponse(
             false,
             raw.errors as string[],
         )
@@ -65,7 +65,7 @@ export function parse_authentication_response (raw: JsonObject): AuthenticationR
 export class AuthenticationFailureError extends Error {
     public readonly errors: string[]
 
-    public constructor (failed_authentication_response: FailedAuthentcationResponse) {
+    public constructor (failed_authentication_response: FailedAuthenticationResponse) {
         super('Authentication failure')
 
         this.errors = failed_authentication_response.errors

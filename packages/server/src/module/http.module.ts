@@ -3,6 +3,7 @@ import {Module} from '@nestjs/common'
 import {
     ChannelFiltersController,
     ChannelsController,
+    FavoritesController,
     NowPlayingController,
     PlaybackController,
     ServerController,
@@ -23,6 +24,7 @@ import {
     controllers: [
         ChannelsController,
         ChannelFiltersController,
+        FavoritesController,
         NowPlayingController,
         PlaybackController,
         ServerController,

@@ -1,6 +1,6 @@
 import {Inject} from '@nestjs/common'
 
-import {ApplicationOptions, IArgvParser} from './config'
+import {ApplicationOptions, Credentials, IArgvParser} from './config'
 import {IConfigProvider} from './ConfigProvider.interface'
 
 export class ConfigProvider implements IConfigProvider {
@@ -51,5 +51,9 @@ export class ConfigProvider implements IConfigProvider {
 
     public get di_quality (): ApplicationOptions['quality'] {
         return this.options.quality
+    }
+
+    public get di_credentials (): Credentials|null {
+        return this.options.credentials
     }
 }

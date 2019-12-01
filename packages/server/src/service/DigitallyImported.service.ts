@@ -10,10 +10,10 @@ import {
     NowPlaying,
     RawNowPlaying,
     parse_authentication_response,
-    FailedAuthentcationResponse,
+    FailedAuthenticationResponse,
     AuthenticationFailureError,
 } from './di'
-import {IDigitallyImported} from './DigitallyImported.interface'
+import {Credentials, IDigitallyImported} from './DigitallyImported.interface'
 import {ILogger} from './logger'
 
 export class DigitallyImportedError extends Error {}
@@ -77,23 +77,28 @@ export class DigitallyImported implements IDigitallyImported {
         return (response.body as RawNowPlaying[]).map(NowPlaying.from_raw)
     }
 
-    public async load_favorites (email: string, password: string): Promise<string[]> {
+    private async authenticate (credentials: Credentials): Promise<SuperAgentStatic> {
         const agent = superagent.agent()
         const response = await agent
             .post(`${this.url}/login`)
             .type('form')
             .set('x-requested-with', 'XMLHttpRequest')
             .send({
-                'member_session[password]': password,
-                'member_session[username]': email,
+                'member_session[password]': credentials.password,
+                'member_session[username]': credentials.username,
                 'member_session[remember_me]': 0,
             })
         const auth_response = parse_authentication_response(response.body)
 
-        if (auth_response instanceof FailedAuthentcationResponse) {
+        if (auth_response instanceof FailedAuthenticationResponse) {
             throw new AuthenticationFailureError(auth_response)
         }
 
+        return agent as SuperAgentStatic
+    }
+
+    public async load_favorite_channel_keys (credentials: Credentials): Promise<string[]> {
+        const agent = await this.authenticate(credentials)
         const raw_app_data = await this.load_raw_app_data(agent)
 
         return raw_app_data.channels

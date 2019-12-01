@@ -3,10 +3,10 @@ import {Inject, Injectable} from '@nestjs/common'
 import {AppData, Channel, ChannelFilter} from './di'
 import {IAppDataProvider} from './AppDataProvider.interface'
 import {ILogger} from './logger'
-import {IChannelProvider, ChannelIdentifier} from './ChannelProvider.interface'
+import {IChannelsProvider, ChannelIdentifier} from './ChannelsProvider.interface'
 
 @Injectable()
-export class ChannelProvider implements IChannelProvider {
+export class ChannelsProvider implements IChannelsProvider {
     private readonly app_data_provider: IAppDataProvider
     private readonly logger: ILogger
     private filters: ChannelFilter[] = []
@@ -19,7 +19,7 @@ export class ChannelProvider implements IChannelProvider {
         @Inject('ILogger') logger: ILogger,
         @Inject('IAppDataProvider') app_data_provider: IAppDataProvider,
     ) {
-        this.logger = logger.child_for_service(ChannelProvider.name)
+        this.logger = logger.child_for_service(ChannelsProvider.name)
         this.app_data_provider = app_data_provider
         this.app_data_provider.on_update(this.update, this)
 

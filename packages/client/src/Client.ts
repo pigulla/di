@@ -168,6 +168,17 @@ export class Client {
         return response.status === NOT_FOUND ? null : response.data
     }
 
+    public async get_favorites (): Promise<ChannelDTO[]> {
+        const response = await this
+            .request({
+                method: 'GET',
+                url: '/favorites',
+                validateStatus: status => [OK, FORBIDDEN].includes(status),
+            })
+
+        return response.status === FORBIDDEN ? null : response.data
+    }
+
     public async get_channels (): Promise<ChannelDTO[]> {
         return this
             .request({

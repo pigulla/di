@@ -39,6 +39,6 @@ export class FavoritesProvider implements IFavoritesProvider {
 
         const favorite_keys = await this.digitally_imported.load_favorite_channel_keys(credentials)
 
-        return favorite_keys.map(key => this.channels_provider.get_by_key(key))
+        return favorite_keys.map(key => this.channels_provider.get(key))
     }
 }

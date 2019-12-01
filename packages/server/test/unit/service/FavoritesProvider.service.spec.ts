@@ -60,8 +60,8 @@ describe('FavoritesProvider service', function () {
     })
 
     it('should return all favorites if credentials are given', async function () {
-        channels_provider.get_by_key.withArgs(progressive.key).returns(progressive)
-        channels_provider.get_by_key.withArgs(classictechno.key).returns(classictechno)
+        channels_provider.get.withArgs(progressive.key).returns(progressive)
+        channels_provider.get.withArgs(classictechno.key).returns(classictechno)
 
         digitally_imported.load_favorite_channel_keys
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

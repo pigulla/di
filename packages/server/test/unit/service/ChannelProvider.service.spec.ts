@@ -91,27 +91,17 @@ describe('ChannelsProvider service', function () {
             expect(channels_provider.channel_exists(invalid_channel.key)).to.be.false
             expect(channels_provider.channel_exists(progressive.key)).to.be.true
         })
-
-        it('by itself', function () {
-            expect(channels_provider.channel_exists(invalid_channel)).to.be.false
-            expect(channels_provider.channel_exists(progressive)).to.be.true
-        })
     })
 
     describe('should return a channel', function () {
         it('by its id', function () {
-            expect(() => channels_provider.get_by_id(invalid_channel.id)).to.throw()
+            expect(() => channels_provider.get(invalid_channel.id)).to.throw()
             expect(channels_provider.get(progressive.id)).to.equal(progressive)
         })
 
         it('by its key', function () {
-            expect(() => channels_provider.get_by_key(invalid_channel.key)).to.throw()
+            expect(() => channels_provider.get(invalid_channel.key)).to.throw()
             expect(channels_provider.get(progressive.key)).to.equal(progressive)
-        })
-
-        it('by itself', function () {
-            expect(() => channels_provider.get(invalid_channel)).to.throw()
-            expect(channels_provider.get(progressive)).to.equal(progressive)
         })
     })
 })

@@ -5,7 +5,7 @@ import yargs, {Options} from 'yargs'
 import {IArgvParser} from './ArgvParser.interface'
 import {ApplicationOptions} from './ApplicationOptions'
 import {Quality} from '../di'
-import {LogLevel} from '@server/service'
+import {LogLevel} from '@server/service/logger'
 
 interface ArgvParserOptions {
     skip_vlc_validation: boolean

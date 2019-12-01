@@ -5,10 +5,10 @@ import {
     ChannelsProvider,
     FavoritesProvider,
     IDigitallyImported, DigitallyImported,
-    ILogger,
     INowPlayingProvider, NowPlayingProvider,
     IPeriodicTrigger, PeriodicTrigger,
 } from '@server/service/'
+import {ILogger} from '@server/service/logger'
 import {UtilityModule} from './utility.module'
 
 @Module({

@@ -3,7 +3,7 @@ import {IncomingMessage, ServerResponse} from 'http'
 import {Logger as Pino} from 'pino'
 import pino_http from 'pino-http'
 
-import {RequestResponseLogger} from '@server/service'
+import {RequestResponseLogger} from '@server/service/logger/Logger.interface'
 
 export function adapt_for_request_response (pino: Pino): RequestResponseLogger {
     const http_logger = pino_http({

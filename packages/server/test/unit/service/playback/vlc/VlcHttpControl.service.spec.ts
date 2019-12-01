@@ -2,7 +2,7 @@ import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
-import {ILogger} from '@server/service'
+import {ILogger} from '@server/service/logger'
 import {IVlcChildProcessFacade, IVlcHttpClient, PlaybackState, VlcHttpControl} from '@server/service/playback/vlc'
 
 import {

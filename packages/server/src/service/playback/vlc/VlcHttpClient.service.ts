@@ -3,8 +3,8 @@ import superagent from 'superagent'
 import clamp from 'lodash.clamp'
 import {Inject} from '@nestjs/common'
 
-import {ILogger} from '../..'
 import {Channel} from '../../di'
+import {ILogger} from '../../logger'
 import {IVlcHttpClient, Status, PlaybackState, VlcHttpConnection} from './VlcHttpClient.interface'
 
 function volume_from_percentage (percent: number): number {

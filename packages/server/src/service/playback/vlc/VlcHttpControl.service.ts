@@ -1,7 +1,8 @@
 import {Inject, OnApplicationShutdown, OnModuleInit} from '@nestjs/common'
 import {JsonObject} from 'type-fest'
 
-import {IPlaybackControl, ILogger} from '../..'
+import {IPlaybackControl} from '../..'
+import {ILogger} from '../../logger'
 import {IVlcChildProcessFacade} from './VlcChildProcessFacade.interface'
 import {IVlcHttpClient} from './VlcHttpClient.interface'
 

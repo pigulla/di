@@ -26,6 +26,8 @@ export interface RawChannel {
     key: string
     name: string
     updated_at: string
+    favorite: boolean
+    favorite_position?: number
 }
 
 export class Channel {

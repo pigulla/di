@@ -53,24 +53,38 @@ export class ChannelsProvider implements IChannelsProvider {
     public channel_exists (identifier: ChannelIdentifier): boolean {
         if (typeof identifier === 'string') {
             return this.channels_by_key.has(identifier)
-        } else {
+        } else if (typeof identifier === 'number') {
             return this.channels_by_id.has(identifier)
+        } else {
+            return [...this.channels_by_id.values()].indexOf(identifier) !== -1
         }
     }
 
-    public get (id: number): Channel
-    public get (key: string): Channel
     public get (identifier: ChannelIdentifier): Channel {
-        let channel: Channel|undefined
-
         if (typeof identifier === 'string') {
-            channel = this.channels_by_key.get(identifier)
+            return this.get_by_key(identifier)
+        } else if (typeof identifier === 'number') {
+            return this.get_by_id(identifier)
         } else {
-            channel = this.channels_by_id.get(identifier)
+            return this.get_by_id(identifier.id)
         }
+    }
+
+    public get_by_id (id: number): Channel {
+        const channel = this.channels_by_id.get(id)
 
         if (!channel) {
-            throw new Error(`Channel "${identifier}" not found`)
+            throw new Error(`Channel with id ${id} not found`)
+        }
+
+        return channel
+    }
+
+    public get_by_key (key: string): Channel {
+        const channel = this.channels_by_key.get(key)
+
+        if (!channel) {
+            throw new Error(`Channel with key "${key}" not found`)
         }
 
         return channel

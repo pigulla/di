@@ -131,7 +131,7 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
     const di_options: {[key: string]: Options} = {
         url: {
             group: 'Digitally Imported',
-            alias: 'u',
+            alias: 'b',
             requiresArg: true,
             default: 'https://www.di.fm',
             describe: 'The base url for Digitally Imported',
@@ -167,7 +167,7 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             alias: 'k',
             required: true,
             requiresArg: true,
-            describe: 'The DI listenkey',
+            describe: 'Your DI listenkey',
             type: 'string',
             coerce (arg: any): boolean {
                 if (!/^[a-f0-9]{16}$/i.test(arg)) {
@@ -176,6 +176,24 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
 
                 return arg
             },
+        },
+        username: {
+            group: 'Digitally Imported',
+            alias: 'u',
+            required: false,
+            requiresArg: true,
+            describe: 'Your DI username',
+            type: 'string',
+            implies: ['password'],
+        },
+        password: {
+            group: 'Digitally Imported',
+            alias: 'w',
+            required: false,
+            requiresArg: true,
+            describe: 'Your DI password',
+            type: 'string',
+            implies: ['username'],
         },
     }
 
@@ -186,12 +204,24 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
     }
 
     return function argv_parser (argv: string[]): ApplicationOptions {
-        return yargs
+        const options = yargs
             .scriptName('di')
             .env('DI_')
             .options(cli_options)
             .strict()
             .exitProcess(auto_exit)
-            .parse(argv) as any as ApplicationOptions
+            .parse(argv) as any
+
+        if (options.username) {
+            options.credentials = {
+                username: options.username,
+                password: options.password,
+            }
+
+            delete options.username
+            delete options.password
+        }
+
+        return options as ApplicationOptions
     }
 }

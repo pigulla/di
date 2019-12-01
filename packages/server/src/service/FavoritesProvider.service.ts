@@ -3,9 +3,9 @@ import {Inject, Injectable} from '@nestjs/common'
 import {Channel} from './di'
 import {ILogger} from './logger'
 import {IFavoritesProvider} from './FavoritesProvider.interface'
-import {IDigitallyImported} from '../service/DigitallyImported.interface'
-import {IConfigProvider} from '../service/ConfigProvider.interface'
-import {IChannelsProvider} from '../service/ChannelsProvider.interface'
+import {IDigitallyImported} from '@server/service/DigitallyImported.interface'
+import {IConfigProvider} from '@server/service/ConfigProvider.interface'
+import {IChannelsProvider} from '@server/service/ChannelsProvider.interface'
 
 export class CredentialsUnavailableError extends Error {}
 
@@ -39,6 +39,6 @@ export class FavoritesProvider implements IFavoritesProvider {
 
         const favorite_keys = await this.digitally_imported.load_favorite_channel_keys(credentials)
 
-        return favorite_keys.map(key => this.channels_provider.get(key))
+        return favorite_keys.map(key => this.channels_provider.get_by_key(key))
     }
 }

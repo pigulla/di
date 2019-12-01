@@ -2,7 +2,8 @@ import {Module} from '@nestjs/common'
 
 import {
     AppDataProvider,
-    ChannelProvider,
+    ChannelsProvider,
+    FavoritesProvider,
     IDigitallyImported, DigitallyImported,
     ILogger,
     INowPlayingProvider, NowPlayingProvider,
@@ -25,8 +26,12 @@ import {UtilityModule} from './utility.module'
             useClass: AppDataProvider,
         },
         {
-            provide: 'IChannelProvider',
-            useClass: ChannelProvider,
+            provide: 'IChannelsProvider',
+            useClass: ChannelsProvider,
+        },
+        {
+            provide: 'IFavoritesProvider',
+            useClass: FavoritesProvider,
         },
         {
             inject: ['ILogger', 'INowPlayingProvider', 'IDigitallyImported'],
@@ -60,7 +65,8 @@ import {UtilityModule} from './utility.module'
     ],
     exports: [
         'IAppDataProvider',
-        'IChannelProvider',
+        'IChannelsProvider',
+        'IFavoritesProvider',
         'INowPlayingProvider',
     ],
 })

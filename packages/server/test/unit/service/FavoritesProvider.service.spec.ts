@@ -1,6 +1,6 @@
-import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
+import {Test} from '@nestjs/testing'
 
 import {
     IDigitallyImported,
@@ -8,7 +8,7 @@ import {
     IChannelsProvider,
     FavoritesProvider,
     CredentialsUnavailableError,
-} from '@src/service'
+} from '@server/service'
 
 import {
     create_logger_stub,
@@ -16,7 +16,7 @@ import {
     create_config_provider_stub,
     create_digitally_imported_stub,
     prebuilt_channel,
-} from '@test/util'
+} from '../../util'
 
 const {progressive, classictechno} = prebuilt_channel
 
@@ -60,8 +60,8 @@ describe('FavoritesProvider service', function () {
     })
 
     it('should return all favorites if credentials are given', async function () {
-        channels_provider.get.withArgs(progressive.key).returns(progressive)
-        channels_provider.get.withArgs(classictechno.key).returns(classictechno)
+        channels_provider.get_by_key.withArgs(progressive.key).returns(progressive)
+        channels_provider.get_by_key.withArgs(classictechno.key).returns(classictechno)
 
         digitally_imported.load_favorite_channel_keys
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -76,6 +76,6 @@ describe('FavoritesProvider service', function () {
     it('should throw if no credentials are given', async function () {
         config_provider.di_credentials = null
 
-        await expect(favorites_provider.get_all()).to.be.rejectedWith(CredentialsUnavailableError)
+        await expect(favorites_provider.get_all()).to.eventually.be.rejectedWith(CredentialsUnavailableError)
     })
 })

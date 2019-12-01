@@ -17,6 +17,10 @@ export const default_config: IConfigProvider = {
     di_listenkey: 'listen-key',
     di_frequency_ms: 5_000,
     di_quality: Quality.AAC_128,
+    di_credentials: {
+        username: 'user@example.local',
+        password: '53cr37',
+    },
 }
 
 export function create_config_provider_stub (overrides: Partial<IConfigProvider> = {}): IConfigProvider {

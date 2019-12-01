@@ -1,12 +1,12 @@
-import {ForbiddenException} from '@nestjs/common'
+import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
-import {SinonStubbedInstance} from 'sinon'
 
-import {FavoritesController} from '@src/controller'
-import {CredentialsUnavailableError, IFavoritesProvider} from '@src/service'
+import {FavoritesController} from '@server/controller'
+import {CredentialsUnavailableError, IFavoritesProvider} from '@server/service'
 
-import {create_favorites_provider_stub, prebuilt_channel} from '@test/util'
+import {create_favorites_provider_stub, prebuilt_channel} from '../../util'
+import {ForbiddenException} from '@nestjs/common'
 
 const {progressive, vocaltrance} = prebuilt_channel
 
@@ -40,13 +40,13 @@ describe('Favorites controller', function () {
     it('should throw if credentials are not available', async function () {
         favorites_provider_stub.get_all.throws(new CredentialsUnavailableError())
 
-        await expect(controller.list_favorites()).to.be.rejectedWith(ForbiddenException)
+        await expect(controller.list_favorites()).to.eventually.rejectedWith(ForbiddenException)
     })
 
     it('should throw if an unexpected error occurred', async function () {
         const error = new Error()
         favorites_provider_stub.get_all.throws(error)
 
-        await expect(controller.list_favorites()).to.be.rejectedWith(error)
+        await expect(controller.list_favorites()).to.eventually.rejectedWith(error)
     })
 })

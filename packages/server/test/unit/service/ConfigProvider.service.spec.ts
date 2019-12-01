@@ -51,6 +51,10 @@ describe('ConfigProvider service', function () {
             listenkey: 'my-listenkey',
             frequency: 7500,
             quality: Quality.AAC_128,
+            credentials: {
+                username: 'my-username',
+                password: 'my-password',
+            },
         }
         let config_provider: ConfigProvider
 
@@ -97,6 +101,10 @@ describe('ConfigProvider service', function () {
 
         it("should return di's frequency", function () {
             expect(config_provider.di_frequency_ms).to.equal(options.frequency)
+        })
+
+        it("should return di's credentials", function () {
+            expect(config_provider.di_credentials).to.equal(options.credentials)
         })
     })
 })

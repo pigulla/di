@@ -76,6 +76,6 @@ describe('FavoritesProvider service', function () {
     it('should throw if no credentials are given', async function () {
         config_provider.di_credentials = null
 
-        await expect(favorites_provider.get_all()).to.eventually.be.rejectedWith(CredentialsUnavailableError)
+        await expect(favorites_provider.get_all()).to.be.rejectedWith(CredentialsUnavailableError)
     })
 })

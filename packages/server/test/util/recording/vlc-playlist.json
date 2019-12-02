@@ -1,0 +1,21 @@
+[
+    {
+        "scope": "http://vlc.local",
+        "method": "GET",
+        "path": "/requests/playlist.xml",
+        "body": "",
+        "status": 200,
+        "response": "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>\n\n<node id=\"0\" name=\"\" ro=\"rw\">\n<node id=\"1\" name=\"Playlist\" ro=\"ro\">\n<leaf duration=\"0\" current=\"current\" uri=\"http://prem2.di.fm:80/progressive?d34db33fd34db33f\" name=\"Progressive - DI.FM Premium\" ro=\"rw\" id=\"4\"/>\n<leaf id=\"5\" duration=\"-1\" name=\"DI.FM - Progressive\" ro=\"rw\" uri=\"http://prem1.di.fm:80/progressive?d34db33fd34db33f\"/>\n<leaf id=\"6\" duration=\"-1\" name=\"DI.FM - Progressive\" ro=\"rw\" uri=\"http://prem4.di.fm:80/progressive?d34db33fd34db33f\"/></node>\n<node id=\"2\" name=\"Media Library\" ro=\"ro\"></node></node>",
+        "rawHeaders": [
+            "Content-type",
+            "text/xml",
+            "Cache-Control",
+            "no-cache",
+            "Connection",
+            "close",
+            "Content-Length",
+            "577"
+        ],
+        "responseIsBinary": false
+    }
+]

@@ -1,0 +1,21 @@
+[
+    {
+        "scope": "http://vlc.local",
+        "method": "GET",
+        "path": "/requests/status.xml",
+        "body": "",
+        "status": 200,
+        "response": "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>\n<root>\n\n<state>stopped</state>\n<version>3.0.8 Vetinari</version>\n<currentplid>-1</currentplid>\n<audiodelay>0</audiodelay>\n<fullscreen>0</fullscreen>\n<time>0</time>\n<length>0</length>\n<position>0</position>\n<rate>1</rate>\n<apiversion>3</apiversion>\n<volume>0</volume>\n<equalizer></equalizer>\n<audiofilters>\n  <filter_0></filter_0></audiofilters>\n<random>false</random>\n<loop>false</loop>\n<subtitledelay>0</subtitledelay>\n<videoeffects>\n  <gamma>1</gamma>\n  <saturation>1</saturation>\n  <hue>0</hue>\n  <brightness>1</brightness>\n  <contrast>1</contrast></videoeffects>\n<repeat>false</repeat><information>\n    <category name=\"meta\">\n        </category>\n    </information>\n  <stats>\n    </stats>\n</root>\n",
+        "rawHeaders": [
+            "Content-type",
+            "text/xml",
+            "Cache-Control",
+            "no-cache",
+            "Connection",
+            "close",
+            "Content-Length",
+            "757"
+        ],
+        "responseIsBinary": false
+    }
+]

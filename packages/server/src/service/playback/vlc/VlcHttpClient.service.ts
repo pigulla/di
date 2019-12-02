@@ -57,9 +57,9 @@ export class VlcHttpClient implements IVlcHttpClient {
             if (meta) {
                 result.meta = {
                     filename: meta.info.find((item: any) => item.$.name === 'filename')._ as string,
-                    genre: meta.info.find((item: any) => item.$.name === 'genre')._ as string,
-                    title: meta.info.find((item: any) => item.$.name === 'title')._ as string,
-                    now_playing: meta.info.find((item: any) => item.$.name === 'now_playing')._ as string,
+                    genre: (meta.info.find((item: any) => item.$.name === 'genre')._ as string).trim(),
+                    title: (meta.info.find((item: any) => item.$.name === 'title')._ as string).trim(),
+                    now_playing: (meta.info.find((item: any) => item.$.name === 'now_playing')._ as string).trim(),
                 }
             }
             if (stream) {

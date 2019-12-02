@@ -40,13 +40,13 @@ describe('Favorites controller', function () {
     it('should throw if credentials are not available', async function () {
         favorites_provider_stub.get_all.throws(new CredentialsUnavailableError())
 
-        await expect(controller.list_favorites()).to.eventually.rejectedWith(ForbiddenException)
+        await expect(controller.list_favorites()).to.be.rejectedWith(ForbiddenException)
     })
 
     it('should throw if an unexpected error occurred', async function () {
         const error = new Error()
         favorites_provider_stub.get_all.throws(error)
 
-        await expect(controller.list_favorites()).to.eventually.rejectedWith(error)
+        await expect(controller.list_favorites()).to.be.rejectedWith(error)
     })
 })

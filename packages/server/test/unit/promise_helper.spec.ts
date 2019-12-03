@@ -15,6 +15,6 @@ describe('The new_promise function', function () {
         const error = new Error()
 
         reject(error)
-        await expect(promise).to.eventually.be.rejectedWith(error)
+        await expect(promise).to.be.rejectedWith(error)
     })
 })

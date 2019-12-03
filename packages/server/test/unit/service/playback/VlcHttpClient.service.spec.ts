@@ -1,12 +1,12 @@
+import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
-import {SinonStubbedInstance} from 'sinon'
 
-import {ILogger} from '@src/service/logger'
-import {PlaybackState, VlcHttpClient, VlcHttpConnection} from '@src/service/playback/'
+import {ILogger} from '@server/service/logger'
+import {PlaybackState, VlcHttpClient, VlcHttpConnection} from '@server/service/playback/'
 
-import {create_logger_stub, prebuilt_channel} from '@test/util'
-import {load_nock_recording, RecordingName} from '@test/util/load_nock_recording'
+import {create_logger_stub, prebuilt_channel} from '../../../util'
+import {load_nock_recording, RecordingName} from '../../../util/load_nock_recording'
 
 const {progressive} = prebuilt_channel
 

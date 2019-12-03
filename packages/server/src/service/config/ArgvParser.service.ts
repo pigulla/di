@@ -184,7 +184,7 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             requiresArg: true,
             describe: 'Your DI username',
             type: 'string',
-            implies: ['password'],
+            implies: 'password',
         },
         password: {
             group: 'Digitally Imported',
@@ -193,7 +193,7 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             requiresArg: true,
             describe: 'Your DI password',
             type: 'string',
-            implies: ['username'],
+            implies: 'username',
         },
     }
 

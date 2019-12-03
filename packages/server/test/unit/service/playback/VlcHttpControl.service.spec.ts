@@ -1,9 +1,9 @@
+import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
-import {SinonStubbedInstance} from 'sinon'
 
-import {ILogger} from '@src/service/logger'
-import {IVlcChildProcessFacade, IVlcHttpClient, PlaybackState, VlcHttpControl} from '@src/service/playback/'
+import {ILogger} from '@server/service/logger'
+import {IVlcChildProcessFacade, IVlcHttpClient, PlaybackState, VlcHttpControl} from '@server/service/playback/'
 
 import {
     create_logger_stub,

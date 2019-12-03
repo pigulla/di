@@ -1,0 +1,21 @@
+[
+    {
+        "scope": "http://vlc.local",
+        "method": "GET",
+        "path": "/requests/playlist.xml",
+        "body": "",
+        "status": 200,
+        "response": "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>\n\n<node ro=\"rw\" name=\"\" id=\"0\">\n<node ro=\"ro\" name=\"Playlist\" id=\"1\"></node>\n<node ro=\"ro\" name=\"Media Library\" id=\"2\"></node></node>",
+        "rawHeaders": [
+            "Content-type",
+            "text/xml",
+            "Cache-Control",
+            "no-cache",
+            "Connection",
+            "close",
+            "Content-Length",
+            "189"
+        ],
+        "responseIsBinary": false
+    }
+]

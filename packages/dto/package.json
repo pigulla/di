@@ -1,0 +1,17 @@
+{
+  "name": "@digitally-imported/dto",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf lib/ && tsc --build tsconfig.json"
+  },
+  "keywords": [],
+  "author": "Raphael Pigulla <pigulla@four66.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "type-fest": "^0.8.1"
+  }
+}

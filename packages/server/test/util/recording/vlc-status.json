@@ -1,0 +1,21 @@
+[
+    {
+        "scope": "http://vlc.local",
+        "method": "GET",
+        "path": "/requests/status.xml",
+        "body": "",
+        "status": 200,
+        "response": "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>\n<root>\n\n<loop>false</loop>\n<version>3.0.8 Vetinari</version>\n<subtitledelay>0</subtitledelay>\n<audiodelay>0</audiodelay>\n<audiofilters>\n  <filter_0></filter_0></audiofilters>\n<videoeffects>\n  <hue>0</hue>\n  <saturation>1</saturation>\n  <contrast>1</contrast>\n  <brightness>1</brightness>\n  <gamma>1</gamma></videoeffects>\n<state>playing</state>\n<equalizer></equalizer>\n<random>false</random>\n<time>1</time>\n<repeat>false</repeat>\n<volume>166</volume>\n<rate>1</rate>\n<position>0</position>\n<fullscreen>0</fullscreen>\n<currentplid>4</currentplid>\n<apiversion>3</apiversion>\n<length>0</length><information>\n    <category name=\"meta\">\n    <info name='title'>Progressive - DI.FM Premium</info><info name='genre'>Progressive</info><info name='now_playing'>JFR - Where Is My God (Original Mix)</info><info name='filename'>progressive?d34db33fd34db33f</info>    </category>\n  <category name='Stream 0'><info name='Channels'>Stereo</info><info name='Sample rate'>44100 Hz</info><info name='Codec'>MPEG AAC Audio (mp4a)</info><info name='Bits per sample'>32</info><info name='Type'>Audio</info></category>  </information>\n  <stats>\n  <lostpictures>0</lostpictures>\n<decodedvideo>0</decodedvideo>\n<sentpackets>0</sentpackets>\n<demuxcorrupted>0</demuxcorrupted>\n<displayedpictures>0</displayedpictures>\n<lostabuffers>0</lostabuffers>\n<readbytes>150273</readbytes>\n<demuxbitrate>0.031452633440495</demuxbitrate>\n<inputbitrate>0.077272355556488</inputbitrate>\n<playedabuffers>129</playedabuffers>\n<readpackets>99</readpackets>\n<demuxreadpackets>0</demuxreadpackets>\n<averagedemuxbitrate>0</averagedemuxbitrate>\n<demuxreadbytes>51955</demuxreadbytes>\n<sendbitrate>0</sendbitrate>\n<decodedaudio>259</decodedaudio>\n<averageinputbitrate>0</averageinputbitrate>\n<sentbytes>0</sentbytes>\n<demuxdiscontinuity>0</demuxdiscontinuity>\n  </stats>\n</root>\n",
+        "rawHeaders": [
+            "Content-type",
+            "text/xml",
+            "Cache-Control",
+            "no-cache",
+            "Connection",
+            "close",
+            "Content-Length",
+            "1887"
+        ],
+        "responseIsBinary": false
+    }
+]

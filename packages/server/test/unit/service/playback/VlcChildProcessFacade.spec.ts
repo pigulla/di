@@ -3,7 +3,7 @@ import {EventEmitter} from 'events'
 import {expect} from 'chai'
 import {SinonStub, stub} from 'sinon'
 
-import {VlcChildProcessFacade, ChildProcessFacadeError, VlcHttpConnection} from '@server/service/playback/vlc'
+import {VlcChildProcessFacade, ChildProcessFacadeError, VlcHttpConnection} from '@server/service/playback/'
 
 interface StreamMock extends EventEmitter {
     read: SinonStub
@@ -64,7 +64,7 @@ describe('The VlcChildProcessFacade', function () {
         })
 
         it('should not be stoppable', async function () {
-            await expect(child_process_facade.stop()).to.eventually.be.rejectedWith(ChildProcessFacadeError)
+            await expect(child_process_facade.stop()).to.be.rejectedWith(ChildProcessFacadeError)
         })
     })
 
@@ -95,7 +95,7 @@ describe('The VlcChildProcessFacade', function () {
 
             await start_promise
             await expect(child_process_facade.start())
-                .to.eventually.be.rejectedWith(ChildProcessFacadeError)
+                .to.be.rejectedWith(ChildProcessFacadeError)
         })
 
         it('should fail if an error occurred', async function () {
@@ -104,7 +104,7 @@ describe('The VlcChildProcessFacade', function () {
             child_process.kill.callsFake(() => child_process.emit('exit'))
             child_process.stdout.emit('error', 'b0rked')
 
-            await expect(start_promise).to.eventually.be.rejectedWith(ChildProcessFacadeError)
+            await expect(start_promise).to.be.rejectedWith(ChildProcessFacadeError)
         })
 
         it('should be stoppable', async function () {

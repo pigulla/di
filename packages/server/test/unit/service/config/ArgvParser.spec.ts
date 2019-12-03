@@ -18,6 +18,7 @@ describe('The ArgvParser', function () {
     let unhook_promise: HookPromise
 
     beforeEach(function () {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         unhook_promise = hook_std.stderr(_output => {})
     })
 
@@ -163,6 +164,39 @@ describe('The ArgvParser', function () {
                 () => argv_parser(['--listenkey', '1234567890123456', '-t', '10x']),
                 /must be an integer/,
             )
+        })
+
+        it('should reject if a username is given but a password is not', function () {
+            expect_yargs_error(
+                () => argv_parser(['--listenkey', '1234567890123456', '--username', 'test@example.local']),
+                /Missing dependent arguments/,
+            )
+        })
+
+        it('should reject if a password is given but a username is not', function () {
+            expect_yargs_error(
+                () => argv_parser(['--listenkey', '1234567890123456', '--password', '53cr37']),
+                /Missing dependent arguments/,
+            )
+        })
+
+        it('should provide credentials if both username and password is set', function () {
+            const result = argv_parser([
+                '--listenkey', '1234567890123456',
+                '-u', 'test@example.local',
+                '-w', '53cr37',
+            ])
+
+            expect(result).to.deep.include({
+                listenkey: '1234567890123456',
+                credentials: {
+                    password: '53cr37',
+                    username: 'test@example.local',
+                },
+            })
+
+            expect(result).not.to.have.property('username')
+            expect(result).not.to.have.property('password')
         })
     })
 })

@@ -3,9 +3,11 @@ import superagent from 'superagent'
 import clamp from 'lodash.clamp'
 import {Inject} from '@nestjs/common'
 
-import {Channel} from '../../di'
-import {ILogger} from '../../logger'
+import {Channel} from '../di'
+import {ILogger} from '../logger'
 import {IVlcHttpClient, Status, PlaybackState, VlcHttpConnection} from './VlcHttpClient.interface'
+
+// See: https://wiki.videolan.org/VLC_HTTP_requests/
 
 function volume_from_percentage (percent: number): number {
     return clamp(percent, 0, 1.25) * 256
@@ -14,8 +16,6 @@ function volume_from_percentage (percent: number): number {
 function volume_to_percentage (volume: number): number {
     return clamp(volume / 256, 0, 1.25)
 }
-
-// See: https://wiki.videolan.org/VLC_HTTP_requests/
 
 export class VlcHttpClient implements IVlcHttpClient {
     private readonly logger: ILogger
@@ -57,9 +57,9 @@ export class VlcHttpClient implements IVlcHttpClient {
             if (meta) {
                 result.meta = {
                     filename: meta.info.find((item: any) => item.$.name === 'filename')._ as string,
-                    genre: meta.info.find((item: any) => item.$.name === 'genre')._ as string,
-                    title: meta.info.find((item: any) => item.$.name === 'title')._ as string,
-                    now_playing: meta.info.find((item: any) => item.$.name === 'now_playing')._ as string,
+                    genre: (meta.info.find((item: any) => item.$.name === 'genre')._ as string).trim(),
+                    title: (meta.info.find((item: any) => item.$.name === 'title')._ as string).trim(),
+                    now_playing: (meta.info.find((item: any) => item.$.name === 'now_playing')._ as string).trim(),
                 }
             }
             if (stream) {
@@ -81,12 +81,20 @@ export class VlcHttpClient implements IVlcHttpClient {
 
         const response = await superagent.get(url).auth('', password)
         const xml = await parse_xml(response.text, {explicitArray: false}) as any
+        const playlist_node = xml.node.node.find((node: any) => node.$.name === 'Playlist')
 
-        const item_url = xml.node.node
-            .find((node: any) => node.$.name === 'Playlist').leaf
-            .find((leaf: any) => leaf.$.current === 'current').$.uri
+        if (!playlist_node?.leaf) {
+            return null
+        }
 
-        return Channel.get_key_from_url(item_url)
+        const current_node = playlist_node.leaf
+            .find((leaf: any) => leaf.$.current === 'current')
+
+        if (!current_node) {
+            return null
+        }
+
+        return Channel.get_key_from_url(current_node.$.uri)
     }
 
     public async get_status (): Promise<Status> {

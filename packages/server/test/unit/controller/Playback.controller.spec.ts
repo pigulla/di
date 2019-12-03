@@ -63,7 +63,7 @@ describe('Playback controller', function () {
         it('should return empty data if nothing is playing', async function () {
             playback_control_stub.get_current_channel_key.resolves(null)
 
-            await expect(controller.current()).to.eventually.be.rejectedWith(NotFoundException)
+            await expect(controller.current()).to.be.rejectedWith(NotFoundException)
         })
 
         it('should return the data if something is playing', async function () {
@@ -97,7 +97,7 @@ describe('Playback controller', function () {
         it('should fail when not playing', async function () {
             playback_control_stub.is_playing.resolves(false)
 
-            await expect(controller.is_playing()).to.eventually.be.rejectedWith(NotFoundException)
+            await expect(controller.is_playing()).to.be.rejectedWith(NotFoundException)
         })
     })
 
@@ -125,7 +125,7 @@ describe('Playback controller', function () {
             channels_provider_stub.channel_exists.withArgs('progressive').returns(false)
 
             await expect(controller.play({channel: 'progressive'}))
-                .to.eventually.be.rejectedWith(NotFoundException)
+                .to.be.rejectedWith(NotFoundException)
         })
     })
 })

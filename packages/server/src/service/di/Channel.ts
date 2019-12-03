@@ -88,7 +88,7 @@ export class Channel {
             description: this.description,
             id: this.id,
             key: this.key,
-            name: this.name,
+            name: this.name.trim(),
             updated_at: this.updated_at ? this.updated_at.toISOString() : null,
             created_at: this.created_at.toISOString(),
             images: {

@@ -1,7 +1,12 @@
+import {spawn} from 'child_process'
+import {randomBytes} from 'crypto'
+
 import {Module} from '@nestjs/common'
+import get_port from 'get-port'
 
 import {UtilityModule} from './utility.module'
-import {ChildProcessFacade, Connector, VlcControl} from '@server/service/playback/vlc'
+import {VlcChildProcessFacade, VlcHttpControl, VlcHttpClient, VlcHttpConnection} from '@server/service/playback/'
+import {IConfigProvider} from '@server/service'
 
 @Module({
     imports: [
@@ -10,16 +15,37 @@ import {ChildProcessFacade, Connector, VlcControl} from '@server/service/playbac
     controllers: [],
     providers: [
         {
-            provide: 'ChildProcessFacadeCtor',
-            useValue: ChildProcessFacade,
+            provide: 'vlc_http_connection',
+            async useFactory (): Promise<VlcHttpConnection> {
+                return {
+                    hostname: 'localhost',
+                    port: await get_port(),
+                    password: randomBytes(16).toString('hex'),
+                }
+            },
         },
         {
-            provide: 'ConnectorCtor',
-            useValue: Connector,
+            provide: 'vlc_child_process',
+            inject: ['IConfigProvider', 'vlc_http_connection'],
+            useFactory (
+                config_provider: IConfigProvider,
+                vlc_http_connection: VlcHttpConnection,
+            ): VlcChildProcessFacade {
+                return new VlcChildProcessFacade(
+                    config_provider.vlc_path,
+                    config_provider.vlc_timeout,
+                    spawn,
+                    vlc_http_connection,
+                )
+            },
+        },
+        {
+            provide: 'IVlcHttpClient',
+            useClass: VlcHttpClient,
         },
         {
             provide: 'IPlaybackControl',
-            useClass: VlcControl,
+            useClass: VlcHttpControl,
         },
     ],
     exports: [

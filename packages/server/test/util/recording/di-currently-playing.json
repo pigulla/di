@@ -1,0 +1,869 @@
+[
+    {
+        "scope": "https://www.di.fm:443",
+        "method": "GET",
+        "path": "/_papi/v1/di/currently_playing",
+        "body": "",
+        "status": 200,
+        "response": [
+            {
+                "channel_id": 324,
+                "channel_key": "00sclubhits",
+                "track": {
+                    "display_artist": "Roisin Murphy",
+                    "display_title": "Never Enough (Club Mix)",
+                    "id": 28142
+                }
+            },
+            {
+                "channel_id": 12,
+                "channel_key": "ambient",
+                "track": {
+                    "display_artist": "Altus",
+                    "display_title": "The Root",
+                    "id": 2879554
+                }
+            },
+            {
+                "channel_id": 403,
+                "channel_key": "atmosphericbreaks",
+                "track": {
+                    "display_artist": "Digital Witchcraft",
+                    "display_title": "Fingerpaint (4Mal's Doodle Mix)",
+                    "id": 1145720
+                }
+            },
+            {
+                "channel_id": 290,
+                "channel_key": "bassnjackinhouse",
+                "track": {
+                    "display_artist": "Torha",
+                    "display_title": "Tangsta (Trav & Volta Remix)",
+                    "id": 777213
+                }
+            },
+            {
+                "channel_id": 289,
+                "channel_key": "bassline",
+                "track": {
+                    "display_artist": "Bad Nelson & Dave Emanuel",
+                    "display_title": "Places (Original Mix)",
+                    "id": 1235804
+                }
+            },
+            {
+                "channel_id": 325,
+                "channel_key": "bigbeat",
+                "track": {
+                    "display_artist": "Stretch & Vern",
+                    "display_title": "Get Up! Go Insane! (Fatboy Really Lost It)",
+                    "id": 2950787
+                }
+            },
+            {
+                "channel_id": 209,
+                "channel_key": "bigroomhouse",
+                "track": {
+                    "display_artist": "Kill The Buzz, Doublefast Feat. Lux",
+                    "display_title": "Know You",
+                    "id": 2923900
+                }
+            },
+            {
+                "channel_id": 15,
+                "channel_key": "breaks",
+                "track": {
+                    "display_artist": "Tayo & The Sunz Of Mecha",
+                    "display_title": "Reality Dub (Original Mix)",
+                    "id": 2931892
+                }
+            },
+            {
+                "channel_id": 400,
+                "channel_key": "chillntropicalhouse",
+                "track": {
+                    "display_artist": "Conor Maynard",
+                    "display_title": "I Took A Pill Ibiza (Mahmut Orhan Remix)",
+                    "id": 1270321
+                }
+            },
+            {
+                "channel_id": 224,
+                "channel_key": "chillhop",
+                "track": {
+                    "display_artist": "Blazo",
+                    "display_title": "Flute Story Two",
+                    "id": 395491
+                }
+            },
+            {
+                "channel_id": 3,
+                "channel_key": "chillout",
+                "track": {
+                    "display_artist": "Sleeping Forest",
+                    "display_title": "The End",
+                    "id": 781250
+                }
+            },
+            {
+                "channel_id": 68,
+                "channel_key": "chilloutdreams",
+                "track": {
+                    "display_artist": "Loungeotic",
+                    "display_title": "Where the Earth Meets the Sky (Chillout Terrace Sunrise Mix)",
+                    "id": 330595
+                }
+            },
+            {
+                "channel_id": 275,
+                "channel_key": "chillstep",
+                "track": {
+                    "display_artist": "Ed Sheeran",
+                    "display_title": "The A-Team (KOAN Sound Remix)",
+                    "id": 896248
+                }
+            },
+            {
+                "channel_id": 69,
+                "channel_key": "classiceurodance",
+                "track": {
+                    "display_artist": "Taleesa",
+                    "display_title": "I Found Luv (Energy Mix)",
+                    "id": 690166
+                }
+            },
+            {
+                "channel_id": 183,
+                "channel_key": "classiceurodisco",
+                "track": {
+                    "display_artist": "Angelico",
+                    "display_title": "Forever Love (Bcr Extended New Generation Mix)",
+                    "id": 2926529
+                }
+            },
+            {
+                "channel_id": 90,
+                "channel_key": "classictrance",
+                "track": {
+                    "display_artist": "DJ Cor Fijneman",
+                    "display_title": "Exhibition",
+                    "id": 196151
+                }
+            },
+            {
+                "channel_id": 125,
+                "channel_key": "classicvocaltrance",
+                "track": {
+                    "display_artist": "Three Drives",
+                    "display_title": "Air Traffic (Extended Vocal Version)",
+                    "id": 15213
+                }
+            },
+            {
+                "channel_id": 177,
+                "channel_key": "clubdubstep",
+                "track": {
+                    "display_artist": "Animadrop",
+                    "display_title": "Sapharia",
+                    "id": 2925765
+                }
+            },
+            {
+                "channel_id": 70,
+                "channel_key": "club",
+                "track": {
+                    "display_artist": "Shane 54",
+                    "display_title": "International Departures 500",
+                    "id": 2955295
+                }
+            },
+            {
+                "channel_id": 181,
+                "channel_key": "darkdnb",
+                "track": {
+                    "display_artist": "Optiv & BTK",
+                    "display_title": "Gateway",
+                    "id": 2034102
+                }
+            },
+            {
+                "channel_id": 346,
+                "channel_key": "darkpsytrance",
+                "track": {
+                    "display_artist": "Evocatone",
+                    "display_title": "Obsidian",
+                    "id": 2270605
+                }
+            },
+            {
+                "channel_id": 174,
+                "channel_key": "deephouse",
+                "track": {
+                    "display_artist": "Matvey Emerson, Alex Hook, Gosha",
+                    "display_title": "Shine (Original Mix)",
+                    "id": 1226140
+                }
+            },
+            {
+                "channel_id": 137,
+                "channel_key": "deepnudisco",
+                "track": {
+                    "display_artist": "Beats International",
+                    "display_title": "Dub Be Good to Me (Nikko Culture Remix)",
+                    "id": 2866616
+                }
+            },
+            {
+                "channel_id": 182,
+                "channel_key": "deeptech",
+                "track": {
+                    "display_artist": "Harrison BDP",
+                    "display_title": "It's All Just Sound",
+                    "id": 2866505
+                }
+            },
+            {
+                "channel_id": 353,
+                "channel_key": "detroithousentechno",
+                "track": {
+                    "display_artist": "3KZ",
+                    "display_title": "Bounder (Mark Broom Remix)",
+                    "id": 1274935
+                }
+            },
+            {
+                "channel_id": 92,
+                "channel_key": "discohouse",
+                "track": {
+                    "display_artist": "Heather Headley",
+                    "display_title": "In My Mind (Freemasons Vocal Mix)",
+                    "id": 1264827
+                }
+            },
+            {
+                "channel_id": 10,
+                "channel_key": "djmixes",
+                "track": {
+                    "display_artist": "Obie Fernandez",
+                    "display_title": "Music Over Matter 079 (02 December 2019) guest Lum1na",
+                    "id": 2958233
+                }
+            },
+            {
+                "channel_id": 180,
+                "channel_key": "downtempolounge",
+                "track": {
+                    "display_artist": "Kouros",
+                    "display_title": "Be What You Like (Buddha Lounge Mix)",
+                    "id": 940096
+                }
+            },
+            {
+                "channel_id": 13,
+                "channel_key": "drumandbass",
+                "track": {
+                    "display_artist": "Need For Mirrors",
+                    "display_title": "Pagans",
+                    "id": 2950643
+                }
+            },
+            {
+                "channel_id": 291,
+                "channel_key": "drumstep",
+                "track": {
+                    "display_artist": "Gemini UK, Greta Svabo Bech",
+                    "display_title": "Fire Inside (Original Mix)",
+                    "id": 218460
+                }
+            },
+            {
+                "channel_id": 348,
+                "channel_key": "dub",
+                "track": {
+                    "display_artist": "Barbés.D",
+                    "display_title": "Dub Of Me feat. Janiss Anton",
+                    "id": 2148760
+                }
+            },
+            {
+                "channel_id": 355,
+                "channel_key": "dubtechno",
+                "track": {
+                    "display_artist": "Francisco Fuentes",
+                    "display_title": "Hello Strange Podcast Episode # 282 (December 2017)",
+                    "id": 2270837
+                }
+            },
+            {
+                "channel_id": 91,
+                "channel_key": "dubstep",
+                "track": {
+                    "display_artist": "Deco",
+                    "display_title": "Musical Family",
+                    "id": 722964
+                }
+            },
+            {
+                "channel_id": 210,
+                "channel_key": "edmfestival",
+                "track": {
+                    "display_artist": "Exodus & Roy Orion",
+                    "display_title": "Blast From the Past",
+                    "id": 2898980
+                }
+            },
+            {
+                "channel_id": 474,
+                "channel_key": "edm",
+                "track": {
+                    "display_artist": "Sebastian Dobrincu",
+                    "display_title": "On Your Mind",
+                    "id": 2957288
+                }
+            },
+            {
+                "channel_id": 56,
+                "channel_key": "electro",
+                "track": {
+                    "display_artist": "Miike Snow",
+                    "display_title": "Pretender (Deniz Koyu Remix)",
+                    "id": 327989
+                }
+            },
+            {
+                "channel_id": 327,
+                "channel_key": "electroswing",
+                "track": {
+                    "display_artist": "Der Dritte Raum",
+                    "display_title": "Swing Bop",
+                    "id": 879199
+                }
+            },
+            {
+                "channel_id": 280,
+                "channel_key": "electronicpioneers",
+                "track": {
+                    "display_artist": "Giorgio Moroder",
+                    "display_title": "Chase",
+                    "id": 888329
+                }
+            },
+            {
+                "channel_id": 286,
+                "channel_key": "electropop",
+                "track": {
+                    "display_artist": "Black Strobe",
+                    "display_title": "Boogie In Zero Gravity (Dub Version)",
+                    "id": 881223
+                }
+            },
+            {
+                "channel_id": 175,
+                "channel_key": "epictrance",
+                "track": {
+                    "display_artist": "Abide & Memory Splice",
+                    "display_title": "Black (Original Mix)",
+                    "id": 2005476
+                }
+            },
+            {
+                "channel_id": 6,
+                "channel_key": "eurodance",
+                "track": {
+                    "display_artist": "Syra Martin",
+                    "display_title": "Love You Tonight (Vicente Lara Radio Edit)",
+                    "id": 445031
+                }
+            },
+            {
+                "channel_id": 58,
+                "channel_key": "funkyhouse",
+                "track": {
+                    "display_artist": "Alienated Mike",
+                    "display_title": "Funky Smoke Session 001",
+                    "id": 2914444
+                }
+            },
+            {
+                "channel_id": 424,
+                "channel_key": "futurebass",
+                "track": {
+                    "display_artist": "Ben Maxwell",
+                    "display_title": "Feel U",
+                    "id": 1254753
+                }
+            },
+            {
+                "channel_id": 292,
+                "channel_key": "futuregarage",
+                "track": {
+                    "display_artist": "Vesky",
+                    "display_title": "Regret",
+                    "id": 2911631
+                }
+            },
+            {
+                "channel_id": 53,
+                "channel_key": "futuresynthpop",
+                "track": {
+                    "display_artist": "AccroGeist",
+                    "display_title": "This Symmetry",
+                    "id": 2004721
+                }
+            },
+            {
+                "channel_id": 16,
+                "channel_key": "gabber",
+                "track": {
+                    "display_artist": "Phoenix",
+                    "display_title": "Now Who's In Control (Nosferatu Remix)",
+                    "id": 588871
+                }
+            },
+            {
+                "channel_id": 198,
+                "channel_key": "glitchhop",
+                "track": {
+                    "display_artist": "Mystic Pulse feat. Downdays",
+                    "display_title": "Asian Flavour (Original Mix)",
+                    "id": 993226
+                }
+            },
+            {
+                "channel_id": 8,
+                "channel_key": "goapsy",
+                "track": {
+                    "display_artist": "EL-Jay",
+                    "display_title": "PsyStoned 177",
+                    "id": 2926722
+                }
+            },
+            {
+                "channel_id": 176,
+                "channel_key": "handsup",
+                "track": {
+                    "display_artist": "Verano",
+                    "display_title": "Popcorn (Veranos Club Mix)",
+                    "id": 2805767
+                }
+            },
+            {
+                "channel_id": 5,
+                "channel_key": "harddance",
+                "track": {
+                    "display_artist": "Ganesh",
+                    "display_title": "Infectious Radio 021 (01 November 2019)",
+                    "id": 2953867
+                }
+            },
+            {
+                "channel_id": 276,
+                "channel_key": "hardtechno",
+                "track": {
+                    "display_artist": "Acid Flux",
+                    "display_title": "Her Name Is Nasty Lopez (Original mix)",
+                    "id": 2901730
+                }
+            },
+            {
+                "channel_id": 9,
+                "channel_key": "hardcore",
+                "track": {
+                    "display_artist": "Technikore",
+                    "display_title": "Preferences",
+                    "id": 88539
+                }
+            },
+            {
+                "channel_id": 60,
+                "channel_key": "hardstyle",
+                "track": {
+                    "display_artist": "Nu-Pulse",
+                    "display_title": "Sector Session Episode 14 (December 2009)",
+                    "id": 598537
+                }
+            },
+            {
+                "channel_id": 4,
+                "channel_key": "house",
+                "track": {
+                    "display_artist": "The Stoned",
+                    "display_title": "Dont Stop The Rock (Original Mix) (Original Mix)",
+                    "id": 2181956
+                }
+            },
+            {
+                "channel_id": 404,
+                "channel_key": "indiebeats",
+                "track": {
+                    "display_artist": "PLGRMS",
+                    "display_title": "Crawling Back",
+                    "id": 2027457
+                }
+            },
+            {
+                "channel_id": 351,
+                "channel_key": "indiedance",
+                "track": {
+                    "display_artist": "SRTW",
+                    "display_title": "We Were Young (Eriq Johnson Remix)",
+                    "id": 1011676
+                }
+            },
+            {
+                "channel_id": 349,
+                "channel_key": "jazzhouse",
+                "track": {
+                    "display_artist": "Ralf GUM",
+                    "display_title": "The Only Way (Terry Hunter Instrumental)",
+                    "id": 1204880
+                }
+            },
+            {
+                "channel_id": 293,
+                "channel_key": "jungle",
+                "track": {
+                    "display_artist": "Dub One",
+                    "display_title": "Home",
+                    "id": 2935457
+                }
+            },
+            {
+                "channel_id": 117,
+                "channel_key": "latinhouse",
+                "track": {
+                    "display_artist": "Dani Vars",
+                    "display_title": "Costa del Sol (Jon Flores Remix)",
+                    "id": 753995
+                }
+            },
+            {
+                "channel_id": 105,
+                "channel_key": "liquiddnb",
+                "track": {
+                    "display_artist": "Enea",
+                    "display_title": "Arion",
+                    "id": 1023535
+                }
+            },
+            {
+                "channel_id": 184,
+                "channel_key": "liquiddubstep",
+                "track": {
+                    "display_artist": "ENiGMA Dubz",
+                    "display_title": "Headroom",
+                    "id": 201081
+                }
+            },
+            {
+                "channel_id": 352,
+                "channel_key": "liquidtrap",
+                "track": {
+                    "display_artist": "Sasha Sloan",
+                    "display_title": "Ready Yet (San Holo Remix)",
+                    "id": 2876395
+                }
+            },
+            {
+                "channel_id": 492,
+                "channel_key": "lofihiphop",
+                "track": {
+                    "display_artist": "SLR",
+                    "display_title": "Push",
+                    "id": 2917462
+                }
+            },
+            {
+                "channel_id": 11,
+                "channel_key": "lounge",
+                "track": {
+                    "display_artist": "Deep Phenomenal",
+                    "display_title": "Single Day",
+                    "id": 870700
+                }
+            },
+            {
+                "channel_id": 402,
+                "channel_key": "melodicprogressive",
+                "track": {
+                    "display_artist": "SOUMA",
+                    "display_title": "Cold Nights (Original Mix)",
+                    "id": 2865456
+                }
+            },
+            {
+                "channel_id": 59,
+                "channel_key": "minimal",
+                "track": {
+                    "display_artist": "Exos",
+                    "display_title": "Pulp",
+                    "id": 2924975
+                }
+            },
+            {
+                "channel_id": 294,
+                "channel_key": "nightcore",
+                "track": {
+                    "display_artist": "Aleeze",
+                    "display_title": "Cuts Like Ice (Tribune Remix Edit) (Nightcore Tranceformer Remix)",
+                    "id": 976004
+                }
+            },
+            {
+                "channel_id": 295,
+                "channel_key": "nudisco",
+                "track": {
+                    "display_artist": "Captain Cuts",
+                    "display_title": "Love Like We Used To (Lenno Remix) (Feat. Nateur)",
+                    "id": 2926819
+                }
+            },
+            {
+                "channel_id": 124,
+                "channel_key": "oldschoolacid",
+                "track": {
+                    "display_artist": "Unknown Artificials",
+                    "display_title": "Petunia (Original Mix)",
+                    "id": 2946245
+                }
+            },
+            {
+                "channel_id": 104,
+                "channel_key": "oldschoolhouse",
+                "track": {
+                    "display_artist": "Acid Gang",
+                    "display_title": "Hangover Acid Trax",
+                    "id": 68290
+                }
+            },
+            {
+                "channel_id": 296,
+                "channel_key": "oldschoolrave",
+                "track": {
+                    "display_artist": "909 Surprise",
+                    "display_title": "Dominator",
+                    "id": 1213624
+                }
+            },
+            {
+                "channel_id": 14,
+                "channel_key": "classictechno",
+                "track": {
+                    "display_artist": "Monsoon",
+                    "display_title": "Monsoon",
+                    "id": 590311
+                }
+            },
+            {
+                "channel_id": 7,
+                "channel_key": "progressive",
+                "track": {
+                    "display_artist": "JFR",
+                    "display_title": "Where Is My God (Original Mix)",
+                    "id": 2943811
+                }
+            },
+            {
+                "channel_id": 178,
+                "channel_key": "progressivepsy",
+                "track": {
+                    "display_artist": "Kalinga Son with guest Invisible Reality",
+                    "display_title": "Samay Chakra 011 (March 2019)",
+                    "id": 2928769
+                }
+            },
+            {
+                "channel_id": 285,
+                "channel_key": "psybient",
+                "track": {
+                    "display_artist": "Evan Bartholomew",
+                    "display_title": "Soft Spots in the Tyranny of Matter",
+                    "id": 703612
+                }
+            },
+            {
+                "channel_id": 67,
+                "channel_key": "psychill",
+                "track": {
+                    "display_artist": "Essential Trip",
+                    "display_title": "Missing Home - Original Mix",
+                    "id": 701335
+                }
+            },
+            {
+                "channel_id": 213,
+                "channel_key": "russianclubhits",
+                "track": {
+                    "display_artist": "Serebro",
+                    "display_title": "Ya Tebya Ne Otdam (Dj.Alexx Slam Bootleg)",
+                    "id": 1215906
+                }
+            },
+            {
+                "channel_id": 47,
+                "channel_key": "soulfulhouse",
+                "track": {
+                    "display_artist": "Ron Basejam",
+                    "display_title": "Someday",
+                    "id": 963229
+                }
+            },
+            {
+                "channel_id": 64,
+                "channel_key": "spacemusic",
+                "track": {
+                    "display_artist": "David Helpling",
+                    "display_title": "End Of An Era",
+                    "id": 1526
+                }
+            },
+            {
+                "channel_id": 438,
+                "channel_key": "synthwave",
+                "track": {
+                    "display_artist": "Electric Dragon",
+                    "display_title": "Covenant",
+                    "id": 2192168
+                }
+            },
+            {
+                "channel_id": 66,
+                "channel_key": "techhouse",
+                "track": {
+                    "display_artist": "Stefano Noferini",
+                    "display_title": "Club Edition 374 (02 December2019)",
+                    "id": 2958240
+                }
+            },
+            {
+                "channel_id": 36,
+                "channel_key": "techno",
+                "track": {
+                    "display_artist": "Chris Liebing",
+                    "display_title": "AM/FM 247 (02 December 2019)",
+                    "id": 2958227
+                }
+            },
+            {
+                "channel_id": 1,
+                "channel_key": "trance",
+                "track": {
+                    "display_artist": "Ferry Tayle and Dan Stone",
+                    "display_title": "Fables 122 with Elucidus (Recorded Live)",
+                    "id": 2958220
+                }
+            },
+            {
+                "channel_id": 230,
+                "channel_key": "trap",
+                "track": {
+                    "display_artist": "Martin Jensen",
+                    "display_title": "Osaki (Extended)",
+                    "id": 2911289
+                }
+            },
+            {
+                "channel_id": 57,
+                "channel_key": "tribalhouse",
+                "track": {
+                    "display_artist": "Simioli, Benny Camaro",
+                    "display_title": "Someone Else (Extended Mix)",
+                    "id": 2920785
+                }
+            },
+            {
+                "channel_id": 215,
+                "channel_key": "umfradio",
+                "track": {
+                    "display_artist": "Oliver Heldens, Alan Walker",
+                    "display_title": "UMF Radio 466 (13 April 2018) ",
+                    "id": 2877782
+                }
+            },
+            {
+                "channel_id": 288,
+                "channel_key": "undergroundtechno",
+                "track": {
+                    "display_artist": "Petter B LIVE",
+                    "display_title": "Death Techno DTMIX S 039 (October 2018) Part 1",
+                    "id": 2907745
+                }
+            },
+            {
+                "channel_id": 142,
+                "channel_key": "vocalchillout",
+                "track": {
+                    "display_artist": "tyDi & JES",
+                    "display_title": "Say the Word",
+                    "id": 2953545
+                }
+            },
+            {
+                "channel_id": 445,
+                "channel_key": "vocalhouse",
+                "track": {
+                    "display_artist": "Fred Everything",
+                    "display_title": " Mercyless (Atjazz Unreleased Astro Remix) ",
+                    "id": 996232
+                }
+            },
+            {
+                "channel_id": 278,
+                "channel_key": "vocallounge",
+                "track": {
+                    "display_artist": "Hooverphonic",
+                    "display_title": "One",
+                    "id": 352316
+                }
+            },
+            {
+                "channel_id": 2,
+                "channel_key": "vocaltrance",
+                "track": {
+                    "display_artist": "Pedro Del Mar",
+                    "display_title": "Mellomania Vocal Trance Anthems Episode 603",
+                    "id": 2958206
+                }
+            }
+        ],
+        "rawHeaders": [
+            "Date",
+            "Mon, 02 Dec 2019 21:23:40 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Transfer-Encoding",
+            "chunked",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=d12597eac1b7380346ac7ff1bb4ac35be1575321820; expires=Wed, 01-Jan-20 21:23:40 GMT; path=/; domain=.di.fm; HttpOnly",
+            "Vary",
+            "Accept-Encoding",
+            "Status",
+            "200 OK",
+            "Cache-Control",
+            "max-age=7, public",
+            "Content-Language",
+            "en",
+            "X-Request-Id",
+            "4f401f9d5a41ccc21744e9a5ec0aa1fb",
+            "ETag",
+            "W/\"29afd8f5c74abf986ab93b34ae9a0021\"",
+            "X-Runtime",
+            "0.051247",
+            "X-Powered-By",
+            "Phusion Passenger Enterprise",
+            "X-Request-Date",
+            "Monday, 02-Dec-2019 21:23:40 GMT",
+            "CF-Cache-Status",
+            "DYNAMIC",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "53f05cff393e7d06-MUC"
+        ],
+        "responseIsBinary": false
+    }
+]

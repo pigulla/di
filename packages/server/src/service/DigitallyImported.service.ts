@@ -1,12 +1,20 @@
 import {Injectable, Inject} from '@nestjs/common'
 import cheerio from 'cheerio'
-import superagent from 'superagent'
+import superagent, {SuperAgentStatic} from 'superagent'
 import {NodeVM} from 'vm2'
 
 import {IConfigProvider} from './ConfigProvider.interface'
-import {AppData, RawAppData, NowPlaying, RawNowPlaying} from './di'
-import {IDigitallyImported} from './DigitallyImported.interface'
-import {ILogger} from './Logger.interface'
+import {
+    AppData,
+    RawAppData,
+    NowPlaying,
+    RawNowPlaying,
+    parse_authentication_response,
+    FailedAuthenticationResponse,
+    AuthenticationFailureError,
+} from './di'
+import {Credentials, IDigitallyImported} from './DigitallyImported.interface'
+import {ILogger} from './logger'
 
 export class DigitallyImportedError extends Error {}
 
@@ -20,9 +28,9 @@ export class DigitallyImported implements IDigitallyImported {
         @Inject('IConfigProvider') config: IConfigProvider,
     ) {
         this.url = config.di_url
-        this.logger = logger.for_service(DigitallyImported.name)
+        this.logger = logger.child_for_service(DigitallyImported.name)
 
-        this.logger.log('Service instantiated')
+        this.logger.debug('Service instantiated')
     }
 
     private extract_app_data (html: string): RawAppData {
@@ -44,8 +52,7 @@ export class DigitallyImported implements IDigitallyImported {
         })
 
         const app_script_tag = cheerio.load(html)('script').toArray()
-            .filter(node => node && node.firstChild &&
-                node.firstChild.data && node.firstChild.data.includes('di.app.start'))
+            .filter(node => node?.firstChild?.data?.includes('di.app.start') || false)
         const src = (app_script_tag && app_script_tag[0] && app_script_tag[0].firstChild.data)
 
         if (!src) {
@@ -70,12 +77,47 @@ export class DigitallyImported implements IDigitallyImported {
         return (response.body as RawNowPlaying[]).map(NowPlaying.from_raw)
     }
 
+    private async authenticate (credentials: Credentials): Promise<SuperAgentStatic> {
+        const agent = superagent.agent()
+        const response = await agent
+            .post(`${this.url}/login`)
+            .type('form')
+            .set('x-requested-with', 'XMLHttpRequest')
+            .send({
+                'member_session[password]': credentials.password,
+                'member_session[username]': credentials.username,
+                'member_session[remember_me]': 0,
+            })
+        const auth_response = parse_authentication_response(response.body)
+
+        if (auth_response instanceof FailedAuthenticationResponse) {
+            throw new AuthenticationFailureError(auth_response)
+        }
+
+        return agent as SuperAgentStatic
+    }
+
+    public async load_favorite_channel_keys (credentials: Credentials): Promise<string[]> {
+        const agent = await this.authenticate(credentials)
+        const raw_app_data = await this.load_raw_app_data(agent)
+
+        return raw_app_data.channels
+            .filter(channel => channel.favorite)
+            .sort((a, b) => (a.favorite_position || 0) - (b.favorite_position || 0))
+            .map(channel => channel.key)
+    }
+
+    private async load_raw_app_data (agent: SuperAgentStatic): Promise<RawAppData> {
+        const response = await agent.get(this.url)
+
+        return this.extract_app_data(response.text)
+    }
+
     public async load_app_data (): Promise<AppData> {
-        const response = await superagent.get(this.url)
-        const raw_app_data = this.extract_app_data(response.text)
+        const raw_app_data = await this.load_raw_app_data(superagent)
         const app_data = AppData.from_raw(raw_app_data)
 
-        this.logger.log('AppData successfully retrieved')
+        this.logger.debug('AppData successfully retrieved')
         return app_data
     }
 }

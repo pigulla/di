@@ -17,7 +17,6 @@ export interface RawChannel {
     description: string
     description_long: string
     description_short: string
-    favorite: boolean
     id: number
     images: {
         compact: string
@@ -27,14 +26,16 @@ export interface RawChannel {
     key: string
     name: string
     updated_at: string
+    favorite: boolean
+    favorite_position?: number
 }
 
 export class Channel {
-    private static readonly quality_to_url_map: {[P in Quality]: string} = {
-        [Quality.AAC_64]: 'premium_medium',
-        [Quality.AAC_128]: 'premium',
-        [Quality.MP3_320]: 'premium_high',
-    }
+    private static readonly quality_to_url: Map<Quality, string> = new Map([
+        [Quality.AAC_64, 'premium_medium'],
+        [Quality.AAC_128, 'premium'],
+        [Quality.MP3_320, 'premium_high'],
+    ])
 
     /* eslint-disable-next-line no-useless-constructor */
     public constructor (
@@ -70,7 +71,7 @@ export class Channel {
     }
 
     public build_url (listen_key: string, quality: Quality): string {
-        const quality_path = Channel.quality_to_url_map[quality]
+        const quality_path = Channel.quality_to_url.get(quality)
 
         return `http://listen.di.fm/${quality_path}/${this.key}.pls?listen_key=${listen_key}`
     }
@@ -87,7 +88,7 @@ export class Channel {
             description: this.description,
             id: this.id,
             key: this.key,
-            name: this.name,
+            name: this.name.trim(),
             updated_at: this.updated_at ? this.updated_at.toISOString() : null,
             created_at: this.created_at.toISOString(),
             images: {

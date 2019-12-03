@@ -1,39 +1,30 @@
-import {ChannelDTO} from '@digitally-imported/dto';
-import {
-    Controller,
-    Get,
-    Inject,
-    UseInterceptors,
-    ClassSerializerInterceptor, ForbiddenException,
-} from '@nestjs/common';
+import {Controller, Get, Inject, ForbiddenException} from '@nestjs/common'
 
-import {IChannelProvider, IUserProvider} from '../service';
-import {AuthenticatedUser} from '../service/di';
+import {ChannelDTO} from '@digitally-imported/dto'
 
-@Controller('/channels/favorites')
+import {IFavoritesProvider, CredentialsUnavailableError} from '@server/service'
+
+@Controller()
 export class FavoritesController {
-    private readonly channel_provider: IChannelProvider;
-    private readonly user_provider: IUserProvider;
+    private readonly favorites_provider: IFavoritesProvider
 
-    constructor (
-        @Inject('IChannelProvider') channel_provider: IChannelProvider,
-        @Inject('IUserProvider') user_provider: IUserProvider,
+    public constructor (
+        @Inject('IFavoritesProvider') favorites_provider: IFavoritesProvider,
     ) {
-        this.channel_provider = channel_provider;
-        this.user_provider = user_provider;
+        this.favorites_provider = favorites_provider
     }
 
-    @Get()
-    @UseInterceptors(ClassSerializerInterceptor)
-    list_favorites (): ChannelDTO[] {
-        const user = this.user_provider.get_user();
+    @Get('/favorites')
+    public async list_favorites (): Promise<ChannelDTO[]> {
+        try {
+            const favorites = await this.favorites_provider.get_all()
+            return favorites.map(favorite => favorite.to_dto())
+        } catch (error) {
+            if (error instanceof CredentialsUnavailableError) {
+                throw new ForbiddenException()
+            }
 
-        if (user.is_public()) {
-            throw new ForbiddenException();
+            throw error
         }
-
-        return Array.from((user as AuthenticatedUser).favorites)
-            .map(id => this.channel_provider.get_channel_by_id(id))
-            .map(channel => channel.to_dto());
     }
 }

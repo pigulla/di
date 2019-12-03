@@ -4,12 +4,12 @@ import {NotFoundException} from '@nestjs/common'
 import {expect} from 'chai'
 
 import {PlaybackController} from '@server/controller'
-import {IChannelProvider, IConfigProvider, INowPlayingProvider, IPlaybackControl} from '@server/service'
+import {IChannelsProvider, IConfigProvider, INowPlayingProvider, IPlaybackControl} from '@server/service'
 import {Quality} from '@server/service/di'
 
 import {
     ChannelBuilder,
-    create_channel_provider_stub,
+    create_channels_provider_stub,
     create_config_provider_stub,
     create_now_playing_provider_stub,
     create_playback_control_stub,
@@ -19,13 +19,13 @@ import {
 describe('Playback controller', function () {
     let controller: PlaybackController
     let playback_control_stub: SinonStubbedInstance<IPlaybackControl>
-    let channel_provider_stub: SinonStubbedInstance<IChannelProvider>
+    let channels_provider_stub: SinonStubbedInstance<IChannelsProvider>
     let config_provider_stub: SinonStubbedInstance<IConfigProvider>
     let now_playing_provider_stub: SinonStubbedInstance<INowPlayingProvider>
 
     beforeEach(async function () {
         playback_control_stub = create_playback_control_stub()
-        channel_provider_stub = create_channel_provider_stub()
+        channels_provider_stub = create_channels_provider_stub()
         now_playing_provider_stub = create_now_playing_provider_stub()
         config_provider_stub = create_config_provider_stub({
             di_listenkey: 'my-listen-key',
@@ -39,8 +39,8 @@ describe('Playback controller', function () {
                     useValue: playback_control_stub,
                 },
                 {
-                    provide: 'IChannelProvider',
-                    useValue: channel_provider_stub,
+                    provide: 'IChannelsProvider',
+                    useValue: channels_provider_stub,
                 },
                 {
                     provide: 'IConfigProvider',
@@ -63,7 +63,7 @@ describe('Playback controller', function () {
         it('should return empty data if nothing is playing', async function () {
             playback_control_stub.get_current_channel_key.resolves(null)
 
-            await expect(controller.current()).to.eventually.be.rejectedWith(NotFoundException)
+            await expect(controller.current()).to.be.rejectedWith(NotFoundException)
         })
 
         it('should return the data if something is playing', async function () {
@@ -75,7 +75,7 @@ describe('Playback controller', function () {
                 .with_display_title('Hookwarts')
                 .build()
             now_playing_provider_stub.get_by_channel_key.withArgs(progressive.key).returns(now_playing)
-            channel_provider_stub.get_by_key.withArgs(progressive.key).returns(progressive)
+            channels_provider_stub.get.withArgs(progressive.key).returns(progressive)
 
             await expect(controller.current()).to.eventually.deep.equal({
                 channel: progressive.to_dto(),
@@ -97,7 +97,7 @@ describe('Playback controller', function () {
         it('should fail when not playing', async function () {
             playback_control_stub.is_playing.resolves(false)
 
-            await expect(controller.is_playing()).to.eventually.be.rejectedWith(NotFoundException)
+            await expect(controller.is_playing()).to.be.rejectedWith(NotFoundException)
         })
     })
 
@@ -113,8 +113,8 @@ describe('Playback controller', function () {
         it('should work if the channel exists', async function () {
             const channel = new ChannelBuilder().with_key('progressive').build()
 
-            channel_provider_stub.channel_exists.withArgs('progressive').returns(true)
-            channel_provider_stub.get_by_key.withArgs('progressive').returns(channel)
+            channels_provider_stub.channel_exists.withArgs('progressive').returns(true)
+            channels_provider_stub.get.withArgs('progressive').returns(channel)
 
             await expect(controller.play({channel: 'progressive'})).to.eventually.deep.equal(channel.to_dto())
             expect(playback_control_stub.play)
@@ -122,10 +122,10 @@ describe('Playback controller', function () {
         })
 
         it('should fail if the channel does not exist', async function () {
-            channel_provider_stub.channel_exists.withArgs('progressive').returns(false)
+            channels_provider_stub.channel_exists.withArgs('progressive').returns(false)
 
             await expect(controller.play({channel: 'progressive'}))
-                .to.eventually.be.rejectedWith(NotFoundException)
+                .to.be.rejectedWith(NotFoundException)
         })
     })
 })

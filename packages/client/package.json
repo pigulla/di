@@ -13,10 +13,10 @@
   "dependencies": {
     "@digitally-imported/dto": "file:../dto",
     "axios": "^0.19.0",
-    "bluebird": "^3.7.1",
+    "bluebird": "^3.7.2",
     "http-status-codes": "^1.4.0"
   },
   "devDependencies": {
-    "@types/bluebird": "^3.5.28"
+    "@types/bluebird": "^3.5.29"
   }
 }

@@ -1,13 +1,12 @@
 import read_pkg, {NormalizedPackageJson} from 'read-pkg'
 import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common'
 import {sync as which} from 'which'
+import pino from 'pino'
 
-import {
-    IConfigProvider, ConfigProvider,
-    ILogger, Logger, ServerProcessProxy, IServerProcessProxy,
-} from '@server/service/'
-import {create_argv_parser, IArgvParser} from '../service/config'
+import {IConfigProvider, ConfigProvider, ServerProcessProxy, IServerProcessProxy} from '@server/service/'
+import {ILogger, PinoLogger} from '@server/service/logger'
 import {AppVersionHeader} from '@server/middleware'
+import {create_argv_parser, IArgvParser} from '../service/config'
 
 @Module({
     imports: [],
@@ -55,7 +54,8 @@ import {AppVersionHeader} from '@server/middleware'
             provide: 'ILogger',
             inject: ['IConfigProvider'],
             useFactory (config_provider: IConfigProvider): ILogger {
-                return new Logger(config_provider.log_level)
+                const root_logger = pino({prettyPrint: true})
+                return new PinoLogger(root_logger).set_level(config_provider.log_level)
             },
         },
         {

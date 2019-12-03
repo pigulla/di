@@ -14,6 +14,9 @@ describe('DigitallyImported service', function () {
     let digitally_imported: DigitallyImported
 
     beforeEach(async function () {
+        const logger = create_logger_stub()
+        logger.child_for_service.returns(create_logger_stub())
+
         config_provider = create_config_provider_stub({
             di_url: 'https://www.di.fm',
         })
@@ -22,7 +25,7 @@ describe('DigitallyImported service', function () {
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: create_logger_stub(),
+                    useValue: logger,
                 },
                 {
                     provide: 'IConfigProvider',
@@ -36,7 +39,7 @@ describe('DigitallyImported service', function () {
     })
 
     it('should parse the "now playing" data', async function () {
-        load_nock_recording(RecordingName.CURRENTLY_PLAYING)
+        load_nock_recording(RecordingName.DI_CURRENTLY_PLAYING)
         const data = await digitally_imported.load_now_playing()
 
         for (const now_playing of data) {
@@ -45,7 +48,7 @@ describe('DigitallyImported service', function () {
     })
 
     it('should parse the app data', async function () {
-        load_nock_recording(RecordingName.HOMEPAGE)
+        load_nock_recording(RecordingName.DI_HOMEPAGE)
         const app_data = await digitally_imported.load_app_data()
 
         expect(app_data.app_version).to.be.a('string')
@@ -61,23 +64,23 @@ describe('DigitallyImported service', function () {
     })
 
     it('should fail if there is no script tag', async function () {
-        load_nock_recording(RecordingName.NO_SCRIPT_TAG)
+        load_nock_recording(RecordingName.DI_NO_SCRIPT_TAG)
 
         await expect(digitally_imported.load_app_data())
-            .to.eventually.be.rejectedWith(DigitallyImportedError, 'Script tag not found')
+            .to.be.rejectedWith(DigitallyImportedError, 'Script tag not found')
     })
 
     it('should fail if the script tag does not call the interceptor', async function () {
-        load_nock_recording(RecordingName.NO_INTERCEPTOR_CALL)
+        load_nock_recording(RecordingName.DI_NO_INTERCEPTOR_CALL)
 
         await expect(digitally_imported.load_app_data())
-            .to.eventually.be.rejectedWith(DigitallyImportedError, 'Interceptor not called')
+            .to.be.rejectedWith(DigitallyImportedError, 'Interceptor not called')
     })
 
     it('should fail if the interceptor does not return data', async function () {
-        load_nock_recording(RecordingName.EMPTY_INTERCEPTOR_CALL)
+        load_nock_recording(RecordingName.DI_EMPTY_INTERCEPTOR_CALL)
 
         await expect(digitally_imported.load_app_data())
-            .to.eventually.be.rejectedWith(DigitallyImportedError, /Could not extract appdata/)
+            .to.be.rejectedWith(DigitallyImportedError, /Could not extract appdata/)
     })
 })

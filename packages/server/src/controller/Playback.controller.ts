@@ -12,11 +12,11 @@ import {
     Put,
 } from '@nestjs/common'
 
-import {ChannelDTO, PlaybackStateDTO} from '@digitally-imported/dto'
+import {ChannelDTO, PlayDTO, PlaybackStateDTO} from '@digitally-imported/dto'
 
-import {IChannelProvider, IPlaybackControl, IConfigProvider, INowPlayingProvider} from '@server/service'
+import {IChannelsProvider, IPlaybackControl, IConfigProvider, INowPlayingProvider} from '@server/service'
 
-export class PlayDTO {
+class ValidatedPlayDTO extends PlayDTO {
     @IsString()
     @IsNotEmpty()
     public readonly channel!: string
@@ -25,13 +25,13 @@ export class PlayDTO {
 @Controller('/playback')
 export class PlaybackController {
     private readonly playback_control: IPlaybackControl
-    private readonly channel_provider: IChannelProvider
+    private readonly channel_provider: IChannelsProvider
     private readonly config_provider: IConfigProvider
     private readonly now_playing_provider: INowPlayingProvider
 
     public constructor (
         @Inject('IPlaybackControl') vlc_control: IPlaybackControl,
-        @Inject('IChannelProvider') channel_provider: IChannelProvider,
+        @Inject('IChannelsProvider') channel_provider: IChannelsProvider,
         @Inject('IConfigProvider') config_provider: IConfigProvider,
         @Inject('INowPlayingProvider') now_playing_provider: INowPlayingProvider,
     ) {
@@ -60,7 +60,7 @@ export class PlaybackController {
         }
 
         const now_playing = this.now_playing_provider.get_by_channel_key(channel_key)
-        const channel = this.channel_provider.get_by_key(channel_key)
+        const channel = this.channel_provider.get(channel_key)
 
         return {
             now_playing: {
@@ -78,7 +78,7 @@ export class PlaybackController {
     }
 
     @Put()
-    public async play (@Body() play_dto: PlayDTO): Promise<ChannelDTO> {
+    public async play (@Body() play_dto: ValidatedPlayDTO): Promise<ChannelDTO> {
         const {channel: identifier} = play_dto
 
         if (!this.channel_provider.channel_exists(identifier)) {
@@ -86,7 +86,7 @@ export class PlaybackController {
         }
 
         const {di_listenkey, di_quality} = this.config_provider
-        const channel = this.channel_provider.get_by_key(identifier)
+        const channel = this.channel_provider.get(identifier)
         const url = channel.build_url(di_listenkey, di_quality)
 
         await this.playback_control.play(url)

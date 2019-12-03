@@ -1,10 +1,11 @@
 import {expect} from 'chai'
-import {stub, SinonStub} from 'sinon'
+import {SinonStub, stub} from 'sinon'
+import {Test} from '@nestjs/testing'
 
 import {ConfigProvider} from '@server/service'
-import {Test} from '@nestjs/testing'
 import {ApplicationOptions} from '@server/service/config'
 import {Quality} from '@server/service/di'
+import {LogLevel} from '@server/service/logger'
 
 describe('ConfigProvider service', function () {
     let argv_parser_stub: SinonStub
@@ -43,7 +44,7 @@ describe('ConfigProvider service', function () {
         const options: ApplicationOptions = {
             hostname: 'example.local',
             port: 1337,
-            logLevel: 'warn',
+            logLevel: LogLevel.WARN,
             vlcPath: '/usr/bin/vlc',
             vlcInitialVolume: 0.666,
             vlcTimeout: 1500,
@@ -51,6 +52,10 @@ describe('ConfigProvider service', function () {
             listenkey: 'my-listenkey',
             frequency: 7500,
             quality: Quality.AAC_128,
+            credentials: {
+                username: 'my-username',
+                password: 'my-password',
+            },
         }
         let config_provider: ConfigProvider
 
@@ -97,6 +102,10 @@ describe('ConfigProvider service', function () {
 
         it("should return di's frequency", function () {
             expect(config_provider.di_frequency_ms).to.equal(options.frequency)
+        })
+
+        it("should return di's credentials", function () {
+            expect(config_provider.di_credentials).to.equal(options.credentials)
         })
     })
 })

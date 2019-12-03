@@ -1,2 +1,2 @@
-export * from './ChildProcessFacade.stub'
-export * from './Connector.stub'
+export * from './VlcChildProcessFacade.stub'
+export * from './VlcHttpClient.stub'

@@ -12,11 +12,14 @@ describe('NowPlayingProvider service', function () {
     let now_playing_provider: NowPlayingProvider
 
     beforeEach(async function () {
+        const logger = create_logger_stub()
+        logger.child_for_service.returns(create_logger_stub())
+
         const module = await Test.createTestingModule({
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: create_logger_stub(),
+                    useValue: logger,
                 },
                 NowPlayingProvider,
             ],
@@ -46,8 +49,8 @@ describe('NowPlayingProvider service', function () {
         })
 
         it('should return the channels by general getter', function () {
-            expect(now_playing_provider.get(progressive)).to.equal(now_playing_items[0])
-            expect(() => now_playing_provider.get(classictechno)).to.throw()
+            expect(now_playing_provider.get(progressive.key)).to.equal(now_playing_items[0])
+            expect(() => now_playing_provider.get(classictechno.key)).to.throw()
         })
 
         it('should return the channels by id', function () {

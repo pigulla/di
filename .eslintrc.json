@@ -38,6 +38,7 @@
                 "exceptAfterSingleLine": true
             }
         ],
+        "no-dupe-class-members": "off",
         "no-process-env": "error",
         "no-process-exit": "error",
         "@typescript-eslint/explicit-member-accessibility": "error",

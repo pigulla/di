@@ -1,8 +1,8 @@
 import {Inject, Injectable} from '@nestjs/common'
 
-import {ChannelIdentifier} from './ChannelProvider.interface'
+import {ChannelIdentifier} from './ChannelsProvider.interface'
 import {NowPlaying} from './di'
-import {ILogger} from './Logger.interface'
+import {ILogger} from './logger'
 import {INowPlayingProvider} from './NowPlayingProvider.interface'
 
 @Injectable()
@@ -14,13 +14,13 @@ export class NowPlayingProvider implements INowPlayingProvider {
     public constructor (
         @Inject('ILogger') logger: ILogger,
     ) {
-        this.logger = logger.for_service(NowPlayingProvider.name)
+        this.logger = logger.child_for_service(NowPlayingProvider.name)
 
-        this.logger.log('Service instantiated')
+        this.logger.debug('Service instantiated')
     }
 
     public update (data: NowPlaying[]): void {
-        this.logger.verbose('Updating "now playing" information')
+        this.logger.debug('Updating "now playing" information')
 
         this.by_id.clear()
         this.by_key.clear()
@@ -34,10 +34,8 @@ export class NowPlayingProvider implements INowPlayingProvider {
     public get (identifier: ChannelIdentifier): NowPlaying {
         if (typeof identifier === 'string') {
             return this.get_by_channel_key(identifier)
-        } else if (typeof identifier === 'number') {
-            return this.get_by_channel_id(identifier)
         } else {
-            return this.get_by_channel_id(identifier.id)
+            return this.get_by_channel_id(identifier)
         }
     }
 

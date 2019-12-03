@@ -6,7 +6,7 @@ import {start_server} from '@server/start_server'
 import {Client} from '@client'
 
 const sleep = promisify(setTimeout)
-const VOLUME_MAX = 75
+const VOLUME_MAX = 50
 const VOLUME_STEP = 5
 
 async function run (): Promise<void> {
@@ -26,12 +26,29 @@ async function run (): Promise<void> {
 
     async function print_playback_state (): Promise<void> {
         spinner.start('Retrieving channel information')
+
         try {
             const playback_state = await client.get_playback_state()
             if (!playback_state.now_playing) {
                 spinner.fail('Unexpected playback state')
             } else {
                 spinner.info(`Now playing: ${playback_state.now_playing.artist} - ${playback_state.now_playing.title}`)
+            }
+        } catch (error) {
+            spinner.fail(`Error: ${error.message}`)
+        }
+    }
+
+    async function print_favorites (): Promise<void> {
+        spinner.start('Retrieving favorites')
+
+        try {
+            const favorites = await client.get_favorites()
+
+            if (favorites) {
+                spinner.info(`Your favorites are: ${favorites.map(channel => channel.name).join(', ')}`)
+            } else {
+                spinner.warn('Credentials not available')
             }
         } catch (error) {
             spinner.fail(`Error: ${error.message}`)
@@ -71,6 +88,8 @@ async function run (): Promise<void> {
     spinner.start('Playing channel for 5 seconds')
     await sleep(5000)
     await print_playback_state()
+
+    await print_favorites()
 
     spinner.start('Stopping server')
     await stop()

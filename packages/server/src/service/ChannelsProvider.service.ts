@@ -53,10 +53,8 @@ export class ChannelsProvider implements IChannelsProvider {
     public channel_exists (identifier: ChannelIdentifier): boolean {
         if (typeof identifier === 'string') {
             return this.channels_by_key.has(identifier)
-        } else if (typeof identifier === 'number') {
-            return this.channels_by_id.has(identifier)
         } else {
-            return [...this.channels_by_id.values()].indexOf(identifier) !== -1
+            return this.channels_by_id.has(identifier)
         }
     }
 

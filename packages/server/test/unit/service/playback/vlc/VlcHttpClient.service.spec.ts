@@ -3,10 +3,12 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
 import {ILogger} from '@server/service/logger'
-import {VlcHttpConnection, VlcHttpClient, PlaybackState} from '@server/service/playback/vlc'
+import {PlaybackState, VlcHttpClient, VlcHttpConnection} from '@server/service/playback/vlc'
 
-import {create_logger_stub} from '../../../../util'
+import {create_logger_stub, prebuilt_channel} from '../../../../util'
 import {load_nock_recording, RecordingName} from '../../../../util/load_nock_recording'
+
+const {progressive} = prebuilt_channel
 
 describe('VlcHttpClient service', function () {
     const vlc_http_connection: VlcHttpConnection = {
@@ -40,26 +42,79 @@ describe('VlcHttpClient service', function () {
         vlc_http_client = module.get(VlcHttpClient)
     })
 
-    it('should return things', async function () {
-        load_nock_recording(RecordingName.VLC_STATUS)
+    describe('when a channel is playing', function () {
+        it('should return the status', async function () {
+            load_nock_recording(RecordingName.VLC_STATUS)
 
-        await expect(vlc_http_client.get_status()).to.eventually.deep.equal({
-            volume: 166,
-            apiversion: 3,
-            state: PlaybackState.PLAYING,
-            version: '3.0.8 Vetinari',
-            meta: {
-                filename: 'progressive?d34db33fd34db33f',
-                genre: 'Progressive',
-                title: 'Progressive - DI.FM Premium',
-                now_playing: 'JFR - Where Is My God (Original Mix)',
-            },
-            stream: {
-                bits_per_sample: 32,
-                codec: 'MPEG AAC Audio (mp4a)',
-                sample_rate: '44100 Hz',
-                channels: 'Stereo',
-            },
+            await expect(vlc_http_client.get_status()).to.eventually.deep.equal({
+                volume: 166,
+                apiversion: 3,
+                state: PlaybackState.PLAYING,
+                version: '3.0.8 Vetinari',
+                meta: {
+                    filename: 'progressive?d34db33fd34db33f',
+                    genre: 'Progressive',
+                    title: 'Progressive - DI.FM Premium',
+                    now_playing: 'JFR - Where Is My God (Original Mix)',
+                },
+                stream: {
+                    bits_per_sample: 32,
+                    codec: 'MPEG AAC Audio (mp4a)',
+                    sample_rate: '44100 Hz',
+                    channels: 'Stereo',
+                },
+            })
+        })
+
+        it('should return the volume', async function () {
+            load_nock_recording(RecordingName.VLC_STATUS)
+
+            await expect(vlc_http_client.get_volume()).to.eventually.be.closeTo(0.65, 0.01)
+        })
+
+        it('should return the playback state', async function () {
+            load_nock_recording(RecordingName.VLC_STATUS)
+
+            await expect(vlc_http_client.is_playing()).to.eventually.be.true
+        })
+
+        it('should return the current channel key', async function () {
+            load_nock_recording(RecordingName.VLC_PLAYLIST)
+
+            await expect(vlc_http_client.get_current_channel_key()).to.eventually.equal(progressive.key)
+        })
+    })
+
+    describe('when nothing is playing', function () {
+        it('should return the status', async function () {
+            load_nock_recording(RecordingName.VLC_STATUS_NOT_PLAYING)
+
+            await expect(vlc_http_client.get_status()).to.eventually.deep.equal({
+                volume: 0,
+                apiversion: 3,
+                state: PlaybackState.STOPPED,
+                version: '3.0.8 Vetinari',
+                meta: null,
+                stream: null,
+            })
+        })
+
+        it('should return the volume', async function () {
+            load_nock_recording(RecordingName.VLC_STATUS_NOT_PLAYING)
+
+            await expect(vlc_http_client.get_volume()).to.eventually.be.closeTo(0, 0.01)
+        })
+
+        it('should return the playback state', async function () {
+            load_nock_recording(RecordingName.VLC_STATUS_NOT_PLAYING)
+
+            await expect(vlc_http_client.is_playing()).to.eventually.be.false
+        })
+
+        it('should return the current channel key', async function () {
+            load_nock_recording(RecordingName.VLC_PLAYLIST_NOT_PLAYING)
+
+            await expect(vlc_http_client.get_current_channel_key()).to.eventually.be.null
         })
     })
 })

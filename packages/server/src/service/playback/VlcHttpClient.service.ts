@@ -3,8 +3,8 @@ import superagent from 'superagent'
 import clamp from 'lodash.clamp'
 import {Inject} from '@nestjs/common'
 
-import {Channel} from '../../di'
-import {ILogger} from '../../logger'
+import {Channel} from '../di'
+import {ILogger} from '../logger'
 import {IVlcHttpClient, Status, PlaybackState, VlcHttpConnection} from './VlcHttpClient.interface'
 
 // See: https://wiki.videolan.org/VLC_HTTP_requests/

@@ -3,13 +3,13 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
 import {ILogger} from '@server/service/logger'
-import {IVlcChildProcessFacade, IVlcHttpClient, PlaybackState, VlcHttpControl} from '@server/service/playback/vlc'
+import {IVlcChildProcessFacade, IVlcHttpClient, PlaybackState, VlcHttpControl} from '@server/service/playback/'
 
 import {
     create_logger_stub,
     create_vlc_child_process_facade_stub,
     create_vlc_http_client_stub,
-} from '../../../../util'
+} from '../../../util'
 
 describe('VlcHttpControl service', function () {
     let vlc_http_control: VlcHttpControl

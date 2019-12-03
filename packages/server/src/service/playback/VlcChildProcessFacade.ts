@@ -1,6 +1,6 @@
 import {ChildProcessWithoutNullStreams, SpawnOptionsWithoutStdio} from 'child_process'
 
-import {new_promise} from '../../../new_promise'
+import {new_promise} from '../../new_promise'
 import {IVlcChildProcessFacade} from './VlcChildProcessFacade.interface'
 import {VlcHttpConnection} from './VlcHttpClient.interface'
 

@@ -18,6 +18,7 @@ describe('The ArgvParser', function () {
     let unhook_promise: HookPromise
 
     beforeEach(function () {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         unhook_promise = hook_std.stderr(_output => {})
     })
 

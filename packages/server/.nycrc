@@ -10,10 +10,10 @@
         ".ts"
     ],
     "include": [
-        "packages/*/src/**/*.ts"
+        "src/**/*.ts"
     ],
     "exclude": [
-        "packages/server/src/module/**/*.ts"
+        "src/module/**/*.ts"
     ],
     "require": [
         "ts-node/register",

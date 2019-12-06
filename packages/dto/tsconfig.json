@@ -1,10 +1,24 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "lib",
-    "rootDir": "src"
-  },
-  "include": [
-    "src/**/*.ts"
-  ]
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "lib",
+        "rootDir": "src",
+        "paths": {
+            "@dto": [
+                "packages/dto/src/index.ts"
+            ],
+            "@dto/*": [
+                "packages/dto/src/*"
+            ],
+            "@test": [
+                "packages/dto/test/index.ts"
+            ],
+            "@test/*": [
+                "packages/dto/test/*"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*.ts"
+    ]
 }

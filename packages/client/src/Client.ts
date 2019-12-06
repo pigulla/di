@@ -1,4 +1,3 @@
-/* eslint-disable no-dupe-class-members */
 import Axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios'
 import Bluebird from 'bluebird'
 import {
@@ -221,7 +220,6 @@ export class Client {
                 url: `/channel/${channel_key}/now_playing`,
             })
             .catch(function (error: AxiosError) {
-                // eslint-disable-next-line no-undef
                 if (error?.response?.status === NOT_FOUND) {
                     throw new ChannelNotFoundError(channel_key)
                 }

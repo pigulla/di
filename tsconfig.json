@@ -17,14 +17,54 @@
         "target": "es2017",
         "baseUrl": ".",
         "paths": {
-            "@cli": ["packages/cli/src/index.ts"],
-            "@cli/*": ["packages/cli/src/*"],
-            "@client": ["packages/client/src/index.ts"],
-            "@client/*": ["packages/client/src/*"],
-            "@dto": ["packages/dto/src/index.ts"],
-            "@dto/*": ["packages/dto/src/*"],
-            "@server": ["packages/server/src/index.ts"],
-            "@server/*": ["packages/server/src/*"]
+            "@server": [
+                "packages/server/src/index.ts"
+            ],
+            "@server/*": [
+                "packages/server/src/*"
+            ],
+            "@server-test": [
+                "packages/server/test/index.ts"
+            ],
+            "@server-test/*": [
+                "packages/server/test/*"
+            ],
+            "@client": [
+                "packages/client/src/index.ts"
+            ],
+            "@client/*": [
+                "packages/client/src/*"
+            ],
+            "@client-test": [
+                "packages/client/test/index.ts"
+            ],
+            "@client-test/*": [
+                "packages/client/test/*"
+            ],
+            "@cli": [
+                "packages/cli/src/index.ts"
+            ],
+            "@cli/*": [
+                "packages/cli/src/*"
+            ],
+            "@cli-test": [
+                "packages/cli/test/index.ts"
+            ],
+            "@cli-test/*": [
+                "packages/cli/test/*"
+            ],
+            "@dto": [
+                "packages/dto/src/index.ts"
+            ],
+            "@dto/*": [
+                "packages/dto/src/*"
+            ],
+            "@dto-test": [
+                "packages/dto/test/index.ts"
+            ],
+            "@dto-test/*": [
+                "packages/dto/test/*"
+            ]
         }
     }
 }

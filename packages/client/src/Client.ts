@@ -1,4 +1,4 @@
-import Axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios'
+import Axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios'
 import Bluebird from 'bluebird'
 import {
     FORBIDDEN,
@@ -19,7 +19,10 @@ import {
 
 import {ChannelNotFoundError, ClientError, ServerNotRunningError} from './error'
 
+type AxiosFactory = (config?: AxiosRequestConfig) => AxiosInstance
+
 export type Options = {
+    axios_factory?: AxiosFactory
     endpoint: string
 }
 
@@ -27,7 +30,7 @@ export class Client {
     private readonly axios: AxiosInstance;
 
     public constructor (options: Options) {
-        this.axios = Axios.create({
+        this.axios = (options.axios_factory || Axios.create)({
             baseURL: options.endpoint,
         })
 
@@ -40,8 +43,7 @@ export class Client {
                     throw new ServerNotRunningError()
                 }
 
-                const response: AxiosResponse = error.response
-                throw new ClientError(`Client error (${response.statusText})`, error)
+                throw new ClientError((error as AxiosError).message, error)
             },
         )
     }
@@ -203,20 +205,19 @@ export class Client {
             .get('data')
     }
 
-    private get_now_playing_on_channel (channel_key: string): Promise<NowPlayingDTO> {
-        return this
+    private async get_now_playing_on_channel (channel_key: string): Promise<NowPlayingDTO> {
+        const response = await this
             .request({
                 method: 'GET',
                 url: `/channel/${channel_key}/now_playing`,
+                validateStatus: status => [OK, NOT_FOUND].includes(status),
             })
-            .get('data')
-            .catch(function (error: AxiosError) {
-                if (error?.response?.status === NOT_FOUND) {
-                    throw new ChannelNotFoundError(channel_key)
-                }
 
-                throw error
-            })
+        if (response.status === NOT_FOUND) {
+            throw new ChannelNotFoundError(channel_key)
+        }
+
+        return response.data
     }
 
     private async get_now_playing_on_channels (): Promise<Map<string, NowPlayingDTO>> {

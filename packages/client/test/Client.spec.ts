@@ -1,6 +1,7 @@
+// import {AxiosError} from 'axios'
 import {expect} from 'chai'
 import nock from 'nock'
-import {AxiosError} from 'axios'
+import {spy, stub} from 'sinon'
 import {
     NO_CONTENT,
     INTERNAL_SERVER_ERROR, OK, NOT_FOUND, FORBIDDEN,
@@ -8,7 +9,7 @@ import {
 import {NowPlayingDTO, PlayDTO} from '@digitally-imported/dto/lib'
 
 import {Client} from '@client'
-import {ChannelNotFoundError, ClientError} from '@client/error'
+import {ChannelNotFoundError, ClientError, ServerNotRunningError} from '@client/error'
 
 describe('Client', function () {
     const URL = 'http://server.local'
@@ -18,6 +19,48 @@ describe('Client', function () {
         client = new Client({endpoint: URL})
     })
 
+    describe('has a response interceptor which', function () {
+        let interceptor: (error: any) => any
+
+        beforeEach(function () {
+            const response_interceptor_use = spy()
+            const axios_mock = stub()
+            const axios_factory = stub().returns(axios_mock)
+
+            // @ts-ignore
+            axios_mock.interceptors = {
+                response: {
+                    use: response_interceptor_use,
+                },
+            }
+
+            // eslint-disable-next-line no-new
+            new Client({endpoint: URL, axios_factory})
+            expect(response_interceptor_use).to.have.been.calledOnce
+
+            interceptor = response_interceptor_use.firstCall.args[1]
+        })
+
+        it('should detect when the server is not running', function () {
+            const error = {isAxiosError: true, code: 'ECONNREFUSED'}
+            expect(() => interceptor(error)).to.throw(ServerNotRunningError)
+        })
+
+        it('should turn Axios errors into ClientErrors', function () {
+            const error = Object.assign(new Error(), {
+                isAxiosError: true,
+                code: 'BOOM',
+            })
+
+            expect(() => interceptor(error)).to.throw(ClientError)
+        })
+
+        it('should pass through other errors', function () {
+            const error = new Error()
+            expect(() => interceptor(error)).to.throw(error)
+        })
+    })
+
     describe('when checking if the server is alive', function () {
         it('should return true if it is', async function () {
             nock(URL).head('/server').reply(NO_CONTENT)
@@ -25,19 +68,28 @@ describe('Client', function () {
             await expect(client.is_alive()).to.eventually.be.true
         })
 
-        it('should fail if an error occurred', async function () {
-            nock(URL).head('/server').reply(INTERNAL_SERVER_ERROR)
+        it('should return false if it is not', async function () {
+            nock(URL).head('/server').replyWithError({
+                isAxiosError: true,
+                code: 'ECONNREFUSED',
+            })
+
+            await expect(client.is_alive()).to.eventually.be.false
+        })
+
+        it('should let other errors bubble up', async function () {
+            const error = Object.assign(new Error(), {
+                isAxiosError: true,
+                code: 'BOOM',
+            })
+            nock(URL).head('/server').replyWithError(error)
 
             try {
                 await client.is_alive()
-            } catch (error) {
-                const client_error = error as ClientError
-                expect(client_error).to.be.instanceOf(ClientError)
-
-                const axios_error = client_error.cause as AxiosError
-                expect(axios_error.isAxiosError).to.be.true
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                expect(axios_error.response!.status).to.equal(INTERNAL_SERVER_ERROR)
+                expect.fail('Previous function should have thrown')
+            } catch (thrown_error) {
+                expect(thrown_error).to.be.instanceOf(ClientError)
+                expect(thrown_error.cause).to.equal(error)
             }
         })
     })
@@ -255,19 +307,39 @@ describe('Client', function () {
         ])
     })
 
-    it('should return the playing song', async function () {
-        const data: NowPlayingDTO = {
-            channel_id: 13,
-            channel_key: 'rave',
-            display_artist: 'The Future Sequencer',
-            display_title: 'Fade 2 Reality',
-        }
+    describe('when the currently playing song on a channel is requested', function () {
+        it('should return it', async function () {
+            const data: NowPlayingDTO = {
+                channel_id: 13,
+                channel_key: 'rave',
+                display_artist: 'The Future Sequencer',
+                display_title: 'Fade 2 Reality',
+            }
 
-        nock(URL)
-            .get('/channel/rave/now_playing')
-            .reply(OK, data)
+            nock(URL)
+                .get('/channel/rave/now_playing')
+                .reply(OK, data)
 
-        await expect(client.get_now_playing('rave'))
-            .to.eventually.deep.equal(data)
+            await expect(client.get_now_playing('rave'))
+                .to.eventually.deep.equal(data)
+        })
+
+        it('should throw if the channel does not exist', async function () {
+            nock(URL)
+                .get('/channel/rave/now_playing')
+                .reply(NOT_FOUND)
+
+            await expect(client.get_now_playing('rave'))
+                .to.eventually.be.rejectedWith(ChannelNotFoundError)
+        })
+
+        it('should let other errors bubble up', async function () {
+            nock(URL)
+                .get('/channel/rave/now_playing')
+                .reply(INTERNAL_SERVER_ERROR)
+
+            await expect(client.get_now_playing('rave'))
+                .to.eventually.be.rejectedWith(ClientError)
+        })
     })
 })

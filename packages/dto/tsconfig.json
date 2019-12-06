@@ -1,24 +1,25 @@
 {
-    "extends": "../../tsconfig.base.json",
+    "extends": "./node_modules/@digitally-imported/settings/tsconfig.json",
+    "include": [
+        "src/**/*.ts"
+    ],
     "compilerOptions": {
+        "baseUrl": ".",
         "outDir": "lib",
         "rootDir": "src",
         "paths": {
             "@dto": [
-                "packages/dto/src/index.ts"
+                "src/index.ts"
             ],
             "@dto/*": [
-                "packages/dto/src/*"
+                "src/*"
             ],
-            "@test": [
-                "packages/dto/test/index.ts"
+            "@dto-test": [
+                "test/index.ts"
             ],
-            "@test/*": [
-                "packages/dto/test/*"
+            "@dto-test/*": [
+                "test/*"
             ]
         }
-    },
-    "include": [
-        "src/**/*.ts"
-    ]
+    }
 }

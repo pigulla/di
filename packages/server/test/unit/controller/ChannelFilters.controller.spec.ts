@@ -5,7 +5,7 @@ import {expect} from 'chai'
 import {ChannelFiltersController} from '@server/controller'
 import {IChannelsProvider} from '@server/service'
 
-import {create_channels_provider_stub, prebuilt_channel_filter} from '../../util'
+import {create_channels_provider_stub, prebuilt_channel_filter} from '@test/util'
 
 const {ambient, bass, deep} = prebuilt_channel_filter
 

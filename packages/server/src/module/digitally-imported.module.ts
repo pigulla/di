@@ -7,7 +7,7 @@ import {
     IDigitallyImported, DigitallyImported,
     INowPlayingProvider, NowPlayingProvider,
     IPeriodicTrigger, PeriodicTrigger,
-} from '@server/service/'
+} from '@server/service'
 import {ILogger} from '@server/service/logger'
 import {UtilityModule} from './utility.module'
 

@@ -1,6 +1,6 @@
+import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
-import {Test} from '@nestjs/testing'
 
 import {ChannelsProvider, IAppDataProvider} from '@server/service'
 import {AppData} from '@server/service/di'

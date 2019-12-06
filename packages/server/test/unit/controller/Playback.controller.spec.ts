@@ -1,7 +1,7 @@
-import {SinonStubbedInstance} from 'sinon'
-import {Test} from '@nestjs/testing'
 import {NotFoundException} from '@nestjs/common'
+import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
+import {SinonStubbedInstance} from 'sinon'
 
 import {PlaybackController} from '@server/controller'
 import {IChannelsProvider, IConfigProvider, INowPlayingProvider, IPlaybackControl} from '@server/service'

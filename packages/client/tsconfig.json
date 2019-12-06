@@ -1,24 +1,26 @@
 {
-    "extends": "../../tsconfig.base.json",
+    "extends": "../settings/tsconfig.json",
+    "include": [
+        "src/**/*.ts",
+        "test/**/*.ts"
+    ],
     "compilerOptions": {
+        "baseUrl": ".",
         "outDir": "lib",
-        "rootDir": "src",
+        "rootDir": ".",
         "paths": {
             "@client": [
-                "packages/client/src/index.ts"
+                "src/index.ts"
             ],
             "@client/*": [
-                "packages/client/src/*"
+                "src/*"
             ],
-            "@test": [
-                "packages/client/test/index.ts"
+            "@client-test": [
+                "test/index.ts"
             ],
-            "@test/*": [
-                "packages/client/test/*"
+            "@client-test/*": [
+                "test/*"
             ]
         }
-    },
-    "include": [
-        "src/**/*.ts"
-    ]
+    }
 }

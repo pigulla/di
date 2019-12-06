@@ -1,10 +1,10 @@
-import dayjs from 'dayjs'
-import {SinonStubbedInstance} from 'sinon'
 import {HttpStatus} from '@nestjs/common'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
+import dayjs from 'dayjs'
 import {mockResponse} from 'mock-req-res'
 import {NormalizedPackageJson} from 'read-pkg'
+import {SinonStubbedInstance} from 'sinon'
 import {JsonObject} from 'type-fest'
 
 import {ServerController} from '@server/controller'

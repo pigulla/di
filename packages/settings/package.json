@@ -1,0 +1,19 @@
+{
+  "name": "@digitally-imported/settings",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'Not implemented'",
+    "test": "echo 'Not implemented'"
+  },
+  "author": "Raphael Pigulla <pigulla@four66.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/parser": "^2.10.0",
+    "eslint": "^6.7.2",
+    "eslint-config-standard": "^14.1.0",
+    "nock": "^11.7.0",
+    "typescript": "^3.7.3"
+  }
+}

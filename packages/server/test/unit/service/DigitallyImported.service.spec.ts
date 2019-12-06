@@ -1,13 +1,13 @@
-import dayjs from 'dayjs'
-import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
+import dayjs from 'dayjs'
+import {SinonStubbedInstance} from 'sinon'
 
 import {DigitallyImported, IConfigProvider, DigitallyImportedError} from '@server/service'
 import {Channel, ChannelFilter, NowPlaying} from '@server/service/di'
 
-import {create_config_provider_stub, create_logger_stub} from '../../util'
-import {load_nock_recording, RecordingName} from '../../util/load_nock_recording'
+import {create_config_provider_stub, create_logger_stub} from '@test/util'
+import {load_nock_recording, RecordingName} from '@test/util/load_nock_recording'
 
 describe('DigitallyImported service', function () {
     let config_provider: SinonStubbedInstance<IConfigProvider>

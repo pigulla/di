@@ -1,24 +1,25 @@
 {
-    "extends": "../../tsconfig.base.json",
+    "extends": "./node_modules/@digitally-imported/settings/tsconfig",
+    "include": [
+        "src/**/*.ts"
+    ],
     "compilerOptions": {
+        "baseUrl": ".",
         "outDir": "lib",
         "rootDir": "src",
         "paths": {
             "@cli": [
-                "packages/cli/src/index.ts"
+                "src/index.ts"
             ],
             "@cli/*": [
-                "packages/cli/src/*"
+                "src/*"
             ],
             "@test": [
-                "packages/cli/test/index.ts"
+                "test/index.ts"
             ],
             "@test/*": [
-                "packages/cli/test/*"
+                "test/*"
             ]
         }
-    },
-    "include": [
-        "src/**/*.ts"
-    ]
+    }
 }

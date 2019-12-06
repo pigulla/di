@@ -1,0 +1,6 @@
+{
+    "extends": "./node_modules/@digitally-imported/settings/.nycrc",
+    "include": [
+        "src/**/*.ts"
+    ]
+}

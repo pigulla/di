@@ -1,13 +1,13 @@
+import {Test} from '@nestjs/testing'
+import {expect} from 'chai'
 import dayjs from 'dayjs'
 import mockdate from 'mockdate'
 import {spy, SinonStubbedInstance, stub} from 'sinon'
-import {Test} from '@nestjs/testing'
-import {expect} from 'chai'
 
 import {DigitallyImported, AppDataProvider} from '@server/service'
 import {AppData} from '@server/service/di'
 
-import {create_logger_stub, create_digitally_imported_stub, AppDataBuilder} from '../../util'
+import {create_logger_stub, create_digitally_imported_stub, AppDataBuilder} from '@test/util'
 
 describe('AppDataProvider service', function () {
     let app_data_provider: AppDataProvider

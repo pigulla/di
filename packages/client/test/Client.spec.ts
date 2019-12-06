@@ -1,7 +1,273 @@
 import {expect} from 'chai'
+import nock from 'nock'
+import {AxiosError} from 'axios'
+import {
+    NO_CONTENT,
+    INTERNAL_SERVER_ERROR, OK, NOT_FOUND, FORBIDDEN,
+} from 'http-status-codes'
+import {NowPlayingDTO, PlayDTO} from '@digitally-imported/dto/lib'
+
+import {Client} from '@client'
+import {ChannelNotFoundError, ClientError} from '@client/error'
 
 describe('Client', function () {
-    it('should check if the server is alive', function () {
-        expect(2 + 2).to.equal(4)
+    const URL = 'http://server.local'
+    let client: Client
+
+    beforeEach(function () {
+        client = new Client({endpoint: URL})
+    })
+
+    describe('when checking if the server is alive', function () {
+        it('should return true if it is', async function () {
+            nock(URL).head('/server').reply(NO_CONTENT)
+
+            await expect(client.is_alive()).to.eventually.be.true
+        })
+
+        it('should fail if an error occurred', async function () {
+            nock(URL).head('/server').reply(INTERNAL_SERVER_ERROR)
+
+            try {
+                await client.is_alive()
+            } catch (error) {
+                const client_error = error as ClientError
+                expect(client_error).to.be.instanceOf(ClientError)
+
+                const axios_error = client_error.cause as AxiosError
+                expect(axios_error.isAxiosError).to.be.true
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                expect(axios_error.response!.status).to.equal(INTERNAL_SERVER_ERROR)
+            }
+        })
+    })
+
+    it('should shut down the server', async function () {
+        nock(URL).delete('/server').reply(NO_CONTENT)
+
+        await expect(client.shutdown()).to.eventually.be.undefined
+    })
+
+    it('should return the server status', async function () {
+        const data = {
+            foo: 42,
+            bar: ['baz'],
+        }
+        nock(URL).get('/server').reply(OK, data)
+
+        await expect(client.get_server_status()).to.eventually.deep.equal(data)
+    })
+
+    it('should trigger a server update', async function () {
+        nock(URL).put('/server/update').reply(NO_CONTENT)
+
+        await expect(client.update()).to.eventually.be.undefined
+    })
+
+    it('should set the volume', async function () {
+        nock(URL)
+            .put('/volume', {volume: 42})
+            .reply(NO_CONTENT)
+
+        await expect(client.set_volume(42)).to.eventually.be.undefined
+    })
+
+    it('should get the volume', async function () {
+        nock(URL)
+            .get('/volume')
+            .reply(OK, {volume: 42})
+
+        await expect(client.get_volume()).to.eventually.equal(42)
+    })
+
+    describe('when checking if something is playing', function () {
+        it('should return true if there is', async function () {
+            nock(URL)
+                .head('/playback')
+                .reply(NO_CONTENT)
+
+            await expect(client.is_playing()).to.eventually.be.true
+        })
+
+        it('should return false if there is not', async function () {
+            nock(URL)
+                .head('/playback')
+                .reply(NOT_FOUND)
+
+            await expect(client.is_playing()).to.eventually.be.false
+        })
+    })
+
+    describe('when playback is started', function () {
+        it('should do so', async function () {
+            nock(URL)
+                .put('/playback', {channel: 'progressive'})
+                .reply(NO_CONTENT)
+
+            await expect(client.start_playback('progressive')).to.eventually.be.undefined
+        })
+
+        it('should fail if the channel does not exist', async function () {
+            const body: PlayDTO = {channel: 'progressive'}
+            nock(URL)
+                .put('/playback', body as {[key: string]: any})
+                .reply(NOT_FOUND)
+
+            await expect(client.start_playback('progressive'))
+                .to.eventually.be.rejectedWith(ChannelNotFoundError)
+        })
+
+        it('should let other errors bubble up', async function () {
+            nock(URL)
+                .put('/playback', {channel: 'progressive'})
+                .reply(INTERNAL_SERVER_ERROR)
+
+            await expect(client.start_playback('progressive'))
+                .to.eventually.be.rejectedWith(ClientError)
+        })
+    })
+
+    it('should stop the playback', async function () {
+        nock(URL).delete('/playback').reply(NO_CONTENT)
+
+        await expect(client.stop_playback()).to.eventually.be.undefined
+    })
+
+    describe('when the playback state is checked', async function () {
+        it('should return the state', async function () {
+            const data = {
+                foo: 42,
+                bar: ['baz'],
+            }
+
+            nock(URL)
+                .get('/playback')
+                .reply(OK, data)
+
+            await expect(client.get_playback_state()).to.eventually.deep.equal(data)
+        })
+
+        it('should return null if nothing is playing', async function () {
+            nock(URL)
+                .get('/playback')
+                .reply(NOT_FOUND)
+
+            await expect(client.get_playback_state()).to.eventually.be.null
+        })
+    })
+
+    describe('when the favorites are requested', function () {
+        it('should return null if unavailable', async function () {
+            nock(URL)
+                .get('/favorites')
+                .reply(FORBIDDEN)
+
+            await expect(client.get_favorites()).to.eventually.be.null
+        })
+
+        it('should return them', async function () {
+            const data = ['foo', 'bar']
+
+            nock(URL)
+                .get('/favorites')
+                .reply(OK, data)
+
+            await expect(client.get_favorites()).to.eventually.deep.equal(data)
+        })
+    })
+
+    it('should return the channels', async function () {
+        const data = ['foo', 'bar']
+
+        nock(URL)
+            .get('/channels')
+            .reply(OK, data)
+
+        await expect(client.get_channels()).to.eventually.deep.equal(data)
+    })
+
+    describe('when a channel is requested', function () {
+        it('should return it', async function () {
+            const data = {
+                foo: 42,
+                bar: ['baz'],
+            }
+
+            nock(URL)
+                .get('/channel/progressive')
+                .reply(OK, data)
+
+            await expect(client.get_channel('progressive')).to.eventually.deep.equal(data)
+        })
+
+        it('should throw if does not exist', async function () {
+            nock(URL)
+                .get('/channel/progressive')
+                .reply(NOT_FOUND)
+
+            await expect(client.get_channel('progressive')).to.eventually.be.rejectedWith(ChannelNotFoundError)
+        })
+
+        it('should let other errors bubble up', async function () {
+            nock(URL)
+                .get('/channel/progressive')
+                .reply(INTERNAL_SERVER_ERROR)
+
+            await expect(client.get_channel('progressive'))
+                .to.eventually.be.rejectedWith(ClientError)
+        })
+    })
+
+    it('should return the channel filters', async function () {
+        const data = ['foo', 'bar']
+
+        nock(URL)
+            .get('/channelfilters')
+            .reply(OK, data)
+
+        await expect(client.get_channel_filters()).to.eventually.deep.equal(data)
+    })
+
+    it('should return all playing songs', async function () {
+        const data: NowPlayingDTO[] = [
+            {
+                channel_id: 42,
+                channel_key: 'progressive',
+                display_artist: 'Hairy Potter',
+                display_title: 'Foobar Bambaz',
+            },
+            {
+                channel_id: 13,
+                channel_key: 'rave',
+                display_artist: 'The Future Sequencer',
+                display_title: 'Fade 2 Reality',
+            },
+        ]
+
+        nock(URL)
+            .get('/channels/now_playing')
+            .reply(OK, data)
+
+        const result = await client.get_now_playing()
+        expect([...result.entries()]).to.deep.equal([
+            [data[0].channel_key, data[0]],
+            [data[1].channel_key, data[1]],
+        ])
+    })
+
+    it('should return the playing song', async function () {
+        const data: NowPlayingDTO = {
+            channel_id: 13,
+            channel_key: 'rave',
+            display_artist: 'The Future Sequencer',
+            display_title: 'Fade 2 Reality',
+        }
+
+        nock(URL)
+            .get('/channel/rave/now_playing')
+            .reply(OK, data)
+
+        await expect(client.get_now_playing('rave'))
+            .to.eventually.deep.equal(data)
     })
 })

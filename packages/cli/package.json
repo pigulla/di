@@ -2,6 +2,16 @@
   "name": "@digitally-imported/cli",
   "version": "0.0.1",
   "author": "Raphael Pigulla <pigulla@four66.com>",
+  "scripts": {
+    "test": "tsc --noEmit && npm run lint && npm run mocha && npm audit",
+    "lint": "eslint --ext=.ts '**/*.ts'",
+    "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
+    "postpack": "rm -f oclif.manifest.json",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
+    "depcheck": "depcheck --ignores='tslib'",
+    "version": "oclif-dev readme && git add README.md"
+  },
   "bin": {
     "di": "./bin/run"
   },
@@ -20,6 +30,7 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
+    "@digitally-imported/settings": "file:../settings",
     "@istanbuljs/nyc-config-typescript": "^0.1.3",
     "@oclif/dev-cli": "^1.22.2",
     "@types/chai": "^4.2.6",
@@ -29,10 +40,19 @@
     "@types/node": "^12.12.14",
     "@types/sinon": "^7.5.1",
     "@types/sinon-chai": "^3.2.3",
+    "@typescript-eslint/eslint-plugin": "^2.10.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "depcheck": "^0.9.1",
+    "er": "^0.2.0",
+    "eslint": "^6.7.2",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "mocha": "^6.2.2",
+    "nock": "^11.7.0",
     "nyc": "^14.1.1",
     "sinon": "^7.5.0",
     "sinon-chai": "^3.3.0",
@@ -63,15 +83,5 @@
     ]
   },
   "repository": "pigulla/cli",
-  "scripts": {
-    "test": "tsc --noEmit && npm run lint && npm run mocha && npm audit",
-    "lint": "../../node_modules/.bin/eslint --ext=.ts '**/*.ts'",
-    "build": "echo NOT IMPLEMENTED",
-    "postpack": "rm -f oclif.manifest.json",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
-    "mocha": "echo 'No tests yet :('",
-    "depcheck": "depcheck --ignores='tslib'",
-    "version": "oclif-dev readme && git add README.md"
-  },
   "types": "lib/index.d.ts"
 }

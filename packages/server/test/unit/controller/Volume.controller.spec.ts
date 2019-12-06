@@ -1,11 +1,11 @@
-import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
+import {SinonStubbedInstance} from 'sinon'
 
 import {VolumeController} from '@server/controller'
 import {IPlaybackControl} from '@server/service'
 
-import {create_playback_control_stub} from '../../util'
+import {create_playback_control_stub} from '@test/util'
 
 describe('Volume controller', function () {
     let controller: VolumeController

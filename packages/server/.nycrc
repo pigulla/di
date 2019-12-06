@@ -1,23 +1,9 @@
 {
-    "extends": "@istanbuljs/nyc-config-typescript",
-    "reporter": [
-        "html",
-        "text",
-        "lcov"
-    ],
-    "all": true,
-    "extension": [
-        ".ts"
-    ],
+    "extends": "./node_modules/@digitally-imported/settings/.nycrc",
     "include": [
         "src/**/*.ts"
     ],
     "exclude": [
         "src/module/**/*.ts"
-    ],
-    "require": [
-        "ts-node/register",
-        "source-map-support/register"
-    ],
-    "cache": false
+    ]
 }

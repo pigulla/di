@@ -5,7 +5,7 @@ import {Module} from '@nestjs/common'
 import get_port from 'get-port'
 
 import {UtilityModule} from './utility.module'
-import {VlcChildProcessFacade, VlcHttpControl, VlcHttpClient, VlcHttpConnection} from '@server/service/playback/'
+import {VlcChildProcessFacade, VlcHttpControl, VlcHttpClient, VlcHttpConnection} from '@server/service/playback'
 import {IConfigProvider} from '@server/service'
 
 @Module({

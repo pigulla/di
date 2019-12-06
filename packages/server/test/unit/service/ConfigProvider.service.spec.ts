@@ -1,6 +1,6 @@
+import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStub, stub} from 'sinon'
-import {Test} from '@nestjs/testing'
 
 import {ConfigProvider} from '@server/service'
 import {ApplicationOptions} from '@server/service/config'

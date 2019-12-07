@@ -9,6 +9,9 @@
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "devDependencies": {
     "@typescript-eslint/parser": "^2.10.0",
     "eslint": "^6.7.2",

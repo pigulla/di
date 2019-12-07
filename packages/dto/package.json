@@ -13,6 +13,9 @@
   "keywords": [],
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "dependencies": {
     "tslib": "^1.10.0"
   },

@@ -13,6 +13,9 @@
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "devDependencies": {
     "@digitally-imported/settings": "file:../settings",
     "@istanbuljs/nyc-config-typescript": "^0.1.3",

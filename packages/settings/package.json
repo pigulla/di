@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "setup": "echo 'Not implemented'",
     "build": "echo 'Not implemented'",
     "test": "echo 'Not implemented'"
   },
@@ -18,5 +19,6 @@
     "eslint-config-standard": "^14.1.0",
     "nock": "^11.7.0",
     "typescript": "^3.7.3"
-  }
+  },
+  "dependencies": {}
 }

@@ -4,11 +4,11 @@
   "description": "",
   "main": "lib/main.js",
   "scripts": {
-    "test": "tsc --noEmit && npm run lint && npm run mocha && npm run depcheck && npm audit",
+    "setup": "npm ci && npm run build",
+    "test": "tsc --noEmit && npm run lint && npm run mocha",
     "lint": "eslint --ext=.ts '**/*.ts'",
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
     "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
-    "depcheck": "depcheck --skip-missing --ignores '@types/*,eslint-*,@digitally-imported/settings,@istanbuljs/nyc-config-typescript,ts-node,tsconfig-paths,@typescript-eslint/eslint-plugin,pino-pretty,class-transformer,@nestjs/platform-express'",
     "start:dev": "ts-node -r tsconfig-paths/register src/main.ts"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
@@ -17,7 +17,7 @@
     "node": ">=10.0.0"
   },
   "devDependencies": {
-    "@digitally-imported/settings": "file:../settings",
+    "@digitally-imported/settings": "^0.0.1",
     "@istanbuljs/nyc-config-typescript": "^0.1.3",
     "@nestjs/testing": "^6.10.7",
     "@types/bluebird": "^3.5.29",
@@ -42,7 +42,6 @@
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "depcheck": "^0.9.1",
     "eslint": "^6.7.2",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
@@ -65,7 +64,7 @@
     "typescript": "^3.7.3"
   },
   "dependencies": {
-    "@digitally-imported/dto": "file:../dto",
+    "@digitally-imported/dto": "^0.0.1",
     "@nestjs/common": "^6.10.7",
     "@nestjs/core": "^6.10.7",
     "@nestjs/platform-express": "^6.10.7",

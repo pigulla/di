@@ -3,8 +3,8 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {FavoritesController} from '@server/controller'
-import {CredentialsUnavailableError, IFavoritesProvider} from '@server/service'
+import {FavoritesController} from '@src/controller'
+import {CredentialsUnavailableError, IFavoritesProvider} from '@src/service'
 
 import {create_favorites_provider_stub, prebuilt_channel} from '@test/util'
 

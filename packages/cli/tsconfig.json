@@ -1,17 +1,18 @@
 {
     "extends": "./node_modules/@digitally-imported/settings/tsconfig",
     "include": [
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "test/**/*.ts"
     ],
     "compilerOptions": {
         "baseUrl": ".",
         "outDir": "lib",
-        "rootDir": "src",
+        "rootDir": ".",
         "paths": {
-            "@cli": [
+            "@src": [
                 "src/index.ts"
             ],
-            "@cli/*": [
+            "@src/*": [
                 "src/*"
             ],
             "@test": [

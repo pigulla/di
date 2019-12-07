@@ -8,7 +8,7 @@ import {
     IChannelsProvider,
     FavoritesProvider,
     CredentialsUnavailableError,
-} from '@server/service'
+} from '@src/service'
 
 import {
     create_logger_stub,

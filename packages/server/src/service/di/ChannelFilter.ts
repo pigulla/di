@@ -21,7 +21,7 @@ export class ChannelFilter {
     ) {}
 
     public to_dto (): ChannelFilterDTO {
-        return new ChannelFilterDTO({
+        return ChannelFilterDTO.create({
             channels: Array.from(this.channels),
             id: this.id,
             key: this.key,

@@ -1,17 +1,18 @@
 {
     "extends": "./node_modules/@digitally-imported/settings/tsconfig.json",
     "include": [
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "test/**/*.ts"
     ],
     "compilerOptions": {
         "baseUrl": ".",
         "outDir": "lib",
-        "rootDir": "src",
+        "rootDir": ".",
         "paths": {
-            "@server": [
+            "@src": [
                 "src/index.ts"
             ],
-            "@server/*": [
+            "@src/*": [
                 "src/*"
             ],
             "@test": [

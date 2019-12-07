@@ -3,8 +3,8 @@ import {expect} from 'chai'
 import dayjs from 'dayjs'
 import {SinonStubbedInstance} from 'sinon'
 
-import {DigitallyImported, IConfigProvider, DigitallyImportedError} from '@server/service'
-import {Channel, ChannelFilter, NowPlaying} from '@server/service/di'
+import {DigitallyImported, IConfigProvider, DigitallyImportedError} from '@src/service'
+import {Channel, ChannelFilter, NowPlaying} from '@src/service/di'
 
 import {create_config_provider_stub, create_logger_stub} from '@test/util'
 import {load_nock_recording, RecordingName} from '@test/util/load_nock_recording'

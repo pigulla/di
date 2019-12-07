@@ -1,6 +1,6 @@
 import {expect} from 'chai'
 
-import {new_promise} from '@server/new_promise'
+import {new_promise} from '@src/new_promise'
 
 describe('The new_promise function', function () {
     it('should return the resolver', async function () {

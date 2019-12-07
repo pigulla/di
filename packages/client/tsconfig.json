@@ -9,16 +9,16 @@
         "outDir": "lib",
         "rootDir": ".",
         "paths": {
-            "@client": [
+            "@src": [
                 "src/index.ts"
             ],
-            "@client/*": [
+            "@src/*": [
                 "src/*"
             ],
-            "@client-test": [
+            "@test": [
                 "test/index.ts"
             ],
-            "@client-test/*": [
+            "@test/*": [
                 "test/*"
             ]
         }

@@ -2,8 +2,8 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {VolumeController} from '@server/controller'
-import {IPlaybackControl} from '@server/service'
+import {VolumeController} from '@src/controller'
+import {IPlaybackControl} from '@src/service'
 
 import {create_playback_control_stub} from '@test/util'
 

@@ -2,8 +2,8 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {ChannelsProvider, IAppDataProvider} from '@server/service'
-import {AppData} from '@server/service/di'
+import {ChannelsProvider, IAppDataProvider} from '@src/service'
+import {AppData} from '@src/service/di'
 
 import {
     create_logger_stub,

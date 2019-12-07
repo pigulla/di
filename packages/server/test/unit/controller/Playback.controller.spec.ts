@@ -3,9 +3,9 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {PlaybackController} from '@server/controller'
-import {IChannelsProvider, IConfigProvider, INowPlayingProvider, IPlaybackControl} from '@server/service'
-import {Quality} from '@server/service/di'
+import {PlaybackController} from '@src/controller'
+import {IChannelsProvider, IConfigProvider, INowPlayingProvider, IPlaybackControl} from '@src/service'
+import {Quality} from '@src/service/di'
 
 import {
     ChannelBuilder,

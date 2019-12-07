@@ -7,7 +7,6 @@
   "scripts": {
     "outdated": "npm outdated; lerna exec --no-bail 'npm outdated'",
     "build": "lerna run build",
-    "depcheck": "lerna run --no-bail depcheck",
     "setup": "rm -rf node_modules && npm install && lerna exec 'rm -rf node_modules' && lerna exec 'npm install'",
     "test": "lerna run build && lerna run test",
     "interactive-integration-test": "ts-node --require tsconfig-paths/register test/interactive-integration.spec.ts"

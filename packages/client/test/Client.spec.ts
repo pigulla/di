@@ -1,15 +1,11 @@
-// import {AxiosError} from 'axios'
 import {expect} from 'chai'
 import nock from 'nock'
 import {spy, stub} from 'sinon'
-import {
-    NO_CONTENT,
-    INTERNAL_SERVER_ERROR, OK, NOT_FOUND, FORBIDDEN,
-} from 'http-status-codes'
+import {NO_CONTENT, INTERNAL_SERVER_ERROR, OK, NOT_FOUND, FORBIDDEN} from 'http-status-codes'
 import {NowPlayingDTO, PlayDTO} from '@digitally-imported/dto/lib'
 
-import {Client} from '@client'
-import {ChannelNotFoundError, ClientError, ServerNotRunningError} from '@client/error'
+import {Client} from '@src'
+import {ChannelNotFoundError, ClientError, ServerNotRunningError} from '@src/error'
 
 describe('Client', function () {
     const URL = 'http://server.local'

@@ -1,7 +1,7 @@
 import {expect} from 'chai'
 import {Logger as Pino} from 'pino'
 
-import {PinoLogger} from '@server/service/logger'
+import {PinoLogger} from '@src/service/logger'
 
 import {create_pino_stub, PinoStub} from '@test/util/stub'
 

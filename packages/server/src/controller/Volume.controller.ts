@@ -9,7 +9,7 @@ import {
     Put,
 } from '@nestjs/common'
 
-import {IPlaybackControl} from '@server/service'
+import {IPlaybackControl} from '@src/service'
 
 export class VolumeDTO {
     @IsNumber()

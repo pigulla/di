@@ -4,8 +4,8 @@ import dayjs from 'dayjs'
 import mockdate from 'mockdate'
 import {spy, SinonStubbedInstance, stub} from 'sinon'
 
-import {DigitallyImported, AppDataProvider} from '@server/service'
-import {AppData} from '@server/service/di'
+import {DigitallyImported, AppDataProvider} from '@src/service'
+import {AppData} from '@src/service/di'
 
 import {create_logger_stub, create_digitally_imported_stub, AppDataBuilder} from '@test/util'
 

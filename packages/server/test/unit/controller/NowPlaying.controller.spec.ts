@@ -3,8 +3,8 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {NowPlayingController} from '@server/controller'
-import {INowPlayingProvider} from '@server/service'
+import {NowPlayingController} from '@src/controller'
+import {INowPlayingProvider} from '@src/service'
 
 import {
     create_now_playing_provider_stub,

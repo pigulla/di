@@ -1,23 +1,24 @@
 {
     "extends": "./node_modules/@digitally-imported/settings/tsconfig.json",
     "include": [
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "test/**/*.ts"
     ],
     "compilerOptions": {
         "baseUrl": ".",
         "outDir": "lib",
-        "rootDir": "src",
+        "rootDir": ".",
         "paths": {
-            "@dto": [
+            "@src": [
                 "src/index.ts"
             ],
-            "@dto/*": [
+            "@src/*": [
                 "src/*"
             ],
-            "@dto-test": [
+            "@test": [
                 "test/index.ts"
             ],
-            "@dto-test/*": [
+            "@test/*": [
                 "test/*"
             ]
         }

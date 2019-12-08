@@ -8,7 +8,8 @@
     "lint": "eslint --ext=.ts '**/*.ts'",
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
     "clean": "rm -rf node_modules && rm -rf lib",
-    "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'"
+    "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
+    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -f ./coverage/lcov.info -F client'"
   },
   "keywords": [],
   "author": "Raphael Pigulla <pigulla@four66.com>",

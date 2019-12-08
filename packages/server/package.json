@@ -4,8 +4,7 @@
   "description": "",
   "main": "lib/main.js",
   "scripts": {
-    "setup": "npm ci && npm run build",
-    "test": "tsc --noEmit && npm run lint && npm run mocha",
+    "test": "tsc --noEmit && yarn run lint && yarn run mocha",
     "lint": "eslint --ext=.ts '**/*.ts'",
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
     "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",

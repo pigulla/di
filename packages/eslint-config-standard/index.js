@@ -1,4 +1,4 @@
-{
+module.exports = {
     "extends": [
         "standard",
         "plugin:@typescript-eslint/recommended"

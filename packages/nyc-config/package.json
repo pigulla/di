@@ -1,5 +1,5 @@
 {
-  "name": "@digitally-imported/settings",
+  "name": "@digitally-imported/nyc-config",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -12,9 +12,6 @@
   "engines": {
     "node": ">=10.0.0"
   },
-  "devDependencies": {
-    "nock": "^11.7.0",
-    "typescript": "^3.7.3"
-  },
+  "devDependencies": {},
   "dependencies": {}
 }

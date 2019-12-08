@@ -1,5 +1,5 @@
 {
-    "extends": "../settings/tsconfig.json",
+    "extends": "@digitally-imported/settings/tsconfig.json",
     "include": [
         "src/**/*.ts",
         "test/**/*.ts"

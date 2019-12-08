@@ -3,9 +3,8 @@
   "version": "0.0.1",
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "scripts": {
-    "setup": "npm ci && npm run build",
     "lint": "eslint --ext=.ts '**/*.ts'",
-    "test": "tsc --noEmit && npm run lint && npm run mocha",
+    "test": "tsc --noEmit && yarn run lint && yarn run mocha",
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
     "postpack": "rm -f oclif.manifest.json",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",

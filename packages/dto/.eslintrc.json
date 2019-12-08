@@ -1,5 +1,5 @@
 {
-    "extends": "./node_modules/@digitally-imported/settings/.eslintrc",
+    "extends": "@digitally-imported/eslint-config-standard",
     "rules": {
         "@typescript-eslint/explicit-member-accessibility": "off"
     }

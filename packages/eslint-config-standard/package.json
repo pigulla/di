@@ -1,5 +1,5 @@
 {
-  "name": "@digitally-imported/settings",
+  "name": "@digitally-imported/eslint-config-standard",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -13,8 +13,9 @@
     "node": ">=10.0.0"
   },
   "devDependencies": {
-    "nock": "^11.7.0",
-    "typescript": "^3.7.3"
+    "@typescript-eslint/parser": "^2.10.0",
+    "eslint": "^6.7.2",
+    "eslint-config-standard": "^14.1.0"
   },
   "dependencies": {}
 }

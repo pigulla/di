@@ -17,7 +17,8 @@
     "compile:dto": "yarn workspace @digitally-imported/dto run build",
     "compile:integration-test": "yarn workspace @digitally-imported/integration-test run build",
     "compile:server": "yarn workspace @digitally-imported/server run build",
-    "test": "yarn run compile && lerna run test && yarn audit"
+    "test": "yarn run compile && lerna run test && yarn audit",
+    "codecov": "lerna run codecov"
   },
   "devDependencies": {
     "lerna": "^3.19.0"

@@ -9,7 +9,8 @@
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
     "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
     "clean": "rm -rf node_modules && rm -rf lib",
-    "start:dev": "ts-node -r tsconfig-paths/register src/main.ts"
+    "start:dev": "ts-node -r tsconfig-paths/register src/main.ts",
+    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -f ./coverage/lcov.info -F server'"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "license": "MIT",

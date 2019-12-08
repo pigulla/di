@@ -9,3 +9,4 @@ node_js:
   - "11"
   - "10"
 install: yarn run setup
+after_script: yarn run codecov

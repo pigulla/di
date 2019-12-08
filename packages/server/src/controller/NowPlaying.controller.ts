@@ -8,7 +8,7 @@ import {
 
 import {NowPlayingDTO} from '@digitally-imported/dto'
 
-import {INowPlayingProvider} from '@server/service'
+import {INowPlayingProvider} from '../service'
 
 @Controller()
 export class NowPlayingController {

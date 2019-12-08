@@ -1,6 +1,6 @@
+import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
-import {Test} from '@nestjs/testing'
 
 import {
     IDigitallyImported,
@@ -8,7 +8,7 @@ import {
     IChannelsProvider,
     FavoritesProvider,
     CredentialsUnavailableError,
-} from '@server/service'
+} from '@src/service'
 
 import {
     create_logger_stub,
@@ -16,7 +16,7 @@ import {
     create_config_provider_stub,
     create_digitally_imported_stub,
     prebuilt_channel,
-} from '../../util'
+} from '@test/util'
 
 const {progressive, classictechno} = prebuilt_channel
 

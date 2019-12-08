@@ -1,10 +1,10 @@
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
-import {NowPlayingProvider} from '@server/service'
-import {NowPlaying} from '@server/service/di'
+import {NowPlayingProvider} from '@src/service'
+import {NowPlaying} from '@src/service/di'
 
-import {create_logger_stub, NowPlayingBuilder, prebuilt_channel} from '../../util'
+import {create_logger_stub, NowPlayingBuilder, prebuilt_channel} from '@test/util'
 
 const {progressive, vocaltrance, classictechno} = prebuilt_channel
 

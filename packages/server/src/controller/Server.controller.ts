@@ -4,7 +4,7 @@ import {Response} from 'express'
 
 import {ServerStatusDTO} from '@digitally-imported/dto'
 
-import {IAppDataProvider, IPlaybackControl, IServerProcessProxy} from '@server/service'
+import {IAppDataProvider, IPlaybackControl, IServerProcessProxy} from '../service'
 
 @Controller('/server')
 export class ServerController {

@@ -1,6 +1,6 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IServerProcessProxy} from '@server/service'
+import {IServerProcessProxy} from '@src/service'
 
 export function create_server_process_proxy_stub (): SinonStubbedInstance<IServerProcessProxy> {
     return {

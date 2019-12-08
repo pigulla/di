@@ -1,8 +1,8 @@
 import {expect} from 'chai'
 import hook_std, {HookPromise} from 'hook-std'
 
-import {create_argv_parser, IArgvParser} from '@server/service/config'
-import {Quality} from '@server/service/di'
+import {create_argv_parser, IArgvParser} from '@src/service/config'
+import {Quality} from '@src/service/di'
 
 function expect_yargs_error (cb: Function, message: RegExp): void {
     try {

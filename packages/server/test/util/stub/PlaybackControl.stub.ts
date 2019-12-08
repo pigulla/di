@@ -1,6 +1,6 @@
 import {stub, SinonStubbedInstance} from 'sinon'
 
-import {IPlaybackControl} from '@server/service'
+import {IPlaybackControl} from '@src/service'
 
 export function create_playback_control_stub (): SinonStubbedInstance<IPlaybackControl> {
     return {

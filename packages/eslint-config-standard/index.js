@@ -1,4 +1,4 @@
-{
+module.exports = {
     "extends": [
         "standard",
         "plugin:@typescript-eslint/recommended"
@@ -92,67 +92,12 @@
     },
     "overrides": [
         {
-            "files": [
-                "packages/*/test/**/*"
-            ],
-            "env": {
-                "mocha": true
-            }
-        },
-        {
-            "files": [
-                "packages/*/test/**/*.spec.ts"
-            ],
+            "files": ["test/**/*"],
             "rules": {
                 "no-unused-expressions": "off"
-            }
-        },
-        {
-            "files": ["packages/cli/**/*"],
-            "rules": {
-                "no-restricted-imports": [
-                    "error",
-                    {
-                        "paths": ["@client", "@dto", "@server"],
-                        "patterns": ["@client/*", "@dto/*", "@server/*"]
-                    }
-                ]
-            }
-        },
-        {
-            "files": ["packages/client/**/*"],
-            "rules": {
-                "no-restricted-imports": [
-                    "error",
-                    {
-                        "paths": ["@cli", "@dto", "@server"],
-                        "patterns": ["@cli/*", "@dto/*", "@server/*"]
-                    }
-                ]
-            }
-        },
-        {
-            "files": ["packages/dto/**/*"],
-            "rules": {
-                "no-restricted-imports": [
-                    "error",
-                    {
-                        "paths": ["@cli", "@client", "@server"],
-                        "patterns": ["@cli/*", "@client/*", "@server/*"]
-                    }
-                ]
-            }
-        },
-        {
-            "files": ["packages/server/**/*"],
-            "rules": {
-                "no-restricted-imports": [
-                    "error",
-                    {
-                        "paths": ["@cli", "@client", "@dto"],
-                        "patterns": ["@cli/*", "@client/*", "@dto/*"]
-                    }
-                ]
+            },
+            "env": {
+                "mocha": true
             }
         }
     ]

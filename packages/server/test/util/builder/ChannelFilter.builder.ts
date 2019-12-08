@@ -1,4 +1,4 @@
-import {ChannelFilter} from '@server/service/di'
+import {ChannelFilter} from '@src/service/di'
 
 export class ChannelFilterBuilder {
     private channels: Set<number> = new Set()

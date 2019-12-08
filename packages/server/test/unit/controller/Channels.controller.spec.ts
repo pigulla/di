@@ -1,12 +1,12 @@
-import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
-import {expect} from 'chai'
-
-import {ChannelsController} from '@server/controller'
-import {IChannelsProvider} from '@server/service'
-
-import {create_channels_provider_stub, prebuilt_channel} from '../../util'
 import {NotFoundException} from '@nestjs/common'
+import {expect} from 'chai'
+import {SinonStubbedInstance} from 'sinon'
+
+import {ChannelsController} from '@src/controller'
+import {IChannelsProvider} from '@src/service'
+
+import {create_channels_provider_stub, prebuilt_channel} from '@test/util'
 
 const {progressive, vocaltrance, classictechno} = prebuilt_channel
 

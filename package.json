@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "build": "lerna run build",
-    "setup": "rm -rf node_modules && yarn && yarn test",
+    "setup": "rm -rf node_modules && yarn",
     "test": "lerna run build && lerna run test && yarn audit",
     "interactive-integration-test": "ts-node --require tsconfig-paths/register test/interactive-integration.spec.ts"
   },

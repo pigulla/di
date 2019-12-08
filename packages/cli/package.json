@@ -10,7 +10,8 @@
     "postpack": "rm -f oclif.manifest.json",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
-    "version": "oclif-dev readme && git add README.md"
+    "version": "oclif-dev readme && git add README.md",
+    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -f ./coverage/lcov.info -F cli'"
   },
   "bin": {
     "di": "./bin/run"

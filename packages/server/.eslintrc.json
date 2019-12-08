@@ -1,3 +1,21 @@
 {
-    "extends": "@digitally-imported/eslint-config-standard"
+    "extends": "@digitally-imported/eslint-config-standard",
+    "overrides": [
+        {
+            "files": [
+                "src/**/*"
+            ],
+            "rules": {
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        "patterns": [
+                            "@src",
+                            "@src/*"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
 }

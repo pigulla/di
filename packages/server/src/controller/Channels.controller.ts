@@ -8,7 +8,7 @@ import {
 
 import {ChannelDTO} from '@digitally-imported/dto'
 
-import {IChannelsProvider} from '@src/service'
+import {IChannelsProvider} from '../service'
 
 @Controller()
 export class ChannelsController {

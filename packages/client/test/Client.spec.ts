@@ -2,7 +2,7 @@ import {expect} from 'chai'
 import nock from 'nock'
 import {spy, stub} from 'sinon'
 import {NO_CONTENT, INTERNAL_SERVER_ERROR, OK, NOT_FOUND, FORBIDDEN} from 'http-status-codes'
-import {NowPlayingDTO, PlayDTO} from '@digitally-imported/dto/lib'
+import {NowPlayingDTO, PlayDTO, ChannelDTO} from '@digitally-imported/dto/lib'
 
 import {Client} from '@src'
 import {ChannelNotFoundError, ClientError, ServerNotRunningError} from '@src/error'
@@ -148,11 +148,26 @@ describe('Client', function () {
 
     describe('when playback is started', function () {
         it('should do so', async function () {
-            nock(URL)
-                .put('/playback', {channel: 'progressive'})
-                .reply(NO_CONTENT)
+            const channel: ChannelDTO = {
+                director: 'Hairy Potter',
+                description: 'The most awesomest music',
+                id: 42,
+                key: 'most-awesome',
+                name: 'Most Awesome',
+                updated_at: null,
+                created_at: '2019-12-08T19:46:47.994Z',
+                images: {
+                    default: 'http://images.local/most-awesome.jpg',
+                    compact: 'http://images.local/most-awesome-comapct.jpg',
+                    banner: null,
+                },
+            }
 
-            await expect(client.start_playback('progressive')).to.eventually.be.undefined
+            nock(URL)
+                .put('/playback', {channel: 'most-awesome'})
+                .reply(OK, channel)
+
+            await expect(client.start_playback('most-awesome')).to.eventually.deep.equal(channel)
         })
 
         it('should fail if the channel does not exist', async function () {

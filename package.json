@@ -9,12 +9,11 @@
   "license": "MIT",
   "scripts": {
     "build": "lerna run build",
+    "outdated": "yarn outdated; lerna exec --no-bail 'yarn outdated'",
     "setup": "rm -rf node_modules && yarn",
-    "test": "lerna run build && lerna run test && yarn audit",
-    "interactive-integration-test": "ts-node --require tsconfig-paths/register test/interactive-integration.spec.ts"
+    "test": "lerna run build && lerna run test && yarn audit"
   },
   "devDependencies": {
-    "lerna": "^3.19.0",
-    "ora": "^4.0.3"
+    "lerna": "^3.19.0"
   }
 }

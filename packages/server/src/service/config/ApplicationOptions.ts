@@ -1,5 +1,5 @@
-import {Quality} from '@src/service/di'
-import {LogLevel} from '@src/service/logger'
+import {Quality} from '../di'
+import {LogLevel} from '../logger'
 
 export interface Credentials {
     username: string

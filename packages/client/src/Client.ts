@@ -126,7 +126,7 @@ export class Client {
         return response.status === NO_CONTENT
     }
 
-    public async start_playback (channel_key: string): Promise<void> {
+    public async start_playback (channel_key: string): Promise<ChannelDTO> {
         const data: PlayDTO = {channel: channel_key}
 
         const response = await this
@@ -134,12 +134,14 @@ export class Client {
                 method: 'PUT',
                 url: '/playback',
                 data,
-                validateStatus: status => [NO_CONTENT, NOT_FOUND].includes(status),
+                validateStatus: status => [OK, NOT_FOUND].includes(status),
             })
 
         if (response.status === NOT_FOUND) {
             throw new ChannelNotFoundError(channel_key)
         }
+
+        return response.data
     }
 
     public async stop_playback (): Promise<void> {

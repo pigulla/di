@@ -2,7 +2,7 @@ import {Controller, Get, Inject, ForbiddenException} from '@nestjs/common'
 
 import {ChannelDTO} from '@digitally-imported/dto'
 
-import {IFavoritesProvider, CredentialsUnavailableError} from '@src/service'
+import {IFavoritesProvider, CredentialsUnavailableError} from '../service'
 
 @Controller()
 export class FavoritesController {

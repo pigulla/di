@@ -14,7 +14,7 @@ import {
 
 import {ChannelDTO, PlayDTO, PlaybackStateDTO} from '@digitally-imported/dto'
 
-import {IChannelsProvider, IPlaybackControl, IConfigProvider, INowPlayingProvider} from '@src/service'
+import {IChannelsProvider, IPlaybackControl, IConfigProvider, INowPlayingProvider} from '../service'
 
 class ValidatedPlayDTO extends PlayDTO {
     @IsString()

@@ -3,9 +3,9 @@ import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common'
 import {sync as which} from 'which'
 import pino from 'pino'
 
-import {IConfigProvider, ConfigProvider, ServerProcessProxy, IServerProcessProxy} from '@src/service'
-import {ILogger, PinoLogger} from '@src/service/logger'
-import {AppVersionHeader} from '@src/middleware'
+import {IConfigProvider, ConfigProvider, ServerProcessProxy, IServerProcessProxy} from '../service'
+import {ILogger, PinoLogger} from '../service/logger'
+import {AppVersionHeader} from '../middleware'
 import {create_argv_parser, IArgvParser} from '../service/config'
 
 @Module({

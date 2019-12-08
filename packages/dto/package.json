@@ -7,6 +7,7 @@
     "test": "tsc --noEmit && yarn run lint && yarn run mocha",
     "lint": "eslint --ext=.ts '**/*.ts'",
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
+    "clean": "rm -rf node_modules && rm -rf lib",
     "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'"
   },
   "keywords": [],

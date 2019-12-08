@@ -8,6 +8,7 @@
     "lint": "eslint --ext=.ts '**/*.ts'",
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
     "start": "node lib/interactive-integration.js",
+    "clean": "rm -rf node_modules && rm -rf lib",
     "dev": "ts-node src/interactive-integration.ts"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",

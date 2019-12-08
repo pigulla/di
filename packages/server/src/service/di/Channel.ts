@@ -83,7 +83,7 @@ export class Channel {
     }
 
     public to_dto (): ChannelDTO {
-        return new ChannelDTO({
+        return ChannelDTO.create({
             director: this.director,
             description: this.description,
             id: this.id,

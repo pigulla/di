@@ -1,6 +1,6 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IDigitallyImported} from '@server/service'
+import {IDigitallyImported} from '@src/service'
 
 export function create_digitally_imported_stub (): SinonStubbedInstance<IDigitallyImported> {
     return {

@@ -1,7 +1,7 @@
-{
+module.exports = {
     "require": [
         "ts-node/register",
         "tsconfig-paths/register",
-        "mocha.setup.ts"
+        "./test/mocha.setup.ts"
     ]
 }

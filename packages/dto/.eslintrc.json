@@ -1,0 +1,24 @@
+{
+    "extends": "@digitally-imported/eslint-config-standard",
+    "rules": {
+        "@typescript-eslint/explicit-member-accessibility": "off"
+    },
+    "overrides": [
+        {
+            "files": [
+                "src/**/*"
+            ],
+            "rules": {
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        "patterns": [
+                            "@src",
+                            "@src/*"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

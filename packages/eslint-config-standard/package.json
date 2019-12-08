@@ -1,0 +1,23 @@
+{
+  "name": "@digitally-imported/eslint-config-standard",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'Not applicable'",
+    "lint": "echo 'Not applicable'",
+    "test": "echo 'Not applicable'",
+    "clean": "rm -rf node_modules"
+  },
+  "author": "Raphael Pigulla <pigulla@four66.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^2.10.0",
+    "eslint": "^6.7.2",
+    "eslint-config-standard": "^14.1.0"
+  },
+  "dependencies": {}
+}

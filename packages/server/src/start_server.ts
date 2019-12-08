@@ -1,3 +1,5 @@
+import 'module-alias/register'
+
 import {AddressInfo, Server} from 'net'
 
 import {NormalizedPackageJson} from 'read-pkg'

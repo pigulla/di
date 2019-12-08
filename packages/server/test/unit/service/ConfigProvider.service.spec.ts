@@ -1,11 +1,11 @@
+import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStub, stub} from 'sinon'
-import {Test} from '@nestjs/testing'
 
-import {ConfigProvider} from '@server/service'
-import {ApplicationOptions} from '@server/service/config'
-import {Quality} from '@server/service/di'
-import {LogLevel} from '@server/service/logger'
+import {ConfigProvider} from '@src/service'
+import {ApplicationOptions} from '@src/service/config'
+import {Quality} from '@src/service/di'
+import {LogLevel} from '@src/service/logger'
 
 describe('ConfigProvider service', function () {
     let argv_parser_stub: SinonStub

@@ -19,25 +19,47 @@ export interface RawSuccessfulAuthenticationResponse {
 export type RawAuthenticationResponse = RawFailedAuthenticationResponse|RawSuccessfulAuthenticationResponse
 
 export class FailedAuthenticationResponse {
-    // eslint-disable-next-line no-useless-constructor
+    public readonly auth: boolean
+    public readonly errors: string[]
+
     public constructor (
-        public readonly auth: boolean,
-        public readonly errors: string[],
-    ) {}
+        auth: boolean,
+        errors: string[],
+    ) {
+        this.auth = auth
+        this.errors = errors
+    }
 }
 
 export class SuccessfulAuthenticationResponse {
-    // eslint-disable-next-line no-useless-constructor
+    public readonly auth: true
+    public readonly confirmed: boolean
+    public readonly premium_subscriber: boolean
+    public readonly listen_key: string
+    public readonly first_name: string
+    public readonly last_name: string
+    public readonly email: string
+    public readonly return_to_url: string|null
+
     public constructor (
-        public readonly auth: true,
-        public readonly confirmed: boolean,
-        public readonly premium_subscriber: boolean,
-        public readonly listen_key: string,
-        public readonly first_name: string,
-        public readonly last_name: string,
-        public readonly email: string,
-        public readonly return_to_url: string|null,
-    ) {}
+        auth: true,
+        confirmed: boolean,
+        premium_subscriber: boolean,
+        listen_key: string,
+        first_name: string,
+        last_name: string,
+        email: string,
+        return_to_url: string|null,
+    ) {
+        this.auth = auth
+        this.confirmed = confirmed
+        this.premium_subscriber = premium_subscriber
+        this.listen_key = listen_key
+        this.first_name = first_name
+        this.last_name = last_name
+        this.email = email
+        this.return_to_url = return_to_url
+    }
 }
 
 export type AuthenticationResponse = FailedAuthenticationResponse|SuccessfulAuthenticationResponse

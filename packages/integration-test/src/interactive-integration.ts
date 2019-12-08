@@ -2,8 +2,8 @@ import {promisify} from 'util'
 
 import ora from 'ora'
 
-import {start_server} from '@server/start_server'
-import {Client} from '@client'
+import {start_server} from '@digitally-imported/server/lib/start_server'
+import {Client} from '@digitally-imported/client'
 
 const sleep = promisify(setTimeout)
 const VOLUME_MAX = 50

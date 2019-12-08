@@ -1,6 +1,6 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {INowPlayingProvider} from '@server/service'
+import {INowPlayingProvider} from '@src/service'
 
 export function create_now_playing_provider_stub (): SinonStubbedInstance<INowPlayingProvider> {
     return {

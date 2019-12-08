@@ -1,6 +1,6 @@
 import dayjs, {Dayjs} from 'dayjs'
 
-import {AppData, Channel, ChannelFilter} from '@server/service/di'
+import {AppData, Channel, ChannelFilter} from '@src/service/di'
 
 export class AppDataBuilder {
     private app_version: string = '1.23.45'

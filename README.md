@@ -11,29 +11,32 @@
 
 ### Packages
 
-#### [@digitally-imported/cli](packages/cli)
+##### [@digitally-imported/cli](packages/cli)
 The command line frontend.
 
-#### [@digitally-imported/client](packages/client)
+##### [@digitally-imported/client](packages/client)
 Simple API wrapper for the server's REST interface.
 
-#### [@digitally-imported/dto](packages/dto)
+##### [@digitally-imported/dto](packages/dto)
 Data transfer objects for the server's REST interface.
 
-#### [@digitally-imported/eslint-config-standard](packages/eslint-config-standard)
+##### [@digitally-imported/eslint-config-standard](packages/eslint-config-standard)
 The ESLint configuration used by all packages.
 
-#### [@digitally-imported/integration-test](packages/integration-test)
-A manual integration "test" script.
+##### [@digitally-imported/integration-test](packages/integration-test)
+Manually run integration "test" scripts.
 
-#### [@digitally-imported/mocha-config](packages/mocha-config)
+##### [@digitally-imported/i3-blocklet](packages/i3-blocklet)
+Blocket for [i3blocks](https://github.com/vivien/i3blocks) for the [i3 window manager](https://i3wm.org/).
+
+##### [@digitally-imported/mocha-config](packages/mocha-config)
 The Mocha configuration used by all packages.
 
-#### [@digitally-imported/nyc-config](packages/nyc-config)
+##### [@digitally-imported/nyc-config](packages/nyc-config)
 The Istanbul configuration used by all packages.
 
-#### [@digitally-imported/server](packages/server)
+##### [@digitally-imported/server](packages/server)
 The server backend.
 
-#### [@digitally-imported/typescript-config](packages/typescript-config)
+##### [@digitally-imported/typescript-config](packages/typescript-config)
 The TypeScript configuration used by all packages.

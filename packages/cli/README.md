@@ -1,70 +1,9 @@
-cli
-===
-
-
-
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/cli.svg)](https://npmjs.org/package/cli)
-[![Downloads/week](https://img.shields.io/npm/dw/cli.svg)](https://npmjs.org/package/cli)
-[![License](https://img.shields.io/npm/l/cli.svg)](https://github.com/pigulla/cli/blob/master/package.json)
-
-<!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
-<!-- tocstop -->
-# Usage
-<!-- usage -->
-```sh-session
-$ npm install -g cli
-$ di COMMAND
-running command...
-$ di (-v|--version|version)
-cli/0.0.0 linux-x64 node-v12.11.0
-$ di --help [COMMAND]
-USAGE
-  $ di COMMAND
-...
-```
-<!-- usagestop -->
-# Commands
-<!-- commands -->
-* [`di hello [FILE]`](#di-hello-file)
-* [`di help [COMMAND]`](#di-help-command)
-
-## `di hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ di hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ di hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/pigulla/cli/blob/v0.0.0/src/commands/hello.ts)_
-
-## `di help [COMMAND]`
-
-display help for di
-
-```
-USAGE
-  $ di help [COMMAND]
-
-ARGUMENTS
-  COMMAND  command to show help for
-
-OPTIONS
-  --all  see all commands in CLI
-```
-
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.1/src/commands/help.ts)_
-<!-- commandsstop -->
+# @digitally-imported/cli
+[![Typescript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
+[![Version](https://img.shields.io/npm/v/@digitally-imported/cli?style=flat-square)](https://www.npmjs.com/package/@digitally-imported/cli)
+[![GitHub license](https://img.shields.io/github/license/pigulla/di?style=flat-square)](https://github.com/pigulla/di/blob/develop/LICENSE)
+[![Travis CI](https://img.shields.io/travis/com/pigulla/di/develop?style=flat-square)](https://codecov.io/gh/pigulla/di)
+[![Dependencies](https://img.shields.io/david/pigulla/di?style=flat-square&path=packages/cli)](https://david-dm.org/pigulla/di?path=packages%2Fcli)
+[![DevDependencies](https://img.shields.io/david/dev/pigulla/di?style=flat-square&path=packages/cli)](https://david-dm.org/dev/pigulla/di?path=packages%2Fcli)
+[![codecov](https://codecov.io/gh/pigulla/di/branch/master/graph/badge.svg?flag=cli)](https://codecov.io/gh/pigulla/di/tree/develop/packages/cli/src)
+[![Snyk](https://snyk.io/test/github/pigulla/di/badge.svg?targetFile=packages/cli/package.json&style=flat-square)](https://snyk.io/test/github/pigulla/di?targetFile=packages%2Fcli%2Fpackage.json&tab=dependencies)

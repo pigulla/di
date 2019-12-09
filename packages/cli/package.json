@@ -2,11 +2,19 @@
   "name": "@digitally-imported/cli",
   "version": "0.0.1",
   "author": "Raphael Pigulla <pigulla@four66.com>",
+  "homepage": "https://github.com/pigulla/di/tree/develop/packages/cli",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/pigulla/di.git"
+    },
+  "bugs": {
+    "url": "https://github.com/pigulla/di/issues"
+  },
   "scripts": {
     "test": "tsc --noEmit && yarn run lint && yarn run mocha",
     "lint": "eslint --ext=.ts '**/*.ts'",
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
-    "clean": "rm -rf node_modules && rm -rf lib",
+    "clean": "rm -rf node_modules lib .nyc_output coverage",
     "postpack": "rm -f oclif.manifest.json",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
@@ -16,7 +24,6 @@
   "bin": {
     "di": "./bin/run"
   },
-  "bugs": "https://github.com/pigulla/cli/issues",
   "dependencies": {
     "@digitally-imported/client": "^0.0.1",
     "@digitally-imported/dto": "^0.0.1",
@@ -31,7 +38,7 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@digitally-imported/settings": "^0.0.1",
+    "@digitally-imported/typescript-config": "^0.0.1",
     "@istanbuljs/nyc-config-typescript": "^0.1.3",
     "@oclif/dev-cli": "^1.22.2",
     "@types/chai": "^4.2.6",
@@ -68,7 +75,6 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/pigulla/cli",
   "keywords": [
     "oclif"
   ],
@@ -81,6 +87,5 @@
       "@oclif/plugin-help"
     ]
   },
-  "repository": "pigulla/cli",
   "types": "lib/index.d.ts"
 }

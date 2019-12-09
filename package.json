@@ -1,25 +1,33 @@
 {
-  "name": "@digitally-imported/meta",
-  "version": "0.0.1",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "author": "Raphael Pigulla <pigulla@four66.com>",
-  "license": "MIT",
-  "scripts": {
-    "build": "lerna run build",
-    "setup": "rm -rf node_modules && yarn workspaces run clean && yarn",
-    "compile": "yarn run compile:dto && yarn run compile:client && yarn run compile:cli && yarn run compile:server && yarn run compile:server",
-    "compile:cli": "yarn workspace @digitally-imported/cli run build",
-    "compile:client": "yarn workspace @digitally-imported/client run build",
-    "compile:dto": "yarn workspace @digitally-imported/dto run build",
-    "compile:integration-test": "yarn workspace @digitally-imported/integration-test run build",
-    "compile:server": "yarn workspace @digitally-imported/server run build",
-    "test": "yarn run compile && lerna run test && yarn audit",
-    "codecov": "lerna run codecov"
-  },
-  "devDependencies": {
-    "lerna": "^3.19.0"
-  }
+    "name": "@digitally-imported/meta",
+    "version": "0.0.1",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "author": "Raphael Pigulla <pigulla@four66.com>",
+    "homepage": "https://github.com/pigulla/di",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/pigulla/di.git"
+    },
+    "bugs": {
+        "url": "https://github.com/pigulla/di/issues"
+    },
+    "license": "MIT",
+    "scripts": {
+        "build": "lerna run build",
+        "setup": "rm -rf node_modules && yarn workspaces run clean && yarn",
+        "compile": "yarn run compile:dto && yarn run compile:client && yarn run compile:cli && yarn run compile:server && yarn run compile:server",
+        "compile:cli": "yarn workspace @digitally-imported/cli run build",
+        "compile:client": "yarn workspace @digitally-imported/client run build",
+        "compile:dto": "yarn workspace @digitally-imported/dto run build",
+        "compile:integration-test": "yarn workspace @digitally-imported/integration-test run build",
+        "compile:server": "yarn workspace @digitally-imported/server run build",
+        "test": "yarn run compile && lerna run test && yarn audit",
+        "codecov": "lerna run codecov"
+    },
+    "devDependencies": {
+        "lerna": "^3.19.0"
+    }
 }

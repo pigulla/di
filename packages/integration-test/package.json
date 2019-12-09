@@ -8,11 +8,15 @@
     "lint": "eslint --ext=.ts '**/*.ts'",
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
     "start": "node lib/interactive-integration.js",
-    "clean": "rm -rf node_modules && rm -rf lib",
+    "clean": "rm -rf node_modules lib .nyc_output coverage",
     "codecov": "echo 'Not applicable'",
     "dev": "ts-node src/interactive-integration.ts"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
+  "homepage": "https://github.com/pigulla/di/tree/develop/packages/integration-test",
+  "bugs": {
+    "url": "https://github.com/pigulla/di/issues"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=10.0.0"

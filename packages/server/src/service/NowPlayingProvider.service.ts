@@ -40,23 +40,23 @@ export class NowPlayingProvider implements INowPlayingProvider {
     }
 
     public get_by_channel_id (id: number): NowPlaying {
-        const channel = this.by_id.get(id)
+        const now_playing = this.by_id.get(id)
 
-        if (!channel) {
-            throw new Error(`Channel with id ${id} not found`)
+        if (!now_playing) {
+            throw new Error(`No data for channel with id ${id} found`)
         }
 
-        return channel
+        return now_playing
     }
 
     public get_by_channel_key (key: string): NowPlaying {
-        const channel = this.by_key.get(key)
+        const now_playing = this.by_key.get(key)
 
-        if (!channel) {
-            throw new Error(`Channel with key "${key}" not found`)
+        if (!now_playing) {
+            throw new Error(`No data for channel with key "${key}" found`)
         }
 
-        return channel
+        return now_playing
     }
 
     public get_all (): NowPlaying[] {

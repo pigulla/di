@@ -29,7 +29,9 @@ async function run (): Promise<void> {
 
         try {
             const playback_state = await client.get_playback_state()
-            if (!playback_state.now_playing) {
+            if (!playback_state) {
+                spinner.fail('Playback state unavailable')
+            } else if (!playback_state.now_playing) {
                 spinner.fail('Unexpected playback state')
             } else {
                 spinner.info(`Now playing: ${playback_state.now_playing.artist} - ${playback_state.now_playing.title}`)

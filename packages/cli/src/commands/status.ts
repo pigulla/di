@@ -42,6 +42,10 @@ export default class Status extends FormattedOutputCommand<PlaybackStateDTO> {
     public async run (): Promise<void> {
         const playback_state = await this.client.get_playback_state()
 
-        this.print_formatted(playback_state)
+        if (playback_state) {
+            this.print_formatted(playback_state)
+        } else {
+            this.log('Playback is stopped')
+        }
     }
 }

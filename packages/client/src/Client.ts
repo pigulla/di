@@ -152,7 +152,7 @@ export class Client {
             })
     }
 
-    public async get_playback_state (): Promise<PlaybackStateDTO> {
+    public async get_playback_state (): Promise<PlaybackStateDTO|null> {
         const response = await this
             .request({
                 method: 'GET',

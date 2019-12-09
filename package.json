@@ -18,10 +18,11 @@
     "scripts": {
         "build": "lerna run build",
         "setup": "rm -rf node_modules && yarn workspaces run clean && yarn",
-        "compile": "yarn run compile:dto && yarn run compile:client && yarn run compile:cli && yarn run compile:server && yarn run compile:server",
+        "compile": "yarn run compile:dto && yarn run compile:client && yarn run compile:i3blocklet && yarn run compile:cli && yarn run compile:server && yarn run compile:integration-test",
         "compile:cli": "yarn workspace @digitally-imported/cli run build",
         "compile:client": "yarn workspace @digitally-imported/client run build",
         "compile:dto": "yarn workspace @digitally-imported/dto run build",
+        "compile:i3blocklet": "yarn workspace @digitally-imported/i3blocklet run build",
         "compile:integration-test": "yarn workspace @digitally-imported/integration-test run build",
         "compile:server": "yarn workspace @digitally-imported/server run build",
         "test": "yarn run compile && lerna run test && yarn audit",

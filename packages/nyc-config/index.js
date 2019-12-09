@@ -1,4 +1,4 @@
-{
+module.exports = {
     "extends": "@istanbuljs/nyc-config-typescript",
     "reporter": [
         "html",
@@ -8,12 +8,6 @@
     "all": true,
     "extension": [
         ".ts"
-    ],
-    "include": [
-        "packages/*/src/**/*.ts"
-    ],
-    "exclude": [
-        "packages/server/src/module/**/*.ts"
     ],
     "require": [
         "ts-node/register",

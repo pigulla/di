@@ -1,3 +1,11 @@
+type PlayProperties = {
+    channel: string
+}
+
 export class PlayDTO {
-    public readonly channel!: string
+    channel!: string
+
+    public static create (properties: PlayProperties): PlayDTO {
+        return Object.assign(new PlayDTO(), properties)
+    }
 }

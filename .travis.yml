@@ -1,0 +1,12 @@
+language: node_js
+branches:
+  only:
+    - master
+    - develop
+node_js:
+  - "13"
+  - "12"
+  - "11"
+  - "10"
+install: yarn run setup
+after_script: yarn run codecov

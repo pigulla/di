@@ -1,6 +1,6 @@
 import {expect} from 'chai'
 
-import {Channel} from '@server/service/di'
+import {Channel} from '@src/service/di'
 
 describe('A DigitallyImported Channel', function () {
     describe('should parse the channel key', function () {

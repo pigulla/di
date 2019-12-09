@@ -8,7 +8,7 @@ import {
     PlaybackController,
     ServerController,
     VolumeController,
-} from '../controller/'
+} from '../controller'
 import {
     DigitallyImportedModule,
     PlaybackControlModule,

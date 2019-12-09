@@ -1,0 +1,27 @@
+{
+  "name": "@digitally-imported/integration-test",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/interactive-integration.js",
+  "scripts": {
+    "test": "tsc --noEmit && yarn run lint",
+    "lint": "eslint --ext=.ts '**/*.ts'",
+    "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
+    "start": "node lib/interactive-integration.js",
+    "clean": "rm -rf node_modules && rm -rf lib",
+    "codecov": "echo 'Not applicable'",
+    "dev": "ts-node src/interactive-integration.ts"
+  },
+  "author": "Raphael Pigulla <pigulla@four66.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {
+    "module-alias": "^2.2.2",
+    "ora": "^4.0.3"
+  }
+}

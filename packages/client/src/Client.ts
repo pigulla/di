@@ -1,5 +1,4 @@
-/* eslint-disable no-dupe-class-members */
-import Axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios'
+import Axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios'
 import Bluebird from 'bluebird'
 import {
     FORBIDDEN,
@@ -18,9 +17,12 @@ import {
     VolumeDTO,
 } from '@digitally-imported/dto'
 
-import {ChannelNotFoundError, ClientError, PremiumAccountRequiredError, ServerNotRunningError} from './error'
+import {ChannelNotFoundError, ClientError, ServerNotRunningError} from './error'
+
+type AxiosFactory = (config?: AxiosRequestConfig) => AxiosInstance
 
 export type Options = {
+    axios_factory?: AxiosFactory
     endpoint: string
 }
 
@@ -28,7 +30,7 @@ export class Client {
     private readonly axios: AxiosInstance;
 
     public constructor (options: Options) {
-        this.axios = Axios.create({
+        this.axios = (options.axios_factory || Axios.create)({
             baseURL: options.endpoint,
         })
 
@@ -41,13 +43,7 @@ export class Client {
                     throw new ServerNotRunningError()
                 }
 
-                const response: AxiosResponse = error.response
-
-                if (response.status === FORBIDDEN) {
-                    throw new PremiumAccountRequiredError()
-                }
-
-                throw new ClientError(`Client error (${response.statusText})`, error)
+                throw new ClientError((error as AxiosError).message, error)
             },
         )
     }
@@ -130,23 +126,22 @@ export class Client {
         return response.status === NO_CONTENT
     }
 
-    public async start_playback (channel_key: string): Promise<void> {
+    public async start_playback (channel_key: string): Promise<ChannelDTO> {
         const data: PlayDTO = {channel: channel_key}
 
-        await this
+        const response = await this
             .request({
                 method: 'PUT',
                 url: '/playback',
                 data,
+                validateStatus: status => [OK, NOT_FOUND].includes(status),
             })
-            .catch(function (error: AxiosError) {
-                // eslint-disable-next-line no-undef
-                if (error?.response?.status === NOT_FOUND) {
-                    throw new ChannelNotFoundError(channel_key)
-                }
 
-                throw error
-            })
+        if (response.status === NOT_FOUND) {
+            throw new ChannelNotFoundError(channel_key)
+        }
+
+        return response.data
     }
 
     public async stop_playback (): Promise<void> {
@@ -189,20 +184,18 @@ export class Client {
     }
 
     public async get_channel (channel_key: string): Promise<ChannelDTO> {
-        return this
+        const response = await this
             .request({
                 method: 'GET',
                 url: `/channel/${channel_key}`,
+                validateStatus: status => [OK, NOT_FOUND].includes(status),
             })
-            .catch(function (error: AxiosError) {
-                // eslint-disable-next-line no-undef
-                if (error?.response?.status === NOT_FOUND) {
-                    throw new ChannelNotFoundError(channel_key)
-                }
 
-                throw error
-            })
-            .get('data')
+        if (response.status === NOT_FOUND) {
+            throw new ChannelNotFoundError(channel_key)
+        }
+
+        return response.data
     }
 
     public get_channel_filters (): Promise<ChannelFilterDTO[]> {
@@ -214,21 +207,19 @@ export class Client {
             .get('data')
     }
 
-    private get_now_playing_on_channel (channel_key: string): Promise<NowPlayingDTO> {
-        return this
+    private async get_now_playing_on_channel (channel_key: string): Promise<NowPlayingDTO> {
+        const response = await this
             .request({
                 method: 'GET',
                 url: `/channel/${channel_key}/now_playing`,
+                validateStatus: status => [OK, NOT_FOUND].includes(status),
             })
-            .catch(function (error: AxiosError) {
-                // eslint-disable-next-line no-undef
-                if (error?.response?.status === NOT_FOUND) {
-                    throw new ChannelNotFoundError(channel_key)
-                }
 
-                throw error
-            })
-            .get('data')
+        if (response.status === NOT_FOUND) {
+            throw new ChannelNotFoundError(channel_key)
+        }
+
+        return response.data
     }
 
     private async get_now_playing_on_channels (): Promise<Map<string, NowPlayingDTO>> {

@@ -13,7 +13,7 @@ import nock, {Definition} from 'nock'
 import Superagent from 'superagent'
 import {HttpStatus} from '@nestjs/common'
 
-import {new_promise} from '@server/new_promise'
+import {new_promise} from '@src/new_promise'
 
 import {RecordingName} from './load_nock_recording'
 

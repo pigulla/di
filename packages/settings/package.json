@@ -1,0 +1,23 @@
+{
+  "name": "@digitally-imported/settings",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'Not applicable'",
+    "lint": "echo 'Not applicable'",
+    "build": "echo 'Not applicable'",
+    "codecov": "echo 'Not applicable'",
+    "clean": "rm -rf node_modules"
+  },
+  "author": "Raphael Pigulla <pigulla@four66.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "devDependencies": {
+    "nock": "^11.7.0",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {}
+}

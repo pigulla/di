@@ -1,10 +1,26 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "lib",
-    "rootDir": "src"
-  },
-  "include": [
-    "src/**/*.ts"
-  ]
+    "extends": "@digitally-imported/settings/tsconfig.json",
+    "include": [
+        "src/**/*.ts",
+        "test/**/*.ts"
+    ],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "lib",
+        "rootDir": ".",
+        "paths": {
+            "@src": [
+                "src/index.ts"
+            ],
+            "@src/*": [
+                "src/*"
+            ],
+            "@test": [
+                "test/index.ts"
+            ],
+            "@test/*": [
+                "test/*"
+            ]
+        }
+    }
 }

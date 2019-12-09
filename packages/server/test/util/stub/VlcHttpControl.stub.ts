@@ -1,6 +1,6 @@
 import {stub, SinonStubbedInstance} from 'sinon'
 
-import {VlcHttpControl} from '@server/service/playback/'
+import {VlcHttpControl} from '@src/service/playback/'
 
 export function create_vlc_http_control_stub (): SinonStubbedInstance<VlcHttpControl> {
     return {

@@ -1,4 +1,4 @@
-/* eslint-env mocha */
+import 'mocha'
 import nock from 'nock'
 import {expect} from 'chai'
 

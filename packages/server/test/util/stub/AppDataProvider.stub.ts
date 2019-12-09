@@ -1,6 +1,6 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IAppDataProvider} from '@server/service'
+import {IAppDataProvider} from '@src/service'
 
 export function create_app_data_provider_stub (): SinonStubbedInstance<IAppDataProvider> {
     return {

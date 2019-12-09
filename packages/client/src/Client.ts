@@ -17,6 +17,7 @@ import {
     VolumeDTO,
 } from '@digitally-imported/dto'
 
+import {IClient} from './Client.interface'
 import {ChannelNotFoundError, ClientError, ServerNotRunningError} from './error'
 
 type AxiosFactory = (config?: AxiosRequestConfig) => AxiosInstance
@@ -26,8 +27,8 @@ export type Options = {
     endpoint: string
 }
 
-export class Client {
-    private readonly axios: AxiosInstance;
+export class Client implements IClient {
+    private readonly axios: AxiosInstance
 
     public constructor (options: Options) {
         this.axios = (options.axios_factory || Axios.create)({
@@ -152,7 +153,7 @@ export class Client {
             })
     }
 
-    public async get_playback_state (): Promise<PlaybackStateDTO> {
+    public async get_playback_state (): Promise<PlaybackStateDTO|null> {
         const response = await this
             .request({
                 method: 'GET',

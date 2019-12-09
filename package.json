@@ -9,7 +9,6 @@
   "license": "MIT",
   "scripts": {
     "build": "lerna run build",
-    "outdated": "yarn outdated; lerna exec --no-bail 'yarn outdated'",
     "setup": "rm -rf node_modules && yarn workspaces run clean && yarn",
     "compile": "yarn run compile:dto && yarn run compile:client && yarn run compile:cli && yarn run compile:server && yarn run compile:server",
     "compile:cli": "yarn workspace @digitally-imported/cli run build",

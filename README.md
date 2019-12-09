@@ -27,7 +27,7 @@ The ESLint configuration used by all packages.
 Manually run integration "test" scripts.
 
 ##### [@digitally-imported/i3-blocklet](packages/i3-blocklet)
-Blocket for [i3blocks](https://github.com/vivien/i3blocks) for the [i3 window manager](https://i3wm.org/).
+Blocklet for [i3blocks](https://github.com/vivien/i3blocks) for the [i3 window manager](https://i3wm.org/).
 
 ##### [@digitally-imported/mocha-config](packages/mocha-config)
 The Mocha configuration used by all packages.

@@ -1,4 +1,7 @@
-# digitally-imported
+# :headphones: digitally-imported
+
+ :information_source: This is *not* an official project of [Digitally Imported, Inc.](https://www.di.fm/) but a labor of love  :gift_heart: from a fan and dedicated listener.
+ 
 [![Typescript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
 ![Version](https://img.shields.io/github/package-json/v/pigulla/di?style=flat-square)
 [![GitHub license](https://img.shields.io/github/license/pigulla/di?style=flat-square)](https://github.com/pigulla/di/blob/develop/LICENSE)

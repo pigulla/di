@@ -10,7 +10,7 @@
     "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
     "clean": "rm -rf node_modules lib .nyc_output coverage",
     "start:dev": "ts-node -r tsconfig-paths/register src/main.ts",
-    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -f ./coverage/lcov.info -F server'"
+    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F server'"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/develop/packages/server",

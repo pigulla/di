@@ -1,7 +1,7 @@
 {
   "name": "@digitally-imported/mocha-config",
   "version": "0.0.1",
-  "description": "",
+  "description": "Common Mocha configuration for @digitally-imported components.",
   "main": "index.js",
   "scripts": {
     "test": "echo 'Not applicable'",

@@ -1,8 +1,11 @@
 {
   "name": "@digitally-imported/i3-blocklet",
   "version": "0.0.1",
-  "description": "",
+  "description": "i3blocks-integration for @digitally-imported/server.",
   "main": "lib/main.js",
+  "keywords": [
+    "digitally-imported", "i3", "blocklet"
+  ],
   "bin": {
     "di-i3-blocklet": "./lib/main.js"
   },
@@ -12,9 +15,8 @@
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
     "clean": "rm -rf node_modules lib .nyc_output coverage",
     "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
-    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F i3blocklet'"
+    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F i3lblocklet'"
   },
-  "keywords": [],
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/develop/packages/i3-blocklet",
   "bugs": {

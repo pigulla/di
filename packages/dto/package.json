@@ -1,8 +1,11 @@
 {
   "name": "@digitally-imported/dto",
   "version": "0.0.1",
-  "description": "",
+  "description": "Common data transfer objects used by @digitally-imported/server and related components.",
   "main": "lib/index.js",
+  "keywords": [
+    "digitally-imported", "dto"
+  ],
   "scripts": {
     "test": "tsc --noEmit && yarn run lint && yarn run mocha",
     "lint": "eslint --ext=.ts '**/*.ts'",
@@ -11,7 +14,6 @@
     "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
     "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F dto'"
   },
-  "keywords": [],
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/develop/packages/dto",
   "bugs": {

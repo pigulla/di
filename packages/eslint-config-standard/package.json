@@ -1,8 +1,11 @@
 {
   "name": "@digitally-imported/eslint-config-standard",
   "version": "0.0.1",
-  "description": "",
+  "description": "Common ESLint configuration for @digitally-imported components.",
   "main": "index.js",
+  "keywords": [
+    "digitally-imported", "eslint-config"
+  ],
   "scripts": {
     "build": "echo 'Not applicable'",
     "lint": "echo 'Not applicable'",

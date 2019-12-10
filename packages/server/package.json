@@ -1,8 +1,11 @@
 {
   "name": "@digitally-imported/server",
   "version": "0.0.1",
-  "description": "",
+  "description": "Listen to music from Digitally Imported, control it from the command line and many other features.",
   "main": "lib/main.js",
+  "keywords": [
+    "digitally-imported", "server", "backend", "nestjs"
+  ],
   "scripts": {
     "test": "tsc --noEmit && yarn run lint && yarn run mocha",
     "lint": "eslint --ext=.ts '**/*.ts'",

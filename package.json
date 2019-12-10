@@ -17,12 +17,13 @@
     "license": "MIT",
     "scripts": {
         "setup": "rm -rf node_modules && yarn workspaces run clean && yarn && yarn run build",
-        "build": "yarn run build:dto && yarn run build:client && yarn run build:i3-blocklet && yarn run build:cli && yarn run build:server && yarn run build:integration-test",
+        "build": "yarn run build:dto && yarn run build:client && yarn run build:i3-blocklet && yarn run build:cli && yarn run build:notifier && yarn run build:server && yarn run build:integration-test",
         "build:cli": "yarn workspace @digitally-imported/cli run build",
         "build:client": "yarn workspace @digitally-imported/client run build",
         "build:dto": "yarn workspace @digitally-imported/dto run build",
         "build:i3-blocklet": "yarn workspace @digitally-imported/i3-blocklet run build",
         "build:integration-test": "yarn workspace @digitally-imported/integration-test run build",
+        "build:notifier": "yarn workspace @digitally-imported/notifier run build",
         "build:server": "yarn workspace @digitally-imported/server run build",
         "test": "yarn run build && lerna run test && yarn audit",
         "codecov": "lerna run codecov"

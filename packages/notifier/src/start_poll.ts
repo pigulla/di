@@ -1,37 +1,55 @@
-import {Client} from '@digitally-imported/client'
-import notifier from 'node-notifier'
+import {IClient} from '@digitally-imported/client'
+import {PlaybackStateDTO} from '@digitally-imported/dto'
+import {Notification} from 'node-notifier/notifiers/notificationcenter'
 
 import {hash_state} from './hash_state'
 
-export type StopFn = () => void
+const HASH_SERVER_NOT_RUNNING = 'server_not_running'
 
-export async function start_poll (client: Client, poll_ms: number = 2_000): Promise<StopFn> {
-    let prev_hash = ''
+const server_not_running_notification: Notification = {
+    title: 'Digitally Imported',
+    message: 'Server not running',
+}
+
+const no_playback_notification: Notification = {
+    title: 'Digitally Imported',
+    message: 'Playback stopped',
+}
+
+export type StopFn = () => void
+export type NotifyFn = (notification: Notification) => void
+
+export async function start_poll (client: IClient, poll_ms: number = 2_000, notify: NotifyFn): Promise<StopFn> {
+    let hash = ''
     let timeout_id: NodeJS.Timeout|null = null
 
     async function check_and_reschedule (): Promise<void> {
-        const playback_state = await client.get_playback_state()
-        const new_hash = hash_state(playback_state)
+        timeout_id = setTimeout(check_and_reschedule, poll_ms)
 
-        if (new_hash !== prev_hash) {
-            prev_hash = new_hash
+        const prev_hash = hash
+        const is_alive = await client.is_alive()
+        let playback_state: PlaybackStateDTO|null = null
 
-            if (playback_state) {
-                const {title, artist} = playback_state.now_playing
-
-                notifier.notify({
-                    title: `Digitally Imported: ${playback_state.channel.name}`,
-                    message: `${artist} - ${title}`,
-                })
-            } else {
-                notifier.notify({
-                    title: 'Digitally Imported',
-                    message: 'Playback stopped',
-                })
-            }
+        if (!is_alive) {
+            hash = HASH_SERVER_NOT_RUNNING
+            return notify(server_not_running_notification)
         }
 
-        timeout_id = setTimeout(check_and_reschedule, poll_ms)
+        playback_state = await client.get_playback_state()
+        hash = hash_state(playback_state)
+
+        if (hash === prev_hash) {
+            // do nothing
+        } else if (!playback_state) {
+            notify(no_playback_notification)
+        } else {
+            const {title, artist} = playback_state.now_playing
+
+            notify({
+                title: `Digitally Imported: ${playback_state.channel.name}`,
+                message: `${artist} - ${title}`,
+            })
+        }
     }
 
     function stop (): void {

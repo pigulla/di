@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 /* istanbul ignore file */
-import {notifier} from './notifier'
+import {change_notifier} from './change_notifier'
 
-notifier(process.argv)
+change_notifier(process.argv)
     .catch(function (error) {
         process.exitCode = 2
         console.error(error)

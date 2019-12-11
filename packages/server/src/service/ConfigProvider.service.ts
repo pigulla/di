@@ -25,6 +25,10 @@ export class ConfigProvider implements IConfigProvider {
         return this.options.logLevel
     }
 
+    public get notifications (): ApplicationOptions['notifications'] {
+        return this.options.notifications
+    }
+
     public get vlc_path (): ApplicationOptions['vlcPath'] {
         return this.options.vlcPath
     }

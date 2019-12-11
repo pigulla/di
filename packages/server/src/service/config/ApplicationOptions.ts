@@ -6,11 +6,19 @@ export interface Credentials {
     password: string
 }
 
+export enum NotificationService {
+    CONSOLE = 'console',
+    LOGGER = 'logger',
+    NOTIFIER = 'notifier',
+    NONE = 'none',
+}
+
 export interface ApplicationOptions {
     // Server
     hostname: string
     port: number
     logLevel: LogLevel
+    notifications: NotificationService
 
     // VLC
     vlcPath: string

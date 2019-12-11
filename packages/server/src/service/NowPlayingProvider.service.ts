@@ -1,9 +1,19 @@
 import {Inject, Injectable} from '@nestjs/common'
+import crypto from 'crypto'
 
 import {ChannelIdentifier} from './ChannelsProvider.interface'
+import {INowPlayingProvider} from './NowPlayingProvider.interface'
 import {NowPlaying} from './di'
 import {ILogger} from './logger'
-import {INowPlayingProvider} from './NowPlayingProvider.interface'
+
+export function hash_now_playing (now_playing: NowPlaying): string {
+    const input = JSON.stringify(now_playing.to_dto())
+
+    return crypto
+        .createHash('md5')
+        .update(input, 'utf8')
+        .digest('hex')
+}
 
 @Injectable()
 export class NowPlayingProvider implements INowPlayingProvider {

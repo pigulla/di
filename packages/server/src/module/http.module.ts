@@ -10,6 +10,7 @@ import {
     VolumeController,
 } from '../controller'
 import {
+    CurrentlyPlayingModule,
     DigitallyImportedModule,
     PlaybackControlModule,
     UtilityModule,
@@ -17,6 +18,7 @@ import {
 
 @Module({
     imports: [
+        CurrentlyPlayingModule,
         DigitallyImportedModule,
         PlaybackControlModule,
         UtilityModule,

@@ -1,13 +1,13 @@
-import read_pkg, {NormalizedPackageJson} from 'read-pkg';
-import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common';
-import {sync as which} from 'which';
-import pino from 'pino';
+import read_pkg, {NormalizedPackageJson} from 'read-pkg'
+import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common'
+import {sync as which} from 'which'
+import pino from 'pino'
 
-import {AppVersionHeader} from '../middleware';
-import {ConfigProvider, IConfigProvider, IServerProcessProxy, ServerProcessProxy} from '../service';
-import {create_argv_parser, IArgvParser, NotificationService} from '../service/config';
-import {ILogger, PinoLogger} from '../service/logger';
-import {INotifier, LoggerNotifier, NodeNotifier, NullNotifier, StderrNotifier} from '../service/notifier';
+import {AppVersionHeader} from '../middleware'
+import {ConfigProvider, IConfigProvider, IServerProcessProxy, ServerProcessProxy} from '../service'
+import {create_argv_parser, IArgvParser, NotificationService} from '../service/config'
+import {ILogger, PinoLogger} from '../service/logger'
+import {INotifier, LoggerNotifier, NodeNotifier, NullNotifier, StderrNotifier} from '../service/notifier'
 
 @Module({
     imports: [],
@@ -28,31 +28,6 @@ import {INotifier, LoggerNotifier, NodeNotifier, NullNotifier, StderrNotifier} f
                     return which('vlc')
                 } catch {
                     return null
-                }
-            },
-        },
-        {
-            provide: 'INotifier',
-            inject: ['ILogger', 'IConfigProvider'],
-            useFactory (logger: ILogger, config_provider: IConfigProvider): INotifier {
-                switch (config_provider.notifications) {
-                    case NotificationService.NONE:
-                        logger.info('Notifications are not enabled')
-                        return new NullNotifier()
-                    case NotificationService.CONSOLE:
-                        logger.info('Using console for notifications')
-                        return new StderrNotifier()
-                    case NotificationService.LOGGER:
-                        logger.info('Using logger for notifications')
-                        return new LoggerNotifier(logger)
-                    case NotificationService.NOTIFIER:
-                        if (!NodeNotifier.is_node_notifier_installed()) {
-                            logger.warn('Module "node-notifier" not available, disabling notifications')
-                            return new NullNotifier()
-                        }
-
-                        logger.info('Using "node-notifier" for notifications')
-                        return new NodeNotifier(logger)
                 }
             },
         },
@@ -90,12 +65,38 @@ import {INotifier, LoggerNotifier, NodeNotifier, NullNotifier, StderrNotifier} f
                 return new ServerProcessProxy(process)
             },
         },
+        {
+            provide: 'INotifier',
+            inject: ['ILogger', 'IConfigProvider'],
+            useFactory (logger: ILogger, config_provider: IConfigProvider): INotifier {
+                switch (config_provider.notifications) {
+                    case NotificationService.NONE:
+                        logger.info('Notifications are not enabled')
+                        return new NullNotifier()
+                    case NotificationService.CONSOLE:
+                        logger.info('Using console for notifications')
+                        return new StderrNotifier()
+                    case NotificationService.LOGGER:
+                        logger.info('Using logger for notifications')
+                        return new LoggerNotifier(logger)
+                    case NotificationService.NOTIFIER:
+                        if (!NodeNotifier.is_node_notifier_installed()) {
+                            logger.warn('Module "node-notifier" not available, disabling notifications')
+                            return new NullNotifier()
+                        }
+
+                        logger.info('Using "node-notifier" for notifications')
+                        return new NodeNotifier(logger)
+                }
+            },
+        },
     ],
     exports: [
         'IConfigProvider',
         'ILogger',
         'IServerProcessProxy',
         'NormalizedPackageJson',
+        'INotifier',
     ],
 })
 export class UtilityModule implements NestModule {

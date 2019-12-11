@@ -83,7 +83,7 @@ export class VlcHttpClient implements IVlcHttpClient {
         const xml = await parse_xml(response.text, {explicitArray: false}) as any
         const playlist_node = xml.node.node.find((node: any) => node.$.name === 'Playlist')
 
-        if (!playlist_node?.leaf) {
+        if (!playlist_node?.leaf?.find) {
             return null
         }
 

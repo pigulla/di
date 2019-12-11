@@ -50,11 +50,13 @@ describe('The start_poll function', function () {
         })
     })
 
-    it('should detect if no song is playing', async function () {
+    it('should detect if no song is playing', function () {
         client_stub.is_alive.resolves(true)
         client_stub.get_playback_state.resolves(null)
 
-        await start_poll(client_stub as IClient, 100, notify_stub)
+        start_poll(client_stub as IClient, 100, notify_stub)
+
+        clock.next()
 
         expect(notify_stub).to.have.been.calledOnceWithExactly({
             title: 'Digitally Imported',
@@ -62,7 +64,7 @@ describe('The start_poll function', function () {
         })
     })
 
-    it('should detect if a song is playing', async function () {
+    it('should detect if a song is playing', function () {
         client_stub.is_alive.resolves(true)
         client_stub.get_playback_state.resolves({
             channel: {
@@ -85,7 +87,7 @@ describe('The start_poll function', function () {
             },
         })
 
-        await start_poll(client_stub as IClient, 100, notify_stub)
+        start_poll(client_stub as IClient, 100, notify_stub)
 
         expect(notify_stub).to.have.been.calledOnceWithExactly({
             title: 'Digitally Imported: Most Awesome',
@@ -93,22 +95,22 @@ describe('The start_poll function', function () {
         })
     })
 
-    it('should clear the timer when stopped', async function () {
+    it('should clear the timer when stopped', function () {
         client_stub.is_alive.resolves(true)
         client_stub.get_playback_state.resolves(null)
 
-        const stop_fn = await start_poll(client_stub as IClient, 100, notify_stub)
+        const stop_fn = start_poll(client_stub as IClient, 100, notify_stub)
         expect(clock.countTimers()).to.equal(1)
 
         stop_fn()
         expect(clock.countTimers()).to.equal(0)
     })
 
-    it('should do nothing when stopped twice', async function () {
+    it('should do nothing when stopped twice', function () {
         client_stub.is_alive.resolves(true)
         client_stub.get_playback_state.resolves(null)
 
-        const stop_fn = await start_poll(client_stub as IClient, 100, notify_stub)
+        const stop_fn = start_poll(client_stub as IClient, 100, notify_stub)
 
         stop_fn()
         stop_fn()

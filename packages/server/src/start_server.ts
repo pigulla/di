@@ -10,6 +10,7 @@ import pino from 'pino'
 import {HttpModule} from './module/http.module'
 import {adapt_for_request_response, adapt_for_nest, ILogger, LogLevel, PinoLogger} from './service/logger'
 import {create_argv_parser} from './service/config'
+import {INotifier} from './service/notifier'
 
 type ShutdownFn = () => Promise<void>
 
@@ -36,6 +37,7 @@ export async function start_server (argv: string[] = []): Promise<ShutdownFn> {
     app.enableShutdownHooks()
 
     const logger = app.get<ILogger>('ILogger')
+    const notifier = app.get<INotifier>('INotifier')
     const server = app.getHttpServer() as Server
 
     server.once('listening', function () {
@@ -43,6 +45,10 @@ export async function start_server (argv: string[] = []): Promise<ShutdownFn> {
         const address = server.address() as AddressInfo
 
         logger.info(`Application ${name} v${version} listening on ${address.address}:${address.port}`)
+        notifier.send('Digitally Imported', 'Server started')
+    })
+    server.once('close', function () {
+        notifier.send('Digitally Imported', 'Server stopped')
     })
 
     await app.listen(port, hostname)

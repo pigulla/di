@@ -3,7 +3,7 @@ import {existsSync as exists} from 'fs'
 import yargs, {Options} from 'yargs'
 
 import {IArgvParser} from './ArgvParser.interface'
-import {ApplicationOptions} from './ApplicationOptions'
+import {ApplicationOptions, NotificationService} from './ApplicationOptions';
 import {Quality} from '../di'
 import {LogLevel} from '../logger'
 
@@ -62,6 +62,14 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             requiresArg: true,
             choices: Object.values(LogLevel),
             default: LogLevel.INFO,
+            type: 'string',
+        },
+        notifications: {
+            group: 'Server',
+            alias: 'n',
+            requiresArg: true,
+            choices: Object.values(NotificationService),
+            default: NotificationService.NONE,
             type: 'string',
         },
     }

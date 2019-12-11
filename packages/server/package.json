@@ -4,7 +4,10 @@
   "description": "Listen to music from Digitally Imported, control it from the command line and many other features.",
   "main": "lib/main.js",
   "keywords": [
-    "digitally-imported", "server", "backend", "nestjs"
+    "digitally-imported",
+    "server",
+    "backend",
+    "nestjs"
   ],
   "scripts": {
     "test": "tsc --noEmit && yarn run lint && yarn run mocha",
@@ -17,10 +20,10 @@
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/develop/packages/server",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/pigulla/di.git"
-    },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pigulla/di.git"
+  },
   "bugs": {
     "url": "https://github.com/pigulla/di/issues"
   },
@@ -99,5 +102,8 @@
     "which": "^2.0.2",
     "xml2js": "^0.4.22",
     "yargs": "^15.0.2"
+  },
+  "optionalDependencies": {
+    "node-notifier": "^6.0.0"
   }
 }

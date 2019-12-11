@@ -1,6 +1,6 @@
 import {Quality} from './di'
 import {LogLevel} from './logger'
-import {Credentials} from './config'
+import {Credentials, NotificationService} from './config'
 
 export class ConfigError extends Error {}
 
@@ -8,6 +8,7 @@ export type IConfigProvider = {
     server_hostname: string
     server_port: number
 
+    notifications: NotificationService
     log_level: LogLevel
 
     vlc_path: string

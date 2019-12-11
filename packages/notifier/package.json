@@ -1,7 +1,7 @@
 {
   "name": "@digitally-imported/notifier",
   "version": "0.0.1",
-  "description": "Growl-integration for @digitally-imported/server.",
+  "description": "Desktop notifications for @digitally-imported/server.",
   "main": "lib/main.js",
   "keywords": [
     "digitally-imported",

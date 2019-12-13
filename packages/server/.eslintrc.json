@@ -1,5 +1,31 @@
 {
     "extends": "@digitally-imported/eslint-config-standard",
+    "rules": {
+        "import/no-restricted-paths": [
+            "error",
+            {
+                "basePath": "./src",
+                "zones": [
+                    {
+                        "from": "./application",
+                        "target": "./domain"
+                    },
+                    {
+                        "from": "./infrastructure",
+                        "target": "./domain"
+                    },
+                    {
+                        "from": "./infrastructure",
+                        "target": "./application"
+                    },
+                    {
+                        "from": "./application",
+                        "target": "./infrastructure"
+                    }
+                ]
+            }
+        ]
+    },
     "overrides": [
         {
             "files": [

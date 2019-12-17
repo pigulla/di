@@ -15,7 +15,7 @@ export class ServerController {
 
     public constructor (
         @Inject('IPlaybackControl') playback_control: IPlaybackControl,
-        @Inject('NormalizedPackageJson') package_json: NormalizedPackageJson,
+        @Inject('normalized_package_json') package_json: NormalizedPackageJson,
         @Inject('IAppDataProvider') app_data_provider: IAppDataProvider,
         @Inject('IServerProcessProxy') server_process_proxy: IServerProcessProxy,
     ) {

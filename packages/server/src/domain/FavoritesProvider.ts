@@ -19,7 +19,7 @@ export class FavoritesProvider implements IFavoritesProvider {
     public constructor (
         @Inject('ILogger') logger: ILogger,
         @Inject('IChannelsProvider') channels_provider: IChannelsProvider,
-        @Inject('Configuration') configuration: Configuration,
+        @Inject('configuration') configuration: Configuration,
         @Inject('IDigitallyImported') digitally_imported: IDigitallyImported,
     ) {
         this.logger = logger.child_for_service(FavoritesProvider.name)

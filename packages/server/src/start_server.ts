@@ -49,7 +49,7 @@ export async function start_server (argv: string[] = []): Promise<ShutdownFn> {
     const server = app.getHttpServer() as Server
 
     server.once('listening', function () {
-        const {name, version} = app.get<NormalizedPackageJson>('NormalizedPackageJson')
+        const {name, version} = app.get<NormalizedPackageJson>('normalized_package_json')
         const address = server.address() as AddressInfo
 
         logger.info(`Application ${name} v${version} listening on ${address.address}:${address.port}`)

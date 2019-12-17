@@ -8,7 +8,7 @@ export class AppVersionHeader implements NestMiddleware {
     private readonly package_json: NormalizedPackageJson
 
     public constructor (
-        @Inject('NormalizedPackageJson') package_json: NormalizedPackageJson,
+        @Inject('normalized_package_json') package_json: NormalizedPackageJson,
     ) {
         this.package_json = package_json
     }

@@ -26,9 +26,8 @@ import {
             },
         },
         {
-            provide: 'DefaultVlcBinary',
+            provide: 'default_vlc_binary',
             useFactory (): string|null {
-                // TODO: use async method
                 try {
                     return which('vlc')
                 } catch {
@@ -38,7 +37,7 @@ import {
         },
         {
             provide: 'IArgvParser',
-            inject: ['DefaultVlcBinary'],
+            inject: ['default_vlc_binary'],
             useFactory (default_vlc_binary: string|null): IArgvParser {
                 return create_argv_parser({
                     default_vlc_binary,
@@ -47,14 +46,14 @@ import {
             },
         },
         {
-            provide: 'Configuration',
+            provide: 'configuration',
             inject: ['IArgvParser', 'argv'],
             useFactory (argv_parser: IArgvParser, argv: string[]): Configuration {
                 return argv_parser(argv)
             },
         },
         {
-            provide: 'NormalizedPackageJson',
+            provide: 'normalized_package_json',
             async useFactory (): Promise<NormalizedPackageJson> {
                 return read_pkg()
             },
@@ -67,7 +66,7 @@ import {
         },
         {
             provide: 'ILogger',
-            inject: ['Configuration'],
+            inject: ['configuration'],
             useFactory (configuration: Configuration): ILogger {
                 const root_logger = pino({prettyPrint: true})
                 return new PinoLogger(root_logger).set_level(configuration.log_level)
@@ -75,7 +74,7 @@ import {
         },
         {
             provide: 'INotificationProvider',
-            inject: ['ILogger', 'Configuration'],
+            inject: ['ILogger', 'configuration'],
             useFactory (logger: ILogger, configuration: Configuration): INotificationProvider {
                 switch (configuration.notifications) {
                     case NotificationType.NONE:
@@ -100,11 +99,11 @@ import {
         },
     ],
     exports: [
-        'Configuration',
+        'configuration',
         'ILogger',
         'INotificationProvider',
         'IServerProcessProxy',
-        'NormalizedPackageJson',
+        'normalized_package_json',
     ],
 })
 export class UtilityModule {}

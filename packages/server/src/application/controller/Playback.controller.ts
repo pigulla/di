@@ -33,7 +33,7 @@ export class PlaybackController {
     public constructor (
         @Inject('IPlaybackControl') vlc_control: IPlaybackControl,
         @Inject('IChannelsProvider') channel_provider: IChannelsProvider,
-        @Inject('Configuration') config_provider: Configuration,
+        @Inject('configuration') config_provider: Configuration,
         @Inject('INowPlayingProvider') now_playing_provider: INowPlayingProvider,
     ) {
         this.playback_control = vlc_control

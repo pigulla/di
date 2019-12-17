@@ -44,7 +44,7 @@ describe('FavoritesProvider', function () {
                     useValue: channels_provider_stub,
                 },
                 {
-                    provide: 'Configuration',
+                    provide: 'configuration',
                     useValue: config_stub,
                 },
                 {

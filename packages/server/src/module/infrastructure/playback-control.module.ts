@@ -26,7 +26,7 @@ import {Configuration} from '../../domain/config'
         },
         {
             provide: 'vlc_child_process',
-            inject: ['Configuration', 'vlc_http_connection'],
+            inject: ['configuration', 'vlc_http_connection'],
             useFactory (
                 configuration: Configuration,
                 vlc_http_connection: VlcHttpConnection,

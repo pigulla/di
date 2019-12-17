@@ -28,7 +28,7 @@ describe('DigitallyImported', function () {
                     useValue: logger_stub,
                 },
                 {
-                    provide: 'Configuration',
+                    provide: 'configuration',
                     useValue: config_stub,
                 },
                 DigitallyImported,

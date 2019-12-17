@@ -44,7 +44,7 @@ describe('Server controller', function () {
                     useValue: app_data_provider_stub,
                 },
                 {
-                    provide: 'NormalizedPackageJson',
+                    provide: 'normalized_package_json',
                     useValue: package_json,
                 },
                 {

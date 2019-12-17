@@ -25,7 +25,7 @@ export class DigitallyImported implements IDigitallyImported {
 
     public constructor (
         @Inject('ILogger') logger: ILogger,
-        @Inject('Configuration') configuration: Configuration,
+        @Inject('configuration') configuration: Configuration,
     ) {
         this.url = configuration.di_url
         this.logger = logger.child_for_service(DigitallyImported.name)

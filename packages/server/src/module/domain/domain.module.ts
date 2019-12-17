@@ -26,7 +26,7 @@ import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../
             useClass: FavoritesProvider,
         },
         {
-            inject: ['ILogger', 'Configuration', 'IPlaybackStateProvider'],
+            inject: ['ILogger', 'configuration', 'IPlaybackStateProvider'],
             provide: 'IPeriodicPlaybackStateUpdater',
             async useFactory (
                 logger: ILogger,
@@ -46,7 +46,7 @@ import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../
             useClass: PlaybackStateProvider,
         },
         {
-            inject: ['ILogger', 'Configuration', 'INowPlayingProvider', 'IDigitallyImported'],
+            inject: ['ILogger', 'configuration', 'INowPlayingProvider', 'IDigitallyImported'],
             provide: 'IPeriodicNowPlayingUpdater',
             async useFactory (
                 logger: ILogger,

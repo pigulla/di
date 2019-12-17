@@ -5,7 +5,7 @@ import {PinoLogger} from '@src/infrastructure/logger'
 
 import {create_pino_stub, PinoStub} from '@test/util/stub'
 
-describe('Logger service', function () {
+describe('PinoLogger', function () {
     let pino_stub: PinoStub
     let logger: PinoLogger
 

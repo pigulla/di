@@ -1,1 +1,1 @@
-export * from './ServerProcessProxy.service'
+export * from './ServerProcessProxy'

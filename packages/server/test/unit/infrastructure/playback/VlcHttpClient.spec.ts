@@ -10,7 +10,7 @@ import {load_nock_recording, RecordingName} from '@test/util/load_nock_recording
 
 const {progressive} = prebuilt_channel
 
-describe('VlcHttpClient service', function () {
+describe('VlcHttpClient', function () {
     const vlc_http_connection: VlcHttpConnection = {
         hostname: 'vlc.local',
         port: 80,

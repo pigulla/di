@@ -19,7 +19,7 @@ import {
 
 const {progressive, classictechno} = prebuilt_channel
 
-describe('FavoritesProvider service', function () {
+describe('FavoritesProvider', function () {
     let favorites_provider: FavoritesProvider
     let config_stub: SinonStubbedInstance<Configuration>
     let channels_provider_stub: SinonStubbedInstance<IChannelsProvider>

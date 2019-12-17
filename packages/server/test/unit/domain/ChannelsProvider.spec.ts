@@ -17,7 +17,7 @@ import {
 const {progressive, classictechno, vocaltrance} = prebuilt_channel
 const {ambient, bass, deep} = prebuilt_channel_filter
 
-describe('ChannelsProvider service', function () {
+describe('ChannelsProvider', function () {
     const invalid_channel = new ChannelBuilder()
         .with_id(0)
         .with_key('invalid_key')

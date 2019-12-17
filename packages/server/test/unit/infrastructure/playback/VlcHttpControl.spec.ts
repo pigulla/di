@@ -11,7 +11,7 @@ import {
     create_vlc_http_client_stub,
 } from '../../../util'
 
-describe('VlcHttpControl service', function () {
+describe('VlcHttpControl', function () {
     let vlc_http_control: VlcHttpControl
     let child_logger_stub: SinonStubbedInstance<ILogger>
     let vlc_child_process_facade_stub: SinonStubbedInstance<IVlcChildProcessFacade>

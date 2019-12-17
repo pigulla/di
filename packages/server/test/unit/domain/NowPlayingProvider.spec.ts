@@ -8,7 +8,7 @@ import {create_logger_stub, NowPlayingBuilder, prebuilt_channel} from '@test/uti
 
 const {progressive, vocaltrance, classictechno} = prebuilt_channel
 
-describe('NowPlayingProvider service', function () {
+describe('NowPlayingProvider', function () {
     let now_playing_provider: NowPlayingProvider
 
     beforeEach(async function () {

@@ -1,2 +1,2 @@
 export * from './ArgvParser.interface'
-export * from './ArgvParser.service'
+export * from './create_argv_parser'

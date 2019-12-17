@@ -9,7 +9,7 @@ import {AppData} from '@src/domain/di'
 
 import {create_logger_stub, create_digitally_imported_stub, AppDataBuilder} from '@test/util'
 
-describe('AppDataProvider service', function () {
+describe('AppDataProvider', function () {
     let app_data_provider: AppDataProvider
     let di_stub: SinonStubbedInstance<DigitallyImported>
 

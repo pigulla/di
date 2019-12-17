@@ -7,7 +7,7 @@ import {PeriodicTrigger, Options, ILogger} from '@src/domain'
 
 import {create_logger_stub} from '@test/util'
 
-describe('PeriodicTrigger service', function () {
+describe('PeriodicTrigger', function () {
     let options: Merge<Options, {callback: SinonStub}>
     let logger_stub: SinonStubbedInstance<ILogger>
     let clock: SinonFakeTimers

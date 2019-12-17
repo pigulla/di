@@ -9,7 +9,7 @@ import {Channel, ChannelFilter, NowPlaying, DigitallyImported, DigitallyImported
 import {create_config_stub, create_logger_stub} from '@test/util'
 import {load_nock_recording, RecordingName} from '@test/util/load_nock_recording'
 
-describe('DigitallyImported service', function () {
+describe('DigitallyImported', function () {
     let config_stub: SinonStubbedInstance<Configuration>
     let digitally_imported: DigitallyImported
 

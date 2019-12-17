@@ -3,7 +3,7 @@ import {stub} from 'sinon'
 
 import {ServerProcessProxy} from '@src/infrastructure'
 
-describe('ServerProcessProxy service', function () {
+describe('ServerProcessProxy', function () {
     it('should terminate the process', function () {
         const process_stub = {
             kill: stub(),

@@ -11,15 +11,11 @@ import {
     VolumeController,
 } from '../../application/controller'
 
-import {DigitallyImportedModule, PlaybackControlModule, UtilityModule} from '../infrastructure'
 import {DomainModule} from '../domain'
 
 @Module({
     imports: [
-        DigitallyImportedModule,
         DomainModule,
-        PlaybackControlModule,
-        UtilityModule,
     ],
     controllers: [
         ChannelFiltersController,

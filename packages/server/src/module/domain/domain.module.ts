@@ -4,7 +4,7 @@ import {
     IPlaybackStateProvider, PlaybackStateProvider,
     IPeriodicTrigger, PeriodicTrigger,
     ILogger,
-    Notifier, INowPlayingProvider, IDigitallyImported, NowPlayingProvider,
+    Notifier, INowPlayingProvider, IDigitallyImported, NowPlayingProvider, ChannelsProvider, FavoritesProvider,
 } from '../../domain'
 import {Configuration} from '../../domain/config'
 import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../infrastructure'
@@ -20,6 +20,10 @@ import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../
         {
             provide: 'INotifier',
             useClass: Notifier,
+        },
+        {
+            provide: 'IFavoritesProvider',
+            useClass: FavoritesProvider,
         },
         {
             inject: ['ILogger', 'Configuration', 'IPlaybackStateProvider'],
@@ -74,10 +78,19 @@ import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../
                 return now_playing_provider
             },
         },
+        {
+            provide: 'IChannelsProvider',
+            useClass: ChannelsProvider,
+        },
     ],
     exports: [
-        'IPlaybackStateProvider',
+        'IChannelsProvider',
+        'IFavoritesProvider',
         'INowPlayingProvider',
+        'IPlaybackStateProvider',
+        DigitallyImportedModule,
+        PlaybackControlModule,
+        UtilityModule,
     ],
 })
 export class DomainModule {}

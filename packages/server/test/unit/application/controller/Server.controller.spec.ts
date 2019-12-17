@@ -14,7 +14,7 @@ import {
     AppDataBuilder,
     create_app_data_provider_stub,
     create_playback_control_stub, create_server_process_proxy_stub,
-} from '../../util'
+} from '../../../util'
 
 describe('Server controller', function () {
     const package_json: NormalizedPackageJson = {

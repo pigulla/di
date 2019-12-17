@@ -48,13 +48,11 @@ export class AppDataProvider implements IAppDataProvider, OnModuleInit {
         return this.app_data
     }
 
-    public async load_app_data (): Promise<this> {
+    public async load_app_data (): Promise<void> {
         this.app_data = await this.digitally_imported.load_app_data()
         this.last_update_at = dayjs()
 
         this.logger.debug('App data retrieved, notifying listeners')
         this.update_callbacks.forEach(([callback, context]) => callback.call(context, this.get_app_data()))
-
-        return this
     }
 }

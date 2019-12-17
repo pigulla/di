@@ -15,7 +15,7 @@ import {
     create_now_playing_provider_stub,
     create_playback_control_stub,
     prebuilt_channel, NowPlayingBuilder,
-} from '../../util'
+} from '../../../util'
 
 describe('Playback controller', function () {
     let controller: PlaybackController

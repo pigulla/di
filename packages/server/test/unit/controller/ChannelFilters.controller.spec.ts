@@ -2,8 +2,8 @@ import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
-import {ChannelFiltersController} from '@src/controller'
-import {IChannelsProvider} from '@src/service'
+import {ChannelFiltersController} from '@src/application/controller'
+import {IChannelsProvider} from '@src/domain'
 
 import {create_channels_provider_stub, prebuilt_channel_filter} from '@test/util'
 

@@ -4,7 +4,7 @@ import {AddressInfo, Server} from 'net'
 
 import {NormalizedPackageJson} from 'read-pkg'
 import {NestFactory} from '@nestjs/core'
-import {INestApplication, LoggerService, ValidationPipe} from '@nestjs/common';
+import {INestApplication, LoggerService, ValidationPipe} from '@nestjs/common'
 import pino from 'pino'
 
 import {ControllerModule} from './module/application'

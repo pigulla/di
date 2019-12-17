@@ -1,6 +1,6 @@
 import {stub, SinonStubbedInstance} from 'sinon'
 
-import {IVlcChildProcessFacade} from '@src/service/playback/'
+import {IVlcChildProcessFacade} from '@src/infrastructure/playback/'
 
 export function create_vlc_child_process_facade_stub (): SinonStubbedInstance<IVlcChildProcessFacade> {
     return {

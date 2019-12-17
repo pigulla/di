@@ -1,8 +1,8 @@
 import {expect} from 'chai'
 import hook_std, {HookPromise} from 'hook-std'
 
-import {create_argv_parser, IArgvParser} from '@src/service/config'
-import {Quality} from '@src/service/di'
+import {create_argv_parser, IArgvParser} from '@src/infrastructure/config'
+import {Quality} from '@src/domain/di'
 
 function expect_yargs_error (cb: Function, message: RegExp): void {
     try {
@@ -78,7 +78,7 @@ describe('The ArgvParser', function () {
 
         it('should work with minimal options', function () {
             const result = argv_parser(['--listenkey', '1234567890123456'])
-            expect(result.listenkey).to.equal('1234567890123456')
+            expect(result.di_listenkey).to.equal('1234567890123456')
         })
 
         it('should parse all options', function () {
@@ -93,13 +93,13 @@ describe('The ArgvParser', function () {
             ])
 
             expect(result).to.include({
-                listenkey: '1234567890123456',
-                frequency: 42,
-                url: 'http://www.di.fm.local/streams',
-                quality: Quality.AAC_64,
-                vlcPath: '/usr/local/bin/vlc',
-                vlcTimeout: 1234,
-                vlcInitialVolume: 0.77,
+                di_listenkey: '1234567890123456',
+                di_frequency_ms: 42,
+                di_url: 'http://www.di.fm.local/streams',
+                di_quality: Quality.AAC_64,
+                vlc_path: '/usr/local/bin/vlc',
+                vlc_timeout: 1234,
+                vlc_initial_volume: 0.77,
             })
         })
 
@@ -188,8 +188,8 @@ describe('The ArgvParser', function () {
             ])
 
             expect(result).to.deep.include({
-                listenkey: '1234567890123456',
-                credentials: {
+                di_listenkey: '1234567890123456',
+                di_credentials: {
                     password: '53cr37',
                     username: 'test@example.local',
                 },

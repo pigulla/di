@@ -4,16 +4,15 @@ import {SinonStubbedInstance} from 'sinon'
 
 import {
     IDigitallyImported,
-    IConfigProvider,
     IChannelsProvider,
     FavoritesProvider,
     CredentialsUnavailableError,
-} from '@src/service'
-
+} from '@src/domain'
+import {Configuration} from '@src/domain/config'
 import {
     create_logger_stub,
     create_channels_provider_stub,
-    create_config_provider_stub,
+    create_config_stub,
     create_digitally_imported_stub,
     prebuilt_channel,
 } from '@test/util'
@@ -22,35 +21,35 @@ const {progressive, classictechno} = prebuilt_channel
 
 describe('FavoritesProvider service', function () {
     let favorites_provider: FavoritesProvider
-    let config_provider: SinonStubbedInstance<IConfigProvider>
-    let channels_provider: SinonStubbedInstance<IChannelsProvider>
-    let digitally_imported: SinonStubbedInstance<IDigitallyImported>
+    let config_stub: SinonStubbedInstance<Configuration>
+    let channels_provider_stub: SinonStubbedInstance<IChannelsProvider>
+    let di_stub: SinonStubbedInstance<IDigitallyImported>
 
     beforeEach(async function () {
-        const logger = create_logger_stub()
-        config_provider = create_config_provider_stub()
-        channels_provider = create_channels_provider_stub()
-        digitally_imported = create_digitally_imported_stub()
+        const logger_stub = create_logger_stub()
+        config_stub = create_config_stub()
+        channels_provider_stub = create_channels_provider_stub()
+        di_stub = create_digitally_imported_stub()
 
-        logger.child_for_service.returns(create_logger_stub())
+        logger_stub.child_for_service.returns(create_logger_stub())
 
         const module = await Test.createTestingModule({
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: logger,
+                    useValue: logger_stub,
                 },
                 {
                     provide: 'IChannelsProvider',
-                    useValue: channels_provider,
+                    useValue: channels_provider_stub,
                 },
                 {
-                    provide: 'IConfigProvider',
-                    useValue: config_provider,
+                    provide: 'Configuration',
+                    useValue: config_stub,
                 },
                 {
                     provide: 'IDigitallyImported',
-                    useValue: digitally_imported,
+                    useValue: di_stub,
                 },
                 FavoritesProvider,
             ],
@@ -60,12 +59,12 @@ describe('FavoritesProvider service', function () {
     })
 
     it('should return all favorites if credentials are given', async function () {
-        channels_provider.get.withArgs(progressive.key).returns(progressive)
-        channels_provider.get.withArgs(classictechno.key).returns(classictechno)
+        channels_provider_stub.get.withArgs(progressive.key).returns(progressive)
+        channels_provider_stub.get.withArgs(classictechno.key).returns(classictechno)
 
-        digitally_imported.load_favorite_channel_keys
+        di_stub.load_favorite_channel_keys
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            .withArgs(config_provider.di_credentials!)
+            .withArgs(config_stub.di_credentials!)
             .resolves([progressive.key, classictechno.key])
 
         const favorites = await favorites_provider.get_all()
@@ -74,7 +73,7 @@ describe('FavoritesProvider service', function () {
     })
 
     it('should throw if no credentials are given', async function () {
-        config_provider.di_credentials = null
+        config_stub.di_credentials = null
 
         await expect(favorites_provider.get_all()).to.be.rejectedWith(CredentialsUnavailableError)
     })

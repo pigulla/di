@@ -1,6 +1,7 @@
 import dayjs, {Dayjs} from 'dayjs'
 
-import {Channel} from '@src/service/di'
+import {IChannel} from '@src/domain/di'
+import {Channel} from '@src/infrastructure/di'
 
 export class ChannelBuilder {
     private director: string = 'D. Rector'
@@ -71,7 +72,7 @@ export class ChannelBuilder {
         return this
     }
 
-    public build (): Channel {
+    public build (): IChannel {
         return new Channel(
             this.director,
             this.created_at,

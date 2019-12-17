@@ -1,4 +1,5 @@
-import {NowPlaying, Channel} from '@src/service/di'
+import {INowPlaying, IChannel} from '@src/domain/di'
+import {NowPlaying} from '@src/infrastructure/di'
 
 export class NowPlayingBuilder {
     private channel_id: number = 7
@@ -6,7 +7,7 @@ export class NowPlayingBuilder {
     private display_artist: string = 'Shpongle'
     private display_title: string = 'Outer Shpongolia'
 
-    public for_channel (channel: Channel): this {
+    public for_channel (channel: IChannel): this {
         return this
             .with_channel_id(channel.id)
             .with_channel_key(channel.key)
@@ -32,7 +33,7 @@ export class NowPlayingBuilder {
         return this
     }
 
-    public build (): NowPlaying {
+    public build (): INowPlaying {
         return new NowPlaying(
             this.channel_id,
             this.channel_key,

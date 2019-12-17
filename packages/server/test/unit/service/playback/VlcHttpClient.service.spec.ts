@@ -2,8 +2,8 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {ILogger} from '@src/service/logger'
-import {PlaybackState, VlcHttpClient, VlcHttpConnection} from '@src/service/playback/'
+import {ILogger} from '@src/domain'
+import {PlaybackState, VlcHttpClient, VlcHttpConnection} from '@src/infrastructure/playback/'
 
 import {create_logger_stub, prebuilt_channel} from '@test/util'
 import {load_nock_recording, RecordingName} from '@test/util/load_nock_recording'
@@ -18,18 +18,18 @@ describe('VlcHttpClient service', function () {
     }
 
     let vlc_http_client: VlcHttpClient
-    let child_logger: SinonStubbedInstance<ILogger>
+    let child_logger_stub: SinonStubbedInstance<ILogger>
 
     beforeEach(async function () {
-        const logger = create_logger_stub()
-        child_logger = create_logger_stub()
-        logger.child_for_service.returns(child_logger)
+        const logger_stub = create_logger_stub()
+        child_logger_stub = create_logger_stub()
+        logger_stub.child_for_service.returns(child_logger_stub)
 
         const module = await Test.createTestingModule({
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: logger,
+                    useValue: logger_stub,
                 },
                 {
                     provide: 'vlc_http_connection',

@@ -6,7 +6,7 @@ import {
     parse_authentication_response, RawFailedAuthenticationResponse,
     RawSuccessfulAuthenticationResponse,
     SuccessfulAuthenticationResponse,
-} from '@src/service/di'
+} from '@src/infrastructure/di'
 
 describe('The AuthenticationResponse', function () {
     it('should be parsed when authentication was successful', function () {

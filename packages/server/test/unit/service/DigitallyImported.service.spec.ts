@@ -3,21 +3,21 @@ import {expect} from 'chai'
 import dayjs from 'dayjs'
 import {SinonStubbedInstance} from 'sinon'
 
-import {DigitallyImported, IConfigProvider, DigitallyImportedError} from '@src/service'
-import {Channel, ChannelFilter, NowPlaying} from '@src/service/di'
+import {Configuration} from '@src/domain/config'
+import {Channel, ChannelFilter, NowPlaying, DigitallyImported, DigitallyImportedError} from '@src/infrastructure/di'
 
-import {create_config_provider_stub, create_logger_stub} from '@test/util'
+import {create_config_stub, create_logger_stub} from '@test/util'
 import {load_nock_recording, RecordingName} from '@test/util/load_nock_recording'
 
 describe('DigitallyImported service', function () {
-    let config_provider: SinonStubbedInstance<IConfigProvider>
+    let config_stub: SinonStubbedInstance<Configuration>
     let digitally_imported: DigitallyImported
 
     beforeEach(async function () {
-        const logger = create_logger_stub()
-        logger.child_for_service.returns(create_logger_stub())
+        const logger_stub = create_logger_stub()
+        logger_stub.child_for_service.returns(create_logger_stub())
 
-        config_provider = create_config_provider_stub({
+        config_stub = create_config_stub({
             di_url: 'https://www.di.fm',
         })
 
@@ -25,11 +25,11 @@ describe('DigitallyImported service', function () {
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: logger,
+                    useValue: logger_stub,
                 },
                 {
-                    provide: 'IConfigProvider',
-                    useValue: config_provider,
+                    provide: 'Configuration',
+                    useValue: config_stub,
                 },
                 DigitallyImported,
             ],

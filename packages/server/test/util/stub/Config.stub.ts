@@ -1,14 +1,16 @@
 import merge from 'lodash.merge'
 
-import {IConfigProvider} from '@src/service'
-import {Quality} from '@src/service/di'
-import {LogLevel} from '@src/service/logger'
+import {LogLevel} from '@src/domain'
+import {Quality} from '@src/domain/di'
+import {Configuration, NotificationType} from '@src/domain/config'
 
-export const default_config: IConfigProvider = {
+export const default_config: Configuration = {
     server_hostname: 'localhost',
     server_port: 4979,
 
     log_level: LogLevel.WARN,
+    playback_state_check_frequency_ms: 2_500,
+    notifications: NotificationType.NONE,
 
     vlc_path: '/dev/null',
     vlc_timeout: 1000,
@@ -24,6 +26,6 @@ export const default_config: IConfigProvider = {
     },
 }
 
-export function create_config_provider_stub (overrides: Partial<IConfigProvider> = {}): IConfigProvider {
+export function create_config_stub (overrides: Partial<Configuration> = {}): Configuration {
     return merge({}, default_config, overrides)
 }

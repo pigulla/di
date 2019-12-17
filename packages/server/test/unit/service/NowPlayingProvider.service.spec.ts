@@ -1,8 +1,8 @@
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 
-import {NowPlayingProvider} from '@src/service'
-import {NowPlaying} from '@src/service/di'
+import {NowPlayingProvider} from '@src/domain'
+import {INowPlaying} from '@src/domain/di'
 
 import {create_logger_stub, NowPlayingBuilder, prebuilt_channel} from '@test/util'
 
@@ -12,14 +12,14 @@ describe('NowPlayingProvider service', function () {
     let now_playing_provider: NowPlayingProvider
 
     beforeEach(async function () {
-        const logger = create_logger_stub()
-        logger.child_for_service.returns(create_logger_stub())
+        const logger_stub = create_logger_stub()
+        logger_stub.child_for_service.returns(create_logger_stub())
 
         const module = await Test.createTestingModule({
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: logger,
+                    useValue: logger_stub,
                 },
                 NowPlayingProvider,
             ],
@@ -33,7 +33,7 @@ describe('NowPlayingProvider service', function () {
     })
 
     describe('when updated', function () {
-        let now_playing_items: NowPlaying[]
+        let now_playing_items: INowPlaying[]
 
         beforeEach(function () {
             now_playing_items = [

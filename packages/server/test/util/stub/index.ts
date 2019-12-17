@@ -1,6 +1,6 @@
 export * from './AppDataProvider.stub'
 export * from './ChannelsProvider.stub'
-export * from './ConfigProvider.stub'
+export * from './Config.stub'
 export * from './DigitallyImported.stub'
 export * from './FavoritesProvider.stub'
 export * from './Logger.stub'

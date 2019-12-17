@@ -3,7 +3,7 @@ import http_mocks from 'node-mocks-http'
 import {NormalizedPackageJson} from 'read-pkg'
 import {spy} from 'sinon'
 
-import {AppVersionHeader} from '@src/middleware'
+import {AppVersionHeader} from '@src/application/middleware'
 
 describe('The app version header middleware', function () {
     const name = 'MyApp'

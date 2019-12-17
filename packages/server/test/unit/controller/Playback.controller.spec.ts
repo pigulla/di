@@ -3,14 +3,15 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {PlaybackController} from '@src/controller'
-import {IChannelsProvider, IConfigProvider, INowPlayingProvider, IPlaybackControl} from '@src/service'
-import {Quality} from '@src/service/di'
+import {PlaybackController} from '@src/application/controller'
+import {IChannelsProvider, INowPlayingProvider, IPlaybackControl} from '@src/domain'
+import {Quality} from '@src/domain/di'
+import {Configuration} from '@src/domain/config'
 
 import {
     ChannelBuilder,
     create_channels_provider_stub,
-    create_config_provider_stub,
+    create_config_stub,
     create_now_playing_provider_stub,
     create_playback_control_stub,
     prebuilt_channel, NowPlayingBuilder,
@@ -20,14 +21,14 @@ describe('Playback controller', function () {
     let controller: PlaybackController
     let playback_control_stub: SinonStubbedInstance<IPlaybackControl>
     let channels_provider_stub: SinonStubbedInstance<IChannelsProvider>
-    let config_provider_stub: SinonStubbedInstance<IConfigProvider>
+    let config_stub: SinonStubbedInstance<Configuration>
     let now_playing_provider_stub: SinonStubbedInstance<INowPlayingProvider>
 
     beforeEach(async function () {
         playback_control_stub = create_playback_control_stub()
         channels_provider_stub = create_channels_provider_stub()
         now_playing_provider_stub = create_now_playing_provider_stub()
-        config_provider_stub = create_config_provider_stub({
+        config_stub = create_config_stub({
             di_listenkey: 'my-listen-key',
             di_quality: Quality.MP3_320,
         })
@@ -43,8 +44,8 @@ describe('Playback controller', function () {
                     useValue: channels_provider_stub,
                 },
                 {
-                    provide: 'IConfigProvider',
-                    useValue: config_provider_stub,
+                    provide: 'Configuration',
+                    useValue: config_stub,
                 },
                 {
                     provide: 'INowPlayingProvider',

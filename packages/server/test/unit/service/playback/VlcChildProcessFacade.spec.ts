@@ -3,7 +3,7 @@ import {EventEmitter} from 'events'
 import {expect} from 'chai'
 import {SinonStub, stub} from 'sinon'
 
-import {VlcChildProcessFacade, ChildProcessFacadeError, VlcHttpConnection} from '@src/service/playback/'
+import {VlcChildProcessFacade, ChildProcessFacadeError, VlcHttpConnection} from '@src/infrastructure/playback/'
 
 interface StreamMock extends EventEmitter {
     read: SinonStub

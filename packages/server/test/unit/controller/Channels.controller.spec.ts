@@ -3,8 +3,8 @@ import {NotFoundException} from '@nestjs/common'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {ChannelsController} from '@src/controller'
-import {IChannelsProvider} from '@src/service'
+import {ChannelsController} from '@src/application/controller'
+import {IChannelsProvider} from '@src/domain'
 
 import {create_channels_provider_stub, prebuilt_channel} from '@test/util'
 

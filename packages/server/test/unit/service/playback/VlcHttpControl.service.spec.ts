@@ -2,8 +2,8 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {ILogger} from '@src/service/logger'
-import {IVlcChildProcessFacade, IVlcHttpClient, PlaybackState, VlcHttpControl} from '@src/service/playback/'
+import {ILogger} from '@src/domain'
+import {IVlcChildProcessFacade, IVlcHttpClient, PlaybackState, VlcHttpControl} from '@src/infrastructure/playback/'
 
 import {
     create_logger_stub,
@@ -13,14 +13,14 @@ import {
 
 describe('VlcHttpControl service', function () {
     let vlc_http_control: VlcHttpControl
-    let child_logger: SinonStubbedInstance<ILogger>
+    let child_logger_stub: SinonStubbedInstance<ILogger>
     let vlc_child_process_facade_stub: SinonStubbedInstance<IVlcChildProcessFacade>
     let vlc_http_client_stub: SinonStubbedInstance<IVlcHttpClient>
 
     beforeEach(async function () {
-        const logger = create_logger_stub()
-        child_logger = create_logger_stub()
-        logger.child_for_service.returns(child_logger)
+        const logger_stub = create_logger_stub()
+        child_logger_stub = create_logger_stub()
+        logger_stub.child_for_service.returns(child_logger_stub)
 
         vlc_child_process_facade_stub = create_vlc_child_process_facade_stub()
         vlc_http_client_stub = create_vlc_http_client_stub()
@@ -29,7 +29,7 @@ describe('VlcHttpControl service', function () {
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: logger,
+                    useValue: logger_stub,
                 },
                 {
                     provide: 'IVlcHttpClient',

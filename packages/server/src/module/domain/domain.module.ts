@@ -65,7 +65,7 @@ import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../
             provide: 'INowPlayingProvider',
             async useFactory (
                 logger: ILogger,
-                digitally_imported: IDigitallyImported
+                digitally_imported: IDigitallyImported,
             ): Promise<INowPlayingProvider> {
                 const now_playing_provider = new NowPlayingProvider(logger)
                 const data = await digitally_imported.load_now_playing()

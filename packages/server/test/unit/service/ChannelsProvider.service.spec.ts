@@ -2,8 +2,8 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {ChannelsProvider, IAppDataProvider} from '@src/service'
-import {AppData} from '@src/service/di'
+import {ChannelsProvider, IAppDataProvider} from '@src/domain'
+import {AppData} from '@src/domain/di'
 
 import {
     create_logger_stub,
@@ -27,29 +27,29 @@ describe('ChannelsProvider service', function () {
         .with_channel_filters([ambient, bass, deep])
         .build()
 
-    let app_data_provider: SinonStubbedInstance<IAppDataProvider>
+    let app_data_provider_stub: SinonStubbedInstance<IAppDataProvider>
     let channels_provider: ChannelsProvider
 
     function trigger_update (new_app_data: AppData): void {
-        const [fn, ctx] = app_data_provider.on_update.firstCall.args
+        const [fn, ctx] = app_data_provider_stub.on_update.firstCall.args
         fn.call(ctx, new_app_data)
     }
 
     beforeEach(async function () {
-        const logger = create_logger_stub()
-        app_data_provider = create_app_data_provider_stub()
-        app_data_provider.get_app_data.returns(app_data)
-        logger.child_for_service.returns(create_logger_stub())
+        const logger_stub = create_logger_stub()
+        app_data_provider_stub = create_app_data_provider_stub()
+        app_data_provider_stub.get_app_data.returns(app_data)
+        logger_stub.child_for_service.returns(create_logger_stub())
 
         const module = await Test.createTestingModule({
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: logger,
+                    useValue: logger_stub,
                 },
                 {
                     provide: 'IAppDataProvider',
-                    useValue: app_data_provider,
+                    useValue: app_data_provider_stub,
                 },
                 ChannelsProvider,
             ],
@@ -65,7 +65,7 @@ describe('ChannelsProvider service', function () {
             channels: [],
             channel_filters: [],
         }
-        app_data_provider.get_app_data.returns(new_app_data)
+        app_data_provider_stub.get_app_data.returns(new_app_data)
 
         trigger_update(new_app_data)
 

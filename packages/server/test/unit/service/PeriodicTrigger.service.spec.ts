@@ -3,8 +3,7 @@ import {expect} from 'chai'
 import {match, stub, useFakeTimers, SinonFakeTimers, SinonStubbedInstance, SinonStub} from 'sinon'
 import {Merge} from 'type-fest'
 
-import {PeriodicTrigger, Options} from '@src/service'
-import {ILogger} from '@src/service/logger'
+import {PeriodicTrigger, Options, ILogger} from '@src/domain'
 
 import {create_logger_stub} from '@test/util'
 

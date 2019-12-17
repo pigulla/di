@@ -7,8 +7,8 @@ import {NormalizedPackageJson} from 'read-pkg'
 import {SinonStubbedInstance} from 'sinon'
 import {JsonObject} from 'type-fest'
 
-import {ServerController} from '@src/controller'
-import {IAppDataProvider, IPlaybackControl, IServerProcessProxy} from '@src/service'
+import {ServerController} from '@src/application/controller'
+import {IAppDataProvider, IPlaybackControl, IServerProcessProxy} from '@src/domain'
 
 import {
     AppDataBuilder,

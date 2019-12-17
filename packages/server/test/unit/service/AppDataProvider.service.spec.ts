@@ -4,29 +4,29 @@ import dayjs from 'dayjs'
 import mockdate from 'mockdate'
 import {spy, SinonStubbedInstance, stub} from 'sinon'
 
-import {DigitallyImported, AppDataProvider} from '@src/service'
-import {AppData} from '@src/service/di'
+import {DigitallyImported, AppDataProvider} from '@src/infrastructure/di'
+import {AppData} from '@src/domain/di'
 
 import {create_logger_stub, create_digitally_imported_stub, AppDataBuilder} from '@test/util'
 
 describe('AppDataProvider service', function () {
     let app_data_provider: AppDataProvider
-    let di: SinonStubbedInstance<DigitallyImported>
+    let di_stub: SinonStubbedInstance<DigitallyImported>
 
     beforeEach(async function () {
-        const logger = create_logger_stub()
-        di = create_digitally_imported_stub()
-        logger.child_for_service.returns(create_logger_stub())
+        const logger_stub = create_logger_stub()
+        di_stub = create_digitally_imported_stub()
+        logger_stub.child_for_service.returns(create_logger_stub())
 
         const module = await Test.createTestingModule({
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: logger,
+                    useValue: logger_stub,
                 },
                 {
                     provide: 'IDigitallyImported',
-                    useValue: di,
+                    useValue: di_stub,
                 },
                 AppDataProvider,
             ],
@@ -61,7 +61,7 @@ describe('AppDataProvider service', function () {
             mockdate.set(now.toDate())
 
             app_data = new AppDataBuilder().build()
-            di.load_app_data.resolves(app_data)
+            di_stub.load_app_data.resolves(app_data)
 
             await app_data_provider.load_app_data()
         })

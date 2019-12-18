@@ -4,10 +4,13 @@ import {Inject, OnModuleInit} from '@nestjs/common'
 import {AppData} from './AppData'
 import {ILogger, IDigitallyImported, IAppDataProvider} from '../../domain'
 
+type UpdateCallbackFn = (app_data: AppData) => void
+type UpdateCallback = [UpdateCallbackFn, any]
+
 export class AppDataProvider implements IAppDataProvider, OnModuleInit {
     private readonly digitally_imported: IDigitallyImported
     private readonly logger: ILogger
-    private readonly update_callbacks: Array<[(app_data: AppData) => void, any]>
+    private readonly update_callbacks: UpdateCallback[]
     private last_update_at: Dayjs|null
     private app_data: AppData|null
 
@@ -36,7 +39,7 @@ export class AppDataProvider implements IAppDataProvider, OnModuleInit {
         return this.last_update_at
     }
 
-    public on_update (callback: (app_data: AppData) => void, context?: any): void {
+    public on_update (callback: UpdateCallbackFn, context: any): void {
         this.update_callbacks.push([callback, context])
     }
 

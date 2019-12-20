@@ -1,7 +1,8 @@
-import {Inject} from '@nestjs/common'
+import {Inject, Injectable} from '@nestjs/common'
 
 import {ILogger, INotificationProvider} from '../../domain'
 
+@Injectable()
 export class LogNotificationProvider implements INotificationProvider {
     private readonly logger: ILogger
 

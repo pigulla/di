@@ -1,7 +1,7 @@
 import {
     ChannelDTO,
     ChannelFilterDTO,
-    NowPlayingDTO,
+    OnAirDTO,
     PlaybackStateDTO,
     ServerStatusDTO,
 } from '@digitally-imported/dto'
@@ -21,7 +21,7 @@ export interface IClient {
     get_channels (): Promise<ChannelDTO[]>
     get_channel (channel_key: string): Promise<ChannelDTO>
     get_channel_filters (): Promise<ChannelFilterDTO[]>
-    get_now_playing (): Promise<Map<string, NowPlayingDTO>>
-    get_now_playing (channel_key: string): Promise<NowPlayingDTO>
-    get_now_playing (channel_key?: string): Promise<NowPlayingDTO|Map<string, NowPlayingDTO>>
+    get_on_air (): Promise<Map<string, OnAirDTO>>
+    get_on_air (channel_key: string): Promise<OnAirDTO>
+    get_on_air (channel_key?: string): Promise<OnAirDTO|Map<string, OnAirDTO>>
 }

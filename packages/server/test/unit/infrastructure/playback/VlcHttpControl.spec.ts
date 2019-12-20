@@ -71,7 +71,6 @@ describe('VlcHttpControl', function () {
             state: PlaybackState.PLAYING,
             version: 'foo',
             meta: null,
-            stream: null,
         })
 
         await expect(vlc_http_control.get_playback_backend_information()).to.eventually.deep.equal({

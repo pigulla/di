@@ -3,7 +3,7 @@ import {expect} from 'chai'
 import {
     ChannelFilterDTO,
     ChannelDTO,
-    NowPlayingDTO,
+    OnAirDTO,
     PlayDTO,
     PlaybackStateDTO,
     ServerStatusDTO,
@@ -54,10 +54,10 @@ describe('The DTO', function () {
         })
     })
 
-    describe('for now playing state', function () {
+    describe('for on air data', function () {
         it('should be constructible', function () {
-            const dto = new NowPlayingDTO()
-            expect(dto).to.be.instanceOf(NowPlayingDTO)
+            const dto = new OnAirDTO()
+            expect(dto).to.be.instanceOf(OnAirDTO)
         })
 
         it('should be constructible via its factory method', function () {
@@ -67,7 +67,7 @@ describe('The DTO', function () {
                 display_artist: 'The Artist',
                 display_title: 'The Title',
             }
-            expect(NowPlayingDTO.create(data)).to.deep.equal(data)
+            expect(OnAirDTO.create(data)).to.deep.equal(data)
         })
     })
 

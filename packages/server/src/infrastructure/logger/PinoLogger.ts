@@ -1,7 +1,9 @@
 import {Logger as Pino} from 'pino'
+import {Injectable} from '@nestjs/common'
 
 import {ILogger, ChildLoggerOptions, LogLevel} from '../../domain'
 
+@Injectable()
 export class PinoLogger implements ILogger {
     private readonly pino: Pino
 

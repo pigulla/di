@@ -16,18 +16,21 @@ describe('PeriodicTrigger', function () {
 
     beforeEach(async function () {
         options = {
+            log_id: 'log-id',
             callback: stub(),
             scope: {},
             interval_ms: 5_000,
         }
 
+        const parent_logger_stub = create_logger_stub()
         logger_stub = create_logger_stub()
+        parent_logger_stub.child_for_service.returns(logger_stub)
 
         const module = await Test.createTestingModule({
             providers: [
                 {
                     provide: 'ILogger',
-                    useValue: logger_stub,
+                    useValue: parent_logger_stub,
                 },
                 {
                     inject: ['ILogger'],
@@ -59,8 +62,8 @@ describe('PeriodicTrigger', function () {
             expect(periodic_trigger.is_running()).to.be.false
         })
 
-        it('should start on application bootstrap', function () {
-            periodic_trigger.onApplicationBootstrap()
+        it('should start on module init', function () {
+            periodic_trigger.onModuleInit()
 
             expect(periodic_trigger.is_running()).to.be.true
         })
@@ -81,8 +84,8 @@ describe('PeriodicTrigger', function () {
             expect(periodic_trigger.is_running()).to.be.true
         })
 
-        it('should stop on application shutdown', function () {
-            periodic_trigger.onApplicationShutdown()
+        it('should stop on module destruction', function () {
+            periodic_trigger.onModuleDestroy()
 
             expect(periodic_trigger.is_running()).to.be.false
         })

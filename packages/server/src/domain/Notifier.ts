@@ -1,9 +1,10 @@
-import {Inject} from '@nestjs/common'
+import {Inject, Injectable} from '@nestjs/common'
 
 import {INotifier} from './Notifier.interface'
 import {INotificationProvider} from './NotificationProvider.interface'
 import {IPlaybackStateProvider, PlaybackState} from './PlaybackStateProvider.interface'
 
+@Injectable()
 export class Notifier implements INotifier {
     private readonly notification_provider: INotificationProvider
     private readonly playback_state_provider: IPlaybackStateProvider

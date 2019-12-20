@@ -1,15 +1,17 @@
-import {Inject, OnApplicationBootstrap, OnApplicationShutdown} from '@nestjs/common'
+import {Inject, Injectable, OnModuleDestroy, OnModuleInit, Scope} from '@nestjs/common'
 
 import {ILogger} from './Logger.interface'
 import {IPeriodicTrigger} from './PeriodicTrigger.interface'
 
 export type Options = {
+    log_id: string
     callback: Function
     scope?: any
     interval_ms: number
 }
 
-export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap, OnApplicationShutdown {
+@Injectable({scope: Scope.TRANSIENT})
+export class PeriodicTrigger implements IPeriodicTrigger, OnModuleInit, OnModuleDestroy {
     private readonly logger: ILogger
     private readonly options: Options
     private interval_id: NodeJS.Timer|null
@@ -18,27 +20,27 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap
         @Inject('ILogger') logger: ILogger,
             options: Options,
     ) {
-        this.logger = logger
+        this.logger = logger.child_for_service(`${PeriodicTrigger.name}/${options.log_id}`)
         this.options = Object.assign({scope: null}, options)
         this.interval_id = null
 
         this.logger.debug('Service instantiated')
     }
 
-    public onApplicationBootstrap (): void {
+    public onModuleInit (): void {
         this.start()
     }
 
-    public onApplicationShutdown (_signal?: string): void {
+    public onModuleDestroy (): void {
         this.stop()
     }
 
     public is_running (): boolean {
-        return !!this.interval_id
+        return this.interval_id !== null
     }
 
     public start (): void {
-        if (this.interval_id) {
+        if (this.interval_id !== null) {
             return
         }
 
@@ -47,7 +49,7 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnApplicationBootstrap
     }
 
     public stop (): void {
-        if (!this.interval_id) {
+        if (this.interval_id === null) {
             return
         }
 

@@ -3,7 +3,7 @@ import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
 import {ILogger} from '@src/domain'
-import {PlaybackState, VlcHttpClient, VlcHttpConnection} from '@src/infrastructure/playback/'
+import {PlaybackState, Status, VlcHttpClient, VlcHttpConnection} from '@src/infrastructure/playback/'
 
 import {create_logger_stub, prebuilt_channel} from '@test/util'
 import {load_nock_recording, RecordingName} from '@test/util/load_nock_recording'
@@ -46,7 +46,7 @@ describe('VlcHttpClient', function () {
         it('should return the status', async function () {
             load_nock_recording(RecordingName.VLC_STATUS)
 
-            await expect(vlc_http_client.get_status()).to.eventually.deep.equal({
+            const expected_status: Status = {
                 volume: 166,
                 apiversion: 3,
                 state: PlaybackState.PLAYING,
@@ -55,15 +55,10 @@ describe('VlcHttpClient', function () {
                     filename: 'progressive?d34db33fd34db33f',
                     genre: 'Progressive',
                     title: 'Progressive - DI.FM Premium',
-                    now_playing: 'JFR - Where Is My God (Original Mix)',
                 },
-                stream: {
-                    bits_per_sample: 32,
-                    codec: 'MPEG AAC Audio (mp4a)',
-                    sample_rate: '44100 Hz',
-                    channels: 'Stereo',
-                },
-            })
+            }
+
+            await expect(vlc_http_client.get_status()).to.eventually.deep.equal(expected_status)
         })
 
         it('should return the volume', async function () {
@@ -89,14 +84,15 @@ describe('VlcHttpClient', function () {
         it('should return the status', async function () {
             load_nock_recording(RecordingName.VLC_STATUS_NOT_PLAYING)
 
-            await expect(vlc_http_client.get_status()).to.eventually.deep.equal({
+            const expected_status: Status = {
                 volume: 0,
                 apiversion: 3,
                 state: PlaybackState.STOPPED,
                 version: '3.0.8 Vetinari',
                 meta: null,
-                stream: null,
-            })
+            }
+
+            await expect(vlc_http_client.get_status()).to.eventually.deep.equal(expected_status)
         })
 
         it('should return the volume', async function () {

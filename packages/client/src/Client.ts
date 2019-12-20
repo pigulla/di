@@ -10,7 +10,7 @@ import {
 import {
     ChannelDTO,
     ChannelFilterDTO,
-    NowPlayingDTO,
+    OnAirDTO,
     PlaybackStateDTO,
     PlayDTO,
     ServerStatusDTO,
@@ -208,11 +208,11 @@ export class Client implements IClient {
             .get('data')
     }
 
-    private async get_now_playing_on_channel (channel_key: string): Promise<NowPlayingDTO> {
+    private async get_on_air_on_channel (channel_key: string): Promise<OnAirDTO> {
         const response = await this
             .request({
                 method: 'GET',
-                url: `/channel/${channel_key}/now_playing`,
+                url: `/channel/${channel_key}/on_air`,
                 validateStatus: status => [OK, NOT_FOUND].includes(status),
             })
 
@@ -223,22 +223,22 @@ export class Client implements IClient {
         return response.data
     }
 
-    private async get_now_playing_on_channels (): Promise<Map<string, NowPlayingDTO>> {
-        const response: NowPlayingDTO[] = await this
+    private async get_on_air_on_channels (): Promise<Map<string, OnAirDTO>> {
+        const response: OnAirDTO[] = await this
             .request({
                 method: 'GET',
-                url: '/channels/now_playing',
+                url: '/channels/on_air',
             })
             .get('data')
 
-        return response.reduce((map, now_playing) => map.set(now_playing.channel_key, now_playing), new Map())
+        return response.reduce((map, on_air) => map.set(on_air.channel_key, on_air), new Map())
     }
 
-    public get_now_playing (): Promise<Map<string, NowPlayingDTO>>
-    public get_now_playing (channel_key: string): Promise<NowPlayingDTO>
-    public get_now_playing (channel_key?: string): Promise<NowPlayingDTO|Map<string, NowPlayingDTO>> {
+    public get_on_air (): Promise<Map<string, OnAirDTO>>
+    public get_on_air (channel_key: string): Promise<OnAirDTO>
+    public get_on_air (channel_key?: string): Promise<OnAirDTO|Map<string, OnAirDTO>> {
         return channel_key === undefined
-            ? this.get_now_playing_on_channels()
-            : this.get_now_playing_on_channel(channel_key)
+            ? this.get_on_air_on_channels()
+            : this.get_on_air_on_channel(channel_key)
     }
 }

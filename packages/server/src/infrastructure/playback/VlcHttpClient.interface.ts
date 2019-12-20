@@ -14,14 +14,6 @@ export interface Meta {
     filename: string
     genre: string
     title: string
-    now_playing: string
-}
-
-export interface Stream {
-    bits_per_sample: number
-    codec: string
-    sample_rate: string
-    channels: string
 }
 
 export interface Status {
@@ -30,7 +22,6 @@ export interface Status {
     state: PlaybackState
     version: string
     meta: Meta|null
-    stream: Stream|null
 }
 
 export interface IVlcHttpClient {

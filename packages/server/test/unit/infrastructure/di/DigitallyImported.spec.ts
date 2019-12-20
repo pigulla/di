@@ -40,7 +40,7 @@ describe('DigitallyImported', function () {
 
     it('should parse the "now playing" data', async function () {
         load_nock_recording(RecordingName.DI_CURRENTLY_PLAYING)
-        const data = await digitally_imported.load_now_playing()
+        const data = await digitally_imported.load_on_air()
 
         for (const now_playing of data) {
             expect(now_playing).to.be.an.instanceOf(NowPlaying)

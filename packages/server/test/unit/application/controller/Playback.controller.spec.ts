@@ -11,7 +11,7 @@ import {
     ChannelBuilder,
     create_channels_provider_stub,
     create_config_stub,
-    create_now_playing_provider_stub,
+    create_on_air_provider_stub,
     create_playback_control_stub,
     prebuilt_channel, NowPlayingBuilder,
 } from '../../../util'
@@ -21,12 +21,12 @@ describe('Playback controller', function () {
     let playback_control_stub: SinonStubbedInstance<IPlaybackControl>
     let channels_provider_stub: SinonStubbedInstance<IChannelsProvider>
     let config_stub: SinonStubbedInstance<Configuration>
-    let now_playing_provider_stub: SinonStubbedInstance<IOnAirProvider>
+    let on_air_provider_stub: SinonStubbedInstance<IOnAirProvider>
 
     beforeEach(async function () {
         playback_control_stub = create_playback_control_stub()
         channels_provider_stub = create_channels_provider_stub()
-        now_playing_provider_stub = create_now_playing_provider_stub()
+        on_air_provider_stub = create_on_air_provider_stub()
         config_stub = create_config_stub({
             di_listenkey: 'my-listen-key',
             di_quality: Quality.MP3_320,
@@ -47,8 +47,8 @@ describe('Playback controller', function () {
                     useValue: config_stub,
                 },
                 {
-                    provide: 'INowPlayingProvider',
-                    useValue: now_playing_provider_stub,
+                    provide: 'IOnAirProvider',
+                    useValue: on_air_provider_stub,
                 },
                 PlaybackController,
             ],
@@ -74,7 +74,7 @@ describe('Playback controller', function () {
                 .with_display_artist('Hairy Potter')
                 .with_display_title('Hookwarts')
                 .build()
-            now_playing_provider_stub.get_by_channel_key.withArgs(progressive.key).returns(now_playing)
+            on_air_provider_stub.get_by_channel_key.withArgs(progressive.key).returns(now_playing)
             channels_provider_stub.get.withArgs(progressive.key).returns(progressive)
 
             await expect(controller.current()).to.eventually.deep.equal({

@@ -1,7 +1,7 @@
 import {parseStringPromise as parse_xml} from 'xml2js'
 import superagent from 'superagent'
 import clamp from 'lodash.clamp'
-import {Inject} from '@nestjs/common'
+import {Inject, Injectable} from '@nestjs/common'
 
 import {ILogger} from '../../domain'
 import {Channel} from '../di'
@@ -17,6 +17,7 @@ function volume_to_percentage (volume: number): number {
     return clamp(volume / 256, 0, 1.25)
 }
 
+@Injectable()
 export class VlcHttpClient implements IVlcHttpClient {
     private readonly logger: ILogger
     private readonly vlc_http_connection: VlcHttpConnection
@@ -47,27 +48,16 @@ export class VlcHttpClient implements IVlcHttpClient {
             state: xml.root.state as PlaybackState,
             version: xml.root.version as string,
             meta: null,
-            stream: null,
         }
 
         if (Array.isArray(xml.root.information.category)) {
             const meta = xml.root.information.category.find((item: any) => item.$.name === 'meta')
-            const stream = xml.root.information.category.find((item: any) => item.$.name === 'Stream 0')
 
             if (meta) {
                 result.meta = {
                     filename: meta.info.find((item: any) => item.$.name === 'filename')._ as string,
                     genre: (meta.info.find((item: any) => item.$.name === 'genre')._ as string).trim(),
                     title: (meta.info.find((item: any) => item.$.name === 'title')._ as string).trim(),
-                    now_playing: (meta.info.find((item: any) => item.$.name === 'now_playing')._ as string).trim(),
-                }
-            }
-            if (stream) {
-                result.stream = {
-                    bits_per_sample: parseInt(stream.info.find((item: any) => item.$.name === 'Bits per sample')._, 10),
-                    codec: stream.info.find((item: any) => item.$.name === 'Codec')._,
-                    sample_rate: stream.info.find((item: any) => item.$.name === 'Sample rate')._,
-                    channels: stream.info.find((item: any) => item.$.name === 'Channels')._,
                 }
             }
         }

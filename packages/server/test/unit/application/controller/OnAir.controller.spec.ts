@@ -3,32 +3,32 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {NowPlayingController} from '@src/application/controller'
+import {OnAirController} from '@src/application/controller'
 import {IOnAirProvider} from '@src/domain'
 
 import {
-    create_now_playing_provider_stub,
+    create_on_air_provider_stub,
     prebuilt_channel, NowPlayingBuilder,
 } from '@test/util'
 
 describe('NowPlaying controller', function () {
-    let controller: NowPlayingController
-    let now_playing_provider_stub: SinonStubbedInstance<IOnAirProvider>
+    let controller: OnAirController
+    let on_air_provider_stub: SinonStubbedInstance<IOnAirProvider>
 
     beforeEach(async function () {
-        now_playing_provider_stub = create_now_playing_provider_stub()
+        on_air_provider_stub = create_on_air_provider_stub()
 
         const module = await Test.createTestingModule({
             providers: [
                 {
-                    provide: 'INowPlayingProvider',
-                    useValue: now_playing_provider_stub,
+                    provide: 'IOnAirProvider',
+                    useValue: on_air_provider_stub,
                 },
-                NowPlayingController,
+                OnAirController,
             ],
         }).compile()
 
-        controller = module.get(NowPlayingController)
+        controller = module.get(OnAirController)
     })
 
     it('should return all currently playing songs', function () {
@@ -36,7 +36,7 @@ describe('NowPlaying controller', function () {
             new NowPlayingBuilder().for_channel(prebuilt_channel.progressive).build(),
             new NowPlayingBuilder().for_channel(prebuilt_channel.vocaltrance).build(),
         ]
-        now_playing_provider_stub.get_all.returns(now_playing)
+        on_air_provider_stub.get_all.returns(now_playing)
 
         const result = controller.now_playing()
         expect(result).to.deep.equal(now_playing.map(item => item.to_dto()))
@@ -46,7 +46,7 @@ describe('NowPlaying controller', function () {
         const channel = prebuilt_channel.progressive
         const now_playing = new NowPlayingBuilder().for_channel(channel).build()
 
-        now_playing_provider_stub.get_by_channel_key.withArgs(channel.key).returns(now_playing)
+        on_air_provider_stub.get_by_channel_key.withArgs(channel.key).returns(now_playing)
 
         const result = await controller.now_playing_on_channel(channel.key)
         expect(result).to.deep.equal(now_playing.to_dto())
@@ -55,7 +55,7 @@ describe('NowPlaying controller', function () {
     it('should throw if the channel does not exist', async function () {
         const error = new Error()
 
-        now_playing_provider_stub.get_by_channel_key.withArgs('invalid').throws(error)
+        on_air_provider_stub.get_by_channel_key.withArgs('invalid').throws(error)
 
         expect(() => controller.now_playing_on_channel('invalid')).to.throw(NotFoundException)
     })

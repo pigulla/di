@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@nestjs/common'
+import {Inject, Injectable, OnModuleInit} from '@nestjs/common'
 
 import {IAppDataProvider} from './AppDataProvider.interface'
 import {IChannelsProvider, ChannelIdentifier} from './ChannelsProvider.interface'
@@ -6,7 +6,7 @@ import {ILogger} from './Logger.interface'
 import {AppData, IChannel, IChannelFilter} from './di'
 
 @Injectable()
-export class ChannelsProvider implements IChannelsProvider {
+export class ChannelsProvider implements IChannelsProvider, OnModuleInit {
     private readonly logger: ILogger
     private readonly app_data_provider: IAppDataProvider
     private filters: IChannelFilter[] = []
@@ -23,7 +23,12 @@ export class ChannelsProvider implements IChannelsProvider {
         this.app_data_provider = app_data_provider
 
         this.app_data_provider.subscribe(this.on_new_app_data.bind(this))
+
         this.logger.debug('Service instantiated')
+    }
+
+    public onModuleInit (): void {
+        this.on_new_app_data(this.app_data_provider.get_app_data())
     }
 
     protected on_new_app_data ({channels, channel_filters}: AppData): void {

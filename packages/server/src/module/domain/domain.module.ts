@@ -5,7 +5,10 @@ import {
     IPlaybackStateProvider, PlaybackStateProvider,
     IPeriodicTrigger, PeriodicTrigger,
     ILogger,
-    Notifier, IDigitallyImported, OnAirProvider, ChannelsProvider, FavoritesProvider,
+    Notifier,
+    OnAirProvider,
+    ChannelsProvider,
+    FavoritesProvider,
 } from '../../domain'
 import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../infrastructure'
 
@@ -26,14 +29,15 @@ import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../
             useClass: FavoritesProvider,
         },
         {
-            inject: ['ILogger', 'configuration', 'IPlaybackStateProvider'],
+            inject: ['configuration', 'ILogger', 'IPlaybackStateProvider'],
             provide: 'IPeriodicPlaybackStateUpdater',
             async useFactory (
-                logger: ILogger,
                 configuration: Configuration,
+                logger: ILogger,
                 playback_state_provider: IPlaybackStateProvider,
             ): Promise<IPeriodicTrigger> {
                 return new PeriodicTrigger(logger, {
+                    log_id: 'playback-state-updater',
                     interval_ms: configuration.playback_state_check_frequency_ms,
                     async callback (): Promise<void> {
                         playback_state_provider.trigger_check()
@@ -50,19 +54,18 @@ import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../
             useClass: OnAirProvider,
         },
         {
-            inject: ['ILogger', 'configuration', 'IDigitallyImported', 'OnAirProvider'],
+            inject: ['configuration', 'ILogger', 'OnAirProvider'],
             provide: 'IPeriodicOnAirUpdater',
             async useFactory (
-                logger: ILogger,
                 configuration: Configuration,
-                digitally_imported: IDigitallyImported,
+                logger: ILogger,
                 on_air_provider: OnAirProvider,
             ): Promise<IPeriodicTrigger> {
                 return new PeriodicTrigger(logger, {
+                    log_id: 'on-air-updater',
                     interval_ms: configuration.di_frequency_ms,
                     async callback (): Promise<void> {
-                        const data = await digitally_imported.load_now_playing()
-                        await on_air_provider.update_with(data)
+                        await on_air_provider.trigger_update()
                     },
                 })
             },

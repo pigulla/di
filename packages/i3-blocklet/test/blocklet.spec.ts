@@ -22,7 +22,7 @@ function create_client_stub (): SinonStubbedInstance<IClient> {
         get_channels: stub(),
         get_channel: stub(),
         get_channel_filters: stub(),
-        get_now_playing: stub(),
+        get_on_air: stub(),
     }
 }
 

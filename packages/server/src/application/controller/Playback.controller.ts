@@ -24,21 +24,21 @@ class ValidatedPlayDTO extends PlayDTO {
 
 @Controller('/playback')
 export class PlaybackController {
-    private readonly playback_control: IPlaybackControl
     private readonly channel_provider: IChannelsProvider
     private readonly configuration: Configuration
-    private readonly now_playing_provider: IOnAirProvider
+    private readonly on_air_provider: IOnAirProvider
+    private readonly playback_control: IPlaybackControl
 
     public constructor (
-        @Inject('IPlaybackControl') vlc_control: IPlaybackControl,
-        @Inject('IChannelsProvider') channel_provider: IChannelsProvider,
         @Inject('configuration') config_provider: Configuration,
-        @Inject('INowPlayingProvider') now_playing_provider: IOnAirProvider,
+        @Inject('IChannelsProvider') channel_provider: IChannelsProvider,
+        @Inject('IOnAirProvider') on_air_provider: IOnAirProvider,
+        @Inject('IPlaybackControl') vlc_control: IPlaybackControl,
     ) {
-        this.playback_control = vlc_control
         this.channel_provider = channel_provider
         this.configuration = config_provider
-        this.now_playing_provider = now_playing_provider
+        this.on_air_provider = on_air_provider
+        this.playback_control = vlc_control
     }
 
     @Head()
@@ -59,7 +59,7 @@ export class PlaybackController {
             throw new NotFoundException()
         }
 
-        const now_playing = this.now_playing_provider.get_by_channel_key(channel_key)
+        const now_playing = this.on_air_provider.get_by_channel_key(channel_key)
         const channel = this.channel_provider.get(channel_key)
 
         return {

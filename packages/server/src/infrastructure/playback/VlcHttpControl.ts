@@ -1,4 +1,4 @@
-import {Inject, OnApplicationShutdown, OnModuleInit} from '@nestjs/common'
+import {Inject, Injectable, OnApplicationShutdown, OnModuleInit} from '@nestjs/common'
 import {JsonObject} from 'type-fest'
 
 import {ILogger, IPlaybackControl} from '../../domain'
@@ -7,6 +7,7 @@ import {IVlcHttpClient} from './VlcHttpClient.interface'
 
 // See: https://wiki.videolan.org/VLC_HTTP_requests/
 
+@Injectable()
 export class VlcHttpControl implements IPlaybackControl, OnModuleInit, OnApplicationShutdown {
     private readonly logger: ILogger
     private readonly child_process: IVlcChildProcessFacade
@@ -31,9 +32,12 @@ export class VlcHttpControl implements IPlaybackControl, OnModuleInit, OnApplica
     }
 
     public async onApplicationShutdown (_signal?: string): Promise<void> {
+        // Terminate the process on application shutdown (rather than in onModuleDestroy) so that this services stays
+        // available for other services that depend on it during their onModuleDestroy hook.
         this.logger.debug('Stopping service')
 
         await this.child_process.stop()
+        this.logger.debug('Service stopped')
     }
 
     private get http_client (): IVlcHttpClient {

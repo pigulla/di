@@ -1,4 +1,4 @@
-import {AppData, INowPlaying} from './di'
+import {AppData, IOnAir} from './di'
 
 export interface Credentials {
     username: string
@@ -7,6 +7,6 @@ export interface Credentials {
 
 export interface IDigitallyImported {
     load_app_data (): Promise<AppData>
-    load_now_playing (): Promise<INowPlaying[]>
+    load_on_air (): Promise<IOnAir[]>
     load_favorite_channel_keys (credentials: Credentials): Promise<string[]>
 }

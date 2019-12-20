@@ -70,7 +70,7 @@ export class DigitallyImported implements IDigitallyImported {
         return raw_app_data
     }
 
-    public async load_now_playing (): Promise<NowPlaying[]> {
+    public async load_on_air (): Promise<NowPlaying[]> {
         const response = await superagent.get(`${this.url}/_papi/v1/di/currently_playing`)
 
         return (response.body as RawNowPlaying[]).map(NowPlaying.from_raw)

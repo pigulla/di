@@ -24,14 +24,14 @@ export function states_differ (a: PlaybackState, b: PlaybackState): boolean {
 @Injectable()
 export class PlaybackStateProvider extends Subject<PlaybackState> implements IPlaybackStateProvider {
     private readonly logger: ILogger
-    private readonly now_playing_provider: IOnAirProvider
+    private readonly on_air_provider: IOnAirProvider
     private readonly playback_control: IPlaybackControl
     private readonly channels_provider: IChannelsProvider
     private state: PlaybackState
 
     public constructor (
         @Inject('ILogger') logger: ILogger,
-        @Inject('INowPlayingProvider') now_playing_provider: IOnAirProvider,
+        @Inject('IOnAirProvider') now_playing_provider: IOnAirProvider,
         @Inject('IPlaybackControl') playback_control: IPlaybackControl,
         @Inject('IChannelsProvider') channels_provider: IChannelsProvider,
     ) {
@@ -39,7 +39,7 @@ export class PlaybackStateProvider extends Subject<PlaybackState> implements IPl
 
         this.logger = logger.child_for_service(PlaybackStateProvider.name)
         this.playback_control = playback_control
-        this.now_playing_provider = now_playing_provider
+        this.on_air_provider = now_playing_provider
         this.channels_provider = channels_provider
         this.state = PLAYBACK_STATE_STOPPED
 
@@ -71,7 +71,7 @@ export class PlaybackStateProvider extends Subject<PlaybackState> implements IPl
         }
 
         const channel = await this.channels_provider.get(channel_key)
-        const now_playing = this.now_playing_provider.get(channel.key)
+        const now_playing = this.on_air_provider.get(channel.key)
 
         this.set_state({
             stopped: false,

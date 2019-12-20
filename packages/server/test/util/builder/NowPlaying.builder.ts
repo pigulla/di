@@ -1,4 +1,4 @@
-import {INowPlaying, IChannel} from '@src/domain/di'
+import {IOnAir, IChannel} from '@src/domain/di'
 import {NowPlaying} from '@src/infrastructure/di'
 
 export class NowPlayingBuilder {
@@ -33,7 +33,7 @@ export class NowPlayingBuilder {
         return this
     }
 
-    public build (): INowPlaying {
+    public build (): IOnAir {
         return new NowPlaying(
             this.channel_id,
             this.channel_key,

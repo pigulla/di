@@ -1,10 +1,11 @@
 import dayjs, {Dayjs} from 'dayjs'
 import {Subject} from 'rxjs'
-import {Inject, OnModuleInit} from '@nestjs/common'
+import {Inject, Injectable, OnModuleInit} from '@nestjs/common'
 
 import {AppData} from './AppData'
 import {ILogger, IDigitallyImported, IAppDataProvider} from '../../domain'
 
+@Injectable()
 export class AppDataProvider extends Subject<AppData> implements IAppDataProvider, OnModuleInit {
     private readonly digitally_imported: IDigitallyImported
     private readonly logger: ILogger

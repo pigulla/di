@@ -2,7 +2,7 @@ import sinon, {SinonStubbedInstance} from 'sinon'
 
 import {IOnAirProvider} from '@src/domain'
 
-export function create_now_playing_provider_stub (): SinonStubbedInstance<IOnAirProvider> {
+export function create_on_air_provider_stub (): SinonStubbedInstance<IOnAirProvider> {
     return {
         subscribe: sinon.stub(),
         get: sinon.stub(),

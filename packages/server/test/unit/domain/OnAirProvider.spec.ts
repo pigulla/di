@@ -3,7 +3,7 @@ import {SinonStubbedInstance} from 'sinon'
 import {expect} from 'chai'
 
 import {IDigitallyImported, OnAirProvider} from '@src/domain'
-import {INowPlaying} from '@src/domain/di'
+import {IOnAir} from '@src/domain/di'
 
 import {create_digitally_imported_stub, create_logger_stub, NowPlayingBuilder, prebuilt_channel} from '@test/util'
 
@@ -40,7 +40,7 @@ describe('OnAirProvider', function () {
     })
 
     describe('when updated', function () {
-        let on_air_items: INowPlaying[]
+        let on_air_items: IOnAir[]
 
         beforeEach(async function () {
             on_air_items = [
@@ -48,8 +48,8 @@ describe('OnAirProvider', function () {
                 new NowPlayingBuilder().for_channel(vocaltrance).build(),
             ]
 
-            digitally_imported_stub.load_now_playing.resolves(on_air_items)
-            on_air_provider.update_with(on_air_items)
+            digitally_imported_stub.load_on_air.resolves(on_air_items)
+            await on_air_provider.trigger_update()
         })
 
         it('should return the data', function () {

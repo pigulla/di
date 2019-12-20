@@ -1,6 +1,6 @@
-import {NowPlayingDTO} from '@digitally-imported/dto'
+import {OnAirDTO} from '@digitally-imported/dto'
 
-import {INowPlaying} from '../../domain/di'
+import {IOnAir} from '../../domain/di'
 
 export interface RawNowPlaying {
     channel_id: number
@@ -12,7 +12,7 @@ export interface RawNowPlaying {
     }
 }
 
-export class NowPlaying implements INowPlaying {
+export class NowPlaying implements IOnAir {
     public readonly channel_id: number
     public readonly channel_key: string
     public readonly display_artist: string
@@ -30,8 +30,8 @@ export class NowPlaying implements INowPlaying {
         this.display_title = display_title
     }
 
-    public to_dto (): NowPlayingDTO {
-        return NowPlayingDTO.create(this)
+    public to_dto (): OnAirDTO {
+        return OnAirDTO.create(this)
     }
 
     public static from_raw (data: RawNowPlaying): NowPlaying {

@@ -166,8 +166,8 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             group: 'Digitally Imported',
             alias: 'f',
             requiresArg: true,
-            default: 30,
-            describe: 'The frequency in seconds with which DI is polled for "now playing" data',
+            default: 15_000,
+            describe: 'The frequency in milliseconds with which DI is polled for "now playing" data',
             type: 'number',
             coerce (arg: any): number {
                 if (!/^\d+$/.test(arg)) {

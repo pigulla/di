@@ -1,6 +1,6 @@
 export * from './ChannelFilter'
 export * from './Channel'
-export * from './NowPlaying'
+export * from './OnAir'
 export * from './Play'
 export * from './PlaybackState'
 export * from './ServerStatus'

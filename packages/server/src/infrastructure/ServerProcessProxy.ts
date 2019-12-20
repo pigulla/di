@@ -1,5 +1,8 @@
+import {Injectable} from '@nestjs/common'
+
 import {IServerProcessProxy} from '../domain'
 
+@Injectable()
 export class ServerProcessProxy implements IServerProcessProxy {
     private readonly process: NodeJS.Process
 

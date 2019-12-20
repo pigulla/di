@@ -1,4 +1,5 @@
-import {ChannelFilter} from '@src/service/di'
+import {IChannelFilter} from '@src/domain/di'
+import {ChannelFilter} from '@src/infrastructure/di'
 
 export class ChannelFilterBuilder {
     private channels: Set<number> = new Set()
@@ -32,7 +33,7 @@ export class ChannelFilterBuilder {
         return this
     }
 
-    public build (): ChannelFilter {
+    public build (): IChannelFilter {
         return new ChannelFilter(
             this.channels,
             this.id,

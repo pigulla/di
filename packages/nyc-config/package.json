@@ -1,8 +1,11 @@
 {
   "name": "@digitally-imported/nyc-config",
   "version": "0.0.1",
-  "description": "",
+  "description": "Common Istanbul configuration for @digitally-imported components.",
   "main": "index.js",
+  "keywords": [
+    "digitally-imported", "istanbul"
+  ],
   "scripts": {
     "test": "echo 'Not applicable'",
     "lint": "echo 'Not applicable'",
@@ -11,6 +14,14 @@
     "clean": "rm -rf node_modules"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
+  "homepage": "https://github.com/pigulla/di/tree/develop/packages/nyc-config",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/pigulla/di.git"
+    },
+  "bugs": {
+    "url": "https://github.com/pigulla/di/issues"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=10.0.0"

@@ -1,8 +1,11 @@
 {
   "name": "@digitally-imported/eslint-config-standard",
   "version": "0.0.1",
-  "description": "",
+  "description": "Common ESLint configuration for @digitally-imported components.",
   "main": "index.js",
+  "keywords": [
+    "digitally-imported", "eslint-config"
+  ],
   "scripts": {
     "build": "echo 'Not applicable'",
     "lint": "echo 'Not applicable'",
@@ -11,6 +14,10 @@
     "clean": "rm -rf node_modules"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
+  "homepage": "https://github.com/pigulla/di/tree/develop/packages/eslint-config-standard",
+  "bugs": {
+    "url": "https://github.com/pigulla/di/issues"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=10.0.0"

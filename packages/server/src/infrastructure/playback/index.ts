@@ -1,0 +1,5 @@
+export * from './VlcChildProcessFacade'
+export * from './VlcChildProcessFacade.interface'
+export * from './VlcHttpControl'
+export * from './VlcHttpClient.interface'
+export * from './VlcHttpClient'

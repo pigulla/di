@@ -2,7 +2,7 @@ import {expect} from 'chai'
 import nock from 'nock'
 import {spy, stub} from 'sinon'
 import {NO_CONTENT, INTERNAL_SERVER_ERROR, OK, NOT_FOUND, FORBIDDEN} from 'http-status-codes'
-import {NowPlayingDTO, PlayDTO, ChannelDTO} from '@digitally-imported/dto/lib'
+import {OnAirDTO, PlayDTO, ChannelDTO} from '@digitally-imported/dto/lib'
 
 import {Client} from '@src'
 import {ChannelNotFoundError, ClientError, ServerNotRunningError} from '@src/error'
@@ -292,7 +292,7 @@ describe('Client', function () {
     })
 
     it('should return all playing songs', async function () {
-        const data: NowPlayingDTO[] = [
+        const data: OnAirDTO[] = [
             {
                 channel_id: 42,
                 channel_key: 'progressive',
@@ -308,10 +308,10 @@ describe('Client', function () {
         ]
 
         nock(URL)
-            .get('/channels/now_playing')
+            .get('/channels/on_air')
             .reply(OK, data)
 
-        const result = await client.get_now_playing()
+        const result = await client.get_on_air()
         expect([...result.entries()]).to.deep.equal([
             [data[0].channel_key, data[0]],
             [data[1].channel_key, data[1]],
@@ -320,7 +320,7 @@ describe('Client', function () {
 
     describe('when the currently playing song on a channel is requested', function () {
         it('should return it', async function () {
-            const data: NowPlayingDTO = {
+            const data: OnAirDTO = {
                 channel_id: 13,
                 channel_key: 'rave',
                 display_artist: 'The Future Sequencer',
@@ -328,28 +328,28 @@ describe('Client', function () {
             }
 
             nock(URL)
-                .get('/channel/rave/now_playing')
+                .get('/channel/rave/on_air')
                 .reply(OK, data)
 
-            await expect(client.get_now_playing('rave'))
+            await expect(client.get_on_air('rave'))
                 .to.eventually.deep.equal(data)
         })
 
         it('should throw if the channel does not exist', async function () {
             nock(URL)
-                .get('/channel/rave/now_playing')
+                .get('/channel/rave/on_air')
                 .reply(NOT_FOUND)
 
-            await expect(client.get_now_playing('rave'))
+            await expect(client.get_on_air('rave'))
                 .to.eventually.be.rejectedWith(ChannelNotFoundError)
         })
 
         it('should let other errors bubble up', async function () {
             nock(URL)
-                .get('/channel/rave/now_playing')
+                .get('/channel/rave/on_air')
                 .reply(INTERNAL_SERVER_ERROR)
 
-            await expect(client.get_now_playing('rave'))
+            await expect(client.get_on_air('rave'))
                 .to.eventually.be.rejectedWith(ClientError)
         })
     })

@@ -1,10 +1,10 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {INowPlayingProvider} from '@src/service'
+import {IOnAirProvider} from '@src/domain'
 
-export function create_now_playing_provider_stub (): SinonStubbedInstance<INowPlayingProvider> {
+export function create_on_air_provider_stub (): SinonStubbedInstance<IOnAirProvider> {
     return {
-        update: sinon.stub(),
+        subscribe: sinon.stub(),
         get: sinon.stub(),
         get_all: sinon.stub(),
         get_by_channel_key: sinon.stub(),

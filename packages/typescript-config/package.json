@@ -1,0 +1,34 @@
+{
+  "name": "@digitally-imported/typescript-config",
+  "version": "0.0.1",
+  "description": "Common TypeScript configuration for @digitally-imported components.",
+  "main": "tsconfig.json",
+  "keywords": [
+    "digitally-imported", "typesript"
+  ],
+  "scripts": {
+    "test": "echo 'Not applicable'",
+    "lint": "echo 'Not applicable'",
+    "build": "echo 'Not applicable'",
+    "codecov": "echo 'Not applicable'",
+    "clean": "rm -rf node_modules"
+  },
+  "author": "Raphael Pigulla <pigulla@four66.com>",
+  "homepage": "https://github.com/pigulla/di/tree/develop/packages/typescript-config",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/pigulla/di.git"
+    },
+  "bugs": {
+    "url": "https://github.com/pigulla/di/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "devDependencies": {
+    "nock": "^11.7.0",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {}
+}

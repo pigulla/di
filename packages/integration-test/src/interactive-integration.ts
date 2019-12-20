@@ -21,6 +21,7 @@ async function run (): Promise<void> {
             spinner.succeed()
         } catch (error) {
             spinner.fail(`Error: ${error.message}`)
+            process.exitCode = 1
         }
     }
 
@@ -29,13 +30,16 @@ async function run (): Promise<void> {
 
         try {
             const playback_state = await client.get_playback_state()
-            if (!playback_state.now_playing) {
+            if (!playback_state) {
+                spinner.fail('Playback state unavailable')
+            } else if (!playback_state.now_playing) {
                 spinner.fail('Unexpected playback state')
             } else {
                 spinner.info(`Now playing: ${playback_state.now_playing.artist} - ${playback_state.now_playing.title}`)
             }
         } catch (error) {
             spinner.fail(`Error: ${error.message}`)
+            process.exitCode = 2
         }
     }
 
@@ -52,6 +56,7 @@ async function run (): Promise<void> {
             }
         } catch (error) {
             spinner.fail(`Error: ${error.message}`)
+            process.exitCode = 3
         }
     }
 
@@ -63,14 +68,16 @@ async function run (): Promise<void> {
             spinner.succeed()
         } catch (error) {
             spinner.fail(`Error: ${error.message}`)
+            process.exitCode = 4
         }
     }
 
     spinner.start('Starting server')
     const stop = await start_server([
-        '--log-level', 'error',
+        '--log-level', 'warn',
         '--port', '4979',
         '--hostname', 'localhost',
+        '--notifications', 'notifier',
         '--vlc-initial-volume', '0',
     ])
     spinner.succeed()

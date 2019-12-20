@@ -79,12 +79,12 @@ describe('AppDataProvider', function () {
         })
 
         it('should invoke registered callbacks', async function () {
-            const cb = spy()
+            const observer = spy()
+            app_data_provider.subscribe(observer)
 
-            app_data_provider.on_update(cb)
             await app_data_provider.load_app_data()
 
-            expect(cb).to.have.been.calledOnceWithExactly(app_data)
+            expect(observer).to.have.been.calledOnceWithExactly(app_data)
         })
     })
 })

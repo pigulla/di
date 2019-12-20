@@ -1,5 +1,5 @@
 import {NormalizedPackageJson} from 'read-pkg'
-import {Controller, Delete, HttpStatus, Res, Inject, Get, Put, HttpCode} from '@nestjs/common'
+import {Controller, Delete, HttpStatus, Res, Inject, Get} from '@nestjs/common'
 import {Response} from 'express'
 
 import {ServerStatusDTO} from '@digitally-imported/dto'
@@ -50,11 +50,5 @@ export class ServerController {
     public async shutdown (@Res() response: Response): Promise<void> {
         response.status(HttpStatus.NO_CONTENT).end()
         this.server_process_proxy.terminate()
-    }
-
-    @Put('/update')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    public async update (): Promise<void> {
-        await this.app_data_provider.load_app_data()
     }
 }

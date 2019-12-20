@@ -1,8 +1,7 @@
 import merge from 'lodash.merge'
 
-import {LogLevel} from '@src/domain'
+import {Configuration, LogLevel, NotificationMechanism} from '@src/domain'
 import {Quality} from '@src/domain/di'
-import {Configuration, NotificationType} from '@src/domain/config'
 
 export const default_config: Configuration = {
     server_hostname: 'localhost',
@@ -10,7 +9,7 @@ export const default_config: Configuration = {
 
     log_level: LogLevel.WARN,
     playback_state_check_frequency_ms: 2_500,
-    notifications: NotificationType.NONE,
+    notifications: NotificationMechanism.NONE,
 
     vlc_path: '/dev/null',
     vlc_timeout: 1000,

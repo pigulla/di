@@ -15,7 +15,7 @@ export class Notifier implements INotifier {
         this.notification_provider = notification_provider
         this.playback_state_provider = playback_state_provider
 
-        this.playback_state_provider.on_update(this.on_playback_state_change, this)
+        this.playback_state_provider.subscribe(this.on_new_playback_state.bind(this))
     }
 
     public onApplicationBootstrap (): void {
@@ -26,7 +26,7 @@ export class Notifier implements INotifier {
         this.notification_provider.send('Digitally Imported', 'Server stopped')
     }
 
-    public on_playback_state_change (state: PlaybackState): void {
+    protected on_new_playback_state (state: PlaybackState): void {
         if (state.stopped) {
             this.notification_provider.send('Digitally Imported', 'Playback stopped')
         } else {

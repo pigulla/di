@@ -1,12 +1,11 @@
+import {Subject} from 'rxjs'
 import {Inject, Injectable} from '@nestjs/common'
 
 import {PlaybackState, IPlaybackStateProvider, PLAYBACK_STATE_STOPPED} from './PlaybackStateProvider.interface'
 import {IPlaybackControl} from './PlaybackControl.interface'
-import {INowPlayingProvider} from './NowPlayingProvider.interface'
+import {IOnAirProvider} from './OnAirProvider.interface'
 import {ILogger} from './Logger.interface'
 import {IChannelsProvider} from './ChannelsProvider.interface'
-
-type UpdateCallback = (state: PlaybackState) => void
 
 export function states_differ (a: PlaybackState, b: PlaybackState): boolean {
     if (a.stopped !== b.stopped) {
@@ -23,25 +22,25 @@ export function states_differ (a: PlaybackState, b: PlaybackState): boolean {
 }
 
 @Injectable()
-export class PlaybackStateProvider implements IPlaybackStateProvider {
-    private readonly update_callbacks: Array<[UpdateCallback, any]>
+export class PlaybackStateProvider extends Subject<PlaybackState> implements IPlaybackStateProvider {
     private readonly logger: ILogger
-    private readonly now_playing_provider: INowPlayingProvider
+    private readonly now_playing_provider: IOnAirProvider
     private readonly playback_control: IPlaybackControl
     private readonly channels_provider: IChannelsProvider
     private state: PlaybackState
 
     public constructor (
         @Inject('ILogger') logger: ILogger,
-        @Inject('INowPlayingProvider') now_playing_provider: INowPlayingProvider,
+        @Inject('INowPlayingProvider') now_playing_provider: IOnAirProvider,
         @Inject('IPlaybackControl') playback_control: IPlaybackControl,
         @Inject('IChannelsProvider') channels_provider: IChannelsProvider,
     ) {
+        super()
+
         this.logger = logger.child_for_service(PlaybackStateProvider.name)
         this.playback_control = playback_control
         this.now_playing_provider = now_playing_provider
         this.channels_provider = channels_provider
-        this.update_callbacks = []
         this.state = PLAYBACK_STATE_STOPPED
 
         this.logger.debug('Service instantiated')
@@ -58,7 +57,7 @@ export class PlaybackStateProvider implements IPlaybackStateProvider {
 
         this.logger.info('State changed', state)
         this.state = state
-        this.update_callbacks.forEach(([callback, context]) => callback.call(context, state))
+        this.next(state)
     }
 
     public async trigger_check (): Promise<void> {
@@ -82,9 +81,5 @@ export class PlaybackStateProvider implements IPlaybackStateProvider {
                 title: now_playing.display_title,
             },
         })
-    }
-
-    public on_update (callback: UpdateCallback, context?: any): void {
-        this.update_callbacks.push([callback, context])
     }
 }

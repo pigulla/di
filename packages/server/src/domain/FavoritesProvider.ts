@@ -1,11 +1,11 @@
 import {Inject, Injectable} from '@nestjs/common'
 
-import {ILogger} from './Logger.interface'
-import {Configuration} from './config'
-import {IChannel} from './di'
+import {Configuration} from './Configuration'
 import {IChannelsProvider} from './ChannelsProvider.interface'
 import {IDigitallyImported} from './DigitallyImported.interface'
 import {IFavoritesProvider} from './FavoritesProvider.interface'
+import {ILogger} from './Logger.interface'
+import {IChannel} from './di'
 
 export class CredentialsUnavailableError extends Error {}
 

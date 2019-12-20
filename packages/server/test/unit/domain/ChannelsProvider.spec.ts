@@ -1,6 +1,6 @@
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
-import {SinonStubbedInstance} from 'sinon'
+import {SinonStubbedInstance, match} from 'sinon'
 
 import {ChannelsProvider, IAppDataProvider} from '@src/domain'
 import {AppData} from '@src/domain/di'
@@ -31,8 +31,10 @@ describe('ChannelsProvider', function () {
     let channels_provider: ChannelsProvider
 
     function trigger_update (new_app_data: AppData): void {
-        const [fn, ctx] = app_data_provider_stub.on_update.firstCall.args
-        fn.call(ctx, new_app_data)
+        expect(app_data_provider_stub.subscribe).to.have.been.calledOnceWithExactly(match.func)
+
+        const callback = app_data_provider_stub.subscribe.firstCall.lastArg
+        callback(new_app_data)
     }
 
     beforeEach(async function () {

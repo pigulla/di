@@ -3,12 +3,12 @@ import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
 import {
+    Configuration,
     IDigitallyImported,
     IChannelsProvider,
     FavoritesProvider,
     CredentialsUnavailableError,
 } from '@src/domain'
-import {Configuration} from '@src/domain/config'
 import {
     create_logger_stub,
     create_channels_provider_stub,

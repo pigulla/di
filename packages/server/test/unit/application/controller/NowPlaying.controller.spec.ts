@@ -4,7 +4,7 @@ import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
 import {NowPlayingController} from '@src/application/controller'
-import {INowPlayingProvider} from '@src/domain'
+import {IOnAirProvider} from '@src/domain'
 
 import {
     create_now_playing_provider_stub,
@@ -13,7 +13,7 @@ import {
 
 describe('NowPlaying controller', function () {
     let controller: NowPlayingController
-    let now_playing_provider_stub: SinonStubbedInstance<INowPlayingProvider>
+    let now_playing_provider_stub: SinonStubbedInstance<IOnAirProvider>
 
     beforeEach(async function () {
         now_playing_provider_stub = create_now_playing_provider_stub()

@@ -14,8 +14,7 @@ import {
 
 import {ChannelDTO, PlayDTO, PlaybackStateDTO} from '@digitally-imported/dto'
 
-import {IChannelsProvider, IPlaybackControl, INowPlayingProvider} from '../../domain'
-import {Configuration} from '../../domain/config'
+import {Configuration, IChannelsProvider, IPlaybackControl, IOnAirProvider} from '../../domain'
 
 class ValidatedPlayDTO extends PlayDTO {
     @IsString()
@@ -28,13 +27,13 @@ export class PlaybackController {
     private readonly playback_control: IPlaybackControl
     private readonly channel_provider: IChannelsProvider
     private readonly configuration: Configuration
-    private readonly now_playing_provider: INowPlayingProvider
+    private readonly now_playing_provider: IOnAirProvider
 
     public constructor (
         @Inject('IPlaybackControl') vlc_control: IPlaybackControl,
         @Inject('IChannelsProvider') channel_provider: IChannelsProvider,
         @Inject('configuration') config_provider: Configuration,
-        @Inject('INowPlayingProvider') now_playing_provider: INowPlayingProvider,
+        @Inject('INowPlayingProvider') now_playing_provider: IOnAirProvider,
     ) {
         this.playback_control = vlc_control
         this.channel_provider = channel_provider

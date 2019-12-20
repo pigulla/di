@@ -12,9 +12,8 @@ import {
     FailedAuthenticationResponse,
     AuthenticationFailureError,
 } from '../di'
-import {IDigitallyImported, ILogger} from '../../domain'
+import {Configuration, IDigitallyImported, ILogger} from '../../domain'
 import {Credentials} from '../../domain/di'
-import {Configuration} from '../../domain/config'
 
 export class DigitallyImportedError extends Error {}
 

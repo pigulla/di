@@ -3,7 +3,7 @@ import {expect} from 'chai'
 import dayjs from 'dayjs'
 import {SinonStubbedInstance} from 'sinon'
 
-import {Configuration} from '@src/domain/config'
+import {Configuration} from '@src/domain'
 import {Channel, ChannelFilter, NowPlaying, DigitallyImported, DigitallyImportedError} from '@src/infrastructure/di'
 
 import {create_config_stub, create_logger_stub} from '@test/util'

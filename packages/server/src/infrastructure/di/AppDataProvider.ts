@@ -1,16 +1,13 @@
 import dayjs, {Dayjs} from 'dayjs'
+import {Subject} from 'rxjs'
 import {Inject, OnModuleInit} from '@nestjs/common'
 
 import {AppData} from './AppData'
 import {ILogger, IDigitallyImported, IAppDataProvider} from '../../domain'
 
-type UpdateCallbackFn = (app_data: AppData) => void
-type UpdateCallback = [UpdateCallbackFn, any]
-
-export class AppDataProvider implements IAppDataProvider, OnModuleInit {
+export class AppDataProvider extends Subject<AppData> implements IAppDataProvider, OnModuleInit {
     private readonly digitally_imported: IDigitallyImported
     private readonly logger: ILogger
-    private readonly update_callbacks: UpdateCallback[]
     private last_update_at: Dayjs|null
     private app_data: AppData|null
 
@@ -18,8 +15,9 @@ export class AppDataProvider implements IAppDataProvider, OnModuleInit {
         @Inject('ILogger') logger: ILogger,
         @Inject('IDigitallyImported') digitally_imported: IDigitallyImported,
     ) {
+        super()
+
         this.logger = logger.child_for_service(AppDataProvider.name)
-        this.update_callbacks = []
         this.digitally_imported = digitally_imported
         this.app_data = null
         this.last_update_at = null
@@ -39,10 +37,6 @@ export class AppDataProvider implements IAppDataProvider, OnModuleInit {
         return this.last_update_at
     }
 
-    public on_update (callback: UpdateCallbackFn, context: any): void {
-        this.update_callbacks.push([callback, context])
-    }
-
     public get_app_data (): AppData {
         if (!this.app_data) {
             throw new Error('AppData not available')
@@ -55,7 +49,7 @@ export class AppDataProvider implements IAppDataProvider, OnModuleInit {
         this.app_data = await this.digitally_imported.load_app_data()
         this.last_update_at = dayjs()
 
-        this.logger.debug('App data retrieved, notifying listeners')
-        this.update_callbacks.forEach(([callback, context]) => callback.call(context, this.get_app_data()))
+        this.logger.debug('App data retrieved')
+        this.next(this.get_app_data())
     }
 }

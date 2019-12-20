@@ -1,14 +1,14 @@
 import {Inject, Injectable} from '@nestjs/common'
 
-import {AppData, IChannel, IChannelFilter} from './di'
 import {IAppDataProvider} from './AppDataProvider.interface'
-import {ILogger} from './Logger.interface'
 import {IChannelsProvider, ChannelIdentifier} from './ChannelsProvider.interface'
+import {ILogger} from './Logger.interface'
+import {AppData, IChannel, IChannelFilter} from './di'
 
 @Injectable()
 export class ChannelsProvider implements IChannelsProvider {
-    private readonly app_data_provider: IAppDataProvider
     private readonly logger: ILogger
+    private readonly app_data_provider: IAppDataProvider
     private filters: IChannelFilter[] = []
     private channels_by_id: Map<number, IChannel> = new Map()
     private channels_by_key: Map<string, IChannel> = new Map()
@@ -21,12 +21,12 @@ export class ChannelsProvider implements IChannelsProvider {
     ) {
         this.logger = logger.child_for_service(ChannelsProvider.name)
         this.app_data_provider = app_data_provider
-        this.app_data_provider.on_update(this.update, this)
 
+        this.app_data_provider.subscribe(this.on_new_app_data.bind(this))
         this.logger.debug('Service instantiated')
     }
 
-    protected update ({channels, channel_filters}: AppData): void {
+    protected on_new_app_data ({channels, channel_filters}: AppData): void {
         this.logger.trace('Updating channel information')
         this.logger.trace(`Received ${channels.length} channels and ${channel_filters.length} channel filters`)
 

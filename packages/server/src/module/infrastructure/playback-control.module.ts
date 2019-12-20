@@ -6,7 +6,7 @@ import get_port from 'get-port'
 
 import {UtilityModule} from './utility.module'
 import {VlcChildProcessFacade, VlcHttpControl, VlcHttpClient, VlcHttpConnection} from '../../infrastructure/playback'
-import {Configuration} from '../../domain/config'
+import {Configuration} from '../../domain'
 
 @Module({
     imports: [

@@ -6,8 +6,7 @@ import pino from 'pino'
 import {ServerProcessProxy} from '../../infrastructure'
 import {create_argv_parser, IArgvParser} from '../../infrastructure/config'
 import {PinoLogger} from '../../infrastructure/logger'
-import {IServerProcessProxy, ILogger, INotificationProvider} from '../../domain'
-import {Configuration, NotificationType} from '../../domain/config'
+import {Configuration, NotificationMechanism, IServerProcessProxy, ILogger, INotificationProvider} from '../../domain'
 import {
     NodeNotificationProvider,
     NullNotificationProvider,
@@ -77,16 +76,16 @@ import {
             inject: ['ILogger', 'configuration'],
             useFactory (logger: ILogger, configuration: Configuration): INotificationProvider {
                 switch (configuration.notifications) {
-                    case NotificationType.NONE:
+                    case NotificationMechanism.NONE:
                         logger.info('Notifications are not enabled')
                         return new NullNotificationProvider()
-                    case NotificationType.CONSOLE:
+                    case NotificationMechanism.CONSOLE:
                         logger.info('Using console for notifications')
                         return new StderrNotificationProvider()
-                    case NotificationType.LOGGER:
+                    case NotificationMechanism.LOGGER:
                         logger.info('Using logger for notifications')
                         return new LogNotificationProvider(logger)
-                    case NotificationType.NOTIFIER:
+                    case NotificationMechanism.NOTIFIER:
                         if (!NodeNotificationProvider.is_node_notifier_installed()) {
                             logger.warn('Module "node-notifier" not available, disabling notifications')
                             return new NodeNotificationProvider(logger)

@@ -1,4 +1,4 @@
 import {OnApplicationBootstrap, OnApplicationShutdown} from '@nestjs/common'
 
-export interface INotifier extends OnApplicationShutdown, OnApplicationBootstrap {
+export interface INotifier extends OnApplicationBootstrap, OnApplicationShutdown {
 }

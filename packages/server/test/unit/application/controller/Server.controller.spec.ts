@@ -87,11 +87,6 @@ describe('Server controller', function () {
         })
     })
 
-    it('should load the app data when requested', async function () {
-        await controller.update()
-        expect(app_data_provider_stub.load_app_data).to.have.been.calledOnce
-    })
-
     it('should shut down the server when requested', async function () {
         const response = mockResponse()
         await controller.shutdown(response)

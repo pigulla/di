@@ -8,14 +8,14 @@ import {
 
 import {NowPlayingDTO} from '@digitally-imported/dto'
 
-import {INowPlayingProvider} from '../../domain'
+import {IOnAirProvider} from '../../domain'
 
 @Controller()
 export class NowPlayingController {
-    private readonly now_playing_provider: INowPlayingProvider
+    private readonly now_playing_provider: IOnAirProvider
 
     public constructor (
-        @Inject('INowPlayingProvider') now_playing_provider: INowPlayingProvider,
+        @Inject('INowPlayingProvider') now_playing_provider: IOnAirProvider,
     ) {
         this.now_playing_provider = now_playing_provider
     }

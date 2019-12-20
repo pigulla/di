@@ -1,12 +1,12 @@
 import {Module} from '@nestjs/common'
 
 import {
+    Configuration,
     IPlaybackStateProvider, PlaybackStateProvider,
     IPeriodicTrigger, PeriodicTrigger,
     ILogger,
-    Notifier, INowPlayingProvider, IDigitallyImported, NowPlayingProvider, ChannelsProvider, FavoritesProvider,
+    Notifier, IDigitallyImported, OnAirProvider, ChannelsProvider, FavoritesProvider,
 } from '../../domain'
-import {Configuration} from '../../domain/config'
 import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../infrastructure'
 
 @Module({
@@ -46,47 +46,40 @@ import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../
             useClass: PlaybackStateProvider,
         },
         {
-            inject: ['ILogger', 'configuration', 'INowPlayingProvider', 'IDigitallyImported'],
-            provide: 'IPeriodicNowPlayingUpdater',
+            provide: 'OnAirProvider',
+            useClass: OnAirProvider,
+        },
+        {
+            inject: ['ILogger', 'configuration', 'IDigitallyImported', 'OnAirProvider'],
+            provide: 'IPeriodicOnAirUpdater',
             async useFactory (
                 logger: ILogger,
                 configuration: Configuration,
-                now_playing_provider: INowPlayingProvider,
                 digitally_imported: IDigitallyImported,
+                on_air_provider: OnAirProvider,
             ): Promise<IPeriodicTrigger> {
                 return new PeriodicTrigger(logger, {
                     interval_ms: configuration.di_frequency_ms,
                     async callback (): Promise<void> {
                         const data = await digitally_imported.load_now_playing()
-
-                        now_playing_provider.update(data)
+                        await on_air_provider.update_with(data)
                     },
                 })
-            },
-        },
-        {
-            inject: ['ILogger', 'IDigitallyImported'],
-            provide: 'INowPlayingProvider',
-            async useFactory (
-                logger: ILogger,
-                digitally_imported: IDigitallyImported,
-            ): Promise<INowPlayingProvider> {
-                const now_playing_provider = new NowPlayingProvider(logger)
-                const data = await digitally_imported.load_now_playing()
-
-                now_playing_provider.update(data)
-                return now_playing_provider
             },
         },
         {
             provide: 'IChannelsProvider',
             useClass: ChannelsProvider,
         },
+        {
+            provide: 'IOnAirProvider',
+            useExisting: OnAirProvider,
+        },
     ],
     exports: [
         'IChannelsProvider',
         'IFavoritesProvider',
-        'INowPlayingProvider',
+        'IOnAirProvider',
         'IPlaybackStateProvider',
         DigitallyImportedModule,
         PlaybackControlModule,

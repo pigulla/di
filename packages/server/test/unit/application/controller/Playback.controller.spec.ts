@@ -4,9 +4,8 @@ import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
 import {PlaybackController} from '@src/application/controller'
-import {IChannelsProvider, INowPlayingProvider, IPlaybackControl} from '@src/domain'
+import {Configuration, IChannelsProvider, IOnAirProvider, IPlaybackControl} from '@src/domain'
 import {Quality} from '@src/domain/di'
-import {Configuration} from '@src/domain/config'
 
 import {
     ChannelBuilder,
@@ -22,7 +21,7 @@ describe('Playback controller', function () {
     let playback_control_stub: SinonStubbedInstance<IPlaybackControl>
     let channels_provider_stub: SinonStubbedInstance<IChannelsProvider>
     let config_stub: SinonStubbedInstance<Configuration>
-    let now_playing_provider_stub: SinonStubbedInstance<INowPlayingProvider>
+    let now_playing_provider_stub: SinonStubbedInstance<IOnAirProvider>
 
     beforeEach(async function () {
         playback_control_stub = create_playback_control_stub()

@@ -3,8 +3,7 @@ import {existsSync as exists} from 'fs'
 import yargs, {Options} from 'yargs'
 
 import {IArgvParser} from './ArgvParser.interface'
-import {LogLevel} from '../../domain'
-import {Configuration, NotificationType} from '../../domain/config'
+import {Configuration, LogLevel, NotificationMechanism} from '../../domain'
 import {Quality} from '../../domain/di'
 
 interface ArgvParserOptions {
@@ -85,8 +84,8 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             group: 'Server',
             alias: 'o',
             requiresArg: true,
-            choices: Object.values(NotificationType),
-            default: NotificationType.NONE,
+            choices: Object.values(NotificationMechanism),
+            default: NotificationMechanism.NONE,
             type: 'string',
         },
     }

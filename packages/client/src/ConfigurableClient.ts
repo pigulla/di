@@ -75,7 +75,9 @@ export class ConfigurableClient implements IClient {
         }
 
         if (semver.diff(this.client_version, server_version) === 'major') {
-            this.process.emitWarning(`App version mismatch (server is ${server_version}, client is ${this.client_version})`)
+            this.process.emitWarning(
+                `App version mismatch (server is ${server_version}, client is ${this.client_version})`,
+            )
         }
     }
 
@@ -113,10 +115,6 @@ export class ConfigurableClient implements IClient {
             .request({
                 method: 'GET',
                 url: '/server',
-            })
-            .then(function (data) {
-                debugger
-                return data
             })
             .get('data')
     }

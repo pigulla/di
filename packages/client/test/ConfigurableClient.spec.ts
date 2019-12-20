@@ -1,11 +1,11 @@
-import {OnAirDTO, PlayDTO, ChannelDTO} from '@digitally-imported/dto/lib'
+import {OnAirDTO, PlayDTO, ChannelDTO} from '@digitally-imported/dto'
 import {expect} from 'chai'
 import nock from 'nock'
 import Axios from 'axios'
 import {SinonStub, SinonStubbedInstance, match, spy, stub} from 'sinon'
 import {NO_CONTENT, INTERNAL_SERVER_ERROR, OK, NOT_FOUND, FORBIDDEN} from 'http-status-codes'
 
-import {ConfigurableClient} from '@src'
+import {ConfigurableClient} from '@src/ConfigurableClient'
 import {ChannelNotFoundError, ClientError, ServerNotRunningError} from '@src/error'
 
 describe('ConfigurableClient', function () {
@@ -18,6 +18,15 @@ describe('ConfigurableClient', function () {
         process_stub = {
             emitWarning: stub(),
         }
+    })
+
+    it('should throw if the client version is invalid', function () {
+        expect(() => new ConfigurableClient({
+            axios_factory: Axios.create,
+            process: process_stub as any as NodeJS.Process,
+            client_version: 'foo',
+            endpoint,
+        })).to.throw(/invalid version/i)
     })
 
     describe('has a response interceptor which', function () {
@@ -48,7 +57,7 @@ describe('ConfigurableClient', function () {
             })
             expect(response_interceptor_use).to.have.been.calledOnce
 
-
+            success_interceptor = response_interceptor_use.firstCall.args[0]
             error_interceptor = response_interceptor_use.firstCall.args[1]
         })
 

@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import * as inquirer_autocomplete from 'inquirer-autocomplete-prompt'
 import * as inquirer from 'inquirer'
 
-import {ChannelDTO} from '@digitally-imported/dto/lib'
+import {ChannelDTO} from '@digitally-imported/dto'
 
 import {BaseCommand} from '../BaseCommand'
 

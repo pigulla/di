@@ -46,6 +46,7 @@
     "@types/mocha": "^5.2.7",
     "@types/mock-req-res": "^1.1.0",
     "@types/node": "^12.12.14",
+    "@types/node-notifier": "^5.4.0",
     "@types/pino": "^5.14.0",
     "@types/pino-http": "^4.3.2",
     "@types/sinon": "^7.5.1",
@@ -90,6 +91,7 @@
     "dayjs": "^1.8.17",
     "get-port": "^5.0.0",
     "lodash.clamp": "^4.0.3",
+    "node-notifier": "^6.0.0",
     "pino": "^5.14.0",
     "pino-http": "^4.3.0",
     "pino-pretty": "^3.5.0",
@@ -103,8 +105,5 @@
     "which": "^2.0.2",
     "xml2js": "^0.4.22",
     "yargs": "^15.0.2"
-  },
-  "optionalDependencies": {
-    "node-notifier": "^6.0.0"
   }
 }

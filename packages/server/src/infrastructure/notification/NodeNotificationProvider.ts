@@ -16,28 +16,7 @@ export class NodeNotificationProvider implements INotificationProvider {
         this.logger.debug('Service instantiated')
     }
 
-    private get notifier (): typeof notifier {
-        if (!this.node_notifier) {
-            throw new Error('Module not yet loaded')
-        }
-
-        return this.node_notifier
-    }
-
     public send (title: string, message: string): void {
-        this.notifier.notify({title, message})
-    }
-
-    public static is_node_notifier_installed (): boolean {
-        try {
-            require.resolve('node-notifier')
-            return true
-        } catch (error) {
-            if (error.code === 'MODULE_NOT_FOUND') {
-                return false
-            }
-
-            throw error
-        }
+        this.node_notifier.notify({title, message})
     }
 }

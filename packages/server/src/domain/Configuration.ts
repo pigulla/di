@@ -1,7 +1,7 @@
 import {Credentials, Quality} from './di'
 import {LogLevel} from './Logger.interface'
 
-export enum NotificationMechanism {
+export enum NotificationTransport {
     CONSOLE = 'console',
     LOGGER = 'logger',
     NOTIFIER = 'notifier',
@@ -13,7 +13,7 @@ export interface Configuration {
     server_port: number
 
     playback_state_check_frequency_ms: number
-    notifications: NotificationMechanism
+    notifications: NotificationTransport
     log_level: LogLevel
 
     vlc_path: string

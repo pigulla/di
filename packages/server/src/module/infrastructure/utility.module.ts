@@ -6,7 +6,7 @@ import pino from 'pino'
 import {ServerProcessProxy} from '../../infrastructure'
 import {create_argv_parser, IArgvParser} from '../../infrastructure/config'
 import {PinoLogger} from '../../infrastructure/logger'
-import {Configuration, NotificationMechanism, IServerProcessProxy, ILogger, INotificationProvider} from '../../domain'
+import {Configuration, NotificationTransport, IServerProcessProxy, ILogger, INotificationProvider} from '../../domain'
 import {
     NodeNotificationProvider,
     NullNotificationProvider,
@@ -76,22 +76,17 @@ import {
             inject: ['ILogger', 'configuration'],
             useFactory (logger: ILogger, configuration: Configuration): INotificationProvider {
                 switch (configuration.notifications) {
-                    case NotificationMechanism.NONE:
+                    case NotificationTransport.NONE:
                         logger.info('Notifications are not enabled')
                         return new NullNotificationProvider()
-                    case NotificationMechanism.CONSOLE:
+                    case NotificationTransport.CONSOLE:
                         logger.info('Using console for notifications')
                         return new StderrNotificationProvider()
-                    case NotificationMechanism.LOGGER:
+                    case NotificationTransport.LOGGER:
                         logger.info('Using logger for notifications')
                         return new LogNotificationProvider(logger)
-                    case NotificationMechanism.NOTIFIER:
-                        if (!NodeNotificationProvider.is_node_notifier_installed()) {
-                            logger.warn('Module "node-notifier" not available, disabling notifications')
-                            return new NodeNotificationProvider(logger)
-                        }
-
-                        logger.info('Using "node-notifier" for notifications')
+                    case NotificationTransport.NOTIFIER:
+                        logger.info('Using node-notifier for notifications')
                         return new NodeNotificationProvider(logger)
                 }
             },

@@ -7,7 +7,7 @@ import {IOnAirProvider} from './OnAirProvider.interface'
 import {ILogger} from './Logger.interface'
 import {IChannelsProvider} from './ChannelsProvider.interface'
 
-export function states_differ (a: PlaybackState, b: PlaybackState): boolean {
+export function playback_states_differ (a: PlaybackState, b: PlaybackState): boolean {
     if (a.stopped !== b.stopped) {
         return true
     } else if (a.stopped || b.stopped) {
@@ -51,7 +51,7 @@ export class PlaybackStateProvider extends Subject<PlaybackState> implements IPl
     }
 
     private set_state (state: PlaybackState): void {
-        if (!states_differ(this.state, state)) {
+        if (!playback_states_differ(this.state, state)) {
             return
         }
 
@@ -70,7 +70,7 @@ export class PlaybackStateProvider extends Subject<PlaybackState> implements IPl
             return this.set_state(PLAYBACK_STATE_STOPPED)
         }
 
-        const channel = await this.channels_provider.get(channel_key)
+        const channel = this.channels_provider.get(channel_key)
         const now_playing = this.on_air_provider.get(channel.key)
 
         this.set_state({

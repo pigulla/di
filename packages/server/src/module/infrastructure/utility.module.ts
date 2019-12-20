@@ -2,6 +2,7 @@ import read_pkg, {NormalizedPackageJson} from 'read-pkg'
 import {Module} from '@nestjs/common'
 import {sync as which} from 'which'
 import pino from 'pino'
+import notifier, {NodeNotifier} from 'node-notifier'
 
 import {ServerProcessProxy} from '../../infrastructure'
 import {create_argv_parser, IArgvParser} from '../../infrastructure/config'
@@ -72,9 +73,17 @@ import {
             },
         },
         {
+            provide: 'NodeNotifier',
+            useValue: notifier,
+        },
+        {
             provide: 'INotificationProvider',
-            inject: ['ILogger', 'configuration'],
-            useFactory (logger: ILogger, configuration: Configuration): INotificationProvider {
+            inject: ['configuration', 'ILogger', 'NodeNotifier'],
+            useFactory (
+                configuration: Configuration,
+                logger: ILogger,
+                node_notifier: NodeNotifier,
+            ): INotificationProvider {
                 switch (configuration.notifications) {
                     case NotificationTransport.NONE:
                         logger.info('Notifications are not enabled')
@@ -87,7 +96,7 @@ import {
                         return new LogNotificationProvider(logger)
                     case NotificationTransport.NOTIFIER:
                         logger.info('Using node-notifier for notifications')
-                        return new NodeNotificationProvider(logger)
+                        return new NodeNotificationProvider(logger, node_notifier)
                 }
             },
         },

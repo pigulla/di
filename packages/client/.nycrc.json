@@ -2,5 +2,8 @@
     "extends": "@digitally-imported/nyc-config",
     "include": [
         "src/**/*.ts"
+    ],
+    "exclude": [
+        "src/Client.ts"
     ]
 }

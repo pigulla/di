@@ -4,7 +4,8 @@
   "description": "Common data transfer objects used by @digitally-imported/server and related components.",
   "main": "lib/index.js",
   "keywords": [
-    "digitally-imported", "dto"
+    "digitally-imported",
+    "dto"
   ],
   "scripts": {
     "test": "tsc --noEmit && yarn run lint && yarn run mocha",

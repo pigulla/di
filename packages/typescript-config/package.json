@@ -4,7 +4,8 @@
   "description": "Common TypeScript configuration for @digitally-imported components.",
   "main": "tsconfig.json",
   "keywords": [
-    "digitally-imported", "typesript"
+    "digitally-imported",
+    "typesript"
   ],
   "scripts": {
     "test": "echo 'Not applicable'",
@@ -15,10 +16,10 @@
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/develop/packages/typescript-config",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/pigulla/di.git"
-    },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pigulla/di.git"
+  },
   "bugs": {
     "url": "https://github.com/pigulla/di/issues"
   },
@@ -29,6 +30,5 @@
   "devDependencies": {
     "nock": "^11.7.0",
     "typescript": "^3.7.3"
-  },
-  "dependencies": {}
+  }
 }

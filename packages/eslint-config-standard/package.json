@@ -4,7 +4,8 @@
   "description": "Common ESLint configuration for @digitally-imported components.",
   "main": "index.js",
   "keywords": [
-    "digitally-imported", "eslint-config"
+    "digitally-imported",
+    "eslint-config"
   ],
   "scripts": {
     "build": "echo 'Not applicable'",
@@ -26,6 +27,5 @@
     "@typescript-eslint/parser": "^2.10.0",
     "eslint": "^6.7.2",
     "eslint-config-standard": "^14.1.0"
-  },
-  "dependencies": {}
+  }
 }

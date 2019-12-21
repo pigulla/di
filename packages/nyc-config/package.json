@@ -4,7 +4,8 @@
   "description": "Common Istanbul configuration for @digitally-imported components.",
   "main": "index.js",
   "keywords": [
-    "digitally-imported", "istanbul"
+    "digitally-imported",
+    "istanbul"
   ],
   "scripts": {
     "test": "echo 'Not applicable'",
@@ -15,17 +16,15 @@
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/develop/packages/nyc-config",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/pigulla/di.git"
-    },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pigulla/di.git"
+  },
   "bugs": {
     "url": "https://github.com/pigulla/di/issues"
   },
   "license": "MIT",
   "engines": {
     "node": ">=10.0.0"
-  },
-  "devDependencies": {},
-  "dependencies": {}
+  }
 }

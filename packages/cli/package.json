@@ -3,9 +3,11 @@
   "version": "0.0.1",
   "description": "Command-line client for the @digitally-imported/server.",
   "author": "Raphael Pigulla <pigulla@four66.com>",
-   "keywords": [
-     "digitally-imported", "oclif", "cli"
-   ],
+  "keywords": [
+    "digitally-imported",
+    "oclif",
+    "cli"
+  ],
   "homepage": "https://github.com/pigulla/di/tree/develop/packages/cli",
   "repository": {
     "type": "git",

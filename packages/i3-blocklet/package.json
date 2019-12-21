@@ -4,7 +4,9 @@
   "description": "i3blocks-integration for @digitally-imported/server.",
   "main": "lib/main.js",
   "keywords": [
-    "digitally-imported", "i3", "blocklet"
+    "digitally-imported",
+    "i3",
+    "blocklet"
   ],
   "bin": {
     "di-i3-blocklet": "./lib/main.js"

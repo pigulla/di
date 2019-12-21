@@ -4,7 +4,7 @@ import {NormalizedPackageJson} from 'read-pkg'
 
 @Injectable()
 export class AppVersionHeader implements NestMiddleware {
-    public static readonly HEADER_NAME = 'X-App-Version'
+    public static readonly HEADER_NAME = 'X-DI-Version'
     private readonly package_json: NormalizedPackageJson
 
     public constructor (
@@ -14,9 +14,9 @@ export class AppVersionHeader implements NestMiddleware {
     }
 
     public use (_request: Request, response: Response, next: Function): void {
-        const {name, version} = this.package_json
+        const {version} = this.package_json
 
-        response.setHeader(AppVersionHeader.HEADER_NAME, `${name} ${version}`)
+        response.setHeader(AppVersionHeader.HEADER_NAME, version)
         next()
     }
 }

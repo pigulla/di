@@ -4,7 +4,9 @@
   "description": "A simple wrapper around the REST-API of the @digitally-imported/server.",
   "main": "lib/index.js",
   "keywords": [
-    "digitally-imported", "api", "client"
+    "digitally-imported",
+    "api",
+    "client"
   ],
   "scripts": {
     "test": "tsc --noEmit && yarn run lint && yarn run mocha",
@@ -16,10 +18,10 @@
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/develop/packages/client",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/pigulla/di.git"
-    },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pigulla/di.git"
+  },
   "bugs": {
     "url": "https://github.com/pigulla/di/issues"
   },
@@ -32,6 +34,8 @@
     "axios": "^0.19.0",
     "bluebird": "^3.7.2",
     "http-status-codes": "^1.4.0",
+    "read-pkg": "^5.2.0",
+    "semver": "^7.1.1",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
@@ -41,6 +45,7 @@
     "@types/chai": "^4.2.6",
     "@types/chai-as-promised": "^7.1.2",
     "@types/mocha": "^5.2.7",
+    "@types/semver": "^6.2.0",
     "@types/sinon": "^7.5.1",
     "@types/sinon-chai": "^3.2.3",
     "@typescript-eslint/eslint-plugin": "^2.10.0",

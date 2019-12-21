@@ -22,6 +22,6 @@ describe('The app version header middleware', function () {
         app_version_header_middleware.use(req, res, next)
 
         expect(next).to.have.been.calledOnceWithExactly()
-        expect(res.getHeader(AppVersionHeader.HEADER_NAME)).to.equal(`${name} ${version}`)
+        expect(res.getHeader(AppVersionHeader.HEADER_NAME)).to.equal(version)
     })
 })

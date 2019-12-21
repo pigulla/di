@@ -92,7 +92,7 @@ describe('ConfigurableClient', function () {
         it('should warn if the version header is invalid', function () {
             const response = {
                 headers: {
-                    'X-DI-Version': 'foo',
+                    'x-di-version': 'foo',
                 },
             }
 
@@ -103,7 +103,7 @@ describe('ConfigurableClient', function () {
         it('should warn if the versions do not match', function () {
             const response = {
                 headers: {
-                    'X-DI-Version': '1.4.4',
+                    'x-di-version': '1.4.4',
                 },
             }
 
@@ -114,7 +114,7 @@ describe('ConfigurableClient', function () {
         it('should not warn if the versions match', function () {
             const response = {
                 headers: {
-                    'X-DI-Version': '2.9.3',
+                    'x-di-version': '2.9.3',
                 },
             }
 

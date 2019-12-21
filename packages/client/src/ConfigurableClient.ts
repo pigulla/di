@@ -48,7 +48,7 @@ export class ConfigurableClient implements IClient {
 
         this.axios.interceptors.response.use(
             response => {
-                this.check_versions(response.headers['X-DI-Version'])
+                this.check_versions(response.headers['x-di-version'])
                 return response
             },
             error => {

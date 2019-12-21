@@ -2,7 +2,7 @@
   "name": "@digitally-imported/client",
   "version": "0.0.1",
   "description": "A simple wrapper around the REST-API of the @digitally-imported/server.",
-  "main": "lib/main.js",
+  "main": "lib/index.js",
   "keywords": [
     "digitally-imported",
     "api",

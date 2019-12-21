@@ -6,7 +6,16 @@ import {SinonStub, SinonStubbedInstance, match, spy, stub} from 'sinon'
 import {NO_CONTENT, INTERNAL_SERVER_ERROR, OK, NOT_FOUND, FORBIDDEN} from 'http-status-codes'
 
 import {ConfigurableClient} from '@src/ConfigurableClient'
+import {Client} from '@src/Client'
 import {ChannelNotFoundError, ClientError, ServerNotRunningError} from '@src/error'
+
+describe('Client', function () {
+    it('should extend ConfigurableClient', function () {
+        const client = new Client({endpoint: 'http://server.local'})
+
+        expect(client).to.be.instanceOf(ConfigurableClient)
+    })
+})
 
 describe('ConfigurableClient', function () {
     const client_version = '2.4.3'

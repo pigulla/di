@@ -1,0 +1,26 @@
+{
+    "extends": "@digitally-imported/typescript-config/tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "lib",
+        "rootDir": ".",
+        "paths": {
+            "@src": [
+                "src/index.ts"
+            ],
+            "@src/*": [
+                "src/*"
+            ],
+            "@test": [
+                "test/index.ts"
+            ],
+            "@test/*": [
+                "test/*"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*.ts",
+        "test/**/*.ts"
+    ]
+}

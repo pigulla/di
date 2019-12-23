@@ -1,0 +1,60 @@
+{
+    "name": "@digitally-imported/cli",
+    "version": "0.0.1",
+    "description": "di CLI",
+    "types": "c/types/types.d.ts",
+    "bin": {
+        "di": "bin/di"
+    },
+    "scripts": {
+        "test": "tsc --noEmit && yarn run lint && yarn run mocha",
+        "lint": "eslint --ext=.ts '**/*.ts'",
+        "copy-templates": "if [ -e ./src/templates ]; then cp -a ./src/templates ./lib/; fi",
+        "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
+        "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
+        "clean": "rm -rf node_modules lib .nyc_output coverage",
+        "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F cli'",
+        "prepublishOnly": "yarn build"
+    },
+    "files": [
+        "lib",
+        "LICENSE",
+        "README.md",
+        "docs",
+        "bin"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "gluegun": "^4.1.2",
+        "@digitally-imported/client": "^0.0.1",
+        "@digitally-imported/dto": "^0.0.1"
+    },
+    "devDependencies": {
+        "@digitally-imported/eslint-config-standard": "^0.0.1",
+        "@digitally-imported/mocha-config": "^0.0.1",
+        "@digitally-imported/typescript-config": "^0.0.1",
+        "@digitally-imported/nyc-config": "^0.0.1",
+        "@types/chai": "^4.2.7",
+        "@types/chai-as-promised": "^7.1.2",
+        "@types/mocha": "^5.2.7",
+        "@types/node": "^12.12.21",
+        "@types/sinon": "^7.5.1",
+        "@types/sinon-chai": "^3.2.3",
+        "@typescript-eslint/eslint-plugin": "^2.12.0",
+        "chai": "^4.2.0",
+        "chai-as-promised": "^7.1.1",
+        "eslint": "^6.8.0",
+        "eslint-config-standard": "^14.1.0",
+        "eslint-plugin-import": "^2.19.1",
+        "eslint-plugin-node": "^10.0.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.1",
+        "mocha": "^6.2.2",
+        "nyc": "^15.0.0",
+        "sinon": "^8.0.1",
+        "sinon-chai": "^3.3.0",
+        "ts-node": "^8.5.4",
+        "tsconfig-paths": "^3.9.0",
+        "typescript": "^3.7.4"
+    }
+}

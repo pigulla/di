@@ -17,8 +17,7 @@
     "license": "MIT",
     "scripts": {
         "setup": "rm -rf node_modules && yarn workspaces run clean && yarn && yarn run build",
-        "build": "yarn run build:dto && yarn run build:client && yarn run build:i3-blocklet && yarn run build:cli && yarn run build:server && yarn run build:integration-test",
-        "build:cli": "yarn workspace @digitally-imported/cli run build",
+        "build": "yarn run build:dto && yarn run build:client && yarn run build:i3-blocklet && yarn run build:server && yarn run build:integration-test",
         "build:client": "yarn workspace @digitally-imported/client run build",
         "build:dto": "yarn workspace @digitally-imported/dto run build",
         "build:i3-blocklet": "yarn workspace @digitally-imported/i3-blocklet run build",

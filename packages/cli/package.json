@@ -4,36 +4,49 @@
     "description": "di CLI",
     "types": "c/types/types.d.ts",
     "bin": {
-        "di": "bin/di"
+        "di": "./bin/run"
     },
     "scripts": {
         "test": "tsc --noEmit && yarn run lint && yarn run mocha",
         "lint": "eslint --ext=.ts '**/*.ts'",
-        "copy-templates": "if [ -e ./src/templates ]; then cp -a ./src/templates ./lib/; fi",
         "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
         "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
         "clean": "rm -rf node_modules lib .nyc_output coverage",
         "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F cli'",
-        "prepublishOnly": "yarn build"
+        "postpack": "rm -f oclif.manifest.json",
+        "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+        "version": "oclif-dev readme && git add README.md"
+    },
+    "main": "lib/index.js",
+    "oclif": {
+        "commands": "./lib/commands",
+        "bin": "di",
+        "plugins": [
+            "@oclif/plugin-help"
+        ]
     },
     "files": [
+        "bin",
         "lib",
         "LICENSE",
-        "README.md",
-        "docs",
-        "bin"
+        "README.md"
     ],
     "license": "MIT",
     "dependencies": {
-        "gluegun": "^4.1.2",
         "@digitally-imported/client": "^0.0.1",
-        "@digitally-imported/dto": "^0.0.1"
+        "@digitally-imported/dto": "^0.0.1",
+        "@oclif/command": "^1.5.19",
+        "@oclif/config": "^1.13.3",
+        "@oclif/plugin-help": "^2.2.3",
+        "tslib": "^1.10.0"
     },
     "devDependencies": {
         "@digitally-imported/eslint-config-standard": "^0.0.1",
         "@digitally-imported/mocha-config": "^0.0.1",
-        "@digitally-imported/typescript-config": "^0.0.1",
         "@digitally-imported/nyc-config": "^0.0.1",
+        "@digitally-imported/typescript-config": "^0.0.1",
+        "@oclif/dev-cli": "^1.22.2",
+        "@oclif/test": "^1.2.5",
         "@types/chai": "^4.2.7",
         "@types/chai-as-promised": "^7.1.2",
         "@types/mocha": "^5.2.7",

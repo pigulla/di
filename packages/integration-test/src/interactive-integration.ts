@@ -10,7 +10,10 @@ const VOLUME_MAX = 50
 const VOLUME_STEP = 5
 
 async function run (): Promise<void> {
-    const client = new Client({endpoint: 'http://localhost:4979'})
+    const client = new Client({
+        endpoint: 'http://localhost:4979',
+        check_version: true,
+    })
     const spinner = ora()
 
     async function start_playback (channel: string): Promise<void> {

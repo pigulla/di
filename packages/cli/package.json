@@ -38,6 +38,8 @@
         "@oclif/command": "^1.5.19",
         "@oclif/config": "^1.13.3",
         "@oclif/plugin-help": "^2.2.3",
+        "cli-ux": "^5.4.1",
+        "json-strictify": "^6.3.2",
         "tslib": "^1.10.0"
     },
     "devDependencies": {
@@ -68,6 +70,7 @@
         "sinon-chai": "^3.3.0",
         "ts-node": "^8.5.4",
         "tsconfig-paths": "^3.9.0",
+        "type-fest": "^0.8.1",
         "typescript": "^3.7.4"
     }
 }

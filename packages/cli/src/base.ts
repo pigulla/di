@@ -1,10 +1,16 @@
 import {Command, flags} from '@oclif/command'
+import {CLIError} from '@oclif/errors'
 import {Input} from '@oclif/command/lib/flags'
 
 import {Client} from '@digitally-imported/client'
 
-export default abstract class BaseCommand extends Command {
-    private client_instance: Client|null = null;
+export enum OutputFormat {
+    TEXT = 'text',
+    JSON = 'json',
+}
+
+export default abstract class BaseCommand<T extends any[] = []> extends Command {
+    private client_instance: Client|null = null
 
     public static flags = {
         endpoint: flags.string({
@@ -18,6 +24,14 @@ export default abstract class BaseCommand extends Command {
             description: 'Do not check whether the client and server versions match',
             env: 'DI_SKIP_VERSION_CHECK',
             default: false,
+        }),
+        'output-format': flags.enum({
+            char: 'f',
+            description: 'The output format',
+            options: Object.values(OutputFormat),
+            required: false,
+            default: OutputFormat.TEXT,
+            env: 'DI_OUTPUT_FORMAT',
         }),
     }
 
@@ -38,5 +52,21 @@ export default abstract class BaseCommand extends Command {
         }
 
         return this.client_instance
+    }
+
+    protected abstract print_text (...value: T): void
+    protected abstract print_json (...value: T): void
+
+    protected print_formatted (...value: T): void {
+        const {flags} = this.parse(this.constructor as any as Input<any>)
+
+        switch (flags['output-format']) {
+            case OutputFormat.TEXT:
+                return this.print_text(...value)
+            case OutputFormat.JSON:
+                return this.print_json(...value)
+            default:
+                throw new CLIError('Unexpected format')
+        }
     }
 }

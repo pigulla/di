@@ -4,8 +4,8 @@
  
 [![Typescript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
 ![Version](https://img.shields.io/github/package-json/v/pigulla/di?style=flat-square)
-[![GitHub license](https://img.shields.io/github/license/pigulla/di?style=flat-square)](https://github.com/pigulla/di/blob/develop/LICENSE)
-[![Travis CI](https://img.shields.io/travis/com/pigulla/di/develop?style=flat-square)](https://travis-ci.com/pigulla/di)
+[![GitHub license](https://img.shields.io/github/license/pigulla/di?style=flat-square)](https://github.com/pigulla/di/blob/master/LICENSE)
+[![Travis CI](https://img.shields.io/travis/com/pigulla/di/master?style=flat-square)](https://travis-ci.com/pigulla/di)
 [![codecov](https://codecov.io/gh/pigulla/di/branch/master/graph/badge.svg)](https://codecov.io/gh/pigulla/di)
 [![GitHub issues](https://img.shields.io/github/issues/pigulla/di?style=flat-square)](https://github.com/pigulla/di/issues)
 [![GitHub PRs](https://img.shields.io/github/issues-pr/pigulla/di?style=flat-square)](https://github.com/pigulla/di/pulls)

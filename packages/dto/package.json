@@ -1,6 +1,6 @@
 {
   "name": "@digitally-imported/dto",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Common data transfer objects used by @digitally-imported/server and related components.",
   "main": "lib/index.js",
   "keywords": [
@@ -28,10 +28,10 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@digitally-imported/eslint-config-standard": "^0.0.1",
-    "@digitally-imported/mocha-config": "^0.0.1",
-    "@digitally-imported/nyc-config": "^0.0.1",
-    "@digitally-imported/typescript-config": "^0.0.1",
+    "@digitally-imported/eslint-config-standard": "^0.0.2",
+    "@digitally-imported/mocha-config": "^0.0.2",
+    "@digitally-imported/nyc-config": "^0.0.2",
+    "@digitally-imported/typescript-config": "^0.0.2",
     "@istanbuljs/nyc-config-typescript": "^1.0.0",
     "@types/chai": "^4.2.6",
     "@types/chai-as-promised": "^7.1.2",

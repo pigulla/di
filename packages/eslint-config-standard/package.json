@@ -1,6 +1,6 @@
 {
   "name": "@digitally-imported/eslint-config-standard",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Common ESLint configuration for @digitally-imported components.",
   "main": "index.js",
   "keywords": [

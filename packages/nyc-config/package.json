@@ -1,6 +1,6 @@
 {
   "name": "@digitally-imported/nyc-config",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Common Istanbul configuration for @digitally-imported components.",
   "main": "index.js",
   "keywords": [

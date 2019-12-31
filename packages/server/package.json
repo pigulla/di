@@ -1,6 +1,6 @@
 {
   "name": "@digitally-imported/server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Listen to music from Digitally Imported, control it from the command line and many other features.",
   "main": "lib/main.js",
   "keywords": [
@@ -32,10 +32,10 @@
     "node": ">=10.0.0"
   },
   "devDependencies": {
-    "@digitally-imported/eslint-config-standard": "^0.0.1",
-    "@digitally-imported/mocha-config": "^0.0.1",
-    "@digitally-imported/nyc-config": "^0.0.1",
-    "@digitally-imported/typescript-config": "^0.0.1",
+    "@digitally-imported/eslint-config-standard": "^0.0.2",
+    "@digitally-imported/mocha-config": "^0.0.2",
+    "@digitally-imported/nyc-config": "^0.0.2",
+    "@digitally-imported/typescript-config": "^0.0.2",
     "@istanbuljs/nyc-config-typescript": "^1.0.0",
     "@nestjs/testing": "^6.10.7",
     "@types/bluebird": "^3.5.29",
@@ -83,7 +83,7 @@
     "typescript": "^3.7.3"
   },
   "dependencies": {
-    "@digitally-imported/dto": "^0.0.1",
+    "@digitally-imported/dto": "^0.0.2",
     "@nestjs/common": "^6.10.7",
     "@nestjs/core": "^6.10.7",
     "@nestjs/platform-express": "^6.10.7",

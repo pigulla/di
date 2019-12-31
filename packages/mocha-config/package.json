@@ -1,6 +1,6 @@
 {
   "name": "@digitally-imported/mocha-config",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Common Mocha configuration for @digitally-imported components.",
   "main": "index.js",
   "scripts": {

@@ -28,6 +28,6 @@ export default class StatusCommand extends BaseCommand<[PlaybackStateDTO|null]> 
     }
 
     protected print_json (playback_state: PlaybackStateDTO|null): void {
-        this.log(JSONs.stringify({playback_state}))
+        this.log(JSONs.stringify(playback_state))
     }
 }

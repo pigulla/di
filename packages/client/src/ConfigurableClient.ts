@@ -201,7 +201,7 @@ export class ConfigurableClient implements IClient {
         return response.status === NOT_FOUND ? null : response.data
     }
 
-    public async get_favorites (): Promise<ChannelDTO[]> {
+    public async get_favorites (): Promise<ChannelDTO[]|null> {
         const response = await this
             .request({
                 method: 'GET',

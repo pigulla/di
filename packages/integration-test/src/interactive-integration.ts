@@ -1,26 +1,33 @@
+/* eslint-disable no-console */
 import {promisify} from 'util'
+import {join} from 'path'
 
 import ora from 'ora'
+import execa from 'execa'
 
 import {start_server} from '@digitally-imported/server/lib/start_server'
-import {Client} from '@digitally-imported/client'
+import {ChannelDTO, PlaybackStateDTO} from '@digitally-imported/dto'
 
 const sleep = promisify(setTimeout)
 const VOLUME_MAX = 50
 const VOLUME_STEP = 5
 
+const BINARY = join(require.resolve('@digitally-imported/cli'), '..', '..', 'bin', 'run')
+
+async function exec<T = void> (...args: string[]): Promise<T> {
+    const {stdout} = await execa(BINARY, [...args, '--output-format', 'json'])
+
+    return JSON.parse(stdout)
+}
+
 async function run (): Promise<void> {
-    const client = new Client({
-        endpoint: 'http://localhost:4979',
-        check_version: true,
-    })
     const spinner = ora()
 
     async function start_playback (channel: string): Promise<void> {
         spinner.start(`Starting playback of channel "${channel}"`)
 
         try {
-            await client.start_playback(channel)
+            await exec('play', channel)
             spinner.succeed()
         } catch (error) {
             spinner.fail(`Error: ${error.message}`)
@@ -32,7 +39,8 @@ async function run (): Promise<void> {
         spinner.start('Retrieving channel information')
 
         try {
-            const playback_state = await client.get_playback_state()
+            const playback_state = await exec<PlaybackStateDTO>('status')
+
             if (!playback_state) {
                 spinner.fail('Playback state unavailable')
             } else if (!playback_state.now_playing) {
@@ -50,7 +58,7 @@ async function run (): Promise<void> {
         spinner.start('Retrieving favorites')
 
         try {
-            const favorites = await client.get_favorites()
+            const favorites = await exec<ChannelDTO[]|null>('favorites')
 
             if (favorites) {
                 spinner.info(`Your favorites are: ${favorites.map(channel => channel.name).join(', ')}`)
@@ -67,13 +75,15 @@ async function run (): Promise<void> {
         spinner.start(`Setting volume to ${volume}%`)
 
         try {
-            await client.set_volume(volume)
+            await exec('set-volume', volume.toString())
             spinner.succeed()
         } catch (error) {
             spinner.fail(`Error: ${error.message}`)
             process.exitCode = 4
         }
     }
+
+    console.log(`Using binary "${BINARY}"`)
 
     spinner.start('Starting server')
     const stop = await start_server([

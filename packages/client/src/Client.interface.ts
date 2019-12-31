@@ -17,7 +17,7 @@ export interface IClient {
     start_playback (channel_key: string): Promise<ChannelDTO>
     stop_playback (): Promise<void>
     get_playback_state (): Promise<PlaybackStateDTO|null>
-    get_favorites (): Promise<ChannelDTO[]>
+    get_favorites (): Promise<ChannelDTO[]|null>
     get_channels (): Promise<ChannelDTO[]>
     get_channel (channel_key: string): Promise<ChannelDTO>
     get_channel_filters (): Promise<ChannelFilterDTO[]>

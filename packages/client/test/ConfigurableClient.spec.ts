@@ -11,7 +11,10 @@ import {ChannelNotFoundError, ClientError, ServerNotRunningError} from '@src/err
 
 describe('Client', function () {
     it('should extend ConfigurableClient', function () {
-        const client = new Client({endpoint: 'http://server.local'})
+        const client = new Client({
+            endpoint: 'http://server.local',
+            check_version: false,
+        })
 
         expect(client).to.be.instanceOf(ConfigurableClient)
     })
@@ -33,6 +36,7 @@ describe('ConfigurableClient', function () {
         expect(() => new ConfigurableClient({
             axios_factory: Axios.create,
             process: process_stub as any as NodeJS.Process,
+            check_version: false,
             client_version: 'foo',
             endpoint,
         })).to.throw(/invalid version/i)
@@ -62,6 +66,7 @@ describe('ConfigurableClient', function () {
                 endpoint,
                 client_version,
                 axios_factory: axios_factory_stub,
+                check_version: true,
                 process: process_stub as any as NodeJS.Process,
             })
             expect(response_interceptor_use).to.have.been.calledOnce
@@ -137,6 +142,7 @@ describe('ConfigurableClient', function () {
             client = new ConfigurableClient({
                 endpoint,
                 client_version,
+                check_version: false,
                 axios_factory: Axios.create,
                 process: process_stub as any as NodeJS.Process,
             })

@@ -4,6 +4,7 @@
         "src/**/*.ts"
     ],
     "exclude": [
-        "src/Client.ts"
+        "src/Client.ts",
+        "src/index.ts"
     ]
 }

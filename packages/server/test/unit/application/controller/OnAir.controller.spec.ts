@@ -38,7 +38,7 @@ describe('NowPlaying controller', function () {
         ]
         on_air_provider_stub.get_all.returns(now_playing)
 
-        const result = controller.now_playing()
+        const result = controller.on_air()
         expect(result).to.deep.equal(now_playing.map(item => item.to_dto()))
     })
 
@@ -48,7 +48,7 @@ describe('NowPlaying controller', function () {
 
         on_air_provider_stub.get_by_channel_key.withArgs(channel.key).returns(now_playing)
 
-        const result = await controller.now_playing_on_channel(channel.key)
+        const result = await controller.on_air_on_channel(channel.key)
         expect(result).to.deep.equal(now_playing.to_dto())
     })
 
@@ -57,6 +57,6 @@ describe('NowPlaying controller', function () {
 
         on_air_provider_stub.get_by_channel_key.withArgs('invalid').throws(error)
 
-        expect(() => controller.now_playing_on_channel('invalid')).to.throw(NotFoundException)
+        expect(() => controller.on_air_on_channel('invalid')).to.throw(NotFoundException)
     })
 })

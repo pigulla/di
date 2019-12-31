@@ -14,7 +14,7 @@ import {
 
 import {ChannelDTO, PlayDTO, PlaybackStateDTO} from '@digitally-imported/dto'
 
-import {Configuration, IChannelsProvider, IPlaybackControl, IOnAirProvider} from '../../domain'
+import {Configuration, IChannelsProvider, IPlaybackControl, IPlaybackStateProvider} from '../../domain'
 
 class ValidatedPlayDTO extends PlayDTO {
     @IsString()
@@ -26,48 +26,45 @@ class ValidatedPlayDTO extends PlayDTO {
 export class PlaybackController {
     private readonly channel_provider: IChannelsProvider
     private readonly configuration: Configuration
-    private readonly on_air_provider: IOnAirProvider
     private readonly playback_control: IPlaybackControl
+    private readonly playback_state_provider: IPlaybackStateProvider
 
     public constructor (
         @Inject('configuration') config_provider: Configuration,
         @Inject('IChannelsProvider') channel_provider: IChannelsProvider,
-        @Inject('IOnAirProvider') on_air_provider: IOnAirProvider,
         @Inject('IPlaybackControl') vlc_control: IPlaybackControl,
+        @Inject('IPlaybackStateProvider') playback_state_provider: IPlaybackStateProvider,
     ) {
         this.channel_provider = channel_provider
         this.configuration = config_provider
-        this.on_air_provider = on_air_provider
         this.playback_control = vlc_control
+        this.playback_state_provider = playback_state_provider
     }
 
     @Head()
     @HttpCode(HttpStatus.NO_CONTENT)
-    public async is_playing (): Promise<void> {
-        const is_playing = await this.playback_control.is_playing()
+    public is_playing (): void {
+        const state = this.playback_state_provider.get_state()
 
-        if (!is_playing) {
+        if (state.stopped) {
             throw new NotFoundException()
         }
     }
 
     @Get()
-    public async current (): Promise<PlaybackStateDTO> {
-        const channel_key = await this.playback_control.get_current_channel_key()
+    public current (): PlaybackStateDTO {
+        const state = this.playback_state_provider.get_state()
 
-        if (!channel_key) {
+        if (state.stopped) {
             throw new NotFoundException()
         }
 
-        const now_playing = this.on_air_provider.get_by_channel_key(channel_key)
-        const channel = this.channel_provider.get(channel_key)
-
         return {
             now_playing: {
-                artist: now_playing.display_artist,
-                title: now_playing.display_title,
+                artist: state.song.artist,
+                title: state.song.title,
             },
-            channel: channel.to_dto(),
+            channel: state.channel.to_dto(),
         }
     }
 
@@ -85,6 +82,7 @@ export class PlaybackController {
             throw new NotFoundException()
         }
 
+        // TODO: Move functionality to domain
         const {di_listenkey, di_quality} = this.configuration
         const channel = this.channel_provider.get(identifier)
         const url = channel.build_url(di_listenkey, di_quality)

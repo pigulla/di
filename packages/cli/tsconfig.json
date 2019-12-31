@@ -1,9 +1,5 @@
 {
     "extends": "@digitally-imported/typescript-config/tsconfig.json",
-    "include": [
-        "src/**/*.ts",
-        "test/**/*.ts"
-    ],
     "compilerOptions": {
         "baseUrl": ".",
         "outDir": "lib",
@@ -22,5 +18,9 @@
                 "test/*"
             ]
         }
-    }
+    },
+    "include": [
+        "src/**/*.ts",
+        "test/**/*.ts"
+    ]
 }

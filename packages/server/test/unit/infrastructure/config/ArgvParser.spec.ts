@@ -70,6 +70,7 @@ describe('The ArgvParser', function () {
 
         beforeEach(function () {
             argv_parser = create_argv_parser({
+                ignore_env: true,
                 skip_vlc_validation: true,
                 auto_exit: false,
                 default_vlc_binary: null,

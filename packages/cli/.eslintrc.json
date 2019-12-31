@@ -1,5 +1,9 @@
 {
-    "extends": "@digitally-imported/eslint-config-standard",
+    "extends": [
+        "@digitally-imported/eslint-config-standard"
+    ],
+    "rules": {
+    },
     "overrides": [
         {
             "files": [

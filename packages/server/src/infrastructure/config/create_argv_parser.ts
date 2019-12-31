@@ -10,12 +10,14 @@ interface ArgvParserOptions {
     skip_vlc_validation: boolean
     default_vlc_binary: string|null
     auto_exit: boolean
+    ignore_env: boolean
 }
 
 const default_parser_options: ArgvParserOptions = {
     skip_vlc_validation: false,
     default_vlc_binary: null,
     auto_exit: true,
+    ignore_env: false,
 }
 
 export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): IArgvParser {
@@ -23,6 +25,7 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
         auto_exit,
         default_vlc_binary,
         skip_vlc_validation,
+        ignore_env,
     } = Object.assign({}, default_parser_options, options)
 
     const server_options: {[key: string]: Options} = {
@@ -231,7 +234,8 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
     return function argv_parser (argv: string[]): Configuration {
         const options = yargs
             .scriptName('di')
-            .env('DI_')
+            // @ts-ignore
+            .env(ignore_env ? false : 'DI_')
             .options(cli_options)
             .strict()
             .exitProcess(auto_exit)

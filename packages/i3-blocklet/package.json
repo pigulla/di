@@ -17,10 +17,10 @@
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
     "clean": "rm -rf node_modules lib .nyc_output coverage",
     "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
-    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F i3lblocklet'"
+    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F i3blocklet'"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
-  "homepage": "https://github.com/pigulla/di/tree/develop/packages/i3-blocklet",
+  "homepage": "https://github.com/pigulla/di/tree/master/packages/i3-blocklet",
   "bugs": {
     "url": "https://github.com/pigulla/di/issues"
   },

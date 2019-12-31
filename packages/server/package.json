@@ -19,7 +19,7 @@
     "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F server'"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
-  "homepage": "https://github.com/pigulla/di/tree/develop/packages/server",
+  "homepage": "https://github.com/pigulla/di/tree/master/packages/server",
   "repository": {
     "type": "git",
     "url": "https://github.com/pigulla/di.git"

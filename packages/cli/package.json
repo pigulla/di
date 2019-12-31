@@ -2,7 +2,12 @@
     "name": "@digitally-imported/cli",
     "version": "0.0.2",
     "description": "di CLI",
-    "types": "c/types/types.d.ts",
+    "main": "lib/index.js",
+    "keywords": [
+        "digitally-imported",
+        "cli",
+        "oclif"
+    ],
     "bin": {
         "di": "./bin/run"
     },
@@ -14,24 +19,17 @@
         "clean": "rm -rf node_modules lib .nyc_output coverage",
         "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F cli'",
         "postpack": "rm -f oclif.manifest.json",
-        "prepack": "rm -rf lib && tsc --build tsconfig.build.json && oclif-dev manifest && oclif-dev readme",
-        "version": "oclif-dev readme && git add README.md"
+        "prepack": "rm -rf lib && tsc --build tsconfig.build.json && oclif-dev manifest"
     },
-    "main": "lib/index.js",
-    "oclif": {
-        "commands": "./lib/commands",
-        "bin": "di",
-        "plugins": [
-            "@oclif/plugin-help"
-        ]
+    "author": "Raphael Pigulla <pigulla@four66.com>",
+    "homepage": "https://github.com/pigulla/di/tree/master/packages/cli",
+    "bugs": {
+        "url": "https://github.com/pigulla/di/issues"
     },
-    "files": [
-        "bin",
-        "lib",
-        "LICENSE",
-        "README.md"
-    ],
     "license": "MIT",
+    "engines": {
+        "node": ">=10.0.0"
+    },
     "dependencies": {
         "@digitally-imported/client": "^0.0.2",
         "@digitally-imported/dto": "^0.0.2",
@@ -72,5 +70,18 @@
         "tsconfig-paths": "^3.9.0",
         "type-fest": "^0.8.1",
         "typescript": "^3.7.4"
-    }
+    },
+    "oclif": {
+        "commands": "./lib/commands",
+        "bin": "di",
+        "plugins": [
+            "@oclif/plugin-help"
+        ]
+    },
+    "files": [
+        "bin",
+        "lib",
+        "LICENSE",
+        "README.md"
+    ]
 }

@@ -15,7 +15,7 @@
     "clean": "rm -rf node_modules"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
-  "homepage": "https://github.com/pigulla/di/tree/develop/packages/typescript-config",
+  "homepage": "https://github.com/pigulla/di/tree/master/packages/typescript-config",
   "repository": {
     "type": "git",
     "url": "https://github.com/pigulla/di.git"

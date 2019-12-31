@@ -16,7 +16,7 @@
     "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F dto'"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
-  "homepage": "https://github.com/pigulla/di/tree/develop/packages/dto",
+  "homepage": "https://github.com/pigulla/di/tree/master/packages/dto",
   "bugs": {
     "url": "https://github.com/pigulla/di/issues"
   },

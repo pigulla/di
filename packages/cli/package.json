@@ -14,7 +14,7 @@
         "clean": "rm -rf node_modules lib .nyc_output coverage",
         "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F cli'",
         "postpack": "rm -f oclif.manifest.json",
-        "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+        "prepack": "rm -rf lib && tsc --build tsconfig.build.json && oclif-dev manifest && oclif-dev readme",
         "version": "oclif-dev readme && git add README.md"
     },
     "main": "lib/index.js",

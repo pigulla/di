@@ -3,7 +3,7 @@
  :information_source: This is *not* an official project of [Digitally Imported, Inc.](https://www.di.fm/) but a labor of love  :gift_heart: from a fan and dedicated listener.
  
 [![Typescript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
-![Version](https://img.shields.io/github/package-json/v/pigulla/di?style=flat-square)
+[![Version](https://img.shields.io/github/package-json/v/pigulla/di?style=flat-square)](https://www.npmjs.com/search?q=%40digitally-imported)
 [![GitHub license](https://img.shields.io/github/license/pigulla/di?style=flat-square)](https://github.com/pigulla/di/blob/master/LICENSE)
 [![Travis CI](https://img.shields.io/travis/com/pigulla/di/master?style=flat-square)](https://travis-ci.com/pigulla/di)
 [![codecov](https://codecov.io/gh/pigulla/di/branch/master/graph/badge.svg)](https://codecov.io/gh/pigulla/di)

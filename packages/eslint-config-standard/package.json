@@ -15,7 +15,7 @@
     "clean": "rm -rf node_modules"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
-  "homepage": "https://github.com/pigulla/di/tree/develop/packages/eslint-config-standard",
+  "homepage": "https://github.com/pigulla/di/tree/master/packages/eslint-config-standard",
   "bugs": {
     "url": "https://github.com/pigulla/di/issues"
   },

@@ -16,7 +16,8 @@
     "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
     "clean": "rm -rf node_modules lib .nyc_output coverage",
     "start:dev": "ts-node -r tsconfig-paths/register src/main.ts",
-    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F server'"
+    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F server'",
+    "prepack": "yarn run build"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/master/packages/server",
@@ -107,6 +108,6 @@
     "vm2": "^3.8.4",
     "which": "^2.0.2",
     "xml2js": "^0.4.22",
-    "yargs": "^15.0.2"
+    "yargs": "^15.1.0"
   }
 }

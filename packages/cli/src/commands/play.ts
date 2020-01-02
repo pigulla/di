@@ -8,6 +8,10 @@ import {HandleClientError} from '../handle-client-error'
 export default class PlayCommand extends BaseCommand<[OnAirDTO, ChannelDTO]> {
     public static description = 'Play a channel.'
 
+    public static examples = [
+        '$ di play progressive',
+    ]
+
     public static flags = {...BaseCommand.flags}
 
     public static args = [

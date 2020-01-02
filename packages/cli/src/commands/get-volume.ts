@@ -6,6 +6,10 @@ import {HandleClientError} from '../handle-client-error'
 export default class GetVolumeCommand extends BaseCommand<[number]> {
     public static description = 'Get the current playback volume.'
 
+    public static examples = [
+        '$ di get-volume',
+    ]
+
     public static flags = {...BaseCommand.flags}
 
     public static args = []

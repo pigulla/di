@@ -26,6 +26,7 @@ type AxiosFactory = (config?: AxiosRequestConfig) => AxiosInstance
 export type ConfigurableOptions = {
     axios_factory: AxiosFactory
     client_version: string
+    user_agent: string
     process: NodeJS.Process
     check_version: boolean
     endpoint: string
@@ -44,7 +45,12 @@ export class ConfigurableClient implements IClient {
             throw new Error('Invalid version string')
         }
 
-        this.axios = options.axios_factory({baseURL: options.endpoint})
+        this.axios = options.axios_factory({
+            baseURL: options.endpoint,
+            headers: {
+                'User-Agent': options.user_agent,
+            },
+        })
         this.check_version = options.check_version
         this.client_version = client_version
         this.process = options.process

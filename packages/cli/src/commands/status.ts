@@ -7,6 +7,10 @@ import JSONs from 'json-strictify'
 export default class StatusCommand extends BaseCommand<[PlaybackStateDTO|null]> {
     public static description = 'Show the current playback status.'
 
+    public static examples = [
+        '$ di status',
+    ]
+
     public static flags = {...BaseCommand.flags}
 
     @HandleClientError()

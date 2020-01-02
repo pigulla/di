@@ -11,10 +11,7 @@ import {ChannelNotFoundError, ClientError, ServerNotRunningError} from '@src/err
 
 describe('Client', function () {
     it('should extend ConfigurableClient', function () {
-        const client = new Client({
-            endpoint: 'http://server.local',
-            check_version: false,
-        })
+        const client = new Client()
 
         expect(client).to.be.instanceOf(ConfigurableClient)
     })
@@ -23,6 +20,7 @@ describe('Client', function () {
 describe('ConfigurableClient', function () {
     const client_version = '2.4.3'
     const endpoint = 'http://server.local'
+    const user_agent = 'my-agent/42'
     let client: ConfigurableClient
     let process_stub: Pick<SinonStubbedInstance<NodeJS.Process>, 'emitWarning'>
 
@@ -38,6 +36,7 @@ describe('ConfigurableClient', function () {
             process: process_stub as any as NodeJS.Process,
             check_version: false,
             client_version: 'foo',
+            user_agent,
             endpoint,
         })).to.throw(/invalid version/i)
     })
@@ -65,6 +64,7 @@ describe('ConfigurableClient', function () {
             client = new ConfigurableClient({
                 endpoint,
                 client_version,
+                user_agent,
                 axios_factory: axios_factory_stub,
                 check_version: true,
                 process: process_stub as any as NodeJS.Process,
@@ -142,6 +142,7 @@ describe('ConfigurableClient', function () {
             client = new ConfigurableClient({
                 endpoint,
                 client_version,
+                user_agent,
                 check_version: false,
                 axios_factory: Axios.create,
                 process: process_stub as any as NodeJS.Process,
@@ -149,6 +150,16 @@ describe('ConfigurableClient', function () {
         })
 
         describe('when checking if the server is alive', function () {
+            it('should send the user agent header', async function () {
+                nock(endpoint, {
+                    reqheaders: {
+                        'user-agent': user_agent,
+                    },
+                }).head('/server').reply(NO_CONTENT)
+
+                await client.is_alive()
+            })
+
             it('should return true if it is', async function () {
                 nock(endpoint).head('/server').reply(NO_CONTENT)
 

@@ -55,7 +55,7 @@ import {
         {
             provide: 'normalized_package_json',
             async useFactory (): Promise<NormalizedPackageJson> {
-                const pkg = await read_pkg_up()
+                const pkg = await read_pkg_up({cwd: __dirname})
 
                 if (!pkg) {
                     throw new Error('No package.json found')

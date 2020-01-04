@@ -15,7 +15,7 @@ $ npm install -g @digitally-imported/cli
 $ di COMMAND
 running command...
 $ di (-v|--version|version)
-@digitally-imported/cli/0.0.2 linux-x64 node-v13.5.0
+@digitally-imported/cli/0.0.3 linux-x64 node-v13.5.0
 $ di --help [COMMAND]
 USAGE
   $ di COMMAND
@@ -24,27 +24,32 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`di favorites`](#di-favorites)
+* [`di channels`](#di-channels)
 * [`di get-volume`](#di-get-volume)
 * [`di help [COMMAND]`](#di-help-command)
 * [`di ping`](#di-ping)
 * [`di play CHANNEL`](#di-play-channel)
+* [`di select`](#di-select)
 * [`di set-volume VOLUME`](#di-set-volume-volume)
 * [`di status`](#di-status)
 * [`di stop`](#di-stop)
 
-## `di favorites`
+## `di channels`
 
-List the favorite channels (if available).
+List all available channels.
 
 ```
 USAGE
-  $ di favorites
+  $ di channels
 
 OPTIONS
   -e, --endpoint=endpoint          [default: http://localhost:4979] The endpoint where the server is listening
-  -f, --output-format=(text|json)  [default: text] The output format
+  -f, --favorites-only             List favorite channels only
+  -o, --output-format=(text|json)  [default: text] The output format
   -s, --skip-version-check         Do not check whether the client and server versions match
+
+EXAMPLE
+  $ di channels
 ```
 
 ## `di get-volume`
@@ -57,8 +62,11 @@ USAGE
 
 OPTIONS
   -e, --endpoint=endpoint          [default: http://localhost:4979] The endpoint where the server is listening
-  -f, --output-format=(text|json)  [default: text] The output format
+  -o, --output-format=(text|json)  [default: text] The output format
   -s, --skip-version-check         Do not check whether the client and server versions match
+
+EXAMPLE
+  $ di get-volume
 ```
 
 ## `di help [COMMAND]`
@@ -88,8 +96,11 @@ USAGE
 
 OPTIONS
   -e, --endpoint=endpoint          [default: http://localhost:4979] The endpoint where the server is listening
-  -f, --output-format=(text|json)  [default: text] The output format
+  -o, --output-format=(text|json)  [default: text] The output format
   -s, --skip-version-check         Do not check whether the client and server versions match
+
+EXAMPLE
+  $ di ping
 ```
 
 ## `di play CHANNEL`
@@ -105,8 +116,29 @@ ARGUMENTS
 
 OPTIONS
   -e, --endpoint=endpoint          [default: http://localhost:4979] The endpoint where the server is listening
-  -f, --output-format=(text|json)  [default: text] The output format
+  -o, --output-format=(text|json)  [default: text] The output format
   -s, --skip-version-check         Do not check whether the client and server versions match
+
+EXAMPLE
+  $ di play progressive
+```
+
+## `di select`
+
+List all available channels.
+
+```
+USAGE
+  $ di select
+
+OPTIONS
+  -e, --endpoint=endpoint          [default: http://localhost:4979] The endpoint where the server is listening
+  -f, --favorites-only             List favorite channels only
+  -o, --output-format=(text|json)  [default: text] The output format
+  -s, --skip-version-check         Do not check whether the client and server versions match
+
+EXAMPLE
+  $ di channels
 ```
 
 ## `di set-volume VOLUME`
@@ -122,8 +154,11 @@ ARGUMENTS
 
 OPTIONS
   -e, --endpoint=endpoint          [default: http://localhost:4979] The endpoint where the server is listening
-  -f, --output-format=(text|json)  [default: text] The output format
+  -o, --output-format=(text|json)  [default: text] The output format
   -s, --skip-version-check         Do not check whether the client and server versions match
+
+EXAMPLE
+  $ di set-volume 80
 ```
 
 ## `di status`
@@ -136,8 +171,11 @@ USAGE
 
 OPTIONS
   -e, --endpoint=endpoint          [default: http://localhost:4979] The endpoint where the server is listening
-  -f, --output-format=(text|json)  [default: text] The output format
+  -o, --output-format=(text|json)  [default: text] The output format
   -s, --skip-version-check         Do not check whether the client and server versions match
+
+EXAMPLE
+  $ di status
 ```
 
 ## `di stop`
@@ -150,7 +188,10 @@ USAGE
 
 OPTIONS
   -e, --endpoint=endpoint          [default: http://localhost:4979] The endpoint where the server is listening
-  -f, --output-format=(text|json)  [default: text] The output format
+  -o, --output-format=(text|json)  [default: text] The output format
   -s, --skip-version-check         Do not check whether the client and server versions match
+
+EXAMPLE
+  $ di stop
 ```
 <!-- commandsstop -->

@@ -1,6 +1,6 @@
 {
   "name": "@digitally-imported/integration-test",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Non-automatic integration 'tests' for the @digitally-imported components.",
   "main": "lib/interactive-integration.js",
   "keywords": [

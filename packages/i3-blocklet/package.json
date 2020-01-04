@@ -1,6 +1,6 @@
 {
   "name": "@digitally-imported/i3-blocklet",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "i3blocks-integration for @digitally-imported/server.",
   "main": "lib/main.js",
   "keywords": [
@@ -36,18 +36,18 @@
     "README.md"
   ],
   "dependencies": {
-    "@digitally-imported/client": "^0.0.2",
-    "@digitally-imported/dto": "^0.0.2",
+    "@digitally-imported/client": "^0.0.3",
+    "@digitally-imported/dto": "^0.0.3",
     "lodash.truncate": "^4.4.2",
     "tslib": "^1.10.0",
     "type-fest": "^0.8.1",
     "yargs": "^15.1.0"
   },
   "devDependencies": {
-    "@digitally-imported/eslint-config-standard": "^0.0.2",
-    "@digitally-imported/mocha-config": "^0.0.2",
-    "@digitally-imported/nyc-config": "^0.0.2",
-    "@digitally-imported/typescript-config": "^0.0.2",
+    "@digitally-imported/eslint-config-standard": "^0.0.3",
+    "@digitally-imported/mocha-config": "^0.0.3",
+    "@digitally-imported/nyc-config": "^0.0.3",
+    "@digitally-imported/typescript-config": "^0.0.3",
     "@istanbuljs/nyc-config-typescript": "^1.0.0",
     "@types/chai": "^4.2.6",
     "@types/chai-as-promised": "^7.1.2",

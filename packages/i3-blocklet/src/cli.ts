@@ -12,7 +12,7 @@ export interface Options {
 }
 
 const default_options: Options = {
-    auto_exit: false,
+    auto_exit: true,
     ClientCtor: Client,
     blocklet_fn: blocklet,
 }

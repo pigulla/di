@@ -14,7 +14,8 @@
     "start": "node lib/interactive-integration.js",
     "clean": "rm -rf node_modules lib .nyc_output coverage",
     "codecov": "echo 'Not applicable'",
-    "dev": "ts-node src/interactive-integration.ts"
+    "dev": "ts-node src/interactive-integration.ts",
+    "prepack": "yarn run build"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/master/packages/integration-test",

@@ -9,7 +9,7 @@
     "blocklet"
   ],
   "bin": {
-    "di-i3-blocklet": "./lib/main.js"
+    "di": "./bin/run"
   },
   "scripts": {
     "test": "tsc --noEmit && yarn run lint && yarn run mocha",
@@ -17,7 +17,8 @@
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
     "clean": "rm -rf node_modules lib .nyc_output coverage",
     "mocha": "nyc mocha --file test/mocha.hooks.ts 'test/**/*.spec.ts'",
-    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F i3blocklet'"
+    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F i3blocklet'",
+    "prepack": "yarn run build"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/master/packages/i3-blocklet",
@@ -28,13 +29,19 @@
   "engines": {
     "node": ">=10.0.0"
   },
+  "files": [
+    "bin",
+    "lib",
+    "LICENSE",
+    "README.md"
+  ],
   "dependencies": {
     "@digitally-imported/client": "^0.0.2",
     "@digitally-imported/dto": "^0.0.2",
     "lodash.truncate": "^4.4.2",
     "tslib": "^1.10.0",
     "type-fest": "^0.8.1",
-    "yargs": "^15.0.2"
+    "yargs": "^15.1.0"
   },
   "devDependencies": {
     "@digitally-imported/eslint-config-standard": "^0.0.2",

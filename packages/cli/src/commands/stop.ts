@@ -6,6 +6,10 @@ import BaseCommand from '../base'
 export default class StopCommand extends BaseCommand {
     public static description = 'Stop playback.'
 
+    public static examples = [
+        '$ di stop',
+    ]
+
     public static flags = {...BaseCommand.flags}
 
     @HandleClientError()

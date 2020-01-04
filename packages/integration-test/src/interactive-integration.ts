@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import {promisify} from 'util'
 import {join} from 'path'
+import {EOL} from 'os'
 
 import ora from 'ora'
 import execa from 'execa'
@@ -12,10 +13,11 @@ const sleep = promisify(setTimeout)
 const VOLUME_MAX = 50
 const VOLUME_STEP = 5
 
-const BINARY = join(require.resolve('@digitally-imported/cli'), '..', '..', 'bin', 'run')
+const CLI_BINARY = join(require.resolve('@digitally-imported/cli'), '..', '..', 'bin', 'run')
+const I3B_BINARY = join(require.resolve('@digitally-imported/i3-blocklet'), '..', '..', 'bin', 'run')
 
 async function exec<T = void> (...args: string[]): Promise<T> {
-    const {stdout} = await execa(BINARY, [...args, '--output-format', 'json'])
+    const {stdout} = await execa(CLI_BINARY, [...args, '--output-format', 'json'])
 
     return JSON.parse(stdout)
 }
@@ -58,7 +60,7 @@ async function run (): Promise<void> {
         spinner.start('Retrieving favorites')
 
         try {
-            const favorites = await exec<ChannelDTO[]|null>('favorites')
+            const favorites = await exec<ChannelDTO[]|null>('channels', '--favorites-only')
 
             if (favorites) {
                 spinner.info(`Your favorites are: ${favorites.map(channel => channel.name).join(', ')}`)
@@ -83,7 +85,24 @@ async function run (): Promise<void> {
         }
     }
 
-    console.log(`Using binary "${BINARY}"`)
+    async function print_i3_blocklet (): Promise<void> {
+        spinner.start('Running i3-blocklet')
+
+        try {
+            const {stdout} = await execa(I3B_BINARY)
+            const data = JSON.parse(stdout)
+
+            spinner.info([
+                'i3-blocklet reports:',
+                JSON.stringify(data, null, 4),
+            ].join(EOL))
+        } catch (error) {
+            spinner.fail(`Error: ${error.message}`)
+            process.exitCode = 5
+        }
+    }
+
+    console.log(`Using binary "${CLI_BINARY}"`)
 
     spinner.start('Starting server')
     const stop = await start_server([
@@ -110,10 +129,13 @@ async function run (): Promise<void> {
     await print_playback_state()
 
     await print_favorites()
+    await print_i3_blocklet()
 
     spinner.start('Stopping server')
     await stop()
     spinner.succeed()
+
+    await print_i3_blocklet()
 }
 
 run()

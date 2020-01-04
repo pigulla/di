@@ -8,6 +8,16 @@
 [![codecov](https://codecov.io/gh/pigulla/di/branch/master/graph/badge.svg?flag=i3-blocklet)](https://codecov.io/gh/pigulla/di/tree/master/packages/i3-blocklet/src)
 [![Snyk](https://snyk.io/test/github/pigulla/di/badge.svg?targetFile=packages/i3-blocklet/package.json&style=flat-square)](https://snyk.io/test/github/pigulla/di?targetFile=packages%2Fi3-blocklet%2Fpackage.json&tab=dependencies)
 
+### Setup
+Add the following section to your `.i3blocks.conf` (adjust as needed):
+```
+[di]
+instance=DI
+interval=5
+format=json
+command=/path/to/i3-blocklet/bin/run
+```
+
 ### See also
 
  - https://i3wm.org/docs/i3bar-protocol.html#_blocks_in_detail

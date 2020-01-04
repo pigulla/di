@@ -7,6 +7,10 @@ import {HandleClientError} from '../handle-client-error'
 export default class SetVolumeCommand extends BaseCommand {
     public static description = 'Set the playback volume.'
 
+    public static examples = [
+        '$ di set-volume 80',
+    ]
+
     public static flags = {...BaseCommand.flags}
 
     public static args = [

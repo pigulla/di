@@ -26,7 +26,7 @@ export default abstract class BaseCommand<T extends any[] = []> extends Command 
             default: false,
         }),
         'output-format': flags.enum({
-            char: 'f',
+            char: 'o',
             description: 'The output format',
             options: Object.values(OutputFormat),
             required: false,
@@ -36,14 +36,16 @@ export default abstract class BaseCommand<T extends any[] = []> extends Command 
     }
 
     protected async init (): Promise<void> {
-        const {flags} = this.parse(this.constructor as any as Input<any>)
-
-        if (!this.client_instance) {
-            this.client_instance = new Client({
-                endpoint: flags.endpoint,
-                check_version: !flags['skip-version-check'],
-            })
+        if (this.client_instance) {
+            return
         }
+
+        const {flags} = this.parse(this.constructor as any as Input<any>)
+        this.client_instance = new Client({
+            endpoint: flags.endpoint,
+            check_version: !flags['skip-version-check'],
+            user_agent: this.config.userAgent,
+        })
     }
 
     protected get client (): Client {

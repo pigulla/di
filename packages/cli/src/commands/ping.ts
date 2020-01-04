@@ -5,6 +5,10 @@ import JSONs from 'json-strictify'
 export default class PingCommand extends BaseCommand<[boolean]> {
     public static description = 'Test if the server is alive.'
 
+    public static examples = [
+        '$ di ping',
+    ]
+
     public static flags = {...BaseCommand.flags}
 
     @HandleClientError()

@@ -77,8 +77,8 @@ export class PlaybackStateProvider extends Subject<PlaybackState> implements IPl
             stopped: false,
             channel,
             song: {
-                artist: now_playing.display_artist,
-                title: now_playing.display_title,
+                artist: now_playing.artist || 'unknown',
+                title: now_playing.title || 'unknown',
             },
         })
     }

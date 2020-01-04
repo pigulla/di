@@ -157,8 +157,8 @@ describe('PlaybackStateProvider', function () {
             on_air_provider_stub.get.withArgs(progressive.key).returns({
                 channel_id: progressive.id,
                 channel_key: progressive.key,
-                display_artist: 'The Future Sequencer',
-                display_title: 'Vary Time',
+                artist: 'The Future Sequencer',
+                title: 'Vary Time',
             } as IOnAir)
 
             await playback_state_provider.trigger_check()

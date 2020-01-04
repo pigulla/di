@@ -398,14 +398,14 @@ describe('ConfigurableClient', function () {
                 {
                     channel_id: 42,
                     channel_key: 'progressive',
-                    display_artist: 'Hairy Potter',
-                    display_title: 'Foobar Bambaz',
+                    artist: 'Hairy Potter',
+                    title: 'Foobar Bambaz',
                 },
                 {
                     channel_id: 13,
                     channel_key: 'rave',
-                    display_artist: 'The Future Sequencer',
-                    display_title: 'Fade 2 Reality',
+                    artist: 'The Future Sequencer',
+                    title: 'Fade 2 Reality',
                 },
             ]
 
@@ -425,8 +425,8 @@ describe('ConfigurableClient', function () {
                 const data: OnAirDTO = {
                     channel_id: 13,
                     channel_key: 'rave',
-                    display_artist: 'The Future Sequencer',
-                    display_title: 'Fade 2 Reality',
+                    artist: 'The Future Sequencer',
+                    title: 'Fade 2 Reality',
                 }
 
                 nock(endpoint)

@@ -33,10 +33,10 @@ export default class PlayCommand extends BaseCommand<[OnAirDTO, ChannelDTO]> {
     }
 
     protected print_text (on_air: OnAirDTO, channel: ChannelDTO): void {
-        const {display_title, display_artist} = on_air
+        const {title, artist} = on_air
         const {name} = channel
 
-        this.log(`Now playing channel ${name}: ${display_artist} - ${display_title}`)
+        this.log(`Now playing channel ${name}: ${artist} - ${title}`)
     }
 
     protected print_json (on_air: OnAirDTO, channel: ChannelDTO): void {

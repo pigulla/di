@@ -64,8 +64,8 @@ describe('The DTO', function () {
             const data = {
                 channel_id: 42,
                 channel_key: 'the-key',
-                display_artist: 'The Artist',
-                display_title: 'The Title',
+                artist: 'The Artist',
+                title: 'The Title',
             }
             expect(OnAirDTO.create(data)).to.deep.equal(data)
         })

@@ -4,8 +4,8 @@ import {NowPlaying} from '@src/infrastructure/di'
 export class NowPlayingBuilder {
     private channel_id: number = 7
     private channel_key: string = 'psychill'
-    private display_artist: string = 'Shpongle'
-    private display_title: string = 'Outer Shpongolia'
+    private artist: string = 'Shpongle'
+    private title: string = 'Outer Shpongolia'
 
     public for_channel (channel: IChannel): this {
         return this
@@ -23,13 +23,13 @@ export class NowPlayingBuilder {
         return this
     }
 
-    public with_display_artist (display_artist: any): this {
-        this.display_artist = display_artist
+    public with_artist (artist: string): this {
+        this.artist = artist
         return this
     }
 
-    public with_display_title (display_title: string): this {
-        this.display_title = display_title
+    public with_title (title: string): this {
+        this.title = title
         return this
     }
 
@@ -37,8 +37,8 @@ export class NowPlayingBuilder {
         return new NowPlaying(
             this.channel_id,
             this.channel_key,
-            this.display_artist,
-            this.display_title,
+            this.artist,
+            this.title,
         )
     }
 }

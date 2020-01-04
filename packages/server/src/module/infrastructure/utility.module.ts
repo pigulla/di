@@ -1,4 +1,4 @@
-import read_pkg, {NormalizedPackageJson} from 'read-pkg'
+import read_pkg_up, {NormalizedPackageJson} from 'read-pkg-up'
 import {Module} from '@nestjs/common'
 import {sync as which} from 'which'
 import pino from 'pino'
@@ -55,7 +55,13 @@ import {
         {
             provide: 'normalized_package_json',
             async useFactory (): Promise<NormalizedPackageJson> {
-                return read_pkg()
+                const pkg = await read_pkg_up()
+
+                if (!pkg) {
+                    throw new Error('No package.json found')
+                }
+
+                return pkg.packageJson
             },
         },
         {

@@ -28,8 +28,11 @@ export default class SelectCommand extends BaseCommand<[ChannelDTO]> {
     @HandleClientError()
     public async run (): Promise<void> {
         const {flags} = this.parse(this.constructor as any as Input<any>)
+        // @ts-ignore
         const favorites_only = flags['favorites-only']
-        const channels = favorites_only ? await this.client.get_favorites() : await this.client.get_channels()
+        const channels: ChannelDTO[] | null = favorites_only
+            ? await this.client.get_favorites()
+            : await this.client.get_channels()
 
         if (!channels) {
             this.error('Favorites are not available')

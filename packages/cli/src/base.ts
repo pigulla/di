@@ -41,8 +41,11 @@ export default abstract class BaseCommand<T extends any[] = []> extends Command 
         }
 
         const {flags} = this.parse(this.constructor as any as Input<any>)
+        // TODO: remove ts-ignore
         this.client_instance = new Client({
+            // @ts-ignore
             endpoint: flags.endpoint,
+            // @ts-ignore
             check_version: !flags['skip-version-check'],
             user_agent: this.config.userAgent,
         })
@@ -62,6 +65,7 @@ export default abstract class BaseCommand<T extends any[] = []> extends Command 
     protected print_formatted (...value: T): void {
         const {flags} = this.parse(this.constructor as any as Input<any>)
 
+        // @ts-ignore
         switch (flags['output-format']) {
             case OutputFormat.TEXT:
                 return this.print_text(...value)

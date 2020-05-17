@@ -27,12 +27,12 @@
     "node": ">=10.0.0"
   },
   "devDependencies": {
-    "typescript": "^3.7.3"
+    "typescript": "^3.9.2"
   },
   "dependencies": {
-    "execa": "^4.0.0",
+    "execa": "^4.0.1",
     "module-alias": "^2.2.2",
-    "ora": "^4.0.3"
+    "ora": "^4.0.4"
   },
   "gitHead": "c590744807591cbe20d48b97c90cd8670779a369"
 }

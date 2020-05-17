@@ -24,9 +24,9 @@
     "node": ">=10.0.0"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^2.10.0",
-    "eslint": "^6.7.2",
-    "eslint-config-standard": "^14.1.0"
+    "@typescript-eslint/parser": "^2.33.0",
+    "eslint": "^7.0.0",
+    "eslint-config-standard": "^14.1.1"
   },
   "gitHead": "c590744807591cbe20d48b97c90cd8670779a369"
 }

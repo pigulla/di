@@ -40,7 +40,6 @@
     "@digitally-imported/dto": "^0.0.3",
     "lodash.truncate": "^4.4.2",
     "tslib": "^1.10.0",
-    "type-fest": "^0.8.1",
     "yargs": "^15.1.0"
   },
   "devDependencies": {
@@ -73,6 +72,7 @@
     "sinon-chai": "^3.3.0",
     "ts-node": "^8.5.4",
     "tsconfig-paths": "^3.9.0",
+    "type-fest": "^0.8.1",
     "typescript": "^3.7.3"
   },
   "gitHead": "c590744807591cbe20d48b97c90cd8670779a369"

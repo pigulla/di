@@ -1,8 +1,7 @@
-import {NormalizedPackageJson} from 'read-pkg'
+import {ServerStatusDTO} from '@digitally-imported/dto'
 import {Controller, Delete, HttpStatus, Res, Inject, Get} from '@nestjs/common'
 import {Response} from 'express'
-
-import {ServerStatusDTO} from '@digitally-imported/dto'
+import {NormalizedPackageJson} from 'read-pkg-up'
 
 import {IAppDataProvider, IPlaybackControl, IServerProcessProxy} from '../../domain'
 
@@ -13,11 +12,11 @@ export class ServerController {
     private readonly playback_control: IPlaybackControl
     private readonly server_process_proxy: IServerProcessProxy
 
-    public constructor (
+    public constructor(
         @Inject('IPlaybackControl') playback_control: IPlaybackControl,
         @Inject('normalized_package_json') package_json: NormalizedPackageJson,
         @Inject('IAppDataProvider') app_data_provider: IAppDataProvider,
-        @Inject('IServerProcessProxy') server_process_proxy: IServerProcessProxy,
+        @Inject('IServerProcessProxy') server_process_proxy: IServerProcessProxy
     ) {
         this.app_data_provider = app_data_provider
         this.package_json = package_json
@@ -26,7 +25,7 @@ export class ServerController {
     }
 
     @Get()
-    public async status (): Promise<ServerStatusDTO> {
+    public async status(): Promise<ServerStatusDTO> {
         const app_data = this.app_data_provider.get_app_data()
         const backend_info = await this.playback_control.get_playback_backend_information()
 
@@ -47,7 +46,7 @@ export class ServerController {
     }
 
     @Delete()
-    public async shutdown (@Res() response: Response): Promise<void> {
+    public async shutdown(@Res() response: Response): Promise<void> {
         response.status(HttpStatus.NO_CONTENT).end()
         this.server_process_proxy.terminate()
     }

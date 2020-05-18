@@ -1,11 +1,11 @@
-import {SinonStubbedInstance} from 'sinon'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
+import {SinonStubbedInstance} from 'sinon'
 
-import {ChannelFiltersController} from '@src/application/controller'
-import {IChannelsProvider} from '@src/domain'
+import {ChannelFiltersController} from '~src/application/controller'
+import {IChannelsProvider} from '~src/domain'
 
-import {create_channels_provider_stub, prebuilt_channel_filter} from '@test/util'
+import {stub_channels_provider, prebuilt_channel_filter} from '~test/util'
 
 const {ambient, bass, deep} = prebuilt_channel_filter
 
@@ -14,7 +14,7 @@ describe('ChannelFilters controller', function () {
     let channels_provider_stub: SinonStubbedInstance<IChannelsProvider>
 
     beforeEach(async function () {
-        channels_provider_stub = create_channels_provider_stub()
+        channels_provider_stub = stub_channels_provider()
 
         const module = await Test.createTestingModule({
             providers: [

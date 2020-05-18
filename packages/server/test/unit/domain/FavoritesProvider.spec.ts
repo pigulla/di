@@ -8,14 +8,15 @@ import {
     IChannelsProvider,
     FavoritesProvider,
     CredentialsUnavailableError,
-} from '@src/domain'
+} from '~src/domain'
+
 import {
-    create_logger_stub,
-    create_channels_provider_stub,
-    create_config_stub,
-    create_digitally_imported_stub,
+    stub_logger,
+    stub_channels_provider,
+    stub_config,
+    stub_digitally_imported,
     prebuilt_channel,
-} from '@test/util'
+} from '~test/util'
 
 const {progressive, classictechno} = prebuilt_channel
 
@@ -26,12 +27,12 @@ describe('FavoritesProvider', function () {
     let di_stub: SinonStubbedInstance<IDigitallyImported>
 
     beforeEach(async function () {
-        const logger_stub = create_logger_stub()
-        config_stub = create_config_stub()
-        channels_provider_stub = create_channels_provider_stub()
-        di_stub = create_digitally_imported_stub()
+        const logger_stub = stub_logger()
+        config_stub = stub_config()
+        channels_provider_stub = stub_channels_provider()
+        di_stub = stub_digitally_imported()
 
-        logger_stub.child_for_service.returns(create_logger_stub())
+        logger_stub.child_for_service.returns(stub_logger())
 
         const module = await Test.createTestingModule({
             providers: [

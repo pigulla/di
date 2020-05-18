@@ -3,14 +3,15 @@ import {expect} from 'chai'
 import {
     AuthenticationFailureError,
     FailedAuthenticationResponse,
-    parse_authentication_response, RawFailedAuthenticationResponse,
+    parse_authentication_response,
+    RawFailedAuthenticationResponse,
     RawSuccessfulAuthenticationResponse,
     SuccessfulAuthenticationResponse,
-} from '@src/infrastructure/di'
+} from '~src/infrastructure/di'
 
 describe('The AuthenticationResponse', function () {
     it('should be parsed when authentication was successful', function () {
-        const response: RawSuccessfulAuthenticationResponse & { [key: string]: any } = {
+        const response: RawSuccessfulAuthenticationResponse & {[key: string]: any} = {
             auth: true,
             confirmed: true,
             premium_subscriber: true,
@@ -36,7 +37,7 @@ describe('The AuthenticationResponse', function () {
     })
 
     it('should be parsed when authentication failed', function () {
-        const response: RawFailedAuthenticationResponse & { [key: string]: any } = {
+        const response: RawFailedAuthenticationResponse & {[key: string]: any} = {
             auth: false,
             errors: ['boom!', 'bam'],
         }

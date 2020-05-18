@@ -6,7 +6,7 @@ export interface Credentials {
 }
 
 export interface IDigitallyImported {
-    load_app_data (): Promise<AppData>
-    load_on_air (): Promise<IOnAir[]>
-    load_favorite_channel_keys (credentials: Credentials): Promise<string[]>
+    load_app_data(): Promise<AppData>
+    load_on_air(): Promise<IOnAir[]>
+    load_favorite_channel_keys(credentials: Credentials): Promise<string[]>
 }

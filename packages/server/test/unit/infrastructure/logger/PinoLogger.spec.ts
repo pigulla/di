@@ -1,18 +1,18 @@
 import {expect} from 'chai'
 import {Logger as Pino} from 'pino'
 
-import {PinoLogger} from '@src/infrastructure/logger'
+import {PinoLogger} from '~src/infrastructure/logger'
 
-import {create_pino_stub, PinoStub} from '@test/util/stub'
+import {stub_pino, PinoStub} from '~test/util/stub'
 
 describe('PinoLogger', function () {
     let pino_stub: PinoStub
     let logger: PinoLogger
 
     beforeEach(async function () {
-        pino_stub = create_pino_stub()
+        pino_stub = stub_pino()
 
-        logger = new PinoLogger(pino_stub as any as Pino)
+        logger = new PinoLogger((pino_stub as any) as Pino)
     })
 
     it('should create a new logger for controllers', function () {

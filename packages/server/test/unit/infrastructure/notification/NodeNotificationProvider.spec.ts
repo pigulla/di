@@ -1,14 +1,16 @@
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
-import {stub, SinonStubbedInstance} from 'sinon'
 import notifier from 'node-notifier'
+import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {ILogger} from '@src/domain'
+import {ILogger} from '~src/domain'
+import {NodeNotificationProvider} from '~src/infrastructure/notification'
 
-import {create_logger_stub} from '../../../util'
-import {NodeNotificationProvider} from '@src/infrastructure/notification'
+import {stub_logger} from '../../../util'
 
-function create_node_notifier_stub (): Partial<SinonStubbedInstance<typeof notifier>> {
+const {stub} = sinon
+
+function stub_node_notifier(): Partial<SinonStubbedInstance<typeof notifier>> {
     return {
         notify: stub(),
     }
@@ -20,10 +22,10 @@ describe('NodeNotificationProvider', function () {
     let node_notifier_stub: Partial<SinonStubbedInstance<typeof notifier>>
 
     beforeEach(async function () {
-        const parent_logger_stub = create_logger_stub()
-        logger_stub = create_logger_stub()
+        const parent_logger_stub = stub_logger()
+        logger_stub = stub_logger()
         parent_logger_stub.child_for_service.returns(logger_stub)
-        node_notifier_stub = create_node_notifier_stub()
+        node_notifier_stub = stub_node_notifier()
 
         const module = await Test.createTestingModule({
             providers: [

@@ -1,8 +1,6 @@
-npm-debug.log
 *-debug.log
 *-error.log
-.idea/
+/.idea/
+/packages/*/lib/
+/packages/*/coverage/
 node_modules/
-packages/*/.nyc_output
-packages/*/lib
-packages/*/coverage

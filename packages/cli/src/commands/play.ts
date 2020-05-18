@@ -1,6 +1,5 @@
-import JSONs from 'json-strictify'
-
 import {ChannelDTO, OnAirDTO} from '@digitally-imported/dto'
+import JSONs from 'json-strictify'
 
 import BaseCommand from '../base'
 import {HandleClientError} from '../handle-client-error'
@@ -8,9 +7,7 @@ import {HandleClientError} from '../handle-client-error'
 export default class PlayCommand extends BaseCommand<[OnAirDTO, ChannelDTO]> {
     public static description = 'Play a channel.'
 
-    public static examples = [
-        '$ di play progressive',
-    ]
+    public static examples = ['$ di play progressive']
 
     public static flags = {...BaseCommand.flags}
 
@@ -23,7 +20,7 @@ export default class PlayCommand extends BaseCommand<[OnAirDTO, ChannelDTO]> {
     ]
 
     @HandleClientError()
-    public async run (): Promise<void> {
+    public async run(): Promise<void> {
         const {args} = this.parse(PlayCommand)
 
         const channel = await this.client.start_playback(args.channel)
@@ -32,14 +29,14 @@ export default class PlayCommand extends BaseCommand<[OnAirDTO, ChannelDTO]> {
         this.print_formatted(on_air, channel)
     }
 
-    protected print_text (on_air: OnAirDTO, channel: ChannelDTO): void {
+    protected print_text(on_air: OnAirDTO, channel: ChannelDTO): void {
         const {title, artist} = on_air
         const {name} = channel
 
         this.log(`Now playing channel ${name}: ${artist} - ${title}`)
     }
 
-    protected print_json (on_air: OnAirDTO, channel: ChannelDTO): void {
+    protected print_json(on_air: OnAirDTO, channel: ChannelDTO): void {
         this.log(JSONs.stringify({on_air, channel}))
     }
 }

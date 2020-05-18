@@ -4,30 +4,30 @@ type ChannelProperties = {
     id: number
     key: string
     name: string
-    updated_at: string|null
+    updated_at: string | null
     created_at: string
     images: {
         default: string
         compact: string
-        banner: string|null
+        banner: string | null
     }
 }
 
 export class ChannelDTO {
-    director!: string
-    description!: string
-    id!: number
-    key!: string
-    name!: string
-    updated_at!: string|null
-    created_at!: string
-    images!: {
+    public director!: string
+    public description!: string
+    public id!: number
+    public key!: string
+    public name!: string
+    public updated_at!: string | null
+    public created_at!: string
+    public images!: {
         default: string
         compact: string
-        banner: string|null
+        banner: string | null
     }
 
-    public static create (properties: ChannelProperties): ChannelDTO {
+    public static create(properties: ChannelProperties): ChannelDTO {
         return Object.assign(new ChannelDTO(), properties)
     }
 }

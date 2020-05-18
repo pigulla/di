@@ -12,7 +12,7 @@
     "lint": "echo 'Not applicable'",
     "build": "echo 'Not applicable'",
     "codecov": "echo 'Not applicable'",
-    "clean": "rm -rf node_modules"
+    "clean": "echo 'Not applicable'"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/master/packages/typescript-config",

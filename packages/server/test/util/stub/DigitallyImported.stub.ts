@@ -1,11 +1,13 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IDigitallyImported} from '@src/domain'
+import {IDigitallyImported} from '~src/domain'
 
-export function create_digitally_imported_stub (): SinonStubbedInstance<IDigitallyImported> {
+const {stub} = sinon
+
+export function stub_digitally_imported(): SinonStubbedInstance<IDigitallyImported> {
     return {
-        load_app_data: sinon.stub(),
-        load_on_air: sinon.stub(),
-        load_favorite_channel_keys: sinon.stub(),
+        load_app_data: stub(),
+        load_on_air: stub(),
+        load_favorite_channel_keys: stub(),
     }
 }

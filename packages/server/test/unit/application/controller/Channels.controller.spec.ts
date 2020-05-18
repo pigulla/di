@@ -1,12 +1,12 @@
-import {Test} from '@nestjs/testing'
 import {NotFoundException} from '@nestjs/common'
+import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {ChannelsController} from '@src/application/controller'
-import {IChannelsProvider} from '@src/domain'
+import {ChannelsController} from '~src/application/controller'
+import {IChannelsProvider} from '~src/domain'
 
-import {create_channels_provider_stub, prebuilt_channel} from '@test/util'
+import {stub_channels_provider, prebuilt_channel} from '~test/util'
 
 const {progressive, vocaltrance, classictechno} = prebuilt_channel
 
@@ -15,7 +15,7 @@ describe('Channels controller', function () {
     let channels_provider_stub: SinonStubbedInstance<IChannelsProvider>
 
     beforeEach(async function () {
-        channels_provider_stub = create_channels_provider_stub()
+        channels_provider_stub = stub_channels_provider()
 
         const module = await Test.createTestingModule({
             providers: [

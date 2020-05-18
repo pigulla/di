@@ -1,20 +1,21 @@
+import {Inject, Injectable, OnModuleInit} from '@nestjs/common'
 import dayjs, {Dayjs} from 'dayjs'
 import {Subject} from 'rxjs'
-import {Inject, Injectable, OnModuleInit} from '@nestjs/common'
+
+import {ILogger, IDigitallyImported, IAppDataProvider} from '../../domain'
 
 import {AppData} from './AppData'
-import {ILogger, IDigitallyImported, IAppDataProvider} from '../../domain'
 
 @Injectable()
 export class AppDataProvider extends Subject<AppData> implements IAppDataProvider, OnModuleInit {
     private readonly digitally_imported: IDigitallyImported
     private readonly logger: ILogger
-    private last_update_at: Dayjs|null
-    private app_data: AppData|null
+    private last_update_at: Dayjs | null
+    private app_data: AppData | null
 
-    public constructor (
+    public constructor(
         @Inject('ILogger') logger: ILogger,
-        @Inject('IDigitallyImported') digitally_imported: IDigitallyImported,
+        @Inject('IDigitallyImported') digitally_imported: IDigitallyImported
     ) {
         super()
 
@@ -26,11 +27,11 @@ export class AppDataProvider extends Subject<AppData> implements IAppDataProvide
         this.logger.debug('Service instantiated')
     }
 
-    public async onModuleInit (): Promise<void> {
+    public async onModuleInit(): Promise<void> {
         await this.load_app_data()
     }
 
-    public last_updated_at (): Dayjs {
+    public last_updated_at(): Dayjs {
         if (!this.last_update_at) {
             throw new Error('Provider not initialized')
         }
@@ -38,7 +39,7 @@ export class AppDataProvider extends Subject<AppData> implements IAppDataProvide
         return this.last_update_at
     }
 
-    public get_app_data (): AppData {
+    public get_app_data(): AppData {
         if (!this.app_data) {
             throw new Error('AppData not available')
         }
@@ -46,7 +47,7 @@ export class AppDataProvider extends Subject<AppData> implements IAppDataProvide
         return this.app_data
     }
 
-    public async load_app_data (): Promise<void> {
+    public async load_app_data(): Promise<void> {
         this.app_data = await this.digitally_imported.load_app_data()
         this.last_update_at = dayjs()
 

@@ -1,5 +1,5 @@
 export interface IPeriodicTrigger {
-    start (): void
-    stop (): void
-    is_running (): boolean
+    start(): void
+    stop(): void
+    is_running(): boolean
 }

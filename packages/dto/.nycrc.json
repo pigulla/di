@@ -1,6 +1,0 @@
-{
-    "extends": "@digitally-imported/nyc-config",
-    "include": [
-        "src/**/*.ts"
-    ]
-}

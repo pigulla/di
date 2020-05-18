@@ -3,6 +3,8 @@ import cheerio from 'cheerio'
 import superagent, {SuperAgentStatic} from 'superagent'
 import {NodeVM} from 'vm2'
 
+import {Configuration, IDigitallyImported, ILogger} from '../../domain'
+import {Credentials} from '../../domain/di'
 import {
     AppData,
     RawAppData,
@@ -12,8 +14,6 @@ import {
     FailedAuthenticationResponse,
     AuthenticationFailureError,
 } from '../di'
-import {Configuration, IDigitallyImported, ILogger} from '../../domain'
-import {Credentials} from '../../domain/di'
 
 export class DigitallyImportedError extends Error {}
 
@@ -22,9 +22,9 @@ export class DigitallyImported implements IDigitallyImported {
     private readonly logger: ILogger
     private readonly url: string
 
-    public constructor (
+    public constructor(
         @Inject('ILogger') logger: ILogger,
-        @Inject('configuration') configuration: Configuration,
+        @Inject('configuration') configuration: Configuration
     ) {
         this.url = configuration.di_url
         this.logger = logger.child_for_service(DigitallyImported.name)
@@ -32,8 +32,8 @@ export class DigitallyImported implements IDigitallyImported {
         this.logger.debug('Service instantiated')
     }
 
-    private extract_app_data (html: string): RawAppData {
-        let raw_app_data: RawAppData|null = null
+    private extract_app_data(html: string): RawAppData {
+        let raw_app_data: RawAppData | null = null
 
         const vm = new NodeVM({
             console: 'off',
@@ -42,7 +42,7 @@ export class DigitallyImported implements IDigitallyImported {
             sandbox: {
                 di: {
                     app: {
-                        start (value: RawAppData) {
+                        start(value: RawAppData) {
                             raw_app_data = value
                         },
                     },
@@ -50,9 +50,11 @@ export class DigitallyImported implements IDigitallyImported {
             },
         })
 
-        const app_script_tag = cheerio.load(html)('script').toArray()
+        const app_script_tag = cheerio
+            .load(html)('script')
+            .toArray()
             .filter(node => node?.firstChild?.data?.includes('di.app.start') || false)
-        const src = (app_script_tag && app_script_tag[0] && app_script_tag[0].firstChild.data)
+        const src = app_script_tag && app_script_tag[0] && app_script_tag[0].firstChild.data
 
         if (!src) {
             throw new DigitallyImportedError('Script tag not found')
@@ -70,13 +72,13 @@ export class DigitallyImported implements IDigitallyImported {
         return raw_app_data
     }
 
-    public async load_on_air (): Promise<NowPlaying[]> {
+    public async load_on_air(): Promise<NowPlaying[]> {
         const response = await superagent.get(`${this.url}/_papi/v1/di/currently_playing`)
 
         return (response.body as RawNowPlaying[]).map(NowPlaying.from_raw)
     }
 
-    private async authenticate (credentials: Credentials): Promise<SuperAgentStatic> {
+    private async authenticate(credentials: Credentials): Promise<SuperAgentStatic> {
         const agent = superagent.agent()
         const response = await agent
             .post(`${this.url}/login`)
@@ -96,7 +98,7 @@ export class DigitallyImported implements IDigitallyImported {
         return agent as SuperAgentStatic
     }
 
-    public async load_favorite_channel_keys (credentials: Credentials): Promise<string[]> {
+    public async load_favorite_channel_keys(credentials: Credentials): Promise<string[]> {
         const agent = await this.authenticate(credentials)
         const raw_app_data = await this.load_raw_app_data(agent)
 
@@ -106,13 +108,13 @@ export class DigitallyImported implements IDigitallyImported {
             .map(channel => channel.key)
     }
 
-    private async load_raw_app_data (agent: SuperAgentStatic): Promise<RawAppData> {
+    private async load_raw_app_data(agent: SuperAgentStatic): Promise<RawAppData> {
         const response = await agent.get(this.url)
 
         return this.extract_app_data(response.text)
     }
 
-    public async load_app_data (): Promise<AppData> {
+    public async load_app_data(): Promise<AppData> {
         const raw_app_data = await this.load_raw_app_data(superagent)
         const app_data = AppData.from_raw(raw_app_data)
 

@@ -1,9 +1,11 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IFavoritesProvider} from '@src/domain'
+import {IFavoritesProvider} from '~src/domain'
 
-export function create_favorites_provider_stub (): SinonStubbedInstance<IFavoritesProvider> {
+const {stub} = sinon
+
+export function stub_favorites_provider(): SinonStubbedInstance<IFavoritesProvider> {
     return {
-        get_all: sinon.stub(),
+        get_all: stub(),
     }
 }

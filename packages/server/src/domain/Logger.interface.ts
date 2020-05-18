@@ -11,14 +11,14 @@ export enum LogLevel {
     WARN = 'warn',
     INFO = 'info',
     DEBUG = 'debug',
-    TRACE ='trace',
+    TRACE = 'trace',
 }
 
 export interface ILogger {
-    set_level (level: LogLevel): this
-    child (child_options: ChildLoggerOptions): ILogger
-    child_for_controller (name: string): ILogger
-    child_for_service (name: string): ILogger
+    set_level(level: LogLevel): this
+    child(child_options: ChildLoggerOptions): ILogger
+    child_for_controller(name: string): ILogger
+    child_for_service(name: string): ILogger
 
     fatal(message: string, object?: object): void
     error(message: string, object?: object): void

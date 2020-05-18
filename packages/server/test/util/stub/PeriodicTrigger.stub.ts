@@ -1,11 +1,13 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IPeriodicTrigger} from '@src/domain'
+import {IPeriodicTrigger} from '~src/domain'
 
-export function create_periodic_trigger_stub (): SinonStubbedInstance<IPeriodicTrigger> {
+const {stub} = sinon
+
+export function stub_periodic_trigger(): SinonStubbedInstance<IPeriodicTrigger> {
     return {
-        start: sinon.stub(),
-        stop: sinon.stub(),
-        is_running: sinon.stub(),
+        start: stub(),
+        stop: stub(),
+        is_running: stub(),
     }
 }

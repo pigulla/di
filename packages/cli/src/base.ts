@@ -1,8 +1,7 @@
-import {Command, flags} from '@oclif/command'
-import {CLIError} from '@oclif/errors'
-import {Input} from '@oclif/command/lib/flags'
-
 import {Client} from '@digitally-imported/client'
+import {Command, flags} from '@oclif/command'
+import {Input} from '@oclif/command/lib/flags'
+import {CLIError} from '@oclif/errors'
 
 export enum OutputFormat {
     TEXT = 'text',
@@ -10,7 +9,7 @@ export enum OutputFormat {
 }
 
 export default abstract class BaseCommand<T extends any[] = []> extends Command {
-    private client_instance: Client|null = null
+    private client_instance: Client | null = null
 
     public static flags = {
         endpoint: flags.string({
@@ -35,12 +34,12 @@ export default abstract class BaseCommand<T extends any[] = []> extends Command 
         }),
     }
 
-    protected async init (): Promise<void> {
+    protected async init(): Promise<void> {
         if (this.client_instance) {
             return
         }
 
-        const {flags} = this.parse(this.constructor as any as Input<any>)
+        const {flags} = this.parse((this.constructor as any) as Input<any>)
         // TODO: remove ts-ignore
         this.client_instance = new Client({
             // @ts-ignore
@@ -51,7 +50,7 @@ export default abstract class BaseCommand<T extends any[] = []> extends Command 
         })
     }
 
-    protected get client (): Client {
+    protected get client(): Client {
         if (!this.client_instance) {
             throw new Error('Command not initialized')
         }
@@ -59,11 +58,11 @@ export default abstract class BaseCommand<T extends any[] = []> extends Command 
         return this.client_instance
     }
 
-    protected abstract print_text (...value: T): void
-    protected abstract print_json (...value: T): void
+    protected abstract print_text(...value: T): void
+    protected abstract print_json(...value: T): void
 
-    protected print_formatted (...value: T): void {
-        const {flags} = this.parse(this.constructor as any as Input<any>)
+    protected print_formatted(...value: T): void {
+        const {flags} = this.parse((this.constructor as any) as Input<any>)
 
         // @ts-ignore
         switch (flags['output-format']) {

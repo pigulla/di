@@ -1,27 +1,25 @@
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
-import {SinonStubbedInstance, match} from 'sinon'
+import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {ChannelsProvider, IAppDataProvider} from '@src/domain'
-import {AppData} from '@src/domain/di'
+import {ChannelsProvider, IAppDataProvider} from '~src/domain'
+import {AppData} from '~src/domain/di'
 
 import {
-    create_logger_stub,
-    create_app_data_provider_stub,
+    stub_logger,
+    stub_app_data_provider,
     AppDataBuilder,
     ChannelBuilder,
     prebuilt_channel,
     prebuilt_channel_filter,
 } from '../../util'
 
+const {match} = sinon
 const {progressive, classictechno, vocaltrance} = prebuilt_channel
 const {ambient, bass, deep} = prebuilt_channel_filter
 
 describe('ChannelsProvider', function () {
-    const invalid_channel = new ChannelBuilder()
-        .with_id(0)
-        .with_key('invalid_key')
-        .build()
+    const invalid_channel = new ChannelBuilder().with_id(0).with_key('invalid_key').build()
     const app_data = new AppDataBuilder()
         .with_channels([progressive, classictechno, vocaltrance])
         .with_channel_filters([ambient, bass, deep])
@@ -30,7 +28,7 @@ describe('ChannelsProvider', function () {
     let app_data_provider_stub: SinonStubbedInstance<IAppDataProvider>
     let channels_provider: ChannelsProvider
 
-    function trigger_update (new_app_data: AppData): void {
+    function trigger_update(new_app_data: AppData): void {
         expect(app_data_provider_stub.subscribe).to.have.been.calledOnceWithExactly(match.func)
 
         const callback = app_data_provider_stub.subscribe.firstCall.lastArg
@@ -38,10 +36,10 @@ describe('ChannelsProvider', function () {
     }
 
     beforeEach(async function () {
-        const logger_stub = create_logger_stub()
-        app_data_provider_stub = create_app_data_provider_stub()
+        const logger_stub = stub_logger()
+        app_data_provider_stub = stub_app_data_provider()
         app_data_provider_stub.get_app_data.returns(app_data)
-        logger_stub.child_for_service.returns(create_logger_stub())
+        logger_stub.child_for_service.returns(stub_logger())
 
         const module = await Test.createTestingModule({
             providers: [

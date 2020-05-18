@@ -2,6 +2,7 @@ import {Inject, Injectable, OnApplicationShutdown, OnModuleInit} from '@nestjs/c
 import {JsonObject} from 'type-fest'
 
 import {ILogger, IPlaybackControl} from '../../domain'
+
 import {IVlcChildProcessFacade} from './VlcChildProcessFacade.interface'
 import {IVlcHttpClient} from './VlcHttpClient.interface'
 
@@ -13,17 +14,17 @@ export class VlcHttpControl implements IPlaybackControl, OnModuleInit, OnApplica
     private readonly child_process: IVlcChildProcessFacade
     private readonly vlc_http_client: IVlcHttpClient
 
-    public constructor (
+    public constructor(
         @Inject('ILogger') logger: ILogger,
         @Inject('IVlcHttpClient') vlc_http_client: IVlcHttpClient,
-        @Inject('vlc_child_process') vlc_child_process: IVlcChildProcessFacade,
+        @Inject('vlc_child_process') vlc_child_process: IVlcChildProcessFacade
     ) {
         this.logger = logger.child_for_service(VlcHttpControl.name)
         this.child_process = vlc_child_process
         this.vlc_http_client = vlc_http_client
     }
 
-    public async onModuleInit (): Promise<void> {
+    public async onModuleInit(): Promise<void> {
         this.logger.debug('Starting service')
 
         await this.child_process.start()
@@ -31,16 +32,17 @@ export class VlcHttpControl implements IPlaybackControl, OnModuleInit, OnApplica
         this.logger.info(`VLC listening on ${hostname}:${port}`)
     }
 
-    public async onApplicationShutdown (_signal?: string): Promise<void> {
-        // Terminate the process on application shutdown (rather than in onModuleDestroy) so that this services stays
-        // available for other services that depend on it during their onModuleDestroy hook.
+    public async onApplicationShutdown(_signal?: string): Promise<void> {
+        // Terminate the process on application shutdown (rather than in onModuleDestroy) so that
+        // this services stays available for other services that depend on it during their
+        // onModuleDestroy hook.
         this.logger.debug('Stopping service')
 
         await this.child_process.stop()
         this.logger.debug('Service stopped')
     }
 
-    private get http_client (): IVlcHttpClient {
+    private get http_client(): IVlcHttpClient {
         if (!this.vlc_http_client) {
             throw new Error('Client not available')
         }
@@ -48,7 +50,7 @@ export class VlcHttpControl implements IPlaybackControl, OnModuleInit, OnApplica
         return this.vlc_http_client
     }
 
-    public async get_playback_backend_information (): Promise<JsonObject> {
+    public async get_playback_backend_information(): Promise<JsonObject> {
         const status = await this.http_client.get_status()
 
         return {
@@ -56,31 +58,31 @@ export class VlcHttpControl implements IPlaybackControl, OnModuleInit, OnApplica
         }
     }
 
-    public get_pid (): number {
+    public get_pid(): number {
         return this.child_process.get_pid()
     }
 
-    public get_current_channel_key (): Promise<string|null> {
+    public get_current_channel_key(): Promise<string | null> {
         return this.http_client.get_current_channel_key()
     }
 
-    public get_volume (): Promise<number> {
+    public get_volume(): Promise<number> {
         return this.http_client.get_volume()
     }
 
-    public is_playing (): Promise<boolean> {
+    public is_playing(): Promise<boolean> {
         return this.http_client.is_playing()
     }
 
-    public play (url: string): Promise<void> {
+    public play(url: string): Promise<void> {
         return this.http_client.play(url)
     }
 
-    public set_volume (volume: number): Promise<void> {
+    public set_volume(volume: number): Promise<void> {
         return this.http_client.set_volume(volume)
     }
 
-    public stop (): Promise<void> {
+    public stop(): Promise<void> {
         return this.http_client.stop()
     }
 }

@@ -3,9 +3,9 @@ type PlayProperties = {
 }
 
 export class PlayDTO {
-    channel!: string
+    public channel!: string
 
-    public static create (properties: PlayProperties): PlayDTO {
+    public static create(properties: PlayProperties): PlayDTO {
         return Object.assign(new PlayDTO(), properties)
     }
 }

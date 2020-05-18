@@ -1,13 +1,15 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IOnAirProvider} from '@src/domain'
+import {IOnAirProvider} from '~src/domain'
 
-export function create_on_air_provider_stub (): SinonStubbedInstance<IOnAirProvider> {
+const {stub} = sinon
+
+export function stub_on_air_provider(): SinonStubbedInstance<IOnAirProvider> {
     return {
-        subscribe: sinon.stub(),
-        get: sinon.stub(),
-        get_all: sinon.stub(),
-        get_by_channel_key: sinon.stub(),
-        get_by_channel_id: sinon.stub(),
+        subscribe: stub(),
+        get: stub(),
+        get_all: stub(),
+        get_by_channel_key: stub(),
+        get_by_channel_id: stub(),
     }
 }

@@ -1,8 +1,10 @@
-import {stub, SinonStubbedInstance} from 'sinon'
+import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {INotificationProvider} from '@src/domain'
+import {INotificationProvider} from '~src/domain'
 
-export function create_notification_provider_stub (): SinonStubbedInstance<INotificationProvider> {
+const {stub} = sinon
+
+export function stub_notification_provider(): SinonStubbedInstance<INotificationProvider> {
     return {
         send: stub(),
     }

@@ -2,14 +2,15 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {ILogger} from '@src/domain'
-import {IVlcChildProcessFacade, IVlcHttpClient, PlaybackState, VlcHttpControl} from '@src/infrastructure/playback/'
-
+import {ILogger} from '~src/domain'
 import {
-    create_logger_stub,
-    create_vlc_child_process_facade_stub,
-    create_vlc_http_client_stub,
-} from '../../../util'
+    IVlcChildProcessFacade,
+    IVlcHttpClient,
+    PlaybackState,
+    VlcHttpControl,
+} from '~src/infrastructure/playback/'
+
+import {stub_logger, stub_vlc_child_process_facade, stub_vlc_http_client} from '../../../util'
 
 describe('VlcHttpControl', function () {
     let vlc_http_control: VlcHttpControl
@@ -18,12 +19,12 @@ describe('VlcHttpControl', function () {
     let vlc_http_client_stub: SinonStubbedInstance<IVlcHttpClient>
 
     beforeEach(async function () {
-        const logger_stub = create_logger_stub()
-        child_logger_stub = create_logger_stub()
+        const logger_stub = stub_logger()
+        child_logger_stub = stub_logger()
         logger_stub.child_for_service.returns(child_logger_stub)
 
-        vlc_child_process_facade_stub = create_vlc_child_process_facade_stub()
-        vlc_http_client_stub = create_vlc_http_client_stub()
+        vlc_child_process_facade_stub = stub_vlc_child_process_facade()
+        vlc_http_client_stub = stub_vlc_http_client()
 
         const module = await Test.createTestingModule({
             providers: [

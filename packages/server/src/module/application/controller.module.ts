@@ -1,6 +1,5 @@
 import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common'
 
-import {AppVersionHeader} from '../../application/middleware'
 import {
     ChannelFiltersController,
     ChannelsController,
@@ -10,13 +9,11 @@ import {
     ServerController,
     VolumeController,
 } from '../../application/controller'
-
+import {AppVersionHeader} from '../../application/middleware'
 import {DomainModule} from '../domain'
 
 @Module({
-    imports: [
-        DomainModule,
-    ],
+    imports: [DomainModule],
     controllers: [
         ChannelFiltersController,
         ChannelsController,
@@ -29,9 +26,7 @@ import {DomainModule} from '../domain'
     providers: [],
 })
 export class ControllerModule implements NestModule {
-    public configure (consumer: MiddlewareConsumer): void {
-        consumer
-            .apply(AppVersionHeader)
-            .forRoutes('*')
+    public configure(consumer: MiddlewareConsumer): void {
+        consumer.apply(AppVersionHeader).forRoutes('*')
     }
 }

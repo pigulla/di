@@ -1,9 +1,11 @@
 import {expect} from 'chai'
 import http_mocks from 'node-mocks-http'
-import {NormalizedPackageJson} from 'read-pkg'
-import {spy} from 'sinon'
+import {NormalizedPackageJson} from 'read-pkg-up'
+import sinon from 'sinon'
 
-import {AppVersionHeader} from '@src/application/middleware'
+import {AppVersionHeader} from '~src/application/middleware'
+
+const {spy} = sinon
 
 describe('The app version header middleware', function () {
     const name = 'MyApp'

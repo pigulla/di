@@ -1,7 +1,7 @@
 import merge from 'lodash.merge'
 
-import {Configuration, LogLevel, NotificationTransport} from '@src/domain'
-import {Quality} from '@src/domain/di'
+import {Configuration, LogLevel, NotificationTransport} from '~src/domain'
+import {Quality} from '~src/domain/di'
 
 export const default_config: Configuration = {
     server_hostname: 'localhost',
@@ -25,6 +25,6 @@ export const default_config: Configuration = {
     },
 }
 
-export function create_config_stub (overrides: Partial<Configuration> = {}): Configuration {
+export function stub_config(overrides: Partial<Configuration> = {}): Configuration {
     return merge({}, default_config, overrides)
 }

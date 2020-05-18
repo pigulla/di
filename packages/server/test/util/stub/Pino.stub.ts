@@ -1,4 +1,6 @@
-import {SinonStub, stub} from 'sinon'
+import sinon, {SinonStub} from 'sinon'
+
+const {stub} = sinon
 
 export type PinoStub = {
     trace: SinonStub
@@ -10,7 +12,7 @@ export type PinoStub = {
     child: SinonStub
 }
 
-export function create_pino_stub (): PinoStub {
+export function stub_pino(): PinoStub {
     return {
         trace: stub(),
         debug: stub(),

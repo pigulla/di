@@ -1,10 +1,10 @@
-import truncate from 'lodash.truncate'
 import {IClient} from '@digitally-imported/client'
+import truncate from 'lodash.truncate'
 
 import {BlockletOutput} from './i3.interface'
 
-export async function blocklet (client: IClient): Promise<BlockletOutput> {
-    if (!await client.is_alive()) {
+export async function blocklet(client: IClient): Promise<BlockletOutput> {
+    if (!(await client.is_alive())) {
         return {
             full_text: 'not running',
             short_text: 'n/a',

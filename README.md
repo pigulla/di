@@ -23,7 +23,7 @@ Simple API wrapper for the server's REST interface.
 ##### [@digitally-imported/dto](packages/dto)
 Data transfer objects for the server's REST interface.
 
-##### [@digitally-imported/eslint-config-standard](packages/eslint-config-standard)
+##### [@digitally-imported/eslint-config-standard](packages/eslint-config-default)
 The ESLint configuration used by all packages.
 
 ##### [@digitally-imported/i3-blocklet](packages/i3-blocklet)

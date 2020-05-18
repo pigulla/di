@@ -1,0 +1,27 @@
+{
+  "name": "@digitally-imported/jest-config",
+  "version": "0.0.3",
+  "description": "Common Jest configuration.",
+  "main": "index.js",
+  "keywords": [
+    "digitally-imported",
+    "jest"
+  ],
+  "scripts": {
+    "test": "echo 'Not applicable'",
+    "lint": "echo 'Not applicable'",
+    "build": "echo 'Not applicable'",
+    "codecov": "echo 'Not applicable'",
+    "clean": "echo 'Not applicable'"
+  },
+  "author": "Raphael Pigulla <pigulla@four66.com>",
+  "homepage": "https://github.com/pigulla/di/tree/master/packages/jest-config",
+  "bugs": {
+    "url": "https://github.com/pigulla/di/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "gitHead": "c590744807591cbe20d48b97c90cd8670779a369"
+}

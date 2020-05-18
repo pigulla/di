@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsString} from 'class-validator'
+import {ChannelDTO, PlayDTO, PlaybackStateDTO} from '@digitally-imported/dto'
 import {
     Body,
     Controller,
@@ -11,10 +11,14 @@ import {
     NotFoundException,
     Put,
 } from '@nestjs/common'
+import {IsNotEmpty, IsString} from 'class-validator'
 
-import {ChannelDTO, PlayDTO, PlaybackStateDTO} from '@digitally-imported/dto'
-
-import {Configuration, IChannelsProvider, IPlaybackControl, IPlaybackStateProvider} from '../../domain'
+import {
+    Configuration,
+    IChannelsProvider,
+    IPlaybackControl,
+    IPlaybackStateProvider,
+} from '../../domain'
 
 class ValidatedPlayDTO extends PlayDTO {
     @IsString()
@@ -29,11 +33,11 @@ export class PlaybackController {
     private readonly playback_control: IPlaybackControl
     private readonly playback_state_provider: IPlaybackStateProvider
 
-    public constructor (
+    public constructor(
         @Inject('configuration') config_provider: Configuration,
         @Inject('IChannelsProvider') channel_provider: IChannelsProvider,
         @Inject('IPlaybackControl') vlc_control: IPlaybackControl,
-        @Inject('IPlaybackStateProvider') playback_state_provider: IPlaybackStateProvider,
+        @Inject('IPlaybackStateProvider') playback_state_provider: IPlaybackStateProvider
     ) {
         this.channel_provider = channel_provider
         this.configuration = config_provider
@@ -43,7 +47,7 @@ export class PlaybackController {
 
     @Head()
     @HttpCode(HttpStatus.NO_CONTENT)
-    public is_playing (): void {
+    public is_playing(): void {
         const state = this.playback_state_provider.get_state()
 
         if (state.stopped) {
@@ -52,7 +56,7 @@ export class PlaybackController {
     }
 
     @Get()
-    public current (): PlaybackStateDTO {
+    public current(): PlaybackStateDTO {
         const state = this.playback_state_provider.get_state()
 
         if (state.stopped) {
@@ -70,12 +74,12 @@ export class PlaybackController {
 
     @Delete()
     @HttpCode(HttpStatus.NO_CONTENT)
-    public async stop (): Promise<void> {
+    public async stop(): Promise<void> {
         await this.playback_control.stop()
     }
 
     @Put()
-    public async play (@Body() play_dto: ValidatedPlayDTO): Promise<ChannelDTO> {
+    public async play(@Body() play_dto: ValidatedPlayDTO): Promise<ChannelDTO> {
         const {channel: identifier} = play_dto
 
         if (!this.channel_provider.channel_exists(identifier)) {

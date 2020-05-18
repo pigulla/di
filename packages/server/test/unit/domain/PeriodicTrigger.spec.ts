@@ -1,18 +1,20 @@
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
-import {match, stub, useFakeTimers, SinonFakeTimers, SinonStubbedInstance, SinonStub} from 'sinon'
+import sinon, {SinonFakeTimers, SinonStubbedInstance, SinonStub} from 'sinon'
 import {Merge} from 'type-fest'
 
-import {PeriodicTrigger, Options, ILogger} from '@src/domain'
+import {PeriodicTrigger, Options, ILogger} from '~src/domain'
 
-import {create_logger_stub} from '@test/util'
+import {stub_logger} from '~test/util'
+
+const {match, stub} = sinon
 
 describe('PeriodicTrigger', function () {
     let options: Merge<Options, {callback: SinonStub}>
     let logger_stub: SinonStubbedInstance<ILogger>
     let clock: SinonFakeTimers
     let periodic_trigger: PeriodicTrigger
-    let tickAsync: (ms: number) => Promise<void>
+    let tick_async: (ms: number) => Promise<void>
 
     beforeEach(async function () {
         options = {
@@ -22,8 +24,8 @@ describe('PeriodicTrigger', function () {
             interval_ms: 5_000,
         }
 
-        const parent_logger_stub = create_logger_stub()
-        logger_stub = create_logger_stub()
+        const parent_logger_stub = stub_logger()
+        logger_stub = stub_logger()
         parent_logger_stub.child_for_service.returns(logger_stub)
 
         const module = await Test.createTestingModule({
@@ -35,7 +37,7 @@ describe('PeriodicTrigger', function () {
                 {
                     inject: ['ILogger'],
                     provide: 'PeriodicTrigger',
-                    useFactory (logger: ILogger): PeriodicTrigger {
+                    useFactory(logger: ILogger): PeriodicTrigger {
                         return new PeriodicTrigger(logger, options)
                     },
                 },
@@ -45,11 +47,11 @@ describe('PeriodicTrigger', function () {
         periodic_trigger = module.get(PeriodicTrigger)
 
         // See https://github.com/sinonjs/sinon/issues/738
-        const originalSetImmediate = setImmediate
-        clock = useFakeTimers()
-        tickAsync = async function (ms: number) {
+        const original_set_immediate = setImmediate
+        clock = sinon.useFakeTimers()
+        tick_async = async function (ms: number) {
             clock.tick(ms)
-            await new Promise(resolve => originalSetImmediate(resolve))
+            await new Promise(resolve => original_set_immediate(resolve))
         }
     })
 
@@ -101,7 +103,7 @@ describe('PeriodicTrigger', function () {
             options.callback.rejects(error)
             periodic_trigger.start()
 
-            await tickAsync(5_000)
+            await tick_async(5_000)
             expect(logger_stub.error).to.have.been.calledOnceWithExactly(match(/oh_noes/))
         })
 
@@ -117,9 +119,9 @@ describe('PeriodicTrigger', function () {
         })
 
         it('should invoke the callback repeatedly', async function () {
-            await tickAsync(5_000)
-            await tickAsync(5_000)
-            await tickAsync(5_000)
+            await tick_async(5_000)
+            await tick_async(5_000)
+            await tick_async(5_000)
 
             expect(options.callback).to.have.been.calledThrice
         })

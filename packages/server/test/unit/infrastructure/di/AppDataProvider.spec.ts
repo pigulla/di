@@ -2,21 +2,23 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import dayjs from 'dayjs'
 import mockdate from 'mockdate'
-import {spy, SinonStubbedInstance, stub} from 'sinon'
+import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {DigitallyImported, AppDataProvider} from '@src/infrastructure/di'
-import {AppData} from '@src/domain/di'
+import {AppData} from '~src/domain/di'
+import {DigitallyImported, AppDataProvider} from '~src/infrastructure/di'
 
-import {create_logger_stub, create_digitally_imported_stub, AppDataBuilder} from '@test/util'
+import {stub_logger, stub_digitally_imported, AppDataBuilder} from '~test/util'
+
+const {spy, stub} = sinon
 
 describe('AppDataProvider', function () {
     let app_data_provider: AppDataProvider
     let di_stub: SinonStubbedInstance<DigitallyImported>
 
     beforeEach(async function () {
-        const logger_stub = create_logger_stub()
-        di_stub = create_digitally_imported_stub()
-        logger_stub.child_for_service.returns(create_logger_stub())
+        const logger_stub = stub_logger()
+        di_stub = stub_digitally_imported()
+        logger_stub.child_for_service.returns(stub_logger())
 
         const module = await Test.createTestingModule({
             providers: [

@@ -1,11 +1,11 @@
+import {LoggerService} from '@nestjs/common'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
-import {LoggerService} from '@nestjs/common'
 
-import {adapt_for_nest} from '@src/infrastructure/logger'
-import {ILogger} from '@src/domain'
+import {ILogger} from '~src/domain'
+import {adapt_for_nest} from '~src/infrastructure/logger'
 
-import {create_logger_stub} from '@test/util/stub'
+import {stub_logger} from '~test/util/stub'
 
 describe('adapt_for_nest', function () {
     const message = 'Log message'
@@ -15,7 +15,7 @@ describe('adapt_for_nest', function () {
     let adapter: Required<LoggerService>
 
     beforeEach(async function () {
-        logger_stub = create_logger_stub()
+        logger_stub = stub_logger()
         adapter = adapt_for_nest(logger_stub)
     })
 

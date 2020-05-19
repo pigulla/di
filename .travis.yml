@@ -8,6 +8,6 @@ node_js:
   - "12"
   - "11"
   - "10"
-before_install: yarn set version berry
+before_install: yarn policies set-version berry
 install: yarn run setup
 after_script: yarn run codecov

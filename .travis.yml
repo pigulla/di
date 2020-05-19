@@ -1,13 +1,22 @@
 language: node_js
+
 branches:
   only:
     - master
+
 node_js:
   - "14"
   - "13"
   - "12"
   - "11"
   - "10"
-before_install: yarn policies set-version berry
-install: yarn run setup
-after_script: yarn run codecov
+
+before_install:
+  - npm --global upgrade yarn
+  - yarn set version berry
+
+install:
+  - yarn run setup
+
+after_script:
+  - yarn run codecov

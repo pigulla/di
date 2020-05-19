@@ -2,12 +2,12 @@ language: node_js
 branches:
   only:
     - master
-    - develop
 node_js:
   - "14"
   - "13"
   - "12"
   - "11"
   - "10"
+before_install: yarn set version berry
 install: yarn run setup
 after_script: yarn run codecov

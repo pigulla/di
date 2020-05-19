@@ -20,7 +20,7 @@
     "clean": "rm -rf lib coverage",
     "jest": "jest",
     "format": "prettier --write src test && eslint --fix 'src/**/*.ts' 'test/**/*.ts'",
-    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F i3-blocklet'",
+    "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F i3blocklet'",
     "prepack": "yarn run build"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",

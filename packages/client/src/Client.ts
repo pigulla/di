@@ -1,15 +1,21 @@
-import read_pkg_up from 'read-pkg-up'
 import Axios from 'axios'
+import read_pkg_up from 'read-pkg-up'
 import {SetOptional} from 'type-fest'
 
 import {ConfigurableClient, ConfigurableOptions} from './ConfigurableClient'
 
-export type Options = SetOptional<Pick<ConfigurableOptions, 'endpoint'|'check_version'|'user_agent'>>
+export type Options = SetOptional<
+    Pick<ConfigurableOptions, 'endpoint' | 'check_version' | 'user_agent'>
+>
 
 export class Client extends ConfigurableClient {
-    public constructor (options: Options = {}) {
+    public constructor(options: Options = {}) {
         const pkg = read_pkg_up.sync({cwd: __dirname})
-        const version = pkg ? pkg.packageJson.version : 'unknown'
+        const version = pkg?.packageJson.version
+
+        if (!version) {
+            throw new Error('Could not determine package version')
+        }
 
         super({
             check_version: true,

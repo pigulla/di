@@ -1,20 +1,17 @@
 import {Test} from '@nestjs/testing'
-import {match, SinonStubbedInstance} from 'sinon'
 import {expect} from 'chai'
 import {NextObserver} from 'rxjs'
+import sinon, {SinonStubbedInstance} from 'sinon'
+
+import {INotificationProvider, IPlaybackStateProvider, Notifier, PlaybackState} from '~src/domain'
 
 import {
-    INotificationProvider,
-    IPlaybackStateProvider,
-    Notifier,
-    PlaybackState,
-} from '@src/domain'
+    stub_playback_state_provider,
+    stub_notification_provider,
+    prebuilt_channel,
+} from '~test/util'
 
-import {
-    create_playback_state_provider_stub,
-    create_notification_provider_stub, prebuilt_channel,
-} from '@test/util'
-
+const {match} = sinon
 const {progressive} = prebuilt_channel
 
 describe('Notifier', function () {
@@ -23,8 +20,8 @@ describe('Notifier', function () {
     let playback_state_provider_stub: SinonStubbedInstance<IPlaybackStateProvider>
 
     beforeEach(async function () {
-        notification_provider_stub = create_notification_provider_stub()
-        playback_state_provider_stub = create_playback_state_provider_stub()
+        notification_provider_stub = stub_notification_provider()
+        playback_state_provider_stub = stub_playback_state_provider()
 
         const module = await Test.createTestingModule({
             providers: [
@@ -57,7 +54,9 @@ describe('Notifier', function () {
         let observer: NextObserver<PlaybackState>['next']
 
         beforeEach(function () {
-            expect(playback_state_provider_stub.subscribe).to.have.been.calledOnceWithExactly(match.func)
+            expect(playback_state_provider_stub.subscribe).to.have.been.calledOnceWithExactly(
+                match.func
+            )
             observer = playback_state_provider_stub.subscribe.firstCall.lastArg
         })
 
@@ -66,7 +65,7 @@ describe('Notifier', function () {
 
             expect(notification_provider_stub.send).to.have.been.calledOnceWithExactly(
                 match.string,
-                match('stopped'),
+                match('stopped')
             )
         })
 
@@ -82,7 +81,7 @@ describe('Notifier', function () {
 
             expect(notification_provider_stub.send).to.have.been.calledOnceWithExactly(
                 match(progressive.name),
-                match('The Future Sequencer'),
+                match('The Future Sequencer')
             )
         })
     })

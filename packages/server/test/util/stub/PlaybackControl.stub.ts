@@ -1,8 +1,10 @@
-import {stub, SinonStubbedInstance} from 'sinon'
+import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IPlaybackControl} from '@src/domain'
+import {IPlaybackControl} from '~src/domain'
 
-export function create_playback_control_stub (): SinonStubbedInstance<IPlaybackControl> {
+const {stub} = sinon
+
+export function stub_playback_control(): SinonStubbedInstance<IPlaybackControl> {
     return {
         get_current_channel_key: stub(),
         get_pid: stub(),

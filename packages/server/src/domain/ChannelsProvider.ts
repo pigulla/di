@@ -2,8 +2,8 @@ import {Inject, Injectable, OnModuleInit} from '@nestjs/common'
 
 import {IAppDataProvider} from './AppDataProvider.interface'
 import {IChannelsProvider, ChannelIdentifier} from './ChannelsProvider.interface'
-import {ILogger} from './Logger.interface'
 import {AppData, IChannel, IChannelFilter} from './di'
+import {ILogger} from './Logger.interface'
 
 @Injectable()
 export class ChannelsProvider implements IChannelsProvider, OnModuleInit {
@@ -15,9 +15,9 @@ export class ChannelsProvider implements IChannelsProvider, OnModuleInit {
     private filters_by_id: Map<number, IChannelFilter> = new Map()
     private filters_by_key: Map<string, IChannelFilter> = new Map()
 
-    public constructor (
+    public constructor(
         @Inject('ILogger') logger: ILogger,
-        @Inject('IAppDataProvider') app_data_provider: IAppDataProvider,
+        @Inject('IAppDataProvider') app_data_provider: IAppDataProvider
     ) {
         this.logger = logger.child_for_service(ChannelsProvider.name)
         this.app_data_provider = app_data_provider
@@ -27,13 +27,15 @@ export class ChannelsProvider implements IChannelsProvider, OnModuleInit {
         this.logger.debug('Service instantiated')
     }
 
-    public onModuleInit (): void {
+    public onModuleInit(): void {
         this.on_new_app_data(this.app_data_provider.get_app_data())
     }
 
-    protected on_new_app_data ({channels, channel_filters}: AppData): void {
+    protected on_new_app_data({channels, channel_filters}: AppData): void {
         this.logger.trace('Updating channel information')
-        this.logger.trace(`Received ${channels.length} channels and ${channel_filters.length} channel filters`)
+        this.logger.trace(
+            `Received ${channels.length} channels and ${channel_filters.length} channel filters`
+        )
 
         this.filters = channel_filters.slice()
         this.channels_by_id = new Map()
@@ -51,11 +53,11 @@ export class ChannelsProvider implements IChannelsProvider, OnModuleInit {
         }
     }
 
-    public get_filters (): IChannelFilter[] {
+    public get_filters(): IChannelFilter[] {
         return this.filters.slice()
     }
 
-    public channel_exists (identifier: ChannelIdentifier): boolean {
+    public channel_exists(identifier: ChannelIdentifier): boolean {
         if (typeof identifier === 'string') {
             return this.channels_by_key.has(identifier)
         } else {
@@ -63,10 +65,10 @@ export class ChannelsProvider implements IChannelsProvider, OnModuleInit {
         }
     }
 
-    public get (id: number): IChannel
-    public get (key: string): IChannel
-    public get (identifier: ChannelIdentifier): IChannel {
-        let channel: IChannel|undefined
+    public get(id: number): IChannel
+    public get(key: string): IChannel
+    public get(identifier: ChannelIdentifier): IChannel {
+        let channel: IChannel | undefined
 
         if (typeof identifier === 'string') {
             channel = this.channels_by_key.get(identifier)
@@ -81,7 +83,7 @@ export class ChannelsProvider implements IChannelsProvider, OnModuleInit {
         return channel
     }
 
-    public get_all (): IChannel[] {
+    public get_all(): IChannel[] {
         return [...this.channels_by_id.values()]
     }
 }

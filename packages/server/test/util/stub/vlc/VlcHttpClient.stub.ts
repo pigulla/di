@@ -1,8 +1,10 @@
-import {stub, SinonStubbedInstance} from 'sinon'
+import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IVlcHttpClient} from '@src/infrastructure/playback/'
+import {IVlcHttpClient} from '~src/infrastructure/playback/'
 
-export function create_vlc_http_client_stub (): SinonStubbedInstance<IVlcHttpClient> {
+const {stub} = sinon
+
+export function stub_vlc_http_client(): SinonStubbedInstance<IVlcHttpClient> {
     return {
         get_current_channel_key: stub(),
         get_status: stub(),

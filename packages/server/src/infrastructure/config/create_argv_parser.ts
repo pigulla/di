@@ -2,13 +2,14 @@ import {existsSync as exists} from 'fs'
 
 import yargs, {Options} from 'yargs'
 
-import {IArgvParser} from './ArgvParser.interface'
 import {Configuration, LogLevel, NotificationTransport} from '../../domain'
 import {Quality} from '../../domain/di'
 
+import {IArgvParser} from './ArgvParser.interface'
+
 interface ArgvParserOptions {
     skip_vlc_validation: boolean
-    default_vlc_binary: string|null
+    default_vlc_binary: string | null
     auto_exit: boolean
     ignore_env: boolean
 }
@@ -20,13 +21,12 @@ const default_parser_options: ArgvParserOptions = {
     ignore_env: false,
 }
 
-export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): IArgvParser {
-    const {
-        auto_exit,
-        default_vlc_binary,
-        skip_vlc_validation,
-        ignore_env,
-    } = Object.assign({}, default_parser_options, options)
+export function create_argv_parser(options: Partial<ArgvParserOptions> = {}): IArgvParser {
+    const {auto_exit, default_vlc_binary, skip_vlc_validation, ignore_env} = Object.assign(
+        {},
+        default_parser_options,
+        options
+    )
 
     const server_options: {[key: string]: Options} = {
         hostname: {
@@ -44,7 +44,7 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             default: 4979,
             describe: 'The port to listen on',
             type: 'number',
-            coerce (arg: any): number {
+            coerce(arg: any): number {
                 if (!/^\d+$/.test(arg)) {
                     throw new Error('Port must be an integer')
                 }
@@ -73,7 +73,7 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             describe: 'The frequency in milliseconds in which to check the playback state',
             default: 2_500,
             type: 'number',
-            coerce (arg: any): number {
+            coerce(arg: any): number {
                 if (!/^\d+$/.test(arg)) {
                     throw new Error('state-frequency must be an integer')
                 }
@@ -101,13 +101,15 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             default: default_vlc_binary,
             normalize: true,
             type: 'string',
-            coerce (arg: any): string {
+            coerce(arg: any): string {
                 if (skip_vlc_validation) {
                     return arg
                 }
 
                 if (!arg) {
-                    throw new Error('VLC executable could not be auto detected. Please provide it explicitly.')
+                    throw new Error(
+                        'VLC executable could not be auto detected. Please provide it explicitly.'
+                    )
                 } else if (!exists(arg)) {
                     throw new Error(`VLC executable not found at path ${arg}`)
                 }
@@ -122,7 +124,7 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             default: 1000,
             describe: 'The timeout in milliseconds when connecting to VLC',
             type: 'number',
-            coerce (arg: any): number {
+            coerce(arg: any): number {
                 if (!/^\d+$/.test(arg)) {
                     throw new Error('vlc-timeout must be an integer')
                 }
@@ -139,7 +141,7 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             default: 0.5,
             describe: 'The default volume to set after start',
             type: 'number',
-            coerce (arg: any): number {
+            coerce(arg: any): number {
                 if (!/^(\d+|\.\d+|\d+\.\d+)?$/.test(arg)) {
                     throw new Error('vlc-initial-volume must be a floating point number')
                 }
@@ -170,9 +172,10 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             alias: 'f',
             requiresArg: true,
             default: 15_000,
-            describe: 'The frequency in milliseconds with which DI is polled for "now playing" data',
+            describe:
+                'The frequency in milliseconds with which DI is polled for "now playing" data',
             type: 'number',
-            coerce (arg: any): number {
+            coerce(arg: any): number {
                 if (!/^\d+$/.test(arg)) {
                     throw new Error('The frequency must be an integer')
                 }
@@ -197,7 +200,7 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             requiresArg: true,
             describe: 'Your DI listenkey',
             type: 'string',
-            coerce (arg: any): boolean {
+            coerce(arg: any): boolean {
                 if (!/^[a-f0-9]{16}$/i.test(arg)) {
                     throw new Error('Listenkey must be a 16 characters long hexadecimal string')
                 }
@@ -231,7 +234,7 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
         ...di_options,
     }
 
-    return function argv_parser (argv: string[]): Configuration {
+    return function argv_parser(argv: string[]): Configuration {
         const options = yargs
             .scriptName('di')
             // @ts-ignore
@@ -257,10 +260,12 @@ export function create_argv_parser (options: Partial<ArgvParserOptions> = {}): I
             di_listenkey: options.listenkey,
             di_frequency_ms: options.frequency,
             di_quality: options.quality,
-            di_credentials: options.username ? {
-                username: options.username,
-                password: options.password,
-            } : null,
+            di_credentials: options.username
+                ? {
+                      username: options.username,
+                      password: options.password,
+                  }
+                : null,
         }
     }
 }

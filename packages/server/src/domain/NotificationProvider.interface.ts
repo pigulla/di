@@ -1,3 +1,3 @@
 export interface INotificationProvider {
-    send (title: string, message: string): void
+    send(title: string, message: string): void
 }

@@ -5,9 +5,7 @@ import {AppDataProvider, DigitallyImported} from '../../infrastructure/di'
 import {UtilityModule} from './utility.module'
 
 @Module({
-    imports: [
-        UtilityModule,
-    ],
+    imports: [UtilityModule],
     controllers: [],
     providers: [
         {
@@ -19,9 +17,6 @@ import {UtilityModule} from './utility.module'
             useClass: DigitallyImported,
         },
     ],
-    exports: [
-        'IAppDataProvider',
-        'IDigitallyImported',
-    ],
+    exports: ['IAppDataProvider', 'IDigitallyImported'],
 })
 export class DigitallyImportedModule {}

@@ -1,7 +1,7 @@
 import dayjs, {Dayjs} from 'dayjs'
 
-import {AppData} from '@src/domain/di'
-import {Channel, ChannelFilter} from '@src/infrastructure/di'
+import {AppData} from '~src/domain/di'
+import {Channel, ChannelFilter} from '~src/infrastructure/di'
 
 export class AppDataBuilder {
     private app_version: string = '1.23.45'
@@ -9,27 +9,27 @@ export class AppDataBuilder {
     private channels: Channel[] = []
     private channel_filters: ChannelFilter[] = []
 
-    public with_app_version (app_version: string): this {
+    public with_app_version(app_version: string): this {
         this.app_version = app_version
         return this
     }
 
-    public with_app_deploy_time (app_deploy_time: dayjs.ConfigType): this {
+    public with_app_deploy_time(app_deploy_time: dayjs.ConfigType): this {
         this.app_deploy_time = dayjs(app_deploy_time)
         return this
     }
 
-    public with_channels (channels: Channel[]): this {
+    public with_channels(channels: Channel[]): this {
         this.channels = channels
         return this
     }
 
-    public with_channel_filters (channel_filters: ChannelFilter[]): this {
+    public with_channel_filters(channel_filters: ChannelFilter[]): this {
         this.channel_filters = channel_filters
         return this
     }
 
-    public build (): AppData {
+    public build(): AppData {
         return {
             app_version: this.app_version,
             app_deploy_time: this.app_deploy_time,

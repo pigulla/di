@@ -14,7 +14,7 @@ export enum RecordingName {
     VLC_STATUS_NOT_PLAYING = 'vlc-status-not-playing',
 }
 
-export function load_nock_recording (name: RecordingName): void {
+export function load_nock_recording(name: RecordingName): void {
     const filename = join(__dirname, 'recording', `${name}.json`)
 
     nock.load(filename)

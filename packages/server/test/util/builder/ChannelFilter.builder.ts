@@ -1,5 +1,5 @@
-import {IChannelFilter} from '@src/domain/di'
-import {ChannelFilter} from '@src/infrastructure/di'
+import {IChannelFilter} from '~src/domain/di'
+import {ChannelFilter} from '~src/infrastructure/di'
 
 export class ChannelFilterBuilder {
     private channels: Set<number> = new Set()
@@ -8,38 +8,32 @@ export class ChannelFilterBuilder {
     private meta: boolean = true
     private name: string = 'filter name'
 
-    public with_channels (channels: Iterable<number>): this {
+    public with_channels(channels: Iterable<number>): this {
         this.channels = new Set([...channels])
         return this
     }
 
-    public with_id (id: number): this {
+    public with_id(id: number): this {
         this.id = id
         return this
     }
 
-    public with_key (key: string): this {
+    public with_key(key: string): this {
         this.key = key
         return this
     }
 
-    public with_meta (meta: boolean): this {
+    public with_meta(meta: boolean): this {
         this.meta = meta
         return this
     }
 
-    public with_name (name: string): this {
+    public with_name(name: string): this {
         this.name = name
         return this
     }
 
-    public build (): IChannelFilter {
-        return new ChannelFilter(
-            this.channels,
-            this.id,
-            this.key,
-            this.meta,
-            this.name,
-        )
+    public build(): IChannelFilter {
+        return new ChannelFilter(this.channels, this.id, this.key, this.meta, this.name)
     }
 }

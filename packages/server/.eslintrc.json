@@ -1,5 +1,8 @@
 {
-    "extends": "@digitally-imported/eslint-config-standard",
+    "extends": "@digitally-imported/eslint-config-default",
+    "parserOptions": {
+        "project": "test/tsconfig.json"
+    },
     "rules": {
         "import/no-restricted-paths": [
             "error",
@@ -25,23 +28,5 @@
                 ]
             }
         ]
-    },
-    "overrides": [
-        {
-            "files": [
-                "src/**/*"
-            ],
-            "rules": {
-                "no-restricted-imports": [
-                    "error",
-                    {
-                        "patterns": [
-                            "@src",
-                            "@src/*"
-                        ]
-                    }
-                ]
-            }
-        }
-    ]
+    }
 }

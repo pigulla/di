@@ -1,8 +1,10 @@
-import {stub, SinonStubbedInstance} from 'sinon'
+import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {VlcHttpControl} from '@src/infrastructure/playback/'
+import {VlcHttpControl} from '~src/infrastructure/playback/'
 
-export function create_vlc_http_control_stub (): SinonStubbedInstance<VlcHttpControl> {
+const {stub} = sinon
+
+export function stub_vlc_http_control(): SinonStubbedInstance<VlcHttpControl> {
     return {
         onModuleInit: stub(),
         onApplicationShutdown: stub(),

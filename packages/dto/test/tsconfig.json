@@ -1,0 +1,14 @@
+{
+    "extends": "../tsconfig.json",
+    "include": ["../src/**/*.ts", "../test/**/*.ts"],
+    "compilerOptions": {
+        "allowJs": true,
+        "types": ["node", "jest"],
+        "paths": {
+            "~src": ["src/index.ts"],
+            "~src/*": ["src/*"],
+            "~test": ["test/index.ts"],
+            "~test/*": ["test/*"]
+        }
+    }
+}

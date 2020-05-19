@@ -3,21 +3,23 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import dayjs from 'dayjs'
 import {mockResponse} from 'mock-req-res'
-import {NormalizedPackageJson} from 'read-pkg'
+import {NormalizedPackageJson} from 'read-pkg-up'
 import {SinonStubbedInstance} from 'sinon'
 import {JsonObject} from 'type-fest'
 
-import {ServerController} from '@src/application/controller'
-import {IAppDataProvider, IPlaybackControl, IServerProcessProxy} from '@src/domain'
+import {ServerController} from '~src/application/controller'
+import {IAppDataProvider, IPlaybackControl, IServerProcessProxy} from '~src/domain'
 
 import {
     AppDataBuilder,
-    create_app_data_provider_stub,
-    create_playback_control_stub, create_server_process_proxy_stub,
+    stub_app_data_provider,
+    stub_playback_control,
+    stub_server_process_proxy,
 } from '../../../util'
 
 describe('Server controller', function () {
     const package_json: NormalizedPackageJson = {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         _id: 'package-id',
         readme: 'README',
         name: 'my-package',
@@ -29,9 +31,9 @@ describe('Server controller', function () {
     let server_process_proxy_stub: SinonStubbedInstance<IServerProcessProxy>
 
     beforeEach(async function () {
-        playback_control_stub = create_playback_control_stub()
-        app_data_provider_stub = create_app_data_provider_stub()
-        server_process_proxy_stub = create_server_process_proxy_stub()
+        playback_control_stub = stub_playback_control()
+        app_data_provider_stub = stub_app_data_provider()
+        server_process_proxy_stub = stub_server_process_proxy()
 
         const module = await Test.createTestingModule({
             providers: [

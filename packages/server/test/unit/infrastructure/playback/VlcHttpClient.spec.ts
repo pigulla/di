@@ -1,12 +1,18 @@
+import 'chai-as-promised'
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {ILogger} from '@src/domain'
-import {PlaybackState, Status, VlcHttpClient, VlcHttpConnection} from '@src/infrastructure/playback/'
+import {ILogger} from '~src/domain'
+import {
+    PlaybackState,
+    Status,
+    VlcHttpClient,
+    VlcHttpConnection,
+} from '~src/infrastructure/playback/'
 
-import {create_logger_stub, prebuilt_channel} from '@test/util'
-import {load_nock_recording, RecordingName} from '@test/util/load_nock_recording'
+import {stub_logger, prebuilt_channel} from '~test/util'
+import {load_nock_recording, RecordingName} from '~test/util/load_nock_recording'
 
 const {progressive} = prebuilt_channel
 
@@ -21,8 +27,8 @@ describe('VlcHttpClient', function () {
     let child_logger_stub: SinonStubbedInstance<ILogger>
 
     beforeEach(async function () {
-        const logger_stub = create_logger_stub()
-        child_logger_stub = create_logger_stub()
+        const logger_stub = stub_logger()
+        child_logger_stub = stub_logger()
         logger_stub.child_for_service.returns(child_logger_stub)
 
         const module = await Test.createTestingModule({
@@ -76,7 +82,9 @@ describe('VlcHttpClient', function () {
         it('should return the current channel key', async function () {
             load_nock_recording(RecordingName.VLC_PLAYLIST)
 
-            await expect(vlc_http_client.get_current_channel_key()).to.eventually.equal(progressive.key)
+            await expect(vlc_http_client.get_current_channel_key()).to.eventually.equal(
+                progressive.key
+            )
         })
     })
 

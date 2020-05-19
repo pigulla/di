@@ -8,7 +8,7 @@ import {
     PlaybackStateDTO,
     ServerStatusDTO,
     VolumeDTO,
-} from '@src'
+} from '~src'
 
 describe('The DTO', function () {
     describe('for a channel filter', function () {

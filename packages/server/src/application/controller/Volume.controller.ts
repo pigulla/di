@@ -1,13 +1,5 @@
+import {Body, Controller, Get, HttpCode, HttpStatus, Inject, Put} from '@nestjs/common'
 import {IsNotEmpty, IsNumber, Max, Min} from 'class-validator'
-import {
-    Body,
-    Controller,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Inject,
-    Put,
-} from '@nestjs/common'
 
 import {IPlaybackControl} from '../../domain'
 
@@ -23,14 +15,12 @@ export class VolumeDTO {
 export class VolumeController {
     private readonly playback_control: IPlaybackControl
 
-    public constructor (
-        @Inject('IPlaybackControl') vlc_control: IPlaybackControl,
-    ) {
+    public constructor(@Inject('IPlaybackControl') vlc_control: IPlaybackControl) {
         this.playback_control = vlc_control
     }
 
     @Get()
-    public async get_volume (): Promise<VolumeDTO> {
+    public async get_volume(): Promise<VolumeDTO> {
         const volume = await this.playback_control.get_volume()
 
         return {
@@ -40,7 +30,7 @@ export class VolumeController {
 
     @Put()
     @HttpCode(HttpStatus.NO_CONTENT)
-    public async set_volume (@Body() volume_dto: VolumeDTO): Promise<void> {
+    public async set_volume(@Body() volume_dto: VolumeDTO): Promise<void> {
         await this.playback_control.set_volume(volume_dto.volume / 100)
     }
 }

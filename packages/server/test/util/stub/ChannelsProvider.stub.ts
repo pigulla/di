@@ -1,12 +1,14 @@
 import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IChannelsProvider} from '@src/domain'
+import {IChannelsProvider} from '~src/domain'
 
-export function create_channels_provider_stub (): SinonStubbedInstance<IChannelsProvider> {
+const {stub} = sinon
+
+export function stub_channels_provider(): SinonStubbedInstance<IChannelsProvider> {
     return {
-        channel_exists: sinon.stub(),
-        get: sinon.stub(),
-        get_all: sinon.stub(),
-        get_filters: sinon.stub(),
+        channel_exists: stub(),
+        get: stub(),
+        get_all: stub(),
+        get_filters: stub(),
     }
 }

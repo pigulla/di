@@ -7,9 +7,7 @@ import {HandleClientError} from '../handle-client-error'
 export default class SetVolumeCommand extends BaseCommand {
     public static description = 'Set the playback volume.'
 
-    public static examples = [
-        '$ di set-volume 80',
-    ]
+    public static examples = ['$ di set-volume 80']
 
     public static flags = {...BaseCommand.flags}
 
@@ -18,7 +16,7 @@ export default class SetVolumeCommand extends BaseCommand {
             name: 'volume',
             required: true,
             description: 'The new volume (between 0 and 125).',
-            parse (input: string): string {
+            parse(input: string): string {
                 const matches = /^\d+$/.exec(input)
 
                 if (!matches) {
@@ -37,7 +35,7 @@ export default class SetVolumeCommand extends BaseCommand {
     ]
 
     @HandleClientError()
-    public async run (): Promise<void> {
+    public async run(): Promise<void> {
         const {args} = this.parse(SetVolumeCommand)
         const volume = parseInt(args.volume, 10)
         await this.client.set_volume(volume)
@@ -45,11 +43,11 @@ export default class SetVolumeCommand extends BaseCommand {
         this.print_formatted()
     }
 
-    protected print_text (): void {
+    protected print_text(): void {
         // no output
     }
 
-    protected print_json (): void {
+    protected print_json(): void {
         this.log(JSONs.stringify({}))
     }
 }

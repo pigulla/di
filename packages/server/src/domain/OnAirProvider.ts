@@ -3,19 +3,16 @@ import crypto from 'crypto'
 import {Inject, Injectable, OnModuleInit} from '@nestjs/common'
 import {Subject} from 'rxjs'
 
-import {IOnAir} from './di'
 import {ChannelIdentifier} from './ChannelsProvider.interface'
+import {IOnAir} from './di'
 import {IDigitallyImported} from './DigitallyImported.interface'
 import {ILogger} from './Logger.interface'
 import {IOnAirProvider} from './OnAirProvider.interface'
 
-export function hash_on_air (on_air: IOnAir[]): string {
+export function hash_on_air(on_air: IOnAir[]): string {
     const input = JSON.stringify(on_air.map(now_playing => now_playing.to_dto()))
 
-    return crypto
-        .createHash('md5')
-        .update(input, 'utf8')
-        .digest('hex')
+    return crypto.createHash('md5').update(input, 'utf8').digest('hex')
 }
 
 @Injectable()
@@ -26,9 +23,9 @@ export class OnAirProvider extends Subject<IOnAirProvider> implements IOnAirProv
     private readonly by_key: Map<string, IOnAir> = new Map()
     private hash: string
 
-    public constructor (
+    public constructor(
         @Inject('ILogger') logger: ILogger,
-        @Inject('IDigitallyImported') digitally_imported: IDigitallyImported,
+        @Inject('IDigitallyImported') digitally_imported: IDigitallyImported
     ) {
         super()
 
@@ -39,11 +36,11 @@ export class OnAirProvider extends Subject<IOnAirProvider> implements IOnAirProv
         this.logger.debug('Service instantiated')
     }
 
-    public async onModuleInit (): Promise<void> {
+    public async onModuleInit(): Promise<void> {
         await this.trigger_update()
     }
 
-    public async trigger_update (): Promise<void> {
+    public async trigger_update(): Promise<void> {
         this.logger.trace('Update triggered')
 
         const on_air = await this.digitally_imported.load_on_air()
@@ -65,7 +62,7 @@ export class OnAirProvider extends Subject<IOnAirProvider> implements IOnAirProv
         this.next(this)
     }
 
-    public get (identifier: ChannelIdentifier): IOnAir {
+    public get(identifier: ChannelIdentifier): IOnAir {
         if (typeof identifier === 'string') {
             return this.get_by_channel_key(identifier)
         } else {
@@ -73,7 +70,7 @@ export class OnAirProvider extends Subject<IOnAirProvider> implements IOnAirProv
         }
     }
 
-    public get_by_channel_id (id: number): IOnAir {
+    public get_by_channel_id(id: number): IOnAir {
         const now_playing = this.by_id.get(id)
 
         if (!now_playing) {
@@ -83,7 +80,7 @@ export class OnAirProvider extends Subject<IOnAirProvider> implements IOnAirProv
         return now_playing
     }
 
-    public get_by_channel_key (key: string): IOnAir {
+    public get_by_channel_key(key: string): IOnAir {
         const now_playing = this.by_key.get(key)
 
         if (!now_playing) {
@@ -93,7 +90,7 @@ export class OnAirProvider extends Subject<IOnAirProvider> implements IOnAirProv
         return now_playing
     }
 
-    public get_all (): IOnAir[] {
+    public get_all(): IOnAir[] {
         return [...this.by_id.values()]
     }
 }

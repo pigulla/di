@@ -2,7 +2,7 @@ import {Subscribable} from 'rxjs'
 
 import {IChannel} from './di'
 
-export type PlaybackState = PlaybackStoppedState|PlaybackInProgressState
+export type PlaybackState = PlaybackStoppedState | PlaybackInProgressState
 
 export interface PlaybackStoppedState {
     stopped: true
@@ -17,11 +17,11 @@ export interface PlaybackInProgressState {
     }
 }
 
-export const PLAYBACK_STATE_STOPPED: PlaybackStoppedState = {
+export const playback_state_stopped: PlaybackStoppedState = {
     stopped: true,
 }
 
 export interface IPlaybackStateProvider extends Subscribable<PlaybackState> {
-    trigger_check (): Promise<void>
-    get_state (): PlaybackState
+    trigger_check(): Promise<void>
+    get_state(): PlaybackState
 }

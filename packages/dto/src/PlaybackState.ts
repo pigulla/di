@@ -9,13 +9,13 @@ type PlaybackStateProperties = {
 }
 
 export class PlaybackStateDTO {
-    channel!: ChannelDTO
-    now_playing!: {
+    public channel!: ChannelDTO
+    public now_playing!: {
         artist: string
         title: string
     }
 
-    public static create (properties: PlaybackStateProperties): PlaybackStateDTO {
+    public static create(properties: PlaybackStateProperties): PlaybackStateDTO {
         return Object.assign(new PlaybackStateDTO(), properties)
     }
 }

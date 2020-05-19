@@ -1,8 +1,10 @@
-import {stub, SinonStubbedInstance} from 'sinon'
+import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {ILogger} from '@src/domain'
+import {ILogger} from '~src/domain'
 
-export function create_logger_stub (): SinonStubbedInstance<ILogger> {
+const {stub} = sinon
+
+export function stub_logger(): SinonStubbedInstance<ILogger> {
     return {
         fatal: stub(),
         error: stub(),

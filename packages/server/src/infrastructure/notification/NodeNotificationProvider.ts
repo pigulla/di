@@ -8,9 +8,9 @@ export class NodeNotificationProvider implements INotificationProvider {
     private readonly logger: ILogger
     private readonly node_notifier: NodeNotifier
 
-    public constructor (
+    public constructor(
         @Inject('ILogger') logger: ILogger,
-        @Inject('NodeNotifier') node_notifier: NodeNotifier,
+        @Inject('NodeNotifier') node_notifier: NodeNotifier
     ) {
         this.logger = logger.child_for_service(NodeNotificationProvider.name)
         this.node_notifier = node_notifier
@@ -18,7 +18,7 @@ export class NodeNotificationProvider implements INotificationProvider {
         this.logger.debug('Service instantiated')
     }
 
-    public send (title: string, message: string): void {
+    public send(title: string, message: string): void {
         this.node_notifier.notify({title, message})
     }
 }

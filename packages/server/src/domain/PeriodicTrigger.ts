@@ -14,12 +14,9 @@ export type Options = {
 export class PeriodicTrigger implements IPeriodicTrigger, OnModuleInit, OnModuleDestroy {
     private readonly logger: ILogger
     private readonly options: Options
-    private interval_id: NodeJS.Timer|null
+    private interval_id: NodeJS.Timer | null
 
-    public constructor (
-        @Inject('ILogger') logger: ILogger,
-            options: Options,
-    ) {
+    public constructor(@Inject('ILogger') logger: ILogger, options: Options) {
         this.logger = logger.child_for_service(`${PeriodicTrigger.name}/${options.log_id}`)
         this.options = Object.assign({scope: null}, options)
         this.interval_id = null
@@ -27,19 +24,19 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnModuleInit, OnModule
         this.logger.debug('Service instantiated')
     }
 
-    public onModuleInit (): void {
+    public onModuleInit(): void {
         this.start()
     }
 
-    public onModuleDestroy (): void {
+    public onModuleDestroy(): void {
         this.stop()
     }
 
-    public is_running (): boolean {
+    public is_running(): boolean {
         return this.interval_id !== null
     }
 
-    public start (): void {
+    public start(): void {
         if (this.interval_id !== null) {
             return
         }
@@ -48,7 +45,7 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnModuleInit, OnModule
         this.interval_id = this.schedule()
     }
 
-    public stop (): void {
+    public stop(): void {
         if (this.interval_id === null) {
             return
         }
@@ -58,7 +55,7 @@ export class PeriodicTrigger implements IPeriodicTrigger, OnModuleInit, OnModule
         this.interval_id = null
     }
 
-    private schedule (): NodeJS.Timer {
+    private schedule(): NodeJS.Timer {
         const {callback, scope, interval_ms} = this.options
 
         return setTimeout(() => {

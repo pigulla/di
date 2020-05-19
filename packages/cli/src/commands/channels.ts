@@ -1,18 +1,16 @@
-import {flags} from '@oclif/command'
-import JSONs from 'json-strictify'
 import {ChannelDTO} from '@digitally-imported/dto'
+import {flags} from '@oclif/command'
+import {Input} from '@oclif/command/lib/flags'
+import cli from 'cli-ux'
+import JSONs from 'json-strictify'
 
 import BaseCommand from '../base'
 import {HandleClientError} from '../handle-client-error'
-import cli from 'cli-ux'
-import {Input} from '@oclif/command/lib/flags'
 
 export default class ChannelsCommand extends BaseCommand<[ChannelDTO[]]> {
     public static description = 'List all available channels.'
 
-    public static examples = [
-        '$ di channels',
-    ]
+    public static examples = ['$ di channels']
 
     public static flags = {
         ...BaseCommand.flags,
@@ -26,15 +24,15 @@ export default class ChannelsCommand extends BaseCommand<[ChannelDTO[]]> {
     public static args = []
 
     @HandleClientError()
-    public async run (): Promise<void> {
-        const {flags} = this.parse(this.constructor as any as Input<any>)
+    public async run(): Promise<void> {
+        const {flags} = this.parse((this.constructor as any) as Input<any>)
         // @ts-ignore
         const favorites_only = flags['favorites-only']
 
         return favorites_only ? this.print_favorites() : this.print_channels()
     }
 
-    private async print_favorites (): Promise<void> {
+    private async print_favorites(): Promise<void> {
         const favorites = await this.client.get_favorites()
 
         if (!favorites) {
@@ -44,24 +42,24 @@ export default class ChannelsCommand extends BaseCommand<[ChannelDTO[]]> {
         this.print_formatted(favorites)
     }
 
-    private async print_channels (): Promise<void> {
+    private async print_channels(): Promise<void> {
         const channels = await this.client.get_channels()
 
         this.print_formatted(channels)
     }
 
-    protected print_text (channels: ChannelDTO[]): void {
+    protected print_text(channels: ChannelDTO[]): void {
         cli.table(
             channels.sort((a, b) => a.name.localeCompare(b.name)),
             {
                 key: {},
                 name: {},
                 description: {},
-            },
+            }
         )
     }
 
-    protected print_json (channels: ChannelDTO[]): void {
+    protected print_json(channels: ChannelDTO[]): void {
         this.log(JSONs.stringify(channels))
     }
 }

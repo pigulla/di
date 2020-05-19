@@ -1,18 +1,19 @@
-import {CLIError} from '@oclif/errors'
 import {ClientError, ServerNotRunningError, ChannelNotFoundError} from '@digitally-imported/client'
+import {CLIError} from '@oclif/errors'
 
 import BaseCommand from './base'
 
-export function HandleClientError (): MethodDecorator {
-    return function handle_client_error_decorator (
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export function HandleClientError(): MethodDecorator {
+    return function handle_client_error_decorator(
         this: BaseCommand,
         _target: any,
-        _propertyKey: string|symbol,
-        descriptor: PropertyDescriptor,
+        _property_key: string | symbol,
+        descriptor: PropertyDescriptor
     ) {
         const method: Function = descriptor.value
 
-        descriptor.value = async function wrapper (...args: any[]) {
+        descriptor.value = async function wrapper(...args: any[]) {
             try {
                 return await method.apply(this, args)
             } catch (error) {

@@ -1,3 +1,3 @@
 export interface IServerProcessProxy {
-    terminate (): void
+    terminate(): void
 }

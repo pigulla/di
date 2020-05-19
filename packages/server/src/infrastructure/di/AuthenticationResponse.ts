@@ -13,19 +13,18 @@ export interface RawSuccessfulAuthenticationResponse {
     first_name: string
     last_name: string
     email: string
-    return_to_url: string|null
+    return_to_url: string | null
 }
 
-export type RawAuthenticationResponse = RawFailedAuthenticationResponse|RawSuccessfulAuthenticationResponse
+export type RawAuthenticationResponse =
+    | RawFailedAuthenticationResponse
+    | RawSuccessfulAuthenticationResponse
 
 export class FailedAuthenticationResponse {
     public readonly auth: boolean
     public readonly errors: string[]
 
-    public constructor (
-        auth: boolean,
-        errors: string[],
-    ) {
+    public constructor(auth: boolean, errors: string[]) {
         this.auth = auth
         this.errors = errors
     }
@@ -39,9 +38,9 @@ export class SuccessfulAuthenticationResponse {
     public readonly first_name: string
     public readonly last_name: string
     public readonly email: string
-    public readonly return_to_url: string|null
+    public readonly return_to_url: string | null
 
-    public constructor (
+    public constructor(
         auth: true,
         confirmed: boolean,
         premium_subscriber: boolean,
@@ -49,7 +48,7 @@ export class SuccessfulAuthenticationResponse {
         first_name: string,
         last_name: string,
         email: string,
-        return_to_url: string|null,
+        return_to_url: string | null
     ) {
         this.auth = auth
         this.confirmed = confirmed
@@ -62,14 +61,11 @@ export class SuccessfulAuthenticationResponse {
     }
 }
 
-export type AuthenticationResponse = FailedAuthenticationResponse|SuccessfulAuthenticationResponse
+export type AuthenticationResponse = FailedAuthenticationResponse | SuccessfulAuthenticationResponse
 
-export function parse_authentication_response (raw: JsonObject): AuthenticationResponse {
+export function parse_authentication_response(raw: JsonObject): AuthenticationResponse {
     if (raw.auth === false) {
-        return new FailedAuthenticationResponse(
-            false,
-            raw.errors as string[],
-        )
+        return new FailedAuthenticationResponse(false, raw.errors as string[])
     } else {
         return new SuccessfulAuthenticationResponse(
             true,
@@ -79,7 +75,7 @@ export function parse_authentication_response (raw: JsonObject): AuthenticationR
             raw.first_name as string,
             raw.last_name as string,
             raw.email as string,
-            raw.return_to_url as string|null,
+            raw.return_to_url as string | null
         )
     }
 }
@@ -87,7 +83,7 @@ export function parse_authentication_response (raw: JsonObject): AuthenticationR
 export class AuthenticationFailureError extends Error {
     public readonly errors: string[]
 
-    public constructor (failed_authentication_response: FailedAuthenticationResponse) {
+    public constructor(failed_authentication_response: FailedAuthenticationResponse) {
         super('Authentication failure')
 
         this.errors = failed_authentication_response.errors

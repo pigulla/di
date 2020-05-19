@@ -1,9 +1,13 @@
 import {EventEmitter} from 'events'
 
 import {expect} from 'chai'
-import {SinonStub, stub} from 'sinon'
+import sinon, {SinonStub} from 'sinon'
 
-import {VlcChildProcessFacade, ChildProcessFacadeError, VlcHttpConnection} from '@src/infrastructure/playback/'
+import {
+    VlcChildProcessFacade,
+    ChildProcessFacadeError,
+    VlcHttpConnection,
+} from '~src/infrastructure/playback'
 
 interface StreamMock extends EventEmitter {
     read: SinonStub
@@ -17,7 +21,9 @@ interface ChildProcessMock extends EventEmitter {
     stderr: StreamMock
 }
 
-function create_stream_mock (): StreamMock {
+const {stub} = sinon
+
+function create_stream_mock(): StreamMock {
     const mock = {
         read: stub(),
         write: stub(),
@@ -26,7 +32,7 @@ function create_stream_mock (): StreamMock {
     return Object.assign(new EventEmitter(), mock)
 }
 
-function create_child_process_mock (): ChildProcessMock {
+function create_child_process_mock(): ChildProcessMock {
     const mock = {
         kill: stub(),
         stdin: create_stream_mock(),
@@ -51,7 +57,12 @@ describe('The VlcChildProcessFacade', function () {
 
     beforeEach(function () {
         spawn_fn = stub()
-        child_process_facade = new VlcChildProcessFacade(path, timeout_ms, spawn_fn, vlc_http_connection)
+        child_process_facade = new VlcChildProcessFacade(
+            path,
+            timeout_ms,
+            spawn_fn,
+            vlc_http_connection
+        )
     })
 
     describe('when it has not been started yet', function () {
@@ -94,8 +105,7 @@ describe('The VlcChildProcessFacade', function () {
             child_process.kill.callsFake(() => child_process.emit('close'))
 
             await start_promise
-            await expect(child_process_facade.start())
-                .to.be.rejectedWith(ChildProcessFacadeError)
+            await expect(child_process_facade.start()).to.be.rejectedWith(ChildProcessFacadeError)
         })
 
         it('should fail if an error occurred', async function () {

@@ -2,17 +2,17 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {VolumeController} from '@src/application/controller'
-import {IPlaybackControl} from '@src/domain'
+import {VolumeController} from '~src/application/controller'
+import {IPlaybackControl} from '~src/domain'
 
-import {create_playback_control_stub} from '@test/util'
+import {stub_playback_control} from '~test/util'
 
 describe('Volume controller', function () {
     let controller: VolumeController
     let playback_control_stub: SinonStubbedInstance<IPlaybackControl>
 
     beforeEach(async function () {
-        playback_control_stub = create_playback_control_stub()
+        playback_control_stub = stub_playback_control()
 
         const module = await Test.createTestingModule({
             providers: [

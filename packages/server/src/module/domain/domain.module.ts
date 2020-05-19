@@ -2,8 +2,10 @@ import {Module} from '@nestjs/common'
 
 import {
     Configuration,
-    IPlaybackStateProvider, PlaybackStateProvider,
-    IPeriodicTrigger, PeriodicTrigger,
+    IPlaybackStateProvider,
+    PlaybackStateProvider,
+    IPeriodicTrigger,
+    PeriodicTrigger,
     ILogger,
     Notifier,
     OnAirProvider,
@@ -13,11 +15,7 @@ import {
 import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../infrastructure'
 
 @Module({
-    imports: [
-        DigitallyImportedModule,
-        PlaybackControlModule,
-        UtilityModule,
-    ],
+    imports: [DigitallyImportedModule, PlaybackControlModule, UtilityModule],
     controllers: [],
     providers: [
         {
@@ -31,15 +29,15 @@ import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../
         {
             inject: ['configuration', 'ILogger', 'IPlaybackStateProvider'],
             provide: 'IPeriodicPlaybackStateUpdater',
-            async useFactory (
+            async useFactory(
                 configuration: Configuration,
                 logger: ILogger,
-                playback_state_provider: IPlaybackStateProvider,
+                playback_state_provider: IPlaybackStateProvider
             ): Promise<IPeriodicTrigger> {
                 return new PeriodicTrigger(logger, {
                     log_id: 'playback-state-updater',
                     interval_ms: configuration.playback_state_check_frequency_ms,
-                    async callback (): Promise<void> {
+                    async callback(): Promise<void> {
                         playback_state_provider.trigger_check()
                     },
                 })
@@ -56,15 +54,15 @@ import {DigitallyImportedModule, UtilityModule, PlaybackControlModule} from '../
         {
             inject: ['configuration', 'ILogger', 'OnAirProvider'],
             provide: 'IPeriodicOnAirUpdater',
-            async useFactory (
+            async useFactory(
                 configuration: Configuration,
                 logger: ILogger,
-                on_air_provider: OnAirProvider,
+                on_air_provider: OnAirProvider
             ): Promise<IPeriodicTrigger> {
                 return new PeriodicTrigger(logger, {
                     log_id: 'on-air-updater',
                     interval_ms: configuration.di_frequency_ms,
-                    async callback (): Promise<void> {
+                    async callback(): Promise<void> {
                         await on_air_provider.trigger_update()
                     },
                 })

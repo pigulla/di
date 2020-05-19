@@ -3,20 +3,17 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {OnAirController} from '@src/application/controller'
-import {IOnAirProvider} from '@src/domain'
+import {OnAirController} from '~src/application/controller'
+import {IOnAirProvider} from '~src/domain'
 
-import {
-    create_on_air_provider_stub,
-    prebuilt_channel, NowPlayingBuilder,
-} from '@test/util'
+import {stub_on_air_provider, prebuilt_channel, NowPlayingBuilder} from '~test/util'
 
 describe('NowPlaying controller', function () {
     let controller: OnAirController
     let on_air_provider_stub: SinonStubbedInstance<IOnAirProvider>
 
     beforeEach(async function () {
-        on_air_provider_stub = create_on_air_provider_stub()
+        on_air_provider_stub = stub_on_air_provider()
 
         const module = await Test.createTestingModule({
             providers: [

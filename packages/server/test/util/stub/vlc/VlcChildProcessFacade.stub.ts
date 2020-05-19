@@ -1,8 +1,10 @@
-import {stub, SinonStubbedInstance} from 'sinon'
+import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IVlcChildProcessFacade} from '@src/infrastructure/playback/'
+import {IVlcChildProcessFacade} from '~src/infrastructure/playback/'
 
-export function create_vlc_child_process_facade_stub (): SinonStubbedInstance<IVlcChildProcessFacade> {
+const {stub} = sinon
+
+export function stub_vlc_child_process_facade(): SinonStubbedInstance<IVlcChildProcessFacade> {
     return {
         hostname: 'test.local',
         port: 42,

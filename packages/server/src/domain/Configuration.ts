@@ -18,11 +18,11 @@ export interface Configuration {
 
     vlc_path: string
     vlc_timeout: number
-    vlc_initial_volume: number|null
+    vlc_initial_volume: number | null
 
     di_url: string
     di_listenkey: string
     di_frequency_ms: number
     di_quality: Quality
-    di_credentials: Credentials|null
+    di_credentials: Credentials | null
 }

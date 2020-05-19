@@ -3,16 +3,21 @@ import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import {SinonStubbedInstance} from 'sinon'
 
-import {PlaybackController} from '@src/application/controller'
-import {Configuration, IChannelsProvider, IPlaybackControl, IPlaybackStateProvider} from '@src/domain'
-import {Quality} from '@src/domain/di'
+import {PlaybackController} from '~src/application/controller'
+import {
+    Configuration,
+    IChannelsProvider,
+    IPlaybackControl,
+    IPlaybackStateProvider,
+} from '~src/domain'
+import {Quality} from '~src/domain/di'
 
 import {
     ChannelBuilder,
-    create_channels_provider_stub,
-    create_config_stub,
-    create_playback_control_stub,
-    create_playback_state_provider_stub,
+    stub_channels_provider,
+    stub_config,
+    stub_playback_control,
+    stub_playback_state_provider,
     prebuilt_channel,
 } from '../../../util'
 
@@ -26,10 +31,10 @@ describe('Playback controller', function () {
     let playback_state_provider_stub: SinonStubbedInstance<IPlaybackStateProvider>
 
     beforeEach(async function () {
-        playback_control_stub = create_playback_control_stub()
-        channels_provider_stub = create_channels_provider_stub()
-        playback_state_provider_stub = create_playback_state_provider_stub()
-        config_stub = create_config_stub({
+        playback_control_stub = stub_playback_control()
+        channels_provider_stub = stub_channels_provider()
+        playback_state_provider_stub = stub_playback_state_provider()
+        config_stub = stub_config({
             di_listenkey: 'my-listen-key',
             di_quality: Quality.MP3_320,
         })
@@ -124,16 +129,20 @@ describe('Playback controller', function () {
             channels_provider_stub.channel_exists.withArgs('progressive').returns(true)
             channels_provider_stub.get.withArgs('progressive').returns(channel)
 
-            await expect(controller.play({channel: 'progressive'})).to.eventually.deep.equal(channel.to_dto())
-            expect(playback_control_stub.play)
-                .to.have.been.calledOnceWithExactly(channel.build_url('my-listen-key', Quality.MP3_320))
+            await expect(controller.play({channel: 'progressive'})).to.eventually.deep.equal(
+                channel.to_dto()
+            )
+            expect(playback_control_stub.play).to.have.been.calledOnceWithExactly(
+                channel.build_url('my-listen-key', Quality.MP3_320)
+            )
         })
 
         it('should fail if the channel does not exist', async function () {
             channels_provider_stub.channel_exists.withArgs('progressive').returns(false)
 
-            await expect(controller.play({channel: 'progressive'}))
-                .to.be.rejectedWith(NotFoundException)
+            await expect(controller.play({channel: 'progressive'})).to.be.rejectedWith(
+                NotFoundException
+            )
         })
     })
 })

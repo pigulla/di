@@ -1,11 +1,11 @@
 import {Inject, Injectable} from '@nestjs/common'
 
-import {Configuration} from './Configuration'
 import {IChannelsProvider} from './ChannelsProvider.interface'
+import {Configuration} from './Configuration'
+import {IChannel} from './di'
 import {IDigitallyImported} from './DigitallyImported.interface'
 import {IFavoritesProvider} from './FavoritesProvider.interface'
 import {ILogger} from './Logger.interface'
-import {IChannel} from './di'
 
 export class CredentialsUnavailableError extends Error {}
 
@@ -16,11 +16,11 @@ export class FavoritesProvider implements IFavoritesProvider {
     private readonly digitally_imported: IDigitallyImported
     private readonly logger: ILogger
 
-    public constructor (
+    public constructor(
         @Inject('ILogger') logger: ILogger,
         @Inject('IChannelsProvider') channels_provider: IChannelsProvider,
         @Inject('configuration') configuration: Configuration,
-        @Inject('IDigitallyImported') digitally_imported: IDigitallyImported,
+        @Inject('IDigitallyImported') digitally_imported: IDigitallyImported
     ) {
         this.logger = logger.child_for_service(FavoritesProvider.name)
         this.configuration = configuration
@@ -30,7 +30,7 @@ export class FavoritesProvider implements IFavoritesProvider {
         this.logger.debug('Service instantiated')
     }
 
-    public async get_all (): Promise<IChannel[]> {
+    public async get_all(): Promise<IChannel[]> {
         const credentials = this.configuration.di_credentials
 
         if (!credentials) {

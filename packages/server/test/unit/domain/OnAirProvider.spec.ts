@@ -1,11 +1,11 @@
 import {Test} from '@nestjs/testing'
-import {SinonStubbedInstance} from 'sinon'
 import {expect} from 'chai'
+import {SinonStubbedInstance} from 'sinon'
 
-import {IDigitallyImported, OnAirProvider} from '@src/domain'
-import {IOnAir} from '@src/domain/di'
+import {IDigitallyImported, OnAirProvider} from '~src/domain'
+import {IOnAir} from '~src/domain/di'
 
-import {create_digitally_imported_stub, create_logger_stub, NowPlayingBuilder, prebuilt_channel} from '@test/util'
+import {stub_digitally_imported, stub_logger, NowPlayingBuilder, prebuilt_channel} from '~test/util'
 
 const {progressive, vocaltrance, classictechno} = prebuilt_channel
 
@@ -14,9 +14,9 @@ describe('OnAirProvider', function () {
     let digitally_imported_stub: SinonStubbedInstance<IDigitallyImported>
 
     beforeEach(async function () {
-        const logger_stub = create_logger_stub()
-        logger_stub.child_for_service.returns(create_logger_stub())
-        digitally_imported_stub = create_digitally_imported_stub()
+        const logger_stub = stub_logger()
+        logger_stub.child_for_service.returns(stub_logger())
+        digitally_imported_stub = stub_digitally_imported()
 
         const module = await Test.createTestingModule({
             providers: [

@@ -1,21 +1,14 @@
 import {OnAirDTO, PlayDTO, ChannelDTO} from '@digitally-imported/dto'
-import {expect} from 'chai'
-import nock from 'nock'
 import Axios from 'axios'
-import {SinonStub, SinonStubbedInstance, match, spy, stub} from 'sinon'
+import {expect} from 'chai'
 import {NO_CONTENT, INTERNAL_SERVER_ERROR, OK, NOT_FOUND, FORBIDDEN} from 'http-status-codes'
+import nock from 'nock'
+import sinon, {SinonStub, SinonStubbedInstance} from 'sinon'
 
-import {ConfigurableClient} from '@src/ConfigurableClient'
-import {Client} from '@src/Client'
-import {ChannelNotFoundError, ClientError, ServerNotRunningError} from '@src/error'
+import {ConfigurableClient} from '~src/ConfigurableClient'
+import {ChannelNotFoundError, ClientError, ServerNotRunningError} from '~src/error'
 
-describe('Client', function () {
-    it('should extend ConfigurableClient', function () {
-        const client = new Client()
-
-        expect(client).to.be.instanceOf(ConfigurableClient)
-    })
-})
+const {match, spy, stub} = sinon
 
 describe('ConfigurableClient', function () {
     const client_version = '2.4.3'
@@ -31,14 +24,17 @@ describe('ConfigurableClient', function () {
     })
 
     it('should throw if the client version is invalid', function () {
-        expect(() => new ConfigurableClient({
-            axios_factory: Axios.create,
-            process: process_stub as any as NodeJS.Process,
-            check_version: false,
-            client_version: 'foo',
-            user_agent,
-            endpoint,
-        })).to.throw(/invalid version/i)
+        expect(
+            () =>
+                new ConfigurableClient({
+                    axios_factory: Axios.create,
+                    process: (process_stub as any) as NodeJS.Process,
+                    check_version: false,
+                    client_version: 'foo',
+                    user_agent,
+                    endpoint,
+                })
+        ).to.throw(/invalid version/i)
     })
 
     describe('has a response interceptor which', function () {
@@ -67,7 +63,7 @@ describe('ConfigurableClient', function () {
                 user_agent,
                 axios_factory: axios_factory_stub,
                 check_version: true,
-                process: process_stub as any as NodeJS.Process,
+                process: (process_stub as any) as NodeJS.Process,
             })
             expect(response_interceptor_use).to.have.been.calledOnce
 
@@ -100,7 +96,9 @@ describe('ConfigurableClient', function () {
             }
 
             expect(success_interceptor(response)).to.equal(response)
-            expect(process_stub.emitWarning).to.have.been.calledOnceWithExactly(match(/did not send/))
+            expect(process_stub.emitWarning).to.have.been.calledOnceWithExactly(
+                match(/did not send/)
+            )
         })
 
         it('should warn if the version header is invalid', function () {
@@ -145,7 +143,7 @@ describe('ConfigurableClient', function () {
                 user_agent,
                 check_version: false,
                 axios_factory: Axios.create,
-                process: process_stub as any as NodeJS.Process,
+                process: (process_stub as any) as NodeJS.Process,
             })
         })
 
@@ -155,7 +153,9 @@ describe('ConfigurableClient', function () {
                     reqheaders: {
                         'user-agent': user_agent,
                     },
-                }).head('/server').reply(NO_CONTENT)
+                })
+                    .head('/server')
+                    .reply(NO_CONTENT)
 
                 await client.is_alive()
             })
@@ -215,34 +215,26 @@ describe('ConfigurableClient', function () {
         })
 
         it('should set the volume', async function () {
-            nock(endpoint)
-                .put('/volume', {volume: 42})
-                .reply(NO_CONTENT)
+            nock(endpoint).put('/volume', {volume: 42}).reply(NO_CONTENT)
 
             await expect(client.set_volume(42)).to.eventually.be.undefined
         })
 
         it('should get the volume', async function () {
-            nock(endpoint)
-                .get('/volume')
-                .reply(OK, {volume: 42})
+            nock(endpoint).get('/volume').reply(OK, {volume: 42})
 
             await expect(client.get_volume()).to.eventually.equal(42)
         })
 
         describe('when checking if something is playing', function () {
             it('should return true if there is', async function () {
-                nock(endpoint)
-                    .head('/playback')
-                    .reply(NO_CONTENT)
+                nock(endpoint).head('/playback').reply(NO_CONTENT)
 
                 await expect(client.is_playing()).to.eventually.be.true
             })
 
             it('should return false if there is not', async function () {
-                nock(endpoint)
-                    .head('/playback')
-                    .reply(NOT_FOUND)
+                nock(endpoint).head('/playback').reply(NOT_FOUND)
 
                 await expect(client.is_playing()).to.eventually.be.false
             })
@@ -265,11 +257,11 @@ describe('ConfigurableClient', function () {
                     },
                 }
 
-                nock(endpoint)
-                    .put('/playback', {channel: 'most-awesome'})
-                    .reply(OK, channel)
+                nock(endpoint).put('/playback', {channel: 'most-awesome'}).reply(OK, channel)
 
-                await expect(client.start_playback('most-awesome')).to.eventually.deep.equal(channel)
+                await expect(client.start_playback('most-awesome')).to.eventually.deep.equal(
+                    channel
+                )
             })
 
             it('should fail if the channel does not exist', async function () {
@@ -278,8 +270,9 @@ describe('ConfigurableClient', function () {
                     .put('/playback', body as {[key: string]: any})
                     .reply(NOT_FOUND)
 
-                await expect(client.start_playback('progressive'))
-                    .to.eventually.be.rejectedWith(ChannelNotFoundError)
+                await expect(client.start_playback('progressive')).to.eventually.be.rejectedWith(
+                    ChannelNotFoundError
+                )
             })
 
             it('should let other errors bubble up', async function () {
@@ -287,8 +280,9 @@ describe('ConfigurableClient', function () {
                     .put('/playback', {channel: 'progressive'})
                     .reply(INTERNAL_SERVER_ERROR)
 
-                await expect(client.start_playback('progressive'))
-                    .to.eventually.be.rejectedWith(ClientError)
+                await expect(client.start_playback('progressive')).to.eventually.be.rejectedWith(
+                    ClientError
+                )
             })
         })
 
@@ -298,24 +292,20 @@ describe('ConfigurableClient', function () {
             await expect(client.stop_playback()).to.eventually.be.undefined
         })
 
-        describe('when the playback state is checked', async function () {
+        describe('when the playback state is checked', function () {
             it('should return the state', async function () {
                 const data = {
                     foo: 42,
                     bar: ['baz'],
                 }
 
-                nock(endpoint)
-                    .get('/playback')
-                    .reply(OK, data)
+                nock(endpoint).get('/playback').reply(OK, data)
 
                 await expect(client.get_playback_state()).to.eventually.deep.equal(data)
             })
 
             it('should return null if nothing is playing', async function () {
-                nock(endpoint)
-                    .get('/playback')
-                    .reply(NOT_FOUND)
+                nock(endpoint).get('/playback').reply(NOT_FOUND)
 
                 await expect(client.get_playback_state()).to.eventually.be.null
             })
@@ -323,9 +313,7 @@ describe('ConfigurableClient', function () {
 
         describe('when the favorites are requested', function () {
             it('should return null if unavailable', async function () {
-                nock(endpoint)
-                    .get('/favorites')
-                    .reply(FORBIDDEN)
+                nock(endpoint).get('/favorites').reply(FORBIDDEN)
 
                 await expect(client.get_favorites()).to.eventually.be.null
             })
@@ -333,9 +321,7 @@ describe('ConfigurableClient', function () {
             it('should return them', async function () {
                 const data = ['foo', 'bar']
 
-                nock(endpoint)
-                    .get('/favorites')
-                    .reply(OK, data)
+                nock(endpoint).get('/favorites').reply(OK, data)
 
                 await expect(client.get_favorites()).to.eventually.deep.equal(data)
             })
@@ -344,9 +330,7 @@ describe('ConfigurableClient', function () {
         it('should return the channels', async function () {
             const data = ['foo', 'bar']
 
-            nock(endpoint)
-                .get('/channels')
-                .reply(OK, data)
+            nock(endpoint).get('/channels').reply(OK, data)
 
             await expect(client.get_channels()).to.eventually.deep.equal(data)
         })
@@ -358,37 +342,32 @@ describe('ConfigurableClient', function () {
                     bar: ['baz'],
                 }
 
-                nock(endpoint)
-                    .get('/channel/progressive')
-                    .reply(OK, data)
+                nock(endpoint).get('/channel/progressive').reply(OK, data)
 
                 await expect(client.get_channel('progressive')).to.eventually.deep.equal(data)
             })
 
             it('should throw if does not exist', async function () {
-                nock(endpoint)
-                    .get('/channel/progressive')
-                    .reply(NOT_FOUND)
+                nock(endpoint).get('/channel/progressive').reply(NOT_FOUND)
 
-                await expect(client.get_channel('progressive')).to.eventually.be.rejectedWith(ChannelNotFoundError)
+                await expect(client.get_channel('progressive')).to.eventually.be.rejectedWith(
+                    ChannelNotFoundError
+                )
             })
 
             it('should let other errors bubble up', async function () {
-                nock(endpoint)
-                    .get('/channel/progressive')
-                    .reply(INTERNAL_SERVER_ERROR)
+                nock(endpoint).get('/channel/progressive').reply(INTERNAL_SERVER_ERROR)
 
-                await expect(client.get_channel('progressive'))
-                    .to.eventually.be.rejectedWith(ClientError)
+                await expect(client.get_channel('progressive')).to.eventually.be.rejectedWith(
+                    ClientError
+                )
             })
         })
 
         it('should return the channel filters', async function () {
             const data = ['foo', 'bar']
 
-            nock(endpoint)
-                .get('/channelfilters')
-                .reply(OK, data)
+            nock(endpoint).get('/channelfilters').reply(OK, data)
 
             await expect(client.get_channel_filters()).to.eventually.deep.equal(data)
         })
@@ -409,9 +388,7 @@ describe('ConfigurableClient', function () {
                 },
             ]
 
-            nock(endpoint)
-                .get('/channels/on_air')
-                .reply(OK, data)
+            nock(endpoint).get('/channels/on_air').reply(OK, data)
 
             const result = await client.get_on_air()
             expect([...result.entries()]).to.deep.equal([
@@ -429,30 +406,23 @@ describe('ConfigurableClient', function () {
                     title: 'Fade 2 Reality',
                 }
 
-                nock(endpoint)
-                    .get('/channel/rave/on_air')
-                    .reply(OK, data)
+                nock(endpoint).get('/channel/rave/on_air').reply(OK, data)
 
-                await expect(client.get_on_air('rave'))
-                    .to.eventually.deep.equal(data)
+                await expect(client.get_on_air('rave')).to.eventually.deep.equal(data)
             })
 
             it('should throw if the channel does not exist', async function () {
-                nock(endpoint)
-                    .get('/channel/rave/on_air')
-                    .reply(NOT_FOUND)
+                nock(endpoint).get('/channel/rave/on_air').reply(NOT_FOUND)
 
-                await expect(client.get_on_air('rave'))
-                    .to.eventually.be.rejectedWith(ChannelNotFoundError)
+                await expect(client.get_on_air('rave')).to.eventually.be.rejectedWith(
+                    ChannelNotFoundError
+                )
             })
 
             it('should let other errors bubble up', async function () {
-                nock(endpoint)
-                    .get('/channel/rave/on_air')
-                    .reply(INTERNAL_SERVER_ERROR)
+                nock(endpoint).get('/channel/rave/on_air').reply(INTERNAL_SERVER_ERROR)
 
-                await expect(client.get_on_air('rave'))
-                    .to.eventually.be.rejectedWith(ClientError)
+                await expect(client.get_on_air('rave')).to.eventually.be.rejectedWith(ClientError)
             })
         })
     })

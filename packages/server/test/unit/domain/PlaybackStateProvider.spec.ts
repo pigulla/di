@@ -1,93 +1,97 @@
 import {Test} from '@nestjs/testing'
-import {spy, SinonSpy, SinonStubbedInstance} from 'sinon'
 import {expect} from 'chai'
+import sinon, {SinonSpy, SinonStubbedInstance} from 'sinon'
 
 import {
     IChannelsProvider,
     IOnAirProvider,
     IPlaybackControl,
-    PLAYBACK_STATE_STOPPED,
+    playback_state_stopped,
     playback_states_differ,
     PlaybackStateProvider,
-} from '@src/domain'
-import {IOnAir} from '@src/domain/di'
+} from '~src/domain'
+import {IOnAir} from '~src/domain/di'
+
 import {
-    create_on_air_provider_stub,
-    create_playback_control_stub,
-    create_logger_stub,
-    create_channels_provider_stub,
+    stub_on_air_provider,
+    stub_playback_control,
+    stub_logger,
+    stub_channels_provider,
     prebuilt_channel,
-} from '@test/util'
+} from '~test/util'
 
 const {progressive, vocaltrance} = prebuilt_channel
 
 describe('playback_states_differ', function () {
     describe('when both are identical', function () {
         it('should return false for stopped states', function () {
-            expect(playback_states_differ(
-                {stopped: true},
-                {stopped: true},
-            )).to.be.false
+            expect(playback_states_differ({stopped: true}, {stopped: true})).to.be.false
         })
 
         it('should return false for non-stopped states', function () {
-            expect(playback_states_differ(
-                {
-                    stopped: false,
-                    channel: progressive,
-                    song: {
-                        artist: 'The Future Sequencer',
-                        title: 'Chrome Ace',
+            expect(
+                playback_states_differ(
+                    {
+                        stopped: false,
+                        channel: progressive,
+                        song: {
+                            artist: 'The Future Sequencer',
+                            title: 'Chrome Ace',
+                        },
                     },
-                },
-                {
-                    stopped: false,
-                    channel: progressive,
-                    song: {
-                        artist: 'The Future Sequencer',
-                        title: 'Chrome Ace',
-                    },
-                },
-            )).to.be.false
+                    {
+                        stopped: false,
+                        channel: progressive,
+                        song: {
+                            artist: 'The Future Sequencer',
+                            title: 'Chrome Ace',
+                        },
+                    }
+                )
+            ).to.be.false
         })
     })
 
     describe('when the states differ', function () {
         it('should return true for different channels', function () {
-            expect(playback_states_differ(
-                {
-                    stopped: false,
-                    channel: vocaltrance,
-                    song: {
-                        artist: 'The Future Sequencer',
-                        title: 'Chrome Ace',
+            expect(
+                playback_states_differ(
+                    {
+                        stopped: false,
+                        channel: vocaltrance,
+                        song: {
+                            artist: 'The Future Sequencer',
+                            title: 'Chrome Ace',
+                        },
                     },
-                },
-                {
-                    stopped: false,
-                    channel: progressive,
-                    song: {
-                        artist: 'The Future Sequencer',
-                        title: 'Chrome Ace',
-                    },
-                },
-            )).to.be.true
+                    {
+                        stopped: false,
+                        channel: progressive,
+                        song: {
+                            artist: 'The Future Sequencer',
+                            title: 'Chrome Ace',
+                        },
+                    }
+                )
+            ).to.be.true
         })
 
         it('should return true for different states', function () {
-            expect(playback_states_differ(
-                {
-                    stopped: false,
-                    channel: vocaltrance,
-                    song: {
-                        artist: 'The Future Sequencer',
-                        title: 'Chrome Ace',
+            expect(
+                playback_states_differ(
+                    {
+                        stopped: false,
+                        channel: vocaltrance,
+                        song: {
+                            artist: 'The Future Sequencer',
+                            title: 'Chrome Ace',
+                        },
                     },
-                },
-                {
-                    stopped: true,
-                },
-            )).to.be.true
+                    {
+                        stopped: true,
+                    }
+                )
+            ).to.be.true
         })
     })
 })
@@ -100,14 +104,14 @@ describe('PlaybackStateProvider', function () {
     let on_change: SinonSpy
 
     beforeEach(async function () {
-        const parent_logger_stub = create_logger_stub()
-        parent_logger_stub.child_for_service.returns(create_logger_stub())
+        const parent_logger_stub = stub_logger()
+        parent_logger_stub.child_for_service.returns(stub_logger())
 
-        channels_provider_stub = create_channels_provider_stub()
-        on_air_provider_stub = create_on_air_provider_stub()
-        playback_control_stub = create_playback_control_stub()
+        channels_provider_stub = stub_channels_provider()
+        on_air_provider_stub = stub_on_air_provider()
+        playback_control_stub = stub_playback_control()
 
-        on_change = spy()
+        on_change = sinon.spy()
 
         const module = await Test.createTestingModule({
             providers: [
@@ -136,7 +140,7 @@ describe('PlaybackStateProvider', function () {
     })
 
     it('should be stopped by default', function () {
-        expect(playback_state_provider.get_state()).to.equal(PLAYBACK_STATE_STOPPED)
+        expect(playback_state_provider.get_state()).to.equal(playback_state_stopped)
     })
 
     describe('when playback is stopped', function () {

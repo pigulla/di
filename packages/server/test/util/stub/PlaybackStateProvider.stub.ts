@@ -1,8 +1,10 @@
-import {stub, SinonStubbedInstance} from 'sinon'
+import sinon, {SinonStubbedInstance} from 'sinon'
 
-import {IPlaybackStateProvider} from '@src/domain'
+import {IPlaybackStateProvider} from '~src/domain'
 
-export function create_playback_state_provider_stub (): SinonStubbedInstance<IPlaybackStateProvider> {
+const {stub} = sinon
+
+export function stub_playback_state_provider(): SinonStubbedInstance<IPlaybackStateProvider> {
     return {
         trigger_check: stub(),
         get_state: stub(),

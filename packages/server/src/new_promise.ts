@@ -6,7 +6,7 @@ export interface PromiseParts<T> {
     reject: (error: Error) => void
 }
 
-export function new_promise<T = void> (): PromiseParts<T> {
+export function new_promise<T = void>(): PromiseParts<T> {
     let resolver: (value: T) => void
     let rejector: (error: Error) => void
 

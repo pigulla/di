@@ -7,5 +7,5 @@ export interface IChannelFilter {
     readonly meta: boolean
     readonly name: string
 
-    to_dto (): ChannelFilterDTO
+    to_dto(): ChannelFilterDTO
 }

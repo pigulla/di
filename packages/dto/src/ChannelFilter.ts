@@ -7,13 +7,13 @@ type ChannelFilterProperties = {
 }
 
 export class ChannelFilterDTO {
-    channels!: number[]
-    id!: number
-    key!: string
-    meta!: boolean
-    name!: string
+    public channels!: number[]
+    public id!: number
+    public key!: string
+    public meta!: boolean
+    public name!: string
 
-    public static create (properties: ChannelFilterProperties): ChannelFilterDTO {
+    public static create(properties: ChannelFilterProperties): ChannelFilterDTO {
         return Object.assign(new ChannelFilterDTO(), properties)
     }
 }

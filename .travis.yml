@@ -12,7 +12,7 @@ node_js:
   - "10"
 
 before_install:
-  - npm --global upgrade yarn
+  - npm install --global yarn@^1.22
   - yarn set version berry
 
 install:

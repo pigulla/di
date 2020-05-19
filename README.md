@@ -6,7 +6,7 @@
 [![Version](https://img.shields.io/github/package-json/v/pigulla/di?style=flat-square)](https://www.npmjs.com/search?q=%40digitally-imported)
 [![GitHub license](https://img.shields.io/github/license/pigulla/di?style=flat-square)](https://github.com/pigulla/di/blob/master/LICENSE)
 [![Travis CI](https://img.shields.io/travis/com/pigulla/di/master?style=flat-square)](https://travis-ci.com/pigulla/di)
-[![codecov](https://codecov.io/gh/pigulla/di/branch/master/graph/badge.svg?style=flat-square)](https://codecov.io/gh/pigulla/di/tree/master)
+[![codecov](https://img.shields.io/codecov/c/github/pigulla/di?style=flat-square)](https://codecov.io/gh/pigulla/di/tree/master)
 [![GitHub issues](https://img.shields.io/github/issues/pigulla/di?style=flat-square)](https://github.com/pigulla/di/issues)
 [![GitHub PRs](https://img.shields.io/github/issues-pr/pigulla/di?style=flat-square)](https://github.com/pigulla/di/pulls)
 

@@ -5,7 +5,7 @@
 [![Travis CI](https://img.shields.io/travis/com/pigulla/di/master?style=flat-square)](https://travis-ci.com/pigulla/di)
 [![Dependencies](https://img.shields.io/david/pigulla/di?path=packages/cli&style=flat-square)](https://david-dm.org/pigulla/di?path=packages%2Fcli)
 [![DevDependencies](https://img.shields.io/david/dev/pigulla/di?path=packages/cli&style=flat-square)](https://david-dm.org/dev/pigulla/di?path=packages%2Fcli)
-[![codecov](https://codecov.io/gh/pigulla/di/branch/master/graph/badge.svg?flag=cli&style=flat-square)](https://codecov.io/gh/pigulla/di/tree/master/packages/cli/src)
+[![codecov](https://img.shields.io/codecov/c/github/pigulla/di?flag=cli&style=flat-square)](https://codecov.io/gh/pigulla/di/tree/master/packages/cli/src)
 [![Snyk](https://snyk.io/test/github/pigulla/di/badge.svg?targetFile=packages/cli/package.json&style=flat-square)](https://snyk.io/test/github/pigulla/di?targetFile=packages%2Fserver%2Fpackage.json&tab=dependencies)
 
 # Usage

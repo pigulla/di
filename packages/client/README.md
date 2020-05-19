@@ -5,5 +5,5 @@
 [![Travis CI](https://img.shields.io/travis/com/pigulla/di/master?style=flat-square)](https://travis-ci.com/pigulla/di)
 [![Dependencies](https://img.shields.io/david/pigulla/di?path=packages/client&style=flat-square)](https://david-dm.org/pigulla/di?path=packages%2Fclient)
 [![DevDependencies](https://img.shields.io/david/dev/pigulla/di?path=packages/client&style=flat-square)](https://david-dm.org/dev/pigulla/di?path=packages%2Fclient)
-[![codecov](https://codecov.io/gh/pigulla/di/branch/master/graph/badge.svg?flag=client&style=flat-square)](https://codecov.io/gh/pigulla/di/tree/master/packages/client/src)
+[![codecov](https://img.shields.io/codecov/c/github/pigulla/di?flag=client&style=flat-square)](https://codecov.io/gh/pigulla/di/tree/master/packages/client/src)
 [![Snyk](https://snyk.io/test/github/pigulla/di/badge.svg?targetFile=packages/client/package.json&style=flat-square)](https://snyk.io/test/github/pigulla/di?targetFile=packages%2Fclient%2Fpackage.json&tab=dependencies)

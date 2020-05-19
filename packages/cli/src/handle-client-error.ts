@@ -1,5 +1,6 @@
-import {ClientError, ServerNotRunningError, ChannelNotFoundError} from '@digitally-imported/client'
 import {CLIError} from '@oclif/errors'
+
+import {ClientError, ServerNotRunningError, ChannelNotFoundError} from '@digitally-imported/client'
 
 import BaseCommand from './base'
 

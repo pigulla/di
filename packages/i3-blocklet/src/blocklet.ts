@@ -1,5 +1,6 @@
-import {IClient} from '@digitally-imported/client'
 import truncate from 'lodash.truncate'
+
+import {IClient} from '@digitally-imported/client'
 
 import {BlockletOutput} from './i3.interface'
 

@@ -1,7 +1,8 @@
-import {ServerStatusDTO} from '@digitally-imported/dto'
 import {Controller, Delete, HttpStatus, Res, Inject, Get} from '@nestjs/common'
 import {Response} from 'express'
 import {NormalizedPackageJson} from 'read-pkg-up'
+
+import {ServerStatusDTO} from '@digitally-imported/dto'
 
 import {IAppDataProvider, IPlaybackControl, IServerProcessProxy} from '../../domain'
 

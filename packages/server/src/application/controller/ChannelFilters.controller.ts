@@ -1,5 +1,6 @@
-import {ChannelFilterDTO} from '@digitally-imported/dto'
 import {Controller, Get, Inject} from '@nestjs/common'
+
+import {ChannelFilterDTO} from '@digitally-imported/dto'
 
 import {IChannelsProvider} from '../../domain'
 

@@ -14,7 +14,8 @@ module.exports = {
                 ".ts",
                 ".tsx"
             ]
-        }
+        },
+        "import/internal-regex": "^@digitally-imported/"
     },
     "extends": [
         "plugin:@typescript-eslint/eslint-recommended",

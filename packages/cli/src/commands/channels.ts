@@ -1,8 +1,9 @@
-import {ChannelDTO} from '@digitally-imported/dto'
 import {flags} from '@oclif/command'
 import {Input} from '@oclif/command/lib/flags'
 import cli from 'cli-ux'
 import JSONs from 'json-strictify'
+
+import {ChannelDTO} from '@digitally-imported/dto'
 
 import BaseCommand from '../base'
 import {HandleClientError} from '../handle-client-error'

@@ -1,5 +1,6 @@
-import {Client} from '@digitally-imported/client'
 import {Class} from 'type-fest'
+
+import {Client} from '@digitally-imported/client'
 
 import {blocklet} from './blocklet'
 import {BlockletOutput} from './i3.interface'

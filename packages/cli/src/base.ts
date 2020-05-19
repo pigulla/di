@@ -1,7 +1,8 @@
-import {Client} from '@digitally-imported/client'
 import {Command, flags} from '@oclif/command'
 import {Input} from '@oclif/command/lib/flags'
 import {CLIError} from '@oclif/errors'
+
+import {Client} from '@digitally-imported/client'
 
 export enum OutputFormat {
     TEXT = 'text',

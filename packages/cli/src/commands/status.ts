@@ -1,5 +1,6 @@
-import {PlaybackStateDTO} from '@digitally-imported/dto'
 import JSONs from 'json-strictify'
+
+import {PlaybackStateDTO} from '@digitally-imported/dto'
 
 import BaseCommand from '../base'
 import {HandleClientError} from '../handle-client-error'

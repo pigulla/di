@@ -1,8 +1,9 @@
-import {IClient} from '@digitally-imported/client'
-import {PlaybackStateDTO} from '@digitally-imported/dto'
 import {expect} from 'chai'
 import sinon, {SinonStubbedInstance} from 'sinon'
 import {PartialDeep} from 'type-fest'
+
+import {IClient} from '@digitally-imported/client'
+import {PlaybackStateDTO} from '@digitally-imported/dto'
 
 import {blocklet} from '~src/blocklet'
 

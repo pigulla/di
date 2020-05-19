@@ -1,4 +1,3 @@
-import {ChannelDTO, PlayDTO, PlaybackStateDTO} from '@digitally-imported/dto'
 import {
     Body,
     Controller,
@@ -12,6 +11,8 @@ import {
     Put,
 } from '@nestjs/common'
 import {IsNotEmpty, IsString} from 'class-validator'
+
+import {ChannelDTO, PlayDTO, PlaybackStateDTO} from '@digitally-imported/dto'
 
 import {
     Configuration,

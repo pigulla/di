@@ -1,5 +1,6 @@
-import {OnAirDTO} from '@digitally-imported/dto'
 import {Controller, Get, Inject, Param, NotFoundException} from '@nestjs/common'
+
+import {OnAirDTO} from '@digitally-imported/dto'
 
 import {IOnAirProvider} from '../../domain'
 

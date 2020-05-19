@@ -1,9 +1,10 @@
-import {OnAirDTO, PlayDTO, ChannelDTO} from '@digitally-imported/dto'
 import Axios from 'axios'
 import {expect} from 'chai'
 import {NO_CONTENT, INTERNAL_SERVER_ERROR, OK, NOT_FOUND, FORBIDDEN} from 'http-status-codes'
 import nock from 'nock'
 import sinon, {SinonStub, SinonStubbedInstance} from 'sinon'
+
+import {OnAirDTO, PlayDTO, ChannelDTO} from '@digitally-imported/dto'
 
 import {ConfigurableClient} from '~src/ConfigurableClient'
 import {ChannelNotFoundError, ClientError, ServerNotRunningError} from '~src/error'

@@ -1,5 +1,6 @@
-import {ChannelDTO} from '@digitally-imported/dto'
 import {Dayjs} from 'dayjs'
+
+import {ChannelDTO} from '@digitally-imported/dto'
 
 import {Quality} from './Quality'
 

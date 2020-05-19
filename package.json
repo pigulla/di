@@ -19,6 +19,7 @@
         "setup": "rm -rf node_modules && yarn install && yarn workspaces foreach run clean && yarn run build",
         "build": "yarn workspaces foreach --verbose --all --parallel --topological run build",
         "test": "yarn workspaces foreach --verbose --parallel --all run test",
+        "format": "yarn workspaces foreach --verbose --parallel --all run format",
         "codecov": "yarn workspaces foreach --verbose --parallel --all run codecov"
     }
 }

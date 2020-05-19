@@ -1,5 +1,6 @@
-import {ChannelDTO} from '@digitally-imported/dto'
 import {Controller, Get, Inject, ForbiddenException} from '@nestjs/common'
+
+import {ChannelDTO} from '@digitally-imported/dto'
 
 import {IFavoritesProvider, CredentialsUnavailableError} from '../../domain'
 

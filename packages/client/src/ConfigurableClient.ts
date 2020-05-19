@@ -1,3 +1,8 @@
+import {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios'
+import Bluebird from 'bluebird'
+import {FORBIDDEN, NO_CONTENT, NOT_FOUND, OK} from 'http-status-codes'
+import semver, {SemVer} from 'semver'
+
 import {
     ChannelDTO,
     ChannelFilterDTO,
@@ -7,10 +12,6 @@ import {
     ServerStatusDTO,
     VolumeDTO,
 } from '@digitally-imported/dto'
-import {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios'
-import Bluebird from 'bluebird'
-import {FORBIDDEN, NO_CONTENT, NOT_FOUND, OK} from 'http-status-codes'
-import semver, {SemVer} from 'semver'
 
 import {IClient} from './Client.interface'
 import {ChannelNotFoundError, ClientError, ServerNotRunningError} from './error'

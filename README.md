@@ -23,26 +23,17 @@ Simple API wrapper for the server's REST interface.
 ##### [@digitally-imported/dto](packages/dto)
 Data transfer objects for the server's REST interface.
 
-##### [@digitally-imported/eslint-config-standard](packages/eslint-config-default)
-The ESLint configuration used by all packages.
+##### [@digitally-imported/eslint-config-default](packages/eslint-config-default)
+The default ESLint and Prettier configuration used by all packages.
 
 ##### [@digitally-imported/i3-blocklet](packages/i3-blocklet)
 Blocklet for [i3blocks](https://github.com/vivien/i3blocks) for the [i3 window manager](https://i3wm.org/).
 
-##### [@digitally-imported/integration-test](packages/integration-test)
-Manually run integration "test" scripts.
-
-##### [@digitally-imported/mocha-config](packages/mocha-config)
-The Mocha configuration used by all packages.
-
-##### [@digitally-imported/nyc-config](packages/notifier)
-Desktop notifications powered by [node-notifier](https://github.com/mikaelbr/node-notifier).
-
-##### [@digitally-imported/nyc-config](packages/nyc-config)
-The Istanbul configuration used by all packages.
+##### [@digitally-imported/jest-config](packages/jest-config)
+The Jest configuration used by all packages.
 
 ##### [@digitally-imported/server](packages/server)
 The server backend.
 
 ##### [@digitally-imported/typescript-config](packages/typescript-config)
-The TypeScript configuration used by all packages.
+The default TypeScript configuration used by all packages.

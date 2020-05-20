@@ -14,7 +14,7 @@
     "prettier": "prettier --check src test",
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
     "clean": "rm -rf lib coverage",
-    "jest": "jest",
+    "jest": "NODE_NO_WARNINGS=1 jest",
     "format": "prettier --write src test && eslint --fix 'src/**/*.ts' 'test/**/*.ts'",
     "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F dto'",
     "prepack": "yarn run build"
@@ -38,7 +38,7 @@
     "@types/chai": "^4.2.11",
     "@types/chai-as-promised": "^7.1.2",
     "@types/jest": "^25.2.3",
-    "@types/sinon": "^9.0.1",
+    "@types/sinon": "^9.0.3",
     "@types/sinon-chai": "^3.2.4",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "chai": "^4.2.0",
@@ -59,7 +59,7 @@
     "ts-jest": "^26.0.0",
     "tsconfig-paths": "^3.9.0",
     "type-fest": "^0.13.1",
-    "typescript": "^3.9.2"
+    "typescript": "^3.9.3"
   },
   "gitHead": "c590744807591cbe20d48b97c90cd8670779a369"
 }

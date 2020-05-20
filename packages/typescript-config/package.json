@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "nock": "^12.0.3",
-    "typescript": "^3.9.2"
+    "typescript": "^3.9.3"
   },
   "gitHead": "c590744807591cbe20d48b97c90cd8670779a369"
 }

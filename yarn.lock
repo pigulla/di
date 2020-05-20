@@ -373,8 +373,8 @@ __metadata:
     "@types/chai": ^4.2.11
     "@types/chai-as-promised": ^7.1.2
     "@types/inquirer": ^6.5.0
-    "@types/node": ^14.0.1
-    "@types/sinon": ^9.0.1
+    "@types/node": ^14.0.4
+    "@types/sinon": ^9.0.3
     "@types/sinon-chai": ^3.2.4
     "@typescript-eslint/eslint-plugin": ^2.34.0
     chai: ^4.2.0
@@ -397,7 +397,7 @@ __metadata:
     tsconfig-paths: ^3.9.0
     tslib: ^2.0.0
     type-fest: ^0.13.1
-    typescript: ^3.9.2
+    typescript: ^3.9.3
   bin:
     di: ./bin/run
   languageName: unknown
@@ -414,9 +414,9 @@ __metadata:
     "@types/bluebird": ^3.5.31
     "@types/chai": ^4.2.11
     "@types/chai-as-promised": ^7.1.2
-    "@types/node": ^14.0.1
+    "@types/node": ^14.0.4
     "@types/semver": ^7.2.0
-    "@types/sinon": ^9.0.1
+    "@types/sinon": ^9.0.3
     "@types/sinon-chai": ^3.2.4
     "@typescript-eslint/eslint-plugin": ^2.34.0
     axios: ^0.19.2
@@ -442,7 +442,7 @@ __metadata:
     tsconfig-paths: ^3.9.0
     tslib: ^2.0.0
     type-fest: ^0.13.1
-    typescript: ^3.9.2
+    typescript: ^3.9.3
   languageName: unknown
   linkType: soft
 
@@ -456,7 +456,7 @@ __metadata:
     "@types/chai": ^4.2.11
     "@types/chai-as-promised": ^7.1.2
     "@types/jest": ^25.2.3
-    "@types/sinon": ^9.0.1
+    "@types/sinon": ^9.0.3
     "@types/sinon-chai": ^3.2.4
     "@typescript-eslint/eslint-plugin": ^2.34.0
     chai: ^4.2.0
@@ -478,7 +478,7 @@ __metadata:
     tsconfig-paths: ^3.9.0
     tslib: ^2.0.0
     type-fest: ^0.13.1
-    typescript: ^3.9.2
+    typescript: ^3.9.3
   languageName: unknown
   linkType: soft
 
@@ -500,8 +500,8 @@ __metadata:
     "@types/chai": ^4.2.11
     "@types/chai-as-promised": ^7.1.2
     "@types/lodash.truncate": ^4.4.6
-    "@types/node": ^14.0.1
-    "@types/sinon": ^9.0.1
+    "@types/node": ^14.0.4
+    "@types/sinon": ^9.0.3
     "@types/sinon-chai": ^3.2.4
     "@types/yargs": ^15.0.5
     "@typescript-eslint/eslint-plugin": ^2.34.0
@@ -524,7 +524,7 @@ __metadata:
     tsconfig-paths: ^3.9.0
     tslib: ^2.0.0
     type-fest: ^0.13.1
-    typescript: ^3.9.2
+    typescript: ^3.9.3
     yargs: ^15.3.1
   bin:
     di: ./bin/run
@@ -566,11 +566,11 @@ __metadata:
     "@types/lodash.merge": ^4.6.6
     "@types/lodash.snakecase": ^4.1.6
     "@types/mock-req-res": ^1.1.2
-    "@types/node": ^14.0.1
+    "@types/node": ^14.0.4
     "@types/node-notifier": ^6.0.1
     "@types/pino": ^6.0.1
     "@types/pino-http": ^5.0.1
-    "@types/sinon": ^9.0.1
+    "@types/sinon": ^9.0.3
     "@types/sinon-chai": ^3.2.4
     "@types/superagent": ^4.1.7
     "@types/which": ^1.3.2
@@ -618,7 +618,7 @@ __metadata:
     tsconfig-paths: ^3.9.0
     tslib: ^2.0.0
     type-fest: ^0.13.1
-    typescript: ^3.9.2
+    typescript: ^3.9.3
     vm2: ^3.9.2
     which: ^2.0.2
     xml2js: ^0.4.23
@@ -631,7 +631,7 @@ __metadata:
   resolution: "@digitally-imported/typescript-config@workspace:packages/typescript-config"
   dependencies:
     nock: ^12.0.3
-    typescript: ^3.9.2
+    typescript: ^3.9.3
   languageName: unknown
   linkType: soft
 
@@ -1450,10 +1450,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^14.0.1":
+"@types/node@npm:*":
   version: 14.0.1
   resolution: "@types/node@npm:14.0.1"
   checksum: 3/97255869f674e3324fdef235173bafb7911a0786434703738008d92f5a4ec189bab2c08a1847f80a6569a5622f0f44a190e1479b08e363368a847e84e0c00902
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^14.0.4":
+  version: 14.0.4
+  resolution: "@types/node@npm:14.0.4"
+  checksum: 3/ea723cbd063ab777920a624002d3caaa274482e055d29d92247bd39b4c826f0a62d3badb173f360a9d6fe03ff607ce27310a0b8a4c9835ecb91fa17d9627aecd
   languageName: node
   linkType: hard
 
@@ -1543,12 +1550,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sinon@npm:*, @types/sinon@npm:^9.0.1":
+"@types/sinon@npm:*":
   version: 9.0.1
   resolution: "@types/sinon@npm:9.0.1"
   dependencies:
     "@types/sinonjs__fake-timers": "*"
   checksum: 3/37b736c07e107f87212d651bd60c75b835c7ce3ebdd64eb529e7160b3ab09dee9ca328373283e8a28da8887988ffc33f99083c182973181fbf12a090e5e3910d
+  languageName: node
+  linkType: hard
+
+"@types/sinon@npm:^9.0.3":
+  version: 9.0.3
+  resolution: "@types/sinon@npm:9.0.3"
+  dependencies:
+    "@types/sinonjs__fake-timers": "*"
+  checksum: 3/25e889f44f8fce52af263902c46149be165bf67be0c8b9b7c67bbfdc4822bd5067a5707e2003703a792a661aed2e58ca906480179e5ca28edf31120d367a93e8
   languageName: node
   linkType: hard
 
@@ -8760,23 +8776,23 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-typescript@^3.9.2:
-  version: 3.9.2
-  resolution: "typescript@npm:3.9.2"
+typescript@^3.9.3:
+  version: 3.9.3
+  resolution: "typescript@npm:3.9.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 3/bf7cbf2f8c695aa942be60da470aaaf902c2e9b3693ed5141fa6de5632f42f471b7e83bd9d4dcff5e0fa37eff746d61cfe1e6949019ad70f0f98d1f60ccfd3ae
+  checksum: 3/f05e6f1c50c635bd7afc95fbc9eb704042b5bec9a77b9c86ddc0c56650c928617d608b9ec9aa468d7b4cf14ac1ea5f540c540c725005a179b54a86665abd9a55
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^3.9.2#builtin<compat/typescript>":
-  version: 3.9.2
-  resolution: "typescript@patch:typescript@npm%3A3.9.2#builtin<compat/typescript>::version=3.9.2&hash=8cac75"
+"typescript@patch:typescript@^3.9.3#builtin<compat/typescript>":
+  version: 3.9.3
+  resolution: "typescript@patch:typescript@npm%3A3.9.3#builtin<compat/typescript>::version=3.9.3&hash=8cac75"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 3/51daca430f15c0df7aa820da2ef0a042b081327a1c2426016abbbcb35395f38d9559036a9b9e71320075197444e9b1093726a8086129a4ec367f188ba398212c
+  checksum: 3/a3780f6fdf0502bb152a3ad56cd004db46f70496f1b8317657d9e89dd93c911483625fd25867d6aec1cd2854ccf036ecc614989c9f1b36bec2d5daffa9bfc230
   languageName: node
   linkType: hard
 

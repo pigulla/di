@@ -1,0 +1,3 @@
+{
+    "extends": "@digitally-imported/eslint-config-default"
+}

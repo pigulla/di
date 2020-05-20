@@ -18,7 +18,7 @@
     "prettier": "prettier --check src test",
     "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
     "clean": "rm -rf lib coverage",
-    "jest": "jest",
+    "jest": "NODE_NO_WARNINGS=1 jest",
     "format": "prettier --write src test && eslint --fix 'src/**/*.ts' 'test/**/*.ts'",
     "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F i3blocklet'",
     "prepack": "yarn run build"
@@ -39,21 +39,21 @@
     "README.md"
   ],
   "dependencies": {
-    "@digitally-imported/client": "^0.0.3",
-    "@digitally-imported/dto": "^0.0.3",
+    "@digitally-imported/client": "workspace:packages/client",
+    "@digitally-imported/dto": "workspace:packages/dto",
     "lodash.truncate": "^4.4.2",
     "tslib": "^2.0.0",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "@digitally-imported/eslint-config-default": "^0.0.3",
-    "@digitally-imported/jest-config": "^0.0.3",
-    "@digitally-imported/typescript-config": "^0.0.3",
+    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default",
+    "@digitally-imported/jest-config": "workspace:packages/jest-config",
+    "@digitally-imported/typescript-config": "workspace:packages/typescript-config",
     "@types/chai": "^4.2.11",
     "@types/chai-as-promised": "^7.1.2",
     "@types/lodash.truncate": "^4.4.6",
-    "@types/node": "^14.0.1",
-    "@types/sinon": "^9.0.1",
+    "@types/node": "^14.0.4",
+    "@types/sinon": "^9.0.3",
     "@types/sinon-chai": "^3.2.4",
     "@types/yargs": "^15.0.5",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
@@ -74,7 +74,7 @@
     "sinon-chai": "^3.5.0",
     "tsconfig-paths": "^3.9.0",
     "type-fest": "^0.13.1",
-    "typescript": "^3.9.2"
+    "typescript": "^3.9.3"
   },
   "gitHead": "c590744807591cbe20d48b97c90cd8670779a369"
 }

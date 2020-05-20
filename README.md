@@ -35,5 +35,8 @@ The Jest configuration used by all packages.
 ##### [@digitally-imported/server](packages/server)
 The server backend.
 
+##### [@digitally-imported/system-test](packages/system-test)
+An interactive (manual) system test.
+
 ##### [@digitally-imported/typescript-config](packages/typescript-config)
 The default TypeScript configuration used by all packages.

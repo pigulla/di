@@ -1,0 +1,59 @@
+{
+  "name": "@digitally-imported/system-test",
+  "version": "0.0.3",
+  "private": true,
+  "description": "System test for the @digitally-imported packages.",
+  "main": "lib/index.js",
+  "keywords": [
+    "digitally-imported",
+    "inegration",
+    "test"
+  ],
+  "scripts": {
+    "test": "tsc --noEmit --project tsconfig.json && yarn run lint && yarn run jest",
+    "lint": "yarn run eslint && yarn run prettier",
+    "eslint": "eslint --ext=.ts src",
+    "prettier": "prettier --check src",
+    "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
+    "clean": "rm -rf lib",
+    "jest": "echo 'Not applicable'",
+    "format": "prettier --write src && eslint --fix 'src/**/*.ts'",
+    "codecov": "echo 'Not applicable'",
+    "prepack": "yarn run build"
+  },
+  "author": "Raphael Pigulla <pigulla@four66.com>",
+  "homepage": "https://github.com/pigulla/di/tree/master/packages/system-test",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pigulla/di.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pigulla/di/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "dependencies": {
+    "@digitally-imported/dto": "workspace:packages/dto",
+    "@digitally-imported/server": "workspace:packages/server",
+    "execa": "^4.0.1",
+    "ora": "^4.0.4"
+  },
+  "devDependencies": {
+    "@digitally-imported/typescript-config": "workspace:packages/typescript-config",
+    "@types/execa": "^2.0.0",
+    "@types/ora": "^3.2.0",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "eslint": "^7.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.3"
+  }
+}

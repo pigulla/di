@@ -18,6 +18,7 @@
     "jest": "NODE_NO_WARNINGS=1 jest",
     "format": "prettier --write src test && eslint --fix 'src/**/*.ts' 'test/**/*.ts'",
     "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F client'",
+    "prepublishOnly": "yarn run test",
     "prepack": "yarn run build"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
@@ -34,7 +35,7 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "@digitally-imported/dto": "workspace:packages/dto",
+    "@digitally-imported/dto": "workspace:*",
     "axios": "^0.19.2",
     "bluebird": "^3.7.2",
     "http-status-codes": "^1.4.0",
@@ -43,9 +44,9 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default",
-    "@digitally-imported/jest-config": "workspace:packages/jest-config",
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config",
+    "@digitally-imported/eslint-config-default": "workspace:*",
+    "@digitally-imported/jest-config": "workspace:*",
+    "@digitally-imported/typescript-config": "workspace:*",
     "@types/bluebird": "^3.5.31",
     "@types/chai": "^4.2.11",
     "@types/chai-as-promised": "^7.1.2",
@@ -72,5 +73,11 @@
     "tsconfig-paths": "^3.9.0",
     "type-fest": "^0.13.1",
     "typescript": "^3.9.3"
-  }
+  },
+  "files": [
+    "bin",
+    "lib",
+    "LICENSE",
+    "README.md"
+  ]
 }

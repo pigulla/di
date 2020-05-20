@@ -14,7 +14,7 @@
     "lint": "yarn run eslint && yarn run prettier",
     "eslint": "eslint --ext=.ts src",
     "prettier": "prettier --check src",
-    "build": "rm -rf lib/ && tsc --build tsconfig.build.json",
+    "build": "rm -rf lib/ && tsc --build tsconfig.json",
     "clean": "rm -rf lib",
     "jest": "echo 'Not applicable'",
     "format": "prettier --write src && eslint --fix 'src/**/*.ts'",

@@ -373,6 +373,7 @@ __metadata:
     "@types/chai": ^4.2.11
     "@types/chai-as-promised": ^7.1.2
     "@types/inquirer": ^6.5.0
+    "@types/nock": ^11.1.0
     "@types/node": ^14.0.4
     "@types/sinon": ^9.0.3
     "@types/sinon-chai": ^3.2.4
@@ -391,6 +392,7 @@ __metadata:
     inquirer: ^7.1.0
     jest: ^26.0.1
     json-strictify: ^6.3.3
+    nock: ^12.0.3
     prettier: ^2.0.5
     sinon: ^9.0.2
     sinon-chai: ^3.5.0
@@ -500,6 +502,7 @@ __metadata:
     "@types/chai": ^4.2.11
     "@types/chai-as-promised": ^7.1.2
     "@types/lodash.truncate": ^4.4.6
+    "@types/nock": ^11.1.0
     "@types/node": ^14.0.4
     "@types/sinon": ^9.0.3
     "@types/sinon-chai": ^3.2.4
@@ -534,6 +537,11 @@ __metadata:
 "@digitally-imported/jest-config@workspace:packages/jest-config":
   version: 0.0.0-use.local
   resolution: "@digitally-imported/jest-config@workspace:packages/jest-config"
+  peerDependencies:
+    chai: "*"
+    chai-as-promised: "*"
+    nock: "*"
+    sinon-chai: "*"
   languageName: unknown
   linkType: soft
 
@@ -1470,6 +1478,15 @@ __metadata:
     "@types/express": "*"
     "@types/sinon": "*"
   checksum: 3/bb8145d72cfbc580eb206314093274a55bcefcaa4c0b0471b02d4b59f7dac40a25c28d52c32d22211da10b8f24a868934250964f18b923da2bb4822edc8494ec
+  languageName: node
+  linkType: hard
+
+"@types/nock@npm:^11.1.0":
+  version: 11.1.0
+  resolution: "@types/nock@npm:11.1.0"
+  dependencies:
+    nock: "*"
+  checksum: 3/09eada0afdd6c59a91fc05ea886fe5b86f8dace2a337773ed4447b2e5423543a74951e0830fd5d89f963ea8758513343c9b2b27c94b82aa0c6923a39a9bef930
   languageName: node
   linkType: hard
 
@@ -6453,7 +6470,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"nock@npm:^12.0.3":
+"nock@npm:*, nock@npm:^12.0.3":
   version: 12.0.3
   resolution: "nock@npm:12.0.3"
   dependencies:

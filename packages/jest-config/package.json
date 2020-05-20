@@ -23,5 +23,11 @@
   "engines": {
     "node": ">=10.0.0"
   },
-  "gitHead": "c590744807591cbe20d48b97c90cd8670779a369"
+  "gitHead": "c590744807591cbe20d48b97c90cd8670779a369",
+  "peerDependencies": {
+    "chai": "*",
+    "chai-as-promised": "*",
+    "nock": "*",
+    "sinon-chai": "*"
+  }
 }

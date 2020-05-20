@@ -1,3 +1,4 @@
+// @ts-nocheck
 import chai, {expect} from 'chai'
 import chai_as_promised from 'chai-as-promised'
 import nock from 'nock'

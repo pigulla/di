@@ -2,8 +2,8 @@
     "extends": "../tsconfig.json",
     "include": ["../src/**/*.ts", "../test/**/*.ts"],
     "compilerOptions": {
-        "allowJs": true,
         "types": ["node", "jest"],
+        "rootDir": "..",
         "paths": {
             "~src": ["src/index.ts"],
             "~src/*": ["src/*"],

@@ -1,5 +1,5 @@
-const config = require('./config.json')
+const config = require('./index')
 
-module.exports = Object.assign(config, {
+module.exports = Object.assign({}, config, {
     coverageThreshold: null,
 })

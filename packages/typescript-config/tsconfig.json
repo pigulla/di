@@ -8,12 +8,10 @@
         "forceConsistentCasingInFileNames": true,
         "importHelpers": true,
         "module": "commonjs",
-        "noImplicitAny": true,
         "noImplicitReturns": true,
-        "noImplicitThis": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "strict": true,
-        "target": "es2017"
+        "target": "ES2015"
     }
 }

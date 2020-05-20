@@ -1,6 +1,6 @@
 {
   "name": "@digitally-imported/dto",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Common data transfer objects used by @digitally-imported/server and related components.",
   "main": "lib/index.js",
   "keywords": [
@@ -8,7 +8,7 @@
     "dto"
   ],
   "scripts": {
-    "test": "tsc --noEmit --project tsconfig.json && yarn run lint && yarn run jest",
+    "test": "tsc --noEmit --project tsconfig.json && yarn run lint && yarn run jest && yarn audit",
     "lint": "yarn run eslint && yarn run prettier",
     "eslint": "eslint --ext=.ts src test",
     "prettier": "prettier --check src test",

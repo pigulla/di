@@ -40,7 +40,7 @@ export default abstract class BaseCommand<T extends any[] = []> extends Command 
             return
         }
 
-        const {flags} = this.parse(this.constructor as any as Input<any>)
+        const {flags} = this.parse((this.constructor as any) as Input<any>)
         this.client_instance = new Client({
             endpoint: flags.endpoint,
             check_version: !flags['skip-version-check'],

@@ -359,11 +359,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@digitally-imported/cli@workspace:packages/cli"
   dependencies:
-    "@digitally-imported/client": "workspace:packages/client"
-    "@digitally-imported/dto": "workspace:packages/dto"
-    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default"
-    "@digitally-imported/jest-config": "workspace:packages/jest-config"
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config"
+    "@digitally-imported/client": "workspace:*"
+    "@digitally-imported/dto": "workspace:*"
+    "@digitally-imported/eslint-config-default": "workspace:*"
+    "@digitally-imported/jest-config": "workspace:*"
+    "@digitally-imported/typescript-config": "workspace:*"
     "@oclif/command": ^1.6.1
     "@oclif/config": ^1.15.1
     "@oclif/dev-cli": ^1.22.2
@@ -405,14 +405,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@digitally-imported/client@workspace:packages/client":
+"@digitally-imported/client@workspace:*, @digitally-imported/client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "@digitally-imported/client@workspace:packages/client"
   dependencies:
-    "@digitally-imported/dto": "workspace:packages/dto"
-    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default"
-    "@digitally-imported/jest-config": "workspace:packages/jest-config"
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config"
+    "@digitally-imported/dto": "workspace:*"
+    "@digitally-imported/eslint-config-default": "workspace:*"
+    "@digitally-imported/jest-config": "workspace:*"
+    "@digitally-imported/typescript-config": "workspace:*"
     "@types/bluebird": ^3.5.31
     "@types/chai": ^4.2.11
     "@types/chai-as-promised": ^7.1.2
@@ -448,13 +448,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@digitally-imported/dto@workspace:packages/dto":
+"@digitally-imported/dto@workspace:*, @digitally-imported/dto@workspace:packages/dto":
   version: 0.0.0-use.local
   resolution: "@digitally-imported/dto@workspace:packages/dto"
   dependencies:
-    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default"
-    "@digitally-imported/jest-config": "workspace:packages/jest-config"
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config"
+    "@digitally-imported/eslint-config-default": "workspace:*"
+    "@digitally-imported/jest-config": "workspace:*"
+    "@digitally-imported/typescript-config": "workspace:*"
     "@types/chai": ^4.2.11
     "@types/chai-as-promised": ^7.1.2
     "@types/jest": ^25.2.3
@@ -484,7 +484,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@digitally-imported/eslint-config-default@workspace:packages/eslint-config-default":
+"@digitally-imported/eslint-config-default@workspace:*, @digitally-imported/eslint-config-default@workspace:packages/eslint-config-default":
   version: 0.0.0-use.local
   resolution: "@digitally-imported/eslint-config-default@workspace:packages/eslint-config-default"
   languageName: unknown
@@ -494,11 +494,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@digitally-imported/i3-blocklet@workspace:packages/i3-blocklet"
   dependencies:
-    "@digitally-imported/client": "workspace:packages/client"
-    "@digitally-imported/dto": "workspace:packages/dto"
-    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default"
-    "@digitally-imported/jest-config": "workspace:packages/jest-config"
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config"
+    "@digitally-imported/client": "workspace:*"
+    "@digitally-imported/dto": "workspace:*"
+    "@digitally-imported/eslint-config-default": "workspace:*"
+    "@digitally-imported/jest-config": "workspace:*"
+    "@digitally-imported/typescript-config": "workspace:*"
     "@types/chai": ^4.2.11
     "@types/chai-as-promised": ^7.1.2
     "@types/lodash.truncate": ^4.4.6
@@ -534,7 +534,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@digitally-imported/jest-config@workspace:packages/jest-config":
+"@digitally-imported/jest-config@workspace:*, @digitally-imported/jest-config@workspace:packages/jest-config":
   version: 0.0.0-use.local
   resolution: "@digitally-imported/jest-config@workspace:packages/jest-config"
   peerDependencies:
@@ -551,14 +551,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@digitally-imported/server@workspace:packages/server":
+"@digitally-imported/server@workspace:*, @digitally-imported/server@workspace:packages/server":
   version: 0.0.0-use.local
   resolution: "@digitally-imported/server@workspace:packages/server"
   dependencies:
-    "@digitally-imported/dto": "workspace:packages/dto"
-    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default"
-    "@digitally-imported/jest-config": "workspace:packages/jest-config"
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config"
+    "@digitally-imported/dto": "workspace:*"
+    "@digitally-imported/eslint-config-default": "workspace:*"
+    "@digitally-imported/jest-config": "workspace:*"
+    "@digitally-imported/typescript-config": "workspace:*"
     "@nestjs/common": ^7.0.13
     "@nestjs/core": ^7.0.13
     "@nestjs/platform-express": ^7.0.13
@@ -639,9 +639,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@digitally-imported/system-test@workspace:packages/system-test"
   dependencies:
-    "@digitally-imported/dto": "workspace:packages/dto"
-    "@digitally-imported/server": "workspace:packages/server"
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config"
+    "@digitally-imported/dto": "workspace:*"
+    "@digitally-imported/server": "workspace:*"
+    "@digitally-imported/typescript-config": "workspace:*"
     "@types/execa": ^2.0.0
     "@types/ora": ^3.2.0
     "@typescript-eslint/eslint-plugin": ^2.34.0
@@ -660,7 +660,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@digitally-imported/typescript-config@workspace:packages/typescript-config":
+"@digitally-imported/typescript-config@workspace:*, @digitally-imported/typescript-config@workspace:packages/typescript-config":
   version: 0.0.0-use.local
   resolution: "@digitally-imported/typescript-config@workspace:packages/typescript-config"
   languageName: unknown

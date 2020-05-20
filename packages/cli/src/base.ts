@@ -1,6 +1,6 @@
 import {Command, flags} from '@oclif/command'
-import {Input} from '@oclif/command/lib/flags'
 import {CLIError} from '@oclif/errors'
+import {Input} from '@oclif/parser'
 
 import {Client} from '@digitally-imported/client'
 
@@ -40,12 +40,9 @@ export default abstract class BaseCommand<T extends any[] = []> extends Command 
             return
         }
 
-        const {flags} = this.parse((this.constructor as any) as Input<any>)
-        // TODO: remove ts-ignore
+        const {flags} = this.parse(this.constructor as any as Input<any>)
         this.client_instance = new Client({
-            // @ts-ignore
             endpoint: flags.endpoint,
-            // @ts-ignore
             check_version: !flags['skip-version-check'],
             user_agent: this.config.userAgent,
         })

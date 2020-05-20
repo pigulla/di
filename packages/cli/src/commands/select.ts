@@ -1,5 +1,4 @@
 import {flags} from '@oclif/command'
-import {Input} from '@oclif/command/lib/flags'
 import inquirer from 'inquirer'
 import JSONs from 'json-strictify'
 
@@ -11,7 +10,7 @@ import {HandleClientError} from '../handle-client-error'
 export default class SelectCommand extends BaseCommand<[ChannelDTO]> {
     public static description = 'List all available channels.'
 
-    public static examples = ['$ di channels']
+    public static examples = ['$ di select']
 
     public static flags = {
         ...BaseCommand.flags,
@@ -26,8 +25,7 @@ export default class SelectCommand extends BaseCommand<[ChannelDTO]> {
 
     @HandleClientError()
     public async run(): Promise<void> {
-        const {flags} = this.parse((this.constructor as any) as Input<any>)
-        // @ts-ignore
+        const {flags} = this.parse(SelectCommand)
         const favorites_only = flags['favorites-only']
         const channels: ChannelDTO[] | null = favorites_only
             ? await this.client.get_favorites()

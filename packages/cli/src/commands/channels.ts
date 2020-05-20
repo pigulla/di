@@ -1,5 +1,4 @@
 import {flags} from '@oclif/command'
-import {Input} from '@oclif/command/lib/flags'
 import cli from 'cli-ux'
 import JSONs from 'json-strictify'
 
@@ -26,8 +25,7 @@ export default class ChannelsCommand extends BaseCommand<[ChannelDTO[]]> {
 
     @HandleClientError()
     public async run(): Promise<void> {
-        const {flags} = this.parse((this.constructor as any) as Input<any>)
-        // @ts-ignore
+        const {flags} = this.parse(ChannelsCommand)
         const favorites_only = flags['favorites-only']
 
         return favorites_only ? this.print_favorites() : this.print_channels()

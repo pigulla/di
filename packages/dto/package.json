@@ -32,9 +32,9 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@digitally-imported/eslint-config-default": "^0.0.3",
-    "@digitally-imported/jest-config": "^0.0.3",
-    "@digitally-imported/typescript-config": "^0.0.3",
+    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default",
+    "@digitally-imported/jest-config": "workspace:packages/jest-config",
+    "@digitally-imported/typescript-config": "workspace:packages/typescript-config",
     "@types/chai": "^4.2.11",
     "@types/chai-as-promised": "^7.1.2",
     "@types/jest": "^25.2.3",

@@ -1,5 +1,3 @@
-import 'module-alias/register'
-
 import {AddressInfo, Server} from 'net'
 
 import {INestApplication, LoggerService, ValidationPipe} from '@nestjs/common'

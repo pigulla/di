@@ -159,6 +159,12 @@ module.exports = {
                 "trailingUnderscore": "forbid"
             },
             {
+                "selector": "variable",
+                "format": ["snake_case", "UPPER_CASE"],
+                "leadingUnderscore": "forbid",
+                "trailingUnderscore": "forbid"
+            },
+            {
                 "selector": "method",
                 "format": null,
                 "leadingUnderscore": "forbid",

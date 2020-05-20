@@ -39,16 +39,16 @@
     "README.md"
   ],
   "dependencies": {
-    "@digitally-imported/client": "^0.0.3",
-    "@digitally-imported/dto": "^0.0.3",
+    "@digitally-imported/client": "workspace:packages/client",
+    "@digitally-imported/dto": "workspace:packages/dto",
     "lodash.truncate": "^4.4.2",
     "tslib": "^2.0.0",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "@digitally-imported/eslint-config-default": "^0.0.3",
-    "@digitally-imported/jest-config": "^0.0.3",
-    "@digitally-imported/typescript-config": "^0.0.3",
+    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default",
+    "@digitally-imported/jest-config": "workspace:packages/jest-config",
+    "@digitally-imported/typescript-config": "workspace:packages/typescript-config",
     "@types/chai": "^4.2.11",
     "@types/chai-as-promised": "^7.1.2",
     "@types/lodash.truncate": "^4.4.6",

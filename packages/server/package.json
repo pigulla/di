@@ -9,6 +9,9 @@
     "backend",
     "nestjs"
   ],
+  "bin": {
+    "di-server": "./bin/run"
+  },
   "scripts": {
     "test": "tsc --noEmit --project tsconfig.json && yarn run lint && yarn run jest",
     "lint": "yarn run eslint && yarn run prettier",
@@ -35,9 +38,9 @@
     "node": ">=10.0.0"
   },
   "devDependencies": {
-    "@digitally-imported/eslint-config-default": "^0.0.3",
-    "@digitally-imported/jest-config": "^0.0.3",
-    "@digitally-imported/typescript-config": "^0.0.3",
+    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default",
+    "@digitally-imported/jest-config": "workspace:packages/jest-config",
+    "@digitally-imported/typescript-config": "workspace:packages/typescript-config",
     "@nestjs/testing": "^7.0.13",
     "@types/bluebird": "^3.5.31",
     "@types/chai": "^4.2.11",
@@ -87,7 +90,7 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
-    "@digitally-imported/dto": "^0.0.3",
+    "@digitally-imported/dto": "workspace:packages/dto",
     "@nestjs/common": "^7.0.13",
     "@nestjs/core": "^7.0.13",
     "@nestjs/platform-express": "^7.0.13",
@@ -99,7 +102,6 @@
     "dayjs": "^1.8.27",
     "get-port": "^5.1.1",
     "lodash.clamp": "^4.0.3",
-    "module-alias": "^2.2.2",
     "node-notifier": "^7.0.0",
     "pino": "^6.2.1",
     "pino-http": "^5.1.0",

@@ -12,7 +12,7 @@
         "di": "./bin/run"
     },
     "scripts": {
-        "test": "tsc --noEmit --project tsconfig.json && yarn run lint && yarn run jest && yarn audit",
+        "test": "tsc --noEmit --project tsconfig.json && yarn run lint && yarn run jest",
         "lint": "yarn run eslint && yarn run prettier",
         "eslint": "eslint --ext=.ts src test",
         "prettier": "prettier --check src test",

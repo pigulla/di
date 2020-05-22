@@ -18,6 +18,11 @@ format=json
 command=/path/to/i3-blocklet/bin/run
 ```
 
+And then restart i3 for the changes to take effect:
+```
+i3-msg restart
+```
+
 ### See also
 
  - https://i3wm.org/docs/i3bar-protocol.html#_blocks_in_detail

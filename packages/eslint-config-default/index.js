@@ -62,7 +62,7 @@ module.exports = {
         "no-process-exit": "error",
         "import/default": "off",
         "import/order": ["error", {
-            "newlines-between":"always",
+            "newlines-between": "always",
             "alphabetize": {
                 "order": "asc",
                 "caseInsensitive": true
@@ -90,7 +90,9 @@ module.exports = {
             ]
         }],
         "@typescript-eslint/explicit-member-accessibility": "error",
-        "@typescript-eslint/ban-ts-ignore": "off",
+        "@typescript-eslint/ban-ts-comment": ["error", {
+            "ts-ignore": false,
+        }],
         "@typescript-eslint/camelcase": "off",
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-parameter-properties": [

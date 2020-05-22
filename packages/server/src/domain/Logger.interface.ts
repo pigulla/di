@@ -20,14 +20,16 @@ export interface ILogger {
     child_for_controller(name: string): ILogger
     child_for_service(name: string): ILogger
 
+    /* eslint-disable @typescript-eslint/ban-types */
     fatal(message: string, object?: object): void
     error(message: string, object?: object): void
     warn(message: string, object?: object): void
     info(message: string, object?: object): void
     debug(message: string, object?: object): void
     trace(message: string, object?: object): void
+    /* eslint-enable @typescript-eslint/ban-types */
 }
 
 export interface RequestResponseLogger {
-    (request: IncomingMessage, response: ServerResponse, next: Function): void
+    (request: IncomingMessage, response: ServerResponse, next: (...args: any[]) => any): void
 }

@@ -5,7 +5,7 @@ import {IPeriodicTrigger} from './PeriodicTrigger.interface'
 
 export type Options = {
     log_id: string
-    callback: Function
+    callback: (...args: any[]) => any
     scope?: any
     interval_ms: number
 }

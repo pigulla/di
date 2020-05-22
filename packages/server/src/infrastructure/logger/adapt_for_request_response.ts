@@ -14,7 +14,7 @@ export function adapt_for_request_response(pino: Pino): RequestResponseLogger {
     return function request_logger(
         request: IncomingMessage,
         response: ServerResponse,
-        next: Function
+        next: (...args: any[]) => any
     ): void {
         http_logger(request, response)
         next()

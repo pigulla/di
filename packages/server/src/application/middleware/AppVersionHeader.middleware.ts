@@ -11,6 +11,7 @@ export class AppVersionHeader implements NestMiddleware {
         this.package_json = package_json
     }
 
+    // eslint-disable-next-line @typescript-eslint/ban-types
     public use(_request: Request, response: Response, next: Function): void {
         const {version} = this.package_json
 

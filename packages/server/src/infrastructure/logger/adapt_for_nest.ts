@@ -4,19 +4,19 @@ import {ILogger} from '../../domain'
 
 export function adapt_for_nest(logger: ILogger): Required<LoggerService> {
     return {
-        error(message: any, trace?: string, context?: string) {
+        error(message: string, trace?: string, context?: string): void {
             logger.error(message, {trace, context})
         },
-        warn(message: any, context?: string) {
+        warn(message: string, context?: string): void {
             logger.warn(message, {context})
         },
-        log(message: any, context?: string) {
+        log(message: string, context?: string): void {
             logger.info(message, {context})
         },
-        debug(message: any, context?: string) {
+        debug(message: string, context?: string): void {
             logger.debug(message, {context})
         },
-        verbose(message: any, context?: string) {
+        verbose(message: string, context?: string): void {
             logger.trace(message, {context})
         },
     }

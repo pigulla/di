@@ -359,11 +359,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@digitally-imported/cli@workspace:packages/cli"
   dependencies:
-    "@digitally-imported/client": "workspace:packages/client"
-    "@digitally-imported/dto": "workspace:packages/dto"
-    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default"
-    "@digitally-imported/jest-config": "workspace:packages/jest-config"
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config"
+    "@digitally-imported/client": "workspace:*"
+    "@digitally-imported/dto": "workspace:*"
+    "@digitally-imported/eslint-config-default": "workspace:*"
+    "@digitally-imported/jest-config": "workspace:*"
+    "@digitally-imported/typescript-config": "workspace:*"
     "@oclif/command": ^1.6.1
     "@oclif/config": ^1.15.1
     "@oclif/dev-cli": ^1.22.2
@@ -374,10 +374,10 @@ __metadata:
     "@types/chai-as-promised": ^7.1.2
     "@types/inquirer": ^6.5.0
     "@types/nock": ^11.1.0
-    "@types/node": ^14.0.4
-    "@types/sinon": ^9.0.3
+    "@types/node": ^14.0.5
+    "@types/sinon": ^9.0.4
     "@types/sinon-chai": ^3.2.4
-    "@typescript-eslint/eslint-plugin": ^2.34.0
+    "@typescript-eslint/eslint-plugin": ^3.0.0
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     cli-ux: ^5.4.6
@@ -398,29 +398,29 @@ __metadata:
     sinon-chai: ^3.5.0
     tsconfig-paths: ^3.9.0
     tslib: ^2.0.0
-    type-fest: ^0.13.1
+    type-fest: ^0.14.0
     typescript: ^3.9.3
   bin:
     di: ./bin/run
   languageName: unknown
   linkType: soft
 
-"@digitally-imported/client@workspace:packages/client":
+"@digitally-imported/client@workspace:*, @digitally-imported/client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "@digitally-imported/client@workspace:packages/client"
   dependencies:
-    "@digitally-imported/dto": "workspace:packages/dto"
-    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default"
-    "@digitally-imported/jest-config": "workspace:packages/jest-config"
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config"
-    "@types/bluebird": ^3.5.31
+    "@digitally-imported/dto": "workspace:*"
+    "@digitally-imported/eslint-config-default": "workspace:*"
+    "@digitally-imported/jest-config": "workspace:*"
+    "@digitally-imported/typescript-config": "workspace:*"
+    "@types/bluebird": ^3.5.32
     "@types/chai": ^4.2.11
     "@types/chai-as-promised": ^7.1.2
-    "@types/node": ^14.0.4
+    "@types/node": ^14.0.5
     "@types/semver": ^7.2.0
-    "@types/sinon": ^9.0.3
+    "@types/sinon": ^9.0.4
     "@types/sinon-chai": ^3.2.4
-    "@typescript-eslint/eslint-plugin": ^2.34.0
+    "@typescript-eslint/eslint-plugin": ^3.0.0
     axios: ^0.19.2
     bluebird: ^3.7.2
     chai: ^4.2.0
@@ -443,24 +443,24 @@ __metadata:
     sinon-chai: ^3.5.0
     tsconfig-paths: ^3.9.0
     tslib: ^2.0.0
-    type-fest: ^0.13.1
+    type-fest: ^0.14.0
     typescript: ^3.9.3
   languageName: unknown
   linkType: soft
 
-"@digitally-imported/dto@workspace:packages/dto":
+"@digitally-imported/dto@workspace:*, @digitally-imported/dto@workspace:packages/dto":
   version: 0.0.0-use.local
   resolution: "@digitally-imported/dto@workspace:packages/dto"
   dependencies:
-    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default"
-    "@digitally-imported/jest-config": "workspace:packages/jest-config"
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config"
+    "@digitally-imported/eslint-config-default": "workspace:*"
+    "@digitally-imported/jest-config": "workspace:*"
+    "@digitally-imported/typescript-config": "workspace:*"
     "@types/chai": ^4.2.11
     "@types/chai-as-promised": ^7.1.2
     "@types/jest": ^25.2.3
-    "@types/sinon": ^9.0.3
+    "@types/sinon": ^9.0.4
     "@types/sinon-chai": ^3.2.4
-    "@typescript-eslint/eslint-plugin": ^2.34.0
+    "@typescript-eslint/eslint-plugin": ^3.0.0
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     eslint: ^7.0.0
@@ -479,12 +479,12 @@ __metadata:
     ts-jest: ^26.0.0
     tsconfig-paths: ^3.9.0
     tslib: ^2.0.0
-    type-fest: ^0.13.1
+    type-fest: ^0.14.0
     typescript: ^3.9.3
   languageName: unknown
   linkType: soft
 
-"@digitally-imported/eslint-config-default@workspace:packages/eslint-config-default":
+"@digitally-imported/eslint-config-default@workspace:*, @digitally-imported/eslint-config-default@workspace:packages/eslint-config-default":
   version: 0.0.0-use.local
   resolution: "@digitally-imported/eslint-config-default@workspace:packages/eslint-config-default"
   languageName: unknown
@@ -494,20 +494,20 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@digitally-imported/i3-blocklet@workspace:packages/i3-blocklet"
   dependencies:
-    "@digitally-imported/client": "workspace:packages/client"
-    "@digitally-imported/dto": "workspace:packages/dto"
-    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default"
-    "@digitally-imported/jest-config": "workspace:packages/jest-config"
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config"
+    "@digitally-imported/client": "workspace:*"
+    "@digitally-imported/dto": "workspace:*"
+    "@digitally-imported/eslint-config-default": "workspace:*"
+    "@digitally-imported/jest-config": "workspace:*"
+    "@digitally-imported/typescript-config": "workspace:*"
     "@types/chai": ^4.2.11
     "@types/chai-as-promised": ^7.1.2
     "@types/lodash.truncate": ^4.4.6
     "@types/nock": ^11.1.0
-    "@types/node": ^14.0.4
-    "@types/sinon": ^9.0.3
+    "@types/node": ^14.0.5
+    "@types/sinon": ^9.0.4
     "@types/sinon-chai": ^3.2.4
     "@types/yargs": ^15.0.5
-    "@typescript-eslint/eslint-plugin": ^2.34.0
+    "@typescript-eslint/eslint-plugin": ^3.0.0
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     eslint: ^7.0.0
@@ -526,7 +526,7 @@ __metadata:
     sinon-chai: ^3.5.0
     tsconfig-paths: ^3.9.0
     tslib: ^2.0.0
-    type-fest: ^0.13.1
+    type-fest: ^0.14.0
     typescript: ^3.9.3
     yargs: ^15.3.1
   bin:
@@ -534,7 +534,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@digitally-imported/jest-config@workspace:packages/jest-config":
+"@digitally-imported/jest-config@workspace:*, @digitally-imported/jest-config@workspace:packages/jest-config":
   version: 0.0.0-use.local
   resolution: "@digitally-imported/jest-config@workspace:packages/jest-config"
   peerDependencies:
@@ -551,20 +551,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@digitally-imported/server@workspace:packages/server":
+"@digitally-imported/server@workspace:*, @digitally-imported/server@workspace:packages/server":
   version: 0.0.0-use.local
   resolution: "@digitally-imported/server@workspace:packages/server"
   dependencies:
-    "@digitally-imported/dto": "workspace:packages/dto"
-    "@digitally-imported/eslint-config-default": "workspace:packages/eslint-config-default"
-    "@digitally-imported/jest-config": "workspace:packages/jest-config"
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config"
+    "@digitally-imported/dto": "workspace:*"
+    "@digitally-imported/eslint-config-default": "workspace:*"
+    "@digitally-imported/jest-config": "workspace:*"
+    "@digitally-imported/typescript-config": "workspace:*"
     "@nestjs/common": ^7.0.13
     "@nestjs/core": ^7.0.13
     "@nestjs/platform-express": ^7.0.13
     "@nestjs/testing": ^7.0.13
     "@oclif/errors": ^1.2.2
-    "@types/bluebird": ^3.5.31
+    "@types/bluebird": ^3.5.32
     "@types/chai": ^4.2.11
     "@types/chai-as-promised": ^7.1.2
     "@types/cheerio": ^0.22.18
@@ -574,18 +574,18 @@ __metadata:
     "@types/lodash.merge": ^4.6.6
     "@types/lodash.snakecase": ^4.1.6
     "@types/mock-req-res": ^1.1.2
-    "@types/node": ^14.0.4
+    "@types/node": ^14.0.5
     "@types/node-notifier": ^6.0.1
     "@types/pino": ^6.0.1
     "@types/pino-http": ^5.0.1
-    "@types/sinon": ^9.0.3
+    "@types/sinon": ^9.0.4
     "@types/sinon-chai": ^3.2.4
     "@types/superagent": ^4.1.7
     "@types/which": ^1.3.2
     "@types/xml2js": ^0.4.5
     "@types/yargs": ^15.0.5
-    "@typescript-eslint/eslint-plugin": ^2.34.0
-    "@typescript-eslint/parser": ^2.34.0
+    "@typescript-eslint/eslint-plugin": ^3.0.0
+    "@typescript-eslint/parser": ^3.0.0
     bluebird: ^3.7.2
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
@@ -606,7 +606,7 @@ __metadata:
     lodash.clamp: ^4.0.3
     lodash.merge: ^4.6.2
     mock-req-res: ^1.1.4
-    mockdate: ^2.0.5
+    mockdate: ^3.0.2
     nock: ^12.0.3
     node-mocks-http: ^1.8.1
     node-notifier: ^7.0.0
@@ -624,7 +624,7 @@ __metadata:
     ts-node: ^8.10.1
     tsconfig-paths: ^3.9.0
     tslib: ^2.0.0
-    type-fest: ^0.13.1
+    type-fest: ^0.14.0
     typescript: ^3.9.3
     vm2: ^3.9.2
     which: ^2.0.2
@@ -639,12 +639,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@digitally-imported/system-test@workspace:packages/system-test"
   dependencies:
-    "@digitally-imported/dto": "workspace:packages/dto"
-    "@digitally-imported/server": "workspace:packages/server"
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config"
+    "@digitally-imported/dto": "workspace:*"
+    "@digitally-imported/server": "workspace:*"
+    "@digitally-imported/typescript-config": "workspace:*"
     "@types/execa": ^2.0.0
     "@types/ora": ^3.2.0
-    "@typescript-eslint/eslint-plugin": ^2.34.0
+    "@typescript-eslint/eslint-plugin": ^3.0.0
     eslint: ^7.0.0
     eslint-config-prettier: ^6.11.0
     eslint-config-standard: ^14.1.1
@@ -660,7 +660,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@digitally-imported/typescript-config@workspace:packages/typescript-config":
+"@digitally-imported/typescript-config@workspace:*, @digitally-imported/typescript-config@workspace:packages/typescript-config":
   version: 0.0.0-use.local
   resolution: "@digitally-imported/typescript-config@workspace:packages/typescript-config"
   languageName: unknown
@@ -1216,10 +1216,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/bluebird@npm:^3.5.31":
-  version: 3.5.31
-  resolution: "@types/bluebird@npm:3.5.31"
-  checksum: 3/01d406b945f9ba5f799a86cc9c2dff64c9228360ee8bcca644dfa3b86c68208d230918b0efa35eaa9c08ad7e7f8208149f773be3aa0b4408efe3147c5e777cb8
+"@types/bluebird@npm:^3.5.32":
+  version: 3.5.32
+  resolution: "@types/bluebird@npm:3.5.32"
+  checksum: 3/92c0baae50feaecb43c1b592829dcbe832b4440110a98cf9ae761e758c6d80843ca7bbd0ecb867e7c470658c52858a53b5700bca5598bce81a713f64f6a5cf41
   languageName: node
   linkType: hard
 
@@ -1506,10 +1506,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.0.4":
-  version: 14.0.4
-  resolution: "@types/node@npm:14.0.4"
-  checksum: 3/ea723cbd063ab777920a624002d3caaa274482e055d29d92247bd39b4c826f0a62d3badb173f360a9d6fe03ff607ce27310a0b8a4c9835ecb91fa17d9627aecd
+"@types/node@npm:^14.0.5":
+  version: 14.0.5
+  resolution: "@types/node@npm:14.0.5"
+  checksum: 3/38a9f9b66c2657b4ba520e40073369d4a33438dd45f9c001d98a7cda40e88a5ea28485c320fa00fc706b5473b549cacc9a8b9796e4d69681c032619e12f73f7d
   languageName: node
   linkType: hard
 
@@ -1617,12 +1617,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sinon@npm:^9.0.3":
-  version: 9.0.3
-  resolution: "@types/sinon@npm:9.0.3"
+"@types/sinon@npm:^9.0.4":
+  version: 9.0.4
+  resolution: "@types/sinon@npm:9.0.4"
   dependencies:
     "@types/sinonjs__fake-timers": "*"
-  checksum: 3/25e889f44f8fce52af263902c46149be165bf67be0c8b9b7c67bbfdc4822bd5067a5707e2003703a792a661aed2e58ca906480179e5ca28edf31120d367a93e8
+  checksum: 3/773f698d132c2c0c66ad5e5d54259bd8bf692807737fc820737f96cbdd9b6c7ac975b62430c5a67549ee60a23638624c6acebcdcbe94a3134e010c0065b44130
   languageName: node
   linkType: hard
 
@@ -1707,60 +1707,61 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^2.34.0":
-  version: 2.34.0
-  resolution: "@typescript-eslint/eslint-plugin@npm:2.34.0"
+"@typescript-eslint/eslint-plugin@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@typescript-eslint/eslint-plugin@npm:3.0.0"
   dependencies:
-    "@typescript-eslint/experimental-utils": 2.34.0
+    "@typescript-eslint/experimental-utils": 3.0.0
     functional-red-black-tree: ^1.0.1
     regexpp: ^3.0.0
+    semver: ^7.3.2
     tsutils: ^3.17.1
   peerDependencies:
-    "@typescript-eslint/parser": ^2.0.0
-    eslint: ^5.0.0 || ^6.0.0
+    "@typescript-eslint/parser": ^3.0.0
+    eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
     typescript: "*"
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 3/8d800f4726487df5ce4d573e62effa250f168658759e32a976eae355cc3130d82e3a918542df273fec428b608d9d50e65ad02d596ba0c24de7fbb4ddb7897dee
+  checksum: 3/986b1c8f02f2230fff8a45b9302383a140852df17915d41584c8bfe01bf908b2e63c186873312784e0d9e60788ce986c255abe7ceec7251bda93410b06f19fca
   languageName: node
   linkType: hard
 
-"@typescript-eslint/experimental-utils@npm:2.34.0":
-  version: 2.34.0
-  resolution: "@typescript-eslint/experimental-utils@npm:2.34.0"
+"@typescript-eslint/experimental-utils@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@typescript-eslint/experimental-utils@npm:3.0.0"
   dependencies:
     "@types/json-schema": ^7.0.3
-    "@typescript-eslint/typescript-estree": 2.34.0
+    "@typescript-eslint/typescript-estree": 3.0.0
     eslint-scope: ^5.0.0
     eslint-utils: ^2.0.0
   peerDependencies:
     eslint: "*"
-  checksum: 3/53cbbcfe67ddc53b4bc23f78b3726b0c2de5ea04ee849ca8b619f1fcad16f644d9d72bb3ea9a08aabfc605ea4a9769fe1b81931af09ce2223ec49de749cde2d4
+  checksum: 3/ccaa9b2aea4a7148d301f2384271e35b39ff8d526beb076705140290b497aa75e032c9efac6492a7d03fac65857d999f555534a186e90601059ee295a3cb9d58
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^2.34.0":
-  version: 2.34.0
-  resolution: "@typescript-eslint/parser@npm:2.34.0"
+"@typescript-eslint/parser@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@typescript-eslint/parser@npm:3.0.0"
   dependencies:
     "@types/eslint-visitor-keys": ^1.0.0
-    "@typescript-eslint/experimental-utils": 2.34.0
-    "@typescript-eslint/typescript-estree": 2.34.0
+    "@typescript-eslint/experimental-utils": 3.0.0
+    "@typescript-eslint/typescript-estree": 3.0.0
     eslint-visitor-keys: ^1.1.0
   peerDependencies:
-    eslint: ^5.0.0 || ^6.0.0
+    eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
     typescript: "*"
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 3/a3fe33d422d5cfe97e36c983253d33d2f5907657f9bb61a129c58656441acf9e90ec525a5273239cc876bc43e031056b2796924f3e64e8ca1295674fb30a2eec
+  checksum: 3/c4388d1a217a026acf9b8ab07e2cf182670e3f3c5b96ef28033a114b794e4ee0d018e63f8c3ef0e9677c075436950afddb886649ca3f0e74e3500389ca307549
   languageName: node
   linkType: hard
 
-"@typescript-eslint/typescript-estree@npm:2.34.0":
-  version: 2.34.0
-  resolution: "@typescript-eslint/typescript-estree@npm:2.34.0"
+"@typescript-eslint/typescript-estree@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@typescript-eslint/typescript-estree@npm:3.0.0"
   dependencies:
     debug: ^4.1.1
     eslint-visitor-keys: ^1.1.0
@@ -1774,7 +1775,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 3/77d1a758dfd4a2813fb51d6102aa79d7eccb006c66db8cff49a10706c8cf64cae6b256b8ec6694058c1c333775e1dbc6ca7501769138fc89165b9c10f8201e40
+  checksum: 3/12020a20f0b181204f4287c6b86d12d450cd88d2c788d22502880e364647cbe34213ca81a13265cd010755f8509dc39578b8354b8d0f738014d4a096dde0ef89
   languageName: node
   linkType: hard
 
@@ -6338,10 +6339,10 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"mockdate@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "mockdate@npm:2.0.5"
-  checksum: 3/fd120ca7a51f14a9ec20491563298483cafa5d8e88b0d8a6473535b7706664f8328b1731f02c1de947782281f52b82adb6b3e59804c6aaa8325c179b612409e6
+"mockdate@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "mockdate@npm:3.0.2"
+  checksum: 3/27a242abaa48f170f6174988b3cd597806715c11d8dc644efa466ca4f1b899e66e6d0618808df60f8a7807c89e6e316b832138f2028039d1caf23341e3d01f90
   languageName: node
   linkType: hard
 
@@ -8821,10 +8822,10 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^0.13.1":
-  version: 0.13.1
-  resolution: "type-fest@npm:0.13.1"
-  checksum: 3/11acce4f34c75a838914bdc4a0133d2dd0864e313897471974880df82624159521bae691a6100ff99f93be2d0f8871ecdab18573d2c67e61905cf2f5cbfa52a6
+"type-fest@npm:^0.14.0":
+  version: 0.14.0
+  resolution: "type-fest@npm:0.14.0"
+  checksum: 3/35e1681c810186f13d59e103efea39e3a41134601e8680df2f8de4563794ef339d3f7500a7fd63c24f2e9e2fd84bf26395629fc8abb86e77f5f1c12332bb3547
   languageName: node
   linkType: hard
 

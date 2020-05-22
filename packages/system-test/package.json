@@ -1,6 +1,6 @@
 {
   "name": "@digitally-imported/system-test",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "description": "System test for the @digitally-imported packages.",
   "main": "lib/index.js",
@@ -18,8 +18,7 @@
     "clean": "rm -rf lib",
     "jest": "echo 'Not applicable'",
     "format": "prettier --write src && eslint --fix 'src/**/*.ts'",
-    "codecov": "echo 'Not applicable'",
-    "prepack": "yarn run build"
+    "codecov": "echo 'Not applicable'"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/master/packages/system-test",
@@ -35,16 +34,16 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "@digitally-imported/dto": "workspace:packages/dto",
-    "@digitally-imported/server": "workspace:packages/server",
+    "@digitally-imported/dto": "workspace:*",
+    "@digitally-imported/server": "workspace:*",
     "execa": "^4.0.1",
     "ora": "^4.0.4"
   },
   "devDependencies": {
-    "@digitally-imported/typescript-config": "workspace:packages/typescript-config",
+    "@digitally-imported/typescript-config": "workspace:*",
     "@types/execa": "^2.0.0",
     "@types/ora": "^3.2.0",
-    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/eslint-plugin": "^3.0.0",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",

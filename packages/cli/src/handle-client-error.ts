@@ -8,11 +8,11 @@ import BaseCommand from './base'
 export function HandleClientError(): MethodDecorator {
     return function handle_client_error_decorator(
         this: BaseCommand,
-        _target: any,
+        _target: unknown,
         _property_key: string | symbol,
         descriptor: PropertyDescriptor
-    ) {
-        const method: Function = descriptor.value
+    ): void {
+        const method: (...args: any[]) => any = descriptor.value
 
         descriptor.value = async function wrapper(...args: any[]) {
             try {

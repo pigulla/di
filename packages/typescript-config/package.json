@@ -1,6 +1,6 @@
 {
   "name": "@digitally-imported/typescript-config",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Common TypeScript configuration for @digitally-imported components.",
   "main": "tsconfig.json",
   "keywords": [

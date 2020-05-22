@@ -33,7 +33,7 @@ export class VlcHttpClient implements IVlcHttpClient {
         this.logger.debug('Service instantiated')
     }
 
-    private async status(query: object = {}): Promise<Status> {
+    private async status(query: Record<string, unknown> = {}): Promise<Status> {
         const {hostname, port, password} = this.vlc_http_connection
         const url = `http://${hostname}:${port}/requests/status.xml`
 

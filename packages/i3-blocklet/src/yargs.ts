@@ -14,7 +14,7 @@ export const yargs = Yargs.options({
         default: 4979,
         describe: 'The port to connect on',
         type: 'number',
-        coerce(arg: any): number {
+        coerce(arg: string): number {
             if (!/^\d+$/.test(arg)) {
                 throw new Error('Port must be an integer')
             }

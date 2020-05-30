@@ -12,12 +12,12 @@
   "scripts": {
     "test": "tsc --noEmit --project tsconfig.json && yarn run lint && yarn run jest",
     "lint": "yarn run eslint && yarn run prettier",
-    "eslint": "eslint --ext=.ts src",
-    "prettier": "prettier --check src",
+    "eslint": "eslint --ext=.ts .",
+    "prettier": "prettier --check .",
     "build": "rm -rf lib/ && tsc --build tsconfig.json",
     "clean": "rm -rf lib",
     "jest": "echo 'Not applicable'",
-    "format": "prettier --write src && eslint --fix 'src/**/*.ts'",
+    "format": "prettier --write . && eslint --fix .",
     "codecov": "echo 'Not applicable'"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
@@ -36,15 +36,15 @@
   "dependencies": {
     "@digitally-imported/dto": "workspace:*",
     "@digitally-imported/server": "workspace:*",
-    "execa": "^4.0.1",
+    "execa": "^4.0.2",
     "ora": "^4.0.4"
   },
   "devDependencies": {
     "@digitally-imported/typescript-config": "workspace:*",
     "@types/execa": "^2.0.0",
     "@types/ora": "^3.2.0",
-    "@typescript-eslint/eslint-plugin": "^3.0.0",
-    "eslint": "^7.0.0",
+    "@typescript-eslint/eslint-plugin": "^3.0.2",
+    "eslint": "^7.1.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-import-resolver-typescript": "^2.0.0",
@@ -53,6 +53,6 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "prettier": "^2.0.5",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.4"
   }
 }

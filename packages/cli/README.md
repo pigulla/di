@@ -1,4 +1,5 @@
 # @digitally-imported/cli
+
 [![Typescript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
 [![Version](https://img.shields.io/npm/v/@digitally-imported/cli?style=flat-square)](https://www.npmjs.com/package/@digitally-imported/cli)
 [![GitHub license](https://img.shields.io/github/license/pigulla/di?style=flat-square)](https://github.com/pigulla/di/blob/master/LICENSE)
@@ -9,7 +10,9 @@
 [![Snyk](https://snyk.io/test/github/pigulla/di/badge.svg?targetFile=packages/cli/package.json&style=flat-square)](https://snyk.io/test/github/pigulla/di?targetFile=packages%2Fserver%2Fpackage.json&tab=dependencies)
 
 # Usage
+
 <!-- usage -->
+
 ```sh-session
 $ npm install -g @digitally-imported/cli
 $ di COMMAND
@@ -21,18 +24,22 @@ USAGE
   $ di COMMAND
 ...
 ```
+
 <!-- usagestop -->
+
 # Commands
+
 <!-- commands -->
-* [`di channels`](#di-channels)
-* [`di get-volume`](#di-get-volume)
-* [`di help [COMMAND]`](#di-help-command)
-* [`di ping`](#di-ping)
-* [`di play CHANNEL`](#di-play-channel)
-* [`di select`](#di-select)
-* [`di set-volume VOLUME`](#di-set-volume-volume)
-* [`di status`](#di-status)
-* [`di stop`](#di-stop)
+
+-   [`di channels`](#di-channels)
+-   [`di get-volume`](#di-get-volume)
+-   [`di help [COMMAND]`](#di-help-command)
+-   [`di ping`](#di-ping)
+-   [`di play CHANNEL`](#di-play-channel)
+-   [`di select`](#di-select)
+-   [`di set-volume VOLUME`](#di-set-volume-volume)
+-   [`di status`](#di-status)
+-   [`di stop`](#di-stop)
 
 ## `di channels`
 
@@ -194,4 +201,5 @@ OPTIONS
 EXAMPLE
   $ di stop
 ```
+
 <!-- commandsstop -->

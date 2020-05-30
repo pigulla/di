@@ -5,7 +5,7 @@ import {NestFactory} from '@nestjs/core'
 import pino from 'pino'
 import {NormalizedPackageJson} from 'read-pkg-up'
 
-import {ILogger, LogLevel, RequestResponseLogger} from './domain'
+import {ILogger, RequestResponseLogger} from './domain'
 import {create_argv_parser} from './infrastructure/config'
 import {adapt_for_request_response, adapt_for_nest, PinoLogger} from './infrastructure/logger'
 import {ControllerModule} from './module/application'
@@ -13,27 +13,30 @@ import {new_promise} from './new_promise'
 
 type ShutdownFn = () => Promise<void>
 type Loggers = {
+    root: ILogger
     nest: Required<LoggerService>
     request_response: RequestResponseLogger
 }
 
-function create_loggers(log_level: LogLevel): Loggers {
+function create_loggers(): Loggers {
     const pino_instance = pino({prettyPrint: true})
-    const root_logger = new PinoLogger(pino_instance).set_level(log_level)
+    const root_logger = new PinoLogger(pino_instance)
 
     return {
+        root: root_logger,
         nest: adapt_for_nest(root_logger),
         request_response: adapt_for_request_response(pino_instance),
     }
 }
 
-async function create_app(log_level: LogLevel): Promise<INestApplication> {
-    const {nest, request_response} = create_loggers(log_level)
-    const app = await NestFactory.create(ControllerModule, {logger: nest})
-
-    app.useLogger(nest)
+async function create_app(
+    nest_logger: LoggerService,
+    request_response_logger: RequestResponseLogger
+): Promise<INestApplication> {
+    const app = await NestFactory.create(ControllerModule, {logger: nest_logger})
+    app.useLogger(nest_logger)
     app.useGlobalPipes(new ValidationPipe({whitelist: true, transform: true}))
-    app.use(request_response)
+    app.use(request_response_logger)
     app.enableShutdownHooks()
 
     return app
@@ -44,25 +47,34 @@ export async function start_server(argv: string[] = []): Promise<ShutdownFn> {
     // argv-value are identical.
     process.argv = argv
 
+    const {root, nest, request_response} = create_loggers()
     const argv_parser = create_argv_parser({skip_vlc_validation: true})
-    const {log_level, server_hostname, server_port} = argv_parser(argv)
-    const {promise, resolve} = new_promise<ShutdownFn>()
 
-    const app = await create_app(log_level)
-    const logger = app.get<ILogger>('ILogger')
-    const server = app.getHttpServer() as Server
+    try {
+        const {log_level, server_hostname, server_port} = argv_parser(argv)
+        const {promise, resolve} = new_promise<ShutdownFn>()
 
-    server.once('listening', function () {
-        const {name, version} = app.get<NormalizedPackageJson>('normalized_package_json')
-        const address = server.address() as AddressInfo
+        root.set_level(log_level)
 
-        logger.info(
-            `Application ${name} v${version} listening on ${address.address}:${address.port}`
-        )
-        resolve(() => app.close())
-    })
+        const app = await create_app(nest, request_response)
+        const logger = app.get<ILogger>('ILogger')
+        const server = app.getHttpServer() as Server
 
-    await app.listen(server_port, server_hostname)
+        server.once('listening', function () {
+            const {name, version} = app.get<NormalizedPackageJson>('normalized_package_json')
+            const address = server.address() as AddressInfo
 
-    return promise
+            logger.info(
+                `Application ${name} v${version} listening on ${address.address}:${address.port}`
+            )
+            resolve(() => app.close())
+        })
+
+        await app.listen(server_port, server_hostname)
+
+        return promise
+    } catch (error) {
+        root.fatal('Error during application startup', error)
+        throw error
+    }
 }

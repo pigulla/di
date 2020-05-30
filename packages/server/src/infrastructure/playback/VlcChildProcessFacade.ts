@@ -1,5 +1,7 @@
 import {ChildProcessWithoutNullStreams, SpawnOptionsWithoutStdio} from 'child_process'
 
+import wait_port from 'wait-port'
+
 import {new_promise} from '../../new_promise'
 
 import {IVlcChildProcessFacade} from './VlcChildProcessFacade.interface'
@@ -52,13 +54,17 @@ export class VlcChildProcessFacade implements IVlcChildProcessFacade {
     public async start(): Promise<void> {
         const {promise, resolve, reject} = new_promise<string>()
         const child_process = this.spawn()
-        const timeout_id = setTimeout(
-            () => reject(new ChildProcessFacadeError('Timeout')),
-            this.timeout_ms
-        )
-        const on_data = (data: string | Buffer): void => resolve(data.toString())
+        const timeout_id = setTimeout(on_timeout, this.timeout_ms)
 
-        const on_error = (error: Error): void => {
+        function on_timeout(): void {
+            reject(new ChildProcessFacadeError('Timeout'))
+        }
+
+        function on_data(data: string | Buffer): void {
+            resolve(data.toString())
+        }
+
+        function on_error(error: Error): void {
             child_process.once('exit', () =>
                 reject(new ChildProcessFacadeError(`Unexpected error: ${error.message}`))
             )
@@ -76,6 +82,27 @@ export class VlcChildProcessFacade implements IVlcChildProcessFacade {
                 child_process.stdout.off('error', on_error)
                 child_process.stdout.off('data', on_data)
             })
+
+        // If this promise resolves, the child process was successfully started. Unfortunately,
+        // this doesn't necessarily mean the http server itself is running. If something goes
+        // wrong (e.g., because it could not be bound to the requested port) it will only report
+        // so in its output but not terminate the process.
+        await this.wait_for_port()
+    }
+
+    private async wait_for_port(): Promise<void> {
+        const is_open = await wait_port({
+            host: this.vlc_http_connection.hostname,
+            port: this.vlc_http_connection.port,
+            protocol: 'http',
+            interval: 250,
+            timeout: 2_500,
+            output: 'silent',
+        })
+
+        if (!is_open) {
+            throw new ChildProcessFacadeError('Timeout while waiting for http server')
+        }
     }
 
     public async stop(): Promise<void> {
@@ -87,7 +114,7 @@ export class VlcChildProcessFacade implements IVlcChildProcessFacade {
         })
         this.process.kill()
 
-        return promise
+        await promise
     }
 
     private get process(): ChildProcessWithoutNullStreams {

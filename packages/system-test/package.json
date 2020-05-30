@@ -18,6 +18,7 @@
     "jest": "echo 'Not applicable'",
     "lint": "yarn run eslint && yarn run prettier",
     "prettier": "prettier --check .",
+    "start": "node lib/index.js",
     "test": "tsc --noEmit --project tsconfig.json && yarn run lint && yarn run jest"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",

@@ -22,6 +22,7 @@
         "prepack": "yarn run build",
         "prepublishOnly": "yarn run test",
         "prettier": "prettier --check .",
+        "start": "node bin/run",
         "test": "tsc --noEmit --project tsconfig.json && yarn run lint && yarn run jest"
     },
     "author": "Raphael Pigulla <pigulla@four66.com>",

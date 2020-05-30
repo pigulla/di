@@ -8,17 +8,17 @@
     "dto"
   ],
   "scripts": {
-    "test": "tsc --noEmit --project tsconfig.json && yarn run lint && yarn run jest",
-    "lint": "yarn run eslint && yarn run prettier",
-    "eslint": "eslint --ext=.ts .",
-    "prettier": "prettier --check .",
     "build": "rm -rf lib/ && tsc --build tsconfig.json",
     "clean": "rm -rf lib coverage",
-    "jest": "NODE_NO_WARNINGS=1 jest",
-    "format": "prettier --write . && eslint --fix .",
     "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F dto'",
+    "eslint": "eslint --ext=.ts .",
+    "format": "prettier --write . && eslint --fix .",
+    "jest": "NODE_NO_WARNINGS=1 jest",
+    "lint": "yarn run eslint && yarn run prettier",
+    "prepack": "yarn run build",
     "prepublishOnly": "yarn run test",
-    "prepack": "yarn run build"
+    "prettier": "prettier --check .",
+    "test": "tsc --noEmit --project tsconfig.json && yarn run lint && yarn run jest"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/master/packages/dto",

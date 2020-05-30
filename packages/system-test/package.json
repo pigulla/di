@@ -10,15 +10,15 @@
     "test"
   ],
   "scripts": {
-    "test": "tsc --noEmit --project tsconfig.json && yarn run lint && yarn run jest",
-    "lint": "yarn run eslint && yarn run prettier",
-    "eslint": "eslint --ext=.ts .",
-    "prettier": "prettier --check .",
     "build": "rm -rf lib/ && tsc --build tsconfig.json",
     "clean": "rm -rf lib",
-    "jest": "echo 'Not applicable'",
+    "codecov": "echo 'Not applicable'",
+    "eslint": "eslint --ext=.ts .",
     "format": "prettier --write . && eslint --fix .",
-    "codecov": "echo 'Not applicable'"
+    "jest": "echo 'Not applicable'",
+    "lint": "yarn run eslint && yarn run prettier",
+    "prettier": "prettier --check .",
+    "test": "tsc --noEmit --project tsconfig.json && yarn run lint && yarn run jest"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/master/packages/system-test",

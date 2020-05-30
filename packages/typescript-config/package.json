@@ -8,11 +8,11 @@
     "typesript"
   ],
   "scripts": {
-    "test": "echo 'Not applicable'",
-    "lint": "echo 'Not applicable'",
     "build": "echo 'Not applicable'",
+    "clean": "echo 'Not applicable'",
     "codecov": "echo 'Not applicable'",
-    "clean": "echo 'Not applicable'"
+    "lint": "echo 'Not applicable'",
+    "test": "echo 'Not applicable'"
   },
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "homepage": "https://github.com/pigulla/di/tree/master/packages/typescript-config",

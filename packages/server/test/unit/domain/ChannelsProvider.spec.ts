@@ -1,3 +1,5 @@
+import 'sinon-chai'
+
 import {Test} from '@nestjs/testing'
 import {expect} from 'chai'
 import sinon, {SinonStubbedInstance} from 'sinon'

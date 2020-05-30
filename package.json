@@ -16,13 +16,13 @@
     },
     "license": "MIT",
     "scripts": {
+        "build": "yarn workspaces foreach --verbose --parallel --topological run build",
+        "clean": "yarn workspaces foreach --verbose --parallel run clean",
+        "codecov": "yarn workspaces foreach --verbose --parallel run codecov",
+        "format": "yarn workspaces foreach --verbose --parallel run format",
+        "jest": "yarn workspaces foreach --verbose --parallel run jest",
+        "lint": "yarn workspaces foreach --verbose --parallel run lint",
         "setup": "rm -rf node_modules && yarn install && yarn run clean && yarn run build",
-        "build": "yarn workspaces foreach --verbose --all --parallel --topological run build",
-        "test": "yarn workspaces foreach --verbose --parallel --all run test",
-        "clean": "yarn workspaces foreach --verbose --parallel --all run clean",
-        "jest": "yarn workspaces foreach --verbose --parallel --all run jest",
-        "lint": "yarn workspaces foreach --verbose --parallel --all run lint",
-        "format": "yarn workspaces foreach --verbose --parallel --all run format",
-        "codecov": "yarn workspaces foreach --verbose --parallel --all run codecov"
+        "test": "yarn workspaces foreach --verbose --parallel run test"
     }
 }

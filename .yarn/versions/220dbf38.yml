@@ -1,0 +1,13 @@
+releases:
+
+
+undecided:
+  - "@digitally-imported/meta"
+  - "@digitally-imported/cli"
+  - "@digitally-imported/client"
+  - "@digitally-imported/dto"
+  - "@digitally-imported/eslint-config-default"
+  - "@digitally-imported/i3-blocklet"
+  - "@digitally-imported/jest-config"
+  - "@digitally-imported/server"
+  - "@digitally-imported/system-test"

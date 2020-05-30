@@ -1,6 +1,6 @@
 {
   "name": "@digitally-imported/system-test",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": true,
   "description": "System test for the @digitally-imported packages.",
   "main": "lib/index.js",

@@ -1,7 +1,7 @@
 {
   "name": "@digitally-imported/dto",
-  "version": "0.0.4",
-  "description": "Common data transfer objects used by @digitally-imported/server and related components.",
+  "version": "0.0.5",
+  "description": "Common data transfer objects for @digitally-imported components.",
   "main": "lib/index.js",
   "keywords": [
     "digitally-imported",

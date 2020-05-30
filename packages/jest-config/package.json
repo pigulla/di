@@ -1,7 +1,7 @@
 {
   "name": "@digitally-imported/jest-config",
-  "version": "0.0.4",
-  "description": "Common Jest configuration.",
+  "version": "0.0.5",
+  "description": "Common Jest configuration for @digitally-imported components.",
   "main": "index.js",
   "keywords": [
     "digitally-imported",

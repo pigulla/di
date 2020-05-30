@@ -1,6 +1,6 @@
 {
   "name": "@digitally-imported/server",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Listen to music from Digitally Imported, control it from the command line and many other features.",
   "main": "lib/main.js",
   "keywords": [

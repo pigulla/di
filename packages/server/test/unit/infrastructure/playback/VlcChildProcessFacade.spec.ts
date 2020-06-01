@@ -9,6 +9,8 @@ import {
     VlcHttpConnection,
 } from '~src/infrastructure/playback'
 
+import {stub_logger} from '~test/util'
+
 interface StreamMock extends EventEmitter {
     read: SinonStub
     write: SinonStub
@@ -53,15 +55,22 @@ describe('The VlcChildProcessFacade', function () {
     }
 
     let spawn_fn: SinonStub
+    let wait_for_http_port_stub: SinonStub
     let child_process_facade: VlcChildProcessFacade
 
     beforeEach(function () {
+        const logger_stub = stub_logger()
+        logger_stub.child_for_service.returns(stub_logger())
+
         spawn_fn = stub()
+        wait_for_http_port_stub = stub()
         child_process_facade = new VlcChildProcessFacade(
             path,
             timeout_ms,
             spawn_fn,
-            vlc_http_connection
+            vlc_http_connection,
+            wait_for_http_port_stub,
+            logger_stub
         )
     })
 
@@ -85,6 +94,7 @@ describe('The VlcChildProcessFacade', function () {
         beforeEach(function () {
             child_process = create_child_process_mock()
             spawn_fn.returns(child_process)
+            wait_for_http_port_stub.resolves(true)
         })
 
         it('should spawn the child process', async function () {
@@ -106,6 +116,19 @@ describe('The VlcChildProcessFacade', function () {
 
             await start_promise
             await expect(child_process_facade.start()).to.be.rejectedWith(ChildProcessFacadeError)
+        })
+
+        it('should fail if the http server is not started', async function () {
+            wait_for_http_port_stub.resolves(false)
+
+            const start_promise = child_process_facade.start()
+            expect(spawn_fn).to.have.been.calledOnceWith(path)
+
+            child_process.stdout.emit('data', 'Foobar')
+            await expect(start_promise).to.be.rejectedWith(
+                ChildProcessFacadeError,
+                'Timeout while waiting for http server'
+            )
         })
 
         it('should fail if an error occurred', async function () {

@@ -57,7 +57,7 @@
     "prettier": "^2.0.5",
     "sinon": "^9.0.2",
     "sinon-chai": "^3.5.0",
-    "ts-jest": "^26.0.0",
+    "ts-jest": "^26.1.0",
     "tsconfig-paths": "^3.9.0",
     "type-fest": "^0.15.0",
     "typescript": "^3.9.4"

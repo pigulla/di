@@ -476,7 +476,7 @@ __metadata:
     prettier: ^2.0.5
     sinon: ^9.0.2
     sinon-chai: ^3.5.0
-    ts-jest: ^26.0.0
+    ts-jest: ^26.1.0
     tsconfig-paths: ^3.9.0
     tslib: ^2.0.0
     type-fest: ^0.15.0
@@ -559,10 +559,10 @@ __metadata:
     "@digitally-imported/eslint-config-default": "workspace:*"
     "@digitally-imported/jest-config": "workspace:*"
     "@digitally-imported/typescript-config": "workspace:*"
-    "@nestjs/common": ^7.1.1
-    "@nestjs/core": ^7.1.1
-    "@nestjs/platform-express": ^7.1.1
-    "@nestjs/testing": ^7.1.1
+    "@nestjs/common": ^7.1.2
+    "@nestjs/core": ^7.1.2
+    "@nestjs/platform-express": ^7.1.2
+    "@nestjs/testing": ^7.1.2
     "@oclif/errors": ^1.2.2
     "@types/bluebird": ^3.5.32
     "@types/chai": ^4.2.11
@@ -620,7 +620,7 @@ __metadata:
     sinon: ^9.0.2
     sinon-chai: ^3.5.0
     superagent: ^5.2.2
-    ts-jest: ^26.0.0
+    ts-jest: ^26.1.0
     ts-node: ^8.10.2
     tsconfig-paths: ^3.9.0
     tslib: ^2.0.0
@@ -895,9 +895,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/common@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "@nestjs/common@npm:7.1.1"
+"@nestjs/common@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "@nestjs/common@npm:7.1.2"
   dependencies:
     axios: 0.19.2
     cli-color: 2.0.0
@@ -907,13 +907,13 @@ __metadata:
   peerDependencies:
     reflect-metadata: ^0.1.12
     rxjs: ^6.0.0
-  checksum: 3/7dd0a870832bfa299665ba22a0c8d1af917b5249c5172d3c496d53bd1f9228ee48151ccfe884199c3b41ebed26ad21cc985dfcc889c9a3bd37dc8178d97a44f2
+  checksum: 3/a713790a45c2590c02b5e662899eb3d719b7cc231623bd85909e3e3d7b247c914bd68ca4f448ef43a20acf38ec3c1f419ebc8485134496634873309654731300
   languageName: node
   linkType: hard
 
-"@nestjs/core@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "@nestjs/core@npm:7.1.1"
+"@nestjs/core@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "@nestjs/core@npm:7.1.2"
   dependencies:
     "@nuxtjs/opencollective": 0.2.2
     fast-safe-stringify: 2.0.7
@@ -926,13 +926,13 @@ __metadata:
     "@nestjs/common": ^7.0.0
     reflect-metadata: ^0.1.12
     rxjs: ^6.0.0
-  checksum: 3/38853055e66de0f74996fff74b658e2e11b7f477d177bb15070cf3903bb4751cafa5765358531c7acc7a608e8f172344f4def5d2942927c73a684cb5bfecc71b
+  checksum: 3/538585f14ea41a8884e2c77ff5052c93fe49c17ef98b2be9848eac40dbe2efd4583dd9711df36cc87ddac6dea37f4976fcc22d56e0177a7ce345a2f2d37bf211
   languageName: node
   linkType: hard
 
-"@nestjs/platform-express@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "@nestjs/platform-express@npm:7.1.1"
+"@nestjs/platform-express@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "@nestjs/platform-express@npm:7.1.2"
   dependencies:
     body-parser: 1.19.0
     cors: 2.8.5
@@ -942,20 +942,20 @@ __metadata:
   peerDependencies:
     "@nestjs/common": ^7.0.0
     "@nestjs/core": ^7.0.0
-  checksum: 3/ab4538857ff8653c61fe62bacf1101b5e9e71c71d160cca5291043e66fabe56e33fc08f1994cedfe22e25facb8c19a3a662158a29647d02d2cbf3959d9ff3631
+  checksum: 3/ca372e62a4c112a6db85ff62b85125258bf4d6f294b176ba5aead0378c8c6aa411c41ff9c2beb61c4303d2a6af0b00d6cbd41ea6af5aab6d829a976b019ca0ba
   languageName: node
   linkType: hard
 
-"@nestjs/testing@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "@nestjs/testing@npm:7.1.1"
+"@nestjs/testing@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "@nestjs/testing@npm:7.1.2"
   dependencies:
     optional: 0.1.4
     tslib: 2.0.0
   peerDependencies:
     "@nestjs/common": ^7.0.0
     "@nestjs/core": ^7.0.0
-  checksum: 3/5a04894099374b7cbd6c8415043360f00ee6529a01972b5ec67753d0b49ce59d16c8f6f95d4858b9eae1b45ee15c89becb64c8c45092986b698f6fd0584c41e9
+  checksum: 3/8b6d5ba27866f40dd7e70fe5b90d9e69ebfb7bc20a96cf17e61b816f976fd1af476b7f245adae1f39d1e5c0bc1e8f5ac7c7ffca895f778ca044ab4d0e3f13940
   languageName: node
   linkType: hard
 
@@ -8742,9 +8742,9 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:^26.0.0":
-  version: 26.0.0
-  resolution: "ts-jest@npm:26.0.0"
+"ts-jest@npm:^26.1.0":
+  version: 26.1.0
+  resolution: "ts-jest@npm:26.1.0"
   dependencies:
     bs-logger: 0.x
     buffer-from: 1.x
@@ -8761,7 +8761,7 @@ fsevents@^2.1.2:
     typescript: ">=3.8 <4.0"
   bin:
     ts-jest: cli.js
-  checksum: 3/17723be82724d664be94cad42f4a3c5141961015968d885d32d122ef32c55c50bffe0ed80bcf3949a0d57c2a14268589c4a4a3be6590f0bb443bca36a13d6940
+  checksum: 3/4289da86b257a0cd1afcc6412e6f6d6e25388cb620c5f56cf0deb909dacb3c7f598ca07c4dbd52cccb2d94408419a732b50ceffcb46d041b311b8d5d41668f24
   languageName: node
   linkType: hard
 

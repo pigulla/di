@@ -19,7 +19,10 @@ type Loggers = {
 }
 
 function create_loggers(): Loggers {
-    const pino_instance = pino({prettyPrint: true})
+    const pino_instance = pino({
+        prettyPrint: true,
+        redact: ['di_listenkey', 'di_credentials.password'],
+    })
     const root_logger = new PinoLogger(pino_instance)
 
     return {
@@ -51,10 +54,11 @@ export async function start_server(argv: string[] = []): Promise<ShutdownFn> {
     const argv_parser = create_argv_parser({skip_vlc_validation: true})
 
     try {
-        const {log_level, server_hostname, server_port} = argv_parser(argv)
+        const options = argv_parser(argv)
         const {promise, resolve} = new_promise<ShutdownFn>()
 
-        root.set_level(log_level)
+        root.set_level(options.log_level)
+        root.debug('Starting application', options)
 
         const app = await create_app(nest, request_response)
         const logger = app.get<ILogger>('ILogger')
@@ -70,7 +74,7 @@ export async function start_server(argv: string[] = []): Promise<ShutdownFn> {
             resolve(() => app.close())
         })
 
-        await app.listen(server_port, server_hostname)
+        await app.listen(options.server_port, options.server_hostname)
 
         return promise
     } catch (error) {

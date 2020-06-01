@@ -15,7 +15,7 @@ function expect_yargs_error(cb: (...args: any[]) => any, message: RegExp): void 
     }
 }
 
-describe('The ArgvParser', function () {
+describe('create_argv_parser', function () {
     describe('with the VLC binary check enabled', function () {
         it('should use the default value', function () {
             const argv_parser = create_argv_parser({

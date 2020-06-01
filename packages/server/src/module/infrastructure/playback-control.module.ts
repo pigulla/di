@@ -4,7 +4,8 @@ import {randomBytes} from 'crypto'
 import {Module} from '@nestjs/common'
 import get_port from 'get-port'
 
-import {Configuration} from '../../domain'
+import {Configuration, ILogger} from '../../domain'
+import {wait_for_http_port} from '../../infrastructure'
 import {
     VlcChildProcessFacade,
     VlcHttpControl,
@@ -30,16 +31,19 @@ import {UtilityModule} from './utility.module'
         },
         {
             provide: 'vlc_child_process',
-            inject: ['configuration', 'vlc_http_connection'],
+            inject: ['configuration', 'vlc_http_connection', 'ILogger'],
             useFactory(
                 configuration: Configuration,
-                vlc_http_connection: VlcHttpConnection
+                vlc_http_connection: VlcHttpConnection,
+                logger: ILogger
             ): VlcChildProcessFacade {
                 return new VlcChildProcessFacade(
                     configuration.vlc_path,
                     configuration.vlc_timeout,
                     spawn,
-                    vlc_http_connection
+                    vlc_http_connection,
+                    wait_for_http_port,
+                    logger
                 )
             },
         },

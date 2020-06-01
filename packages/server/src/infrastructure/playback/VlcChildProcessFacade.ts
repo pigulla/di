@@ -1,8 +1,8 @@
 import {ChildProcessWithoutNullStreams, SpawnOptionsWithoutStdio} from 'child_process'
 
-import wait_port from 'wait-port'
-
+import {ILogger} from '../../domain'
 import {new_promise} from '../../new_promise'
+import {IWaitForHttpPort} from '../wait_for_http_port.interface'
 
 import {IVlcChildProcessFacade} from './VlcChildProcessFacade.interface'
 import {VlcHttpConnection} from './VlcHttpClient.interface'
@@ -15,24 +15,35 @@ export type SpawnFn = (
 
 export class ChildProcessFacadeError extends Error {}
 
+// TODO: Kill the child process if it doesn't start the http server and make sure that is_running
+//       returns false if it errored (currently not checked in the unit tests).
+
 export class VlcChildProcessFacade implements IVlcChildProcessFacade {
     private readonly path: string
     private readonly timeout_ms: number
     private readonly spawn_fn: SpawnFn
     private readonly vlc_http_connection: VlcHttpConnection
+    private readonly wait_for_http_port: IWaitForHttpPort
+    private readonly logger: ILogger
     private child_process: ChildProcessWithoutNullStreams | null
 
     public constructor(
         path: string,
         timeout_ms: number,
         spawn_fn: SpawnFn,
-        vlc_http_connection: VlcHttpConnection
+        vlc_http_connection: VlcHttpConnection,
+        wait_for_http_port: IWaitForHttpPort,
+        logger: ILogger
     ) {
         this.path = path
         this.timeout_ms = timeout_ms
         this.child_process = null
         this.vlc_http_connection = vlc_http_connection
         this.spawn_fn = spawn_fn
+        this.wait_for_http_port = wait_for_http_port
+        this.logger = logger.child_for_service(VlcChildProcessFacade.name)
+
+        this.logger.debug('Service instantiated')
     }
 
     public get hostname(): string {
@@ -91,13 +102,11 @@ export class VlcChildProcessFacade implements IVlcChildProcessFacade {
     }
 
     private async wait_for_port(): Promise<void> {
-        const is_open = await wait_port({
+        const is_open = await this.wait_for_http_port({
             host: this.vlc_http_connection.hostname,
             port: this.vlc_http_connection.port,
-            protocol: 'http',
             interval: 250,
             timeout: 2_500,
-            output: 'silent',
         })
 
         if (!is_open) {
@@ -131,6 +140,8 @@ export class VlcChildProcessFacade implements IVlcChildProcessFacade {
         }
 
         const {hostname, port, password} = this.vlc_http_connection
+        // The password shows up in 'ps', not sure if this can be avoided here. It's probably not
+        // much of an issue anyway.
         const args = [
             '--intf',
             'cli',
@@ -143,6 +154,8 @@ export class VlcChildProcessFacade implements IVlcChildProcessFacade {
             '--http-password',
             password,
         ]
+
+        this.logger.debug('Spawning VLC', {args: [...args.slice(0, -1), '********']})
         const child_process = this.spawn_fn(this.path, args)
         child_process.stdout.on('readable', child_process.stdout.read)
         child_process.stderr.on('readable', child_process.stderr.read)

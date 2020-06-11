@@ -1,3 +1,5 @@
+import 'chai-as-promised'
+import 'sinon-chai'
 import {expect} from 'chai'
 import sinon, {SinonStub} from 'sinon'
 
@@ -33,19 +35,9 @@ describe('The CLI wrapper', function () {
         return with_console_silenced(() => cli(argv, opts))
     }
 
-    it('should throw if invalid arguments are passed', async function () {
-        await expect(run_cli(['--foo'])).to.eventually.be.rejectedWith('Unknown argument: foo')
-    })
-
-    it('should throw if the port is not an integer', async function () {
-        await expect(run_cli(['-p', '80.80'])).to.eventually.be.rejectedWith(
-            'Port must be an integer'
-        )
-    })
-
-    it('should throw if the port is out of range', async function () {
-        await expect(run_cli(['--port', '471100'])).to.eventually.be.rejectedWith(
-            'Port must be below'
+    it('should throw if the endpoint is invalid', async function () {
+        await expect(run_cli(['--endpoint', 'ftp://test.local'])).to.eventually.be.rejectedWith(
+            'Endpoint must be http or https'
         )
     })
 
@@ -61,9 +53,11 @@ describe('The CLI wrapper', function () {
 
     it('should invoke the blocklet function with the provided parameters', async function () {
         const client_instance = {}
-        client_ctor.withArgs({endpoint: 'https://di.local:4711'}).returns(client_instance)
+        client_ctor
+            .withArgs({endpoint: 'https://di-server.home.local:443'})
+            .returns(client_instance)
 
-        await run_cli(['--hostname', 'di.local', '-p', '4711', '--https'])
+        await run_cli(['--endpoint', 'https://di-server.home.local:443'])
 
         expect(client_ctor).to.have.been.calledWithNew
         expect(blocklet_fn).to.have.been.calledOnceWithExactly(client_instance)

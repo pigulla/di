@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "build": "rm -rf lib/ && tsc --build tsconfig.json",
-    "clean": "rm -rf lib",
+    "clean": "rm -rf lib node_modules",
     "codecov": "echo 'Not applicable'",
     "eslint": "eslint --ext=.ts .",
     "format": "prettier --write . && eslint --fix .",

@@ -1,39 +1,28 @@
-import Yargs from 'yargs'
+import Yargs, {Options} from 'yargs'
 
-export const yargs = Yargs.options({
-    hostname: {
-        alias: 'h',
+const cli_options: Record<string, Options> = {
+    endpoint: {
+        alias: 'e',
         requiresArg: true,
-        default: 'localhost',
-        describe: 'The hostname to connect to',
+        default: 'http://localhost:4979',
+        describe: 'The endpoint to connect to.',
         type: 'string',
-    },
-    port: {
-        alias: 'p',
-        requiresArg: true,
-        default: 4979,
-        describe: 'The port to connect on',
-        type: 'number',
-        coerce(arg: string): number {
-            if (!/^\d+$/.test(arg)) {
-                throw new Error('Port must be an integer')
+        coerce(input: string): string {
+            let url: URL
+
+            try {
+                url = new URL(input)
+            } catch (error) {
+                throw new Error('Endpoint is not a valid URL')
             }
+// console.log(url.protocol)
+//             if (!['http', 'https'].includes(url.protocol)) {
+//                 throw new Error('Endpoint must be http or https')
+//             }
 
-            const port = parseInt(arg, 10)
-
-            if (port >= 65536) {
-                throw new Error('Port must be below 65536')
-            }
-
-            return port
+            return url.toString()
         },
     },
-    https: {
-        alias: 's',
-        default: false,
-        describe: 'Use https to connect',
-        type: 'boolean',
-    },
-})
-    .strict()
-    .help()
+}
+
+export const yargs = Yargs.scriptName('di-i3-blocklet').env('DI_').options(cli_options).help()

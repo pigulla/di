@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "rm -rf lib/ && tsc --build tsconfig.json",
-    "clean": "rm -rf lib coverage",
+    "clean": "rm -rf lib coverage node_modules",
     "codecov": "bash -c 'bash <(curl https://codecov.io/bash) -Z -f ./coverage/lcov.info -F client'",
     "eslint": "eslint --ext=.ts .",
     "format": "prettier --write . && eslint --fix .",

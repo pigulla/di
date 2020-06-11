@@ -25,10 +25,8 @@ export async function cli(
 ): Promise<BlockletOutput> {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const {auto_exit, client_ctor: ClientCtor, blocklet_fn} = options
-    const {https, hostname, port} = yargs.exitProcess(auto_exit).parse(argv)
-    const client = new ClientCtor({
-        endpoint: `${https ? 'https' : 'http'}://${hostname}:${port}`,
-    })
+    const {endpoint} = yargs.exitProcess(auto_exit).parse(argv)
+    const client = new ClientCtor({endpoint})
 
     return blocklet_fn(client)
 }

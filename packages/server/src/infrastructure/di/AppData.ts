@@ -27,7 +27,9 @@ export class AppData {
         const app_deploy_yime = dayjs(data.appDeployTime, app_deploy_time_format)
 
         if (!app_deploy_yime.isValid()) {
-            throw new Error(`Failed to parse appDeployTime (string "${data.appDeployTime}" did not match format "${app_deploy_time_format}")`)
+            throw new Error(
+                `Failed to parse appDeployTime (string "${data.appDeployTime}" did not match format "${app_deploy_time_format}")`
+            )
         }
 
         return new AppData(

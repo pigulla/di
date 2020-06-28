@@ -25,8 +25,10 @@ const I3B_BINARY = join(
 async function exec<T = void>(...args: string[]): Promise<T> {
     const {stdout} = await execa(CLI_BINARY, [
         ...args,
-        '--output-format', 'json',
-        '--endpoint', 'http://localhost:4979',
+        '--output-format',
+        'json',
+        '--endpoint',
+        'http://localhost:4979',
     ])
 
     return JSON.parse(stdout)

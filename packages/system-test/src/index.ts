@@ -23,7 +23,11 @@ const I3B_BINARY = join(
 )
 
 async function exec<T = void>(...args: string[]): Promise<T> {
-    const {stdout} = await execa(CLI_BINARY, [...args, '--output-format', 'json'])
+    const {stdout} = await execa(CLI_BINARY, [
+        ...args,
+        '--output-format', 'json',
+        '--endpoint', 'http://localhost:4979',
+    ])
 
     return JSON.parse(stdout)
 }
@@ -99,7 +103,7 @@ async function run(): Promise<void> {
         spinner.start('Running i3-blocklet')
 
         try {
-            const {stdout} = await execa(I3B_BINARY)
+            const {stdout} = await execa(I3B_BINARY, ['--endpoint', 'http://localhost:4979'])
             const data = JSON.parse(stdout)
 
             spinner.info(['i3-blocklet reports:', JSON.stringify(data, null, 4)].join(EOL))

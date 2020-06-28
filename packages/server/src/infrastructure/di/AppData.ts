@@ -23,9 +23,16 @@ export class AppData {
     ) {}
 
     public static from_raw(data: RawAppData): AppData {
+        const app_deploy_time_format = 'YYYY-MM-DD[T]HH:mm:ssZ'
+        const app_deploy_yime = dayjs(data.appDeployTime, app_deploy_time_format)
+
+        if (!app_deploy_yime.isValid()) {
+            throw new Error(`Failed to parse appDeployTime (string "${data.appDeployTime}" did not match format "${app_deploy_time_format}")`)
+        }
+
         return new AppData(
             data.appVersion,
-            dayjs(data.appDeployTime, 'YYYY-MM-DD HH:mm:ss ZZ'),
+            app_deploy_yime,
             data.channels.map(Channel.from_raw),
             data.channel_filters.sort((a, b) => a.position - b.position).map(ChannelFilter.from_raw)
         )

@@ -105,9 +105,7 @@ describe('create_argv_parser', function () {
         })
 
         it('should not reject unknown options', function () {
-            expect(
-                () => argv_parser(['--listenkey', '1234567890123456', '--foo']),
-            ).not.to.throw()
+            expect(() => argv_parser(['--listenkey', '1234567890123456', '--foo'])).not.to.throw()
         })
 
         it('should reject invalid values for DI listenkey', function () {

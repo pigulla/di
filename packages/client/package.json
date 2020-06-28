@@ -61,7 +61,7 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-import-resolver-typescript": "^2.0.0",
-    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
@@ -71,7 +71,7 @@
     "sinon": "^9.0.2",
     "sinon-chai": "^3.5.0",
     "tsconfig-paths": "^3.9.0",
-    "type-fest": "^0.15.1",
+    "type-fest": "^0.16.0",
     "typescript": "^3.9.5"
   },
   "files": [

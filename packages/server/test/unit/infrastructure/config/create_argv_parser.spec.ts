@@ -104,11 +104,8 @@ describe('create_argv_parser', function () {
             expect_yargs_error(() => argv_parser(['--quality', Quality.AAC_128]), /listenkey/i)
         })
 
-        it('should reject unknown options', function () {
-            expect_yargs_error(
-                () => argv_parser(['--listenkey', '1234567890123456', '--foo']),
-                /Unknown argument/i
-            )
+        it('should not reject unknown options', function () {
+            expect(() => argv_parser(['--listenkey', '1234567890123456', '--foo'])).not.to.throw()
         })
 
         it('should reject invalid values for DI listenkey', function () {

@@ -240,7 +240,6 @@ export function create_argv_parser(options: Partial<ArgvParserOptions> = {}): IA
             // @ts-ignore
             .env(ignore_env ? false : 'DI_')
             .options(cli_options)
-            .strict()
             .exitProcess(auto_exit)
             .parse(argv) as any
 

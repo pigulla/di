@@ -38,7 +38,7 @@
     "@digitally-imported/dto": "workspace:*",
     "lodash.truncate": "^4.4.2",
     "tslib": "^2.0.0",
-    "yargs": "^15.3.1"
+    "yargs": "^16.0.0"
   },
   "devDependencies": {
     "@digitally-imported/eslint-config-default": "workspace:*",

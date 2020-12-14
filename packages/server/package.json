@@ -104,7 +104,7 @@
     "dayjs": "^1.8.28",
     "get-port": "^5.1.1",
     "lodash.clamp": "^4.0.3",
-    "node-notifier": "^7.0.1",
+    "node-notifier": "^9.0.0",
     "pino": "^6.3.2",
     "pino-http": "^5.2.0",
     "pino-pretty": "^4.0.0",

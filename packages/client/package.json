@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@digitally-imported/dto": "workspace:*",
-    "axios": "^0.19.2",
+    "axios": "^0.21.3",
     "bluebird": "^3.7.2",
     "http-status-codes": "^1.4.0",
     "read-pkg-up": "^7.0.1",

@@ -38,7 +38,7 @@
     "@digitally-imported/dto": "workspace:*",
     "@digitally-imported/server": "workspace:*",
     "execa": "^4.0.2",
-    "ora": "^4.0.4"
+    "ora": "^6.0.0"
   },
   "devDependencies": {
     "@digitally-imported/typescript-config": "workspace:*",

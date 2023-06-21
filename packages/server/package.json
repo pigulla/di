@@ -108,7 +108,7 @@
     "pino": "^6.3.2",
     "pino-http": "^5.2.0",
     "pino-pretty": "^4.0.0",
-    "read-pkg-up": "^7.0.1",
+    "read-pkg-up": "^8.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.5",
     "superagent": "^5.3.1",

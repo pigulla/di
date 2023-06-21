@@ -39,7 +39,7 @@
     "axios": "^0.19.2",
     "bluebird": "^3.7.2",
     "http-status-codes": "^1.4.0",
-    "read-pkg-up": "^7.0.1",
+    "read-pkg-up": "^8.0.0",
     "semver": "^7.3.2",
     "tslib": "^2.0.0"
   },
